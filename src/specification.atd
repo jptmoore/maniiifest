@@ -1,0 +1,12 @@
+type target_t = [
+  | T1 of target_t_simple
+  | T2 of target_t_complex
+]  
+
+type target_t_simple = string
+
+type target_t_complex = {
+  t <json name="type"> : string;
+  source: string;
+} 
+
