@@ -1,32 +1,21 @@
-import fs from 'fs';
-import * as spec from "./specification"
-import { TargetT } from './specification';
+import { JsonParser } from './JsonParser'; // replace with the actual path to your class file
 
+const filename = 'test/data.json'; // replace with your actual file name
 
-function readJsonFromFile(filename: string): any {
-    try {
-        const rawData = fs.readFileSync(filename, 'utf-8');
-        return JSON.parse(rawData);
-    } catch (error) {
-        console.error(`Error reading or parsing file: ${filename}`, error);
-        return null;
+// Read JSON data from file
+const jsonData = JsonParser.readJsonFromFile(filename);
+
+if (jsonData) {
+    // Parse JSON data
+    const parsedData = JsonParser.parseJson(jsonData);
+
+    if (parsedData) {
+        console.log('Parsed data:', parsedData);
+    } else {
+        console.error('Failed to parse JSON data');
     }
+} else {
+    console.error('Failed to read JSON data from file');
 }
-
-function parseJson(data: any): TargetT | null {
-    try {
-        return spec.readTargetT(data);
-    } catch (error) {
-        console.error('Error parsing JSON data', error);
-        return null;
-    }
-}
-
-const data = readJsonFromFile('test/data.json');
-if (data) {
-    const result = parseJson(data);
-    console.log(result);
-}
-
 
 
