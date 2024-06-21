@@ -1,1 +1,1 @@
-["T2", {"type": "foo", "source": "bar"}]
+{"type": "foo", "source": "bar"}
