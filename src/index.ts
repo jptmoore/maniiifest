@@ -1,6 +1,6 @@
 import { JsonParser } from './JsonParser'; // replace with the actual path to your class file
 
-import * as spec from "./specification"
+import { writeSpecification } from "./specification"
 
 const filename = 'test/data.json'; // replace with your actual file name
 
@@ -11,7 +11,7 @@ if (jsonData) {
     // Parse JSON data
     const parsedData = JsonParser.parseJson(jsonData);
     if (parsedData) {
-        const result = spec.writeSpecification(parsedData);
+        const result = writeSpecification(parsedData);
         console.log(result)
     } else {
         console.error('Failed to parse JSON data');
