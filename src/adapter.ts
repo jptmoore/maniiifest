@@ -1,6 +1,9 @@
 
 export function restore<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error('Result array must contain at least two items.');
+    }
     return resultList[1];
 }
 
