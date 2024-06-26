@@ -1,3 +1,20 @@
+type specification = {
+  ?id : string option;
+  t <json name="type"> : string;
+  motivation : string; 
+  body : body_t;
+  target : target_t;
+  ?created : string option;
+  ?modified : string option
+}
+
+type body_t = {
+  t <json name="type"> : string;
+  language : string;
+  format : string;
+  value : string
+}
+
 type target_t = [
   | T1 of target_t_simple
   | T2 of target_t_complex

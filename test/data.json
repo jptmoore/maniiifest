@@ -1,1 +1,14 @@
-{"type": "foo", "source": "bar"}
+{
+    "type": "Annotation",
+    "motivation": "commenting",
+    "body": {
+      "type": "TextualBody",
+      "language": "en",
+      "format": "text/plain",
+      "value": "Very nice marketplace"
+    },
+    "target": {
+      "type": "SpecificResource",
+      "source": "https://example.com/ocean123.jpg"
+    }
+}

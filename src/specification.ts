@@ -14,6 +14,23 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export type Specification = {
+  id?: string;
+  t: string;
+  motivation: string;
+  body: BodyT;
+  target: TargetT;
+  created?: string;
+  modified?: string;
+}
+
+export type BodyT = {
+  t: string;
+  language: string;
+  format: string;
+  value: string;
+}
+
 export type TargetT =
 | { kind: 'T1'; value: TargetTSimple }
 | { kind: 'T2'; value: TargetTComplex }
@@ -25,7 +42,55 @@ export type TargetTComplex = {
   source: string;
 }
 
+export function writeSpecification(x: Specification, context: any = x): any {
+  return {
+    'id': _atd_write_optional_field(_atd_write_string, x.id, x),
+    'type': _atd_write_required_field('Specification', 't', _atd_write_string, x.t, x),
+    'motivation': _atd_write_required_field('Specification', 'motivation', _atd_write_string, x.motivation, x),
+    'body': _atd_write_required_field('Specification', 'body', writeBodyT, x.body, x),
+    'target': _atd_write_required_field('Specification', 'target', writeTargetT, x.target, x),
+    'created': _atd_write_optional_field(_atd_write_string, x.created, x),
+    'modified': _atd_write_optional_field(_atd_write_string, x.modified, x),
+  };
+}
+
+export function readSpecification(x: any, context: any = x): Specification {
+  return {
+    id: _atd_read_optional_field(_atd_read_string, x['id'], x),
+    t: _atd_read_required_field('Specification', 'type', _atd_read_string, x['type'], x),
+    motivation: _atd_read_required_field('Specification', 'motivation', _atd_read_string, x['motivation'], x),
+    body: _atd_read_required_field('Specification', 'body', readBodyT, x['body'], x),
+    target: _atd_read_required_field('Specification', 'target', readTargetT, x['target'], x),
+    created: _atd_read_optional_field(_atd_read_string, x['created'], x),
+    modified: _atd_read_optional_field(_atd_read_string, x['modified'], x),
+  };
+}
+
+export function writeBodyT(x: BodyT, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('BodyT', 't', _atd_write_string, x.t, x),
+    'language': _atd_write_required_field('BodyT', 'language', _atd_write_string, x.language, x),
+    'format': _atd_write_required_field('BodyT', 'format', _atd_write_string, x.format, x),
+    'value': _atd_write_required_field('BodyT', 'value', _atd_write_string, x.value, x),
+  };
+}
+
+export function readBodyT(x: any, context: any = x): BodyT {
+  return {
+    t: _atd_read_required_field('BodyT', 'type', _atd_read_string, x['type'], x),
+    language: _atd_read_required_field('BodyT', 'language', _atd_read_string, x['language'], x),
+    format: _atd_read_required_field('BodyT', 'format', _atd_read_string, x['format'], x),
+    value: _atd_read_required_field('BodyT', 'value', _atd_read_string, x['value'], x),
+  };
+}
+
 export function writeTargetT(x: TargetT, context: any = x): any {
+  const result = _writeTargetT(x, context);
+  return result[1]; 
+}
+
+
+function _writeTargetT(x: TargetT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
       return ['T1', writeTargetTSimple(x.value, x)]
@@ -34,7 +99,19 @@ export function writeTargetT(x: TargetT, context: any = x): any {
   }
 }
 
+
 export function readTargetT(x: any, context: any = x): TargetT {
+  if (typeof(x) === 'string') {
+    return _readTargetT(['T1', x], context);
+  } else if (typeof(x) === 'object') {
+    return _readTargetT(['T2', x], context);
+  } else {
+    throw new Error('did not match type');
+  }
+}
+
+
+function _readTargetT(x: any, context: any = x): TargetT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
     case 'T1':
