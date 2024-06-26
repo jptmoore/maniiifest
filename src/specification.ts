@@ -32,8 +32,8 @@ export type BodyT = {
 }
 
 export type TargetT =
-| { kind: 'T1'; value: TargetTSimple }
-| { kind: 'T2'; value: TargetTComplex }
+  | { kind: 'T1'; value: TargetTSimple }
+  | { kind: 'T2'; value: TargetTComplex }
 
 export type TargetTSimple = string
 
@@ -84,11 +84,10 @@ export function readBodyT(x: any, context: any = x): BodyT {
   };
 }
 
-export function writeTargetT(x: TargetT, context: any = x): any {
-  const result = _writeTargetT(x, context);
-  return result[1]; 
+export function restore<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+  const result = fn(x, context);
+  return result[1];
 }
-
 
 function _writeTargetT(x: TargetT, context: any = x): any {
   switch (x.kind) {
@@ -99,17 +98,20 @@ function _writeTargetT(x: TargetT, context: any = x): any {
   }
 }
 
-
-export function readTargetT(x: any, context: any = x): TargetT {
-  if (typeof(x) === 'string') {
-    return _readTargetT(['T1', x], context);
-  } else if (typeof(x) === 'object') {
-    return _readTargetT(['T2', x], context);
-  } else {
-    throw new Error('did not match type');
-  }
+export function writeTargetT(x: any, context: any = x): TargetT {
+  return restore(x, context, _writeTargetT);
 }
 
+
+export function normalize<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+  if (typeof (x) === 'string') {
+    return fn(['T1', x], context);
+  } else if (typeof (x) === 'object') {
+    return fn(['T2', x], context);
+  } else {
+    throw new Error('Input type did not match expected types.');
+  }
+}
 
 function _readTargetT(x: any, context: any = x): TargetT {
   _atd_check_json_tuple(2, x, context)
@@ -122,6 +124,11 @@ function _readTargetT(x: any, context: any = x): TargetT {
       _atd_bad_json('TargetT', x, context)
       throw new Error('impossible')
   }
+}
+
+
+export function readTargetT(x: any, context: any = x): TargetT {
+  return normalize(x, context, _readTargetT);
 }
 
 export function writeTargetTSimple(x: TargetTSimple, context: any = x): any {
@@ -154,13 +161,13 @@ export function readTargetTComplex(x: any, context: any = x): TargetTComplex {
 export type Option<T> = null | { value: T }
 
 function _atd_missing_json_field(type_name: string, json_field_name: string) {
-    throw new Error(`missing field '${json_field_name}'` +
-                    ` in JSON object of type '${type_name}'`)
+  throw new Error(`missing field '${json_field_name}'` +
+    ` in JSON object of type '${type_name}'`)
 }
 
 function _atd_missing_ts_field(type_name: string, ts_field_name: string) {
-    throw new Error(`missing field '${ts_field_name}'` +
-                    ` in TypeScript object of type '${type_name}'`)
+  throw new Error(`missing field '${ts_field_name}'` +
+    ` in TypeScript object of type '${type_name}'`)
 }
 
 function _atd_bad_json(expected_type: string, json_value: any, context: any) {
@@ -169,8 +176,8 @@ function _atd_bad_json(expected_type: string, json_value: any, context: any) {
     value_str = value_str.substring(0, 200) + '…';
 
   throw new Error(`incompatible JSON value where` +
-                  ` type '${expected_type}' was expected: '${value_str}'.` +
-                  ` Occurs in '${JSON.stringify(context)}'.`)
+    ` type '${expected_type}' was expected: '${value_str}'.` +
+    ` Occurs in '${JSON.stringify(context)}'.`)
 }
 
 function _atd_bad_ts(expected_type: string, ts_value: any, context: any) {
@@ -179,12 +186,12 @@ function _atd_bad_ts(expected_type: string, ts_value: any, context: any) {
     value_str = value_str.substring(0, 200) + '…';
 
   throw new Error(`incompatible TypeScript value where` +
-                  ` type '${expected_type}' was expected: '${value_str}'.` +
-                  ` Occurs in '${JSON.stringify(context)}'.`)
+    ` type '${expected_type}' was expected: '${value_str}'.` +
+    ` Occurs in '${JSON.stringify(context)}'.`)
 }
 
 function _atd_check_json_tuple(len: number /*int*/, x: any, context: any) {
-  if (! Array.isArray(x) || x.length !== len)
+  if (!Array.isArray(x) || x.length !== len)
     _atd_bad_json('tuple of length ' + len, x, context);
 }
 
@@ -234,10 +241,10 @@ function _atd_read_string(x: any, context: any): string {
 }
 
 function _atd_read_required_field<T>(type_name: string,
-                                     field_name: string,
-                                     read_elt: (x: any, context: any) => T,
-                                     x: any,
-                                     context: any): T {
+  field_name: string,
+  read_elt: (x: any, context: any) => T,
+  x: any,
+  context: any): T {
   if (x === undefined) {
     _atd_missing_json_field(type_name, field_name)
     throw new Error('impossible')
@@ -247,8 +254,8 @@ function _atd_read_required_field<T>(type_name: string,
 }
 
 function _atd_read_optional_field<T>(read_elt: (x: any, context: any) => T,
-                                     x: any,
-                                     context: any): T {
+  x: any,
+  context: any): T {
   if (x === undefined || x === null)
     return x
   else
@@ -256,9 +263,9 @@ function _atd_read_optional_field<T>(read_elt: (x: any, context: any) => T,
 }
 
 function _atd_read_field_with_default<T>(read_elt: (x: any, context: any) => T,
-                                         default_: T,
-                                         x: any,
-                                         context: any): T {
+  default_: T,
+  x: any,
+  context: any): T {
   if (x === undefined || x === null)
     return default_
   else
@@ -309,9 +316,9 @@ function _atd_read_array<T>(read_elt: (x: any, context: any) => T):
 }
 
 function _atd_read_assoc_array_into_map<K, V>(
-    read_key: (key: any, context: any) => K,
-    read_value: (value: any, context: any) => V
-  ): (x: any, context: any) => Map<K, V> {
+  read_key: (key: any, context: any) => K,
+  read_value: (value: any, context: any) => V
+): (x: any, context: any) => Map<K, V> {
   function read_assoc(elts: any, context: any): Map<K, V> {
     if (Array.isArray(elts)) {
       const res = new Map<K, V>([])
@@ -334,8 +341,8 @@ function _atd_read_assoc_array_into_map<K, V>(
 }
 
 function _atd_read_assoc_object_into_map<T>(
-    read_value: (value: any, context: any) => T
-  ): (x: any, context: any) => Map<string, T> {
+  read_value: (value: any, context: any) => T
+): (x: any, context: any) => Map<string, T> {
   function read_assoc(elts: any, context: any): Map<string, T> {
     if (typeof elts === 'object') {
       const res = new Map<string, T>([])
@@ -352,8 +359,8 @@ function _atd_read_assoc_object_into_map<T>(
 }
 
 function _atd_read_assoc_object_into_array<T>(
-    read_value: (value: any, context: any) => T
-  ): (x: any, context: any) => [string, T][] {
+  read_value: (value: any, context: any) => T
+): (x: any, context: any) => [string, T][] {
   function read_assoc(elts: any, context: any): [string, T][] {
     if (typeof elts === 'object') {
       const res: [string, T][] = []
@@ -415,7 +422,7 @@ function _atd_write_string(x: any, context: any): string {
 }
 
 function _atd_write_option<T>(write_elt: (x: T, context: any) => any):
-   (elts: Option<T>, context: any) => any {
+  (elts: Option<T>, context: any) => any {
   function write_option(x: Option<T>, context: any): any {
     if (x === null)
       return 'None'
@@ -444,9 +451,9 @@ function _atd_write_array<T>(write_elt: (elt: T, context: any) => any):
 }
 
 function _atd_write_assoc_map_to_array<K, V>(
-    write_key: (key: K, context: any) => any,
-    write_value: (value: V, context: any) => any
-  ): (elts: Map<K, V>, context: any) => any {
+  write_key: (key: K, context: any) => any,
+  write_value: (value: V, context: any) => any
+): (elts: Map<K, V>, context: any) => any {
   function write_assoc(elts: Map<K, V>, context: any): any {
     const res: any = []
     elts.forEach((value: V, key: K) =>
@@ -458,8 +465,8 @@ function _atd_write_assoc_map_to_array<K, V>(
 }
 
 function _atd_write_assoc_map_to_object<T>(
-    write_value: (value: T, context: any) => any
-  ): (elts: Map<string, T>, context: any) => any {
+  write_value: (value: T, context: any) => any
+): (elts: Map<string, T>, context: any) => any {
   function write_assoc(elts: Map<string, T>, context: any): any {
     const res: any = {}
     elts.forEach((value: T, key: string) =>
@@ -471,8 +478,8 @@ function _atd_write_assoc_map_to_object<T>(
 }
 
 function _atd_write_assoc_array_to_object<T>(
-    write_value: (value: T, context: any) => any
-  ): (elts: [string, T][], context: any) => any {
+  write_value: (value: T, context: any) => any
+): (elts: [string, T][], context: any) => any {
   function write_assoc(elts: [string, T][], context: any): any {
     const res: any = {}
     for (const [key, value] of elts)
@@ -483,10 +490,10 @@ function _atd_write_assoc_array_to_object<T>(
 }
 
 function _atd_write_required_field<T>(type_name: string,
-                                      field_name: string,
-                                      write_elt: (x: T, context: any) => any,
-                                      x: T,
-                                      context: any): any {
+  field_name: string,
+  write_elt: (x: T, context: any) => any,
+  x: T,
+  context: any): any {
   if (x === undefined) {
     _atd_missing_ts_field(type_name, field_name)
     throw new Error('impossible')
@@ -496,8 +503,8 @@ function _atd_write_required_field<T>(type_name: string,
 }
 
 function _atd_write_optional_field<T>(write_elt: (x: T, context: any) => any,
-                                      x: T | undefined,
-                                      context: any): any {
+  x: T | undefined,
+  context: any): any {
   if (x === undefined || x === null)
     return x
   else
