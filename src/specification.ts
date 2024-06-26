@@ -14,6 +14,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import { normalize,restore } from "./adapter";
+
 export type Specification = {
   id?: string;
   t: string;
@@ -84,11 +86,6 @@ export function readBodyT(x: any, context: any = x): BodyT {
   };
 }
 
-export function restore<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
-  const result = fn(x, context);
-  return result[1];
-}
-
 function _writeTargetT(x: TargetT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
@@ -102,16 +99,6 @@ export function writeTargetT(x: any, context: any = x): TargetT {
   return restore(x, context, _writeTargetT);
 }
 
-
-export function normalize<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
-  if (typeof (x) === 'string') {
-    return fn(['T1', x], context);
-  } else if (typeof (x) === 'object') {
-    return fn(['T2', x], context);
-  } else {
-    throw new Error('Input type did not match expected types.');
-  }
-}
 
 function _readTargetT(x: any, context: any = x): TargetT {
   _atd_check_json_tuple(2, x, context)
