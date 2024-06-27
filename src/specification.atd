@@ -16,13 +16,13 @@ type body_t = {
 }
 
 type target_t = [
-  | T1 of target_t_simple
-  | T2 of target_t_complex
+  | T1 of target_t1
+  | T2 of target_t2
 ]  
 
-type target_t_simple = string
+type target_t1 = string
 
-type target_t_complex = {
+type target_t2 = {
   t <json name="type"> : string;
   source: string;
 } 

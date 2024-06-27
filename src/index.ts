@@ -1,23 +1,20 @@
-import { JsonParser } from './JsonParser'; // replace with the actual path to your class file
+import { readJsonFromFile } from './utils'
+import { Manifesty } from './Manifesty';
 
-import { writeBodyT, writeSpecification, writeTargetT } from "./specification"
+const filename = 'test/data.json';
 
-const filename = 'test/data.json'; // replace with your actual file name
-
-// Read JSON data from file
-const jsonData = JsonParser.readJsonFromFile(filename);
-
-if (jsonData) {
-    // Parse JSON data
-    const spec = JsonParser.parseJson(jsonData);
-    if (spec) {
-        const body = (writeBodyT(spec.body));
-        console.log(body);
-    } else {
-        console.error('Failed to parse JSON data');
+(function () {
+    try {
+        const jsonData = readJsonFromFile(filename);
+        if (!jsonData) {
+            console.error("No data returned from the file.");
+            return;
+        }
+        const parser = new Manifesty(jsonData);
+        console.log(parser.getTarget());
+    } catch (error) {
+        console.error("An error occurred:", error);
     }
-} else {
-    console.error('Failed to read JSON data from file');
-}
+})();
 
 
