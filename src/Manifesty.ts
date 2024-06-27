@@ -1,4 +1,4 @@
-import { readSpecificationT, writeSpecificationT, writeBodyT, writeTargetT, SpecificationT, TargetT, BodyT } from "./specification";
+import { readSpecificationT, writeSpecificationT, writeBodyT, writeTargetT1, writeTargetT2, SpecificationT, TargetT1, TargetT2, BodyT } from "./specification";
 
 export class Manifesty {
     specification: any;
@@ -19,8 +19,13 @@ export class Manifesty {
         return writeBodyT(this.specification.body);
     }
 
-    getTarget(): TargetT {
-        //this.specification.target.kind
-        return writeTargetT(this.specification.target);
+    getTarget(): TargetT1 | TargetT2 {
+        const target = this.specification.target;
+        if (target.kind === "T1") {
+            return writeTargetT1(target.value);
+        } else if (target.kind === "T2") {
+            return writeTargetT2(target.value);
+        }
+        throw new Error("Unknown target kind.");
     }
 }

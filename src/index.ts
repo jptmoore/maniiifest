@@ -10,9 +10,15 @@ const filename = 'test/data.json';
             console.error("No data returned from the file.");
             return;
         }
+
         const parser = new Manifesty(jsonData);
-        const result = parser.getTarget();
-        console.log(result);
+        const target = parser.getTarget();
+        if (typeof target === "string") {
+            console.log(target);
+        } else
+        if (typeof target === "object") {
+            console.log(target);
+        } 
     } catch (error) {
         console.error("An error occurred:", error);
     }
