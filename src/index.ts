@@ -1,6 +1,6 @@
 import { JsonParser } from './JsonParser'; // replace with the actual path to your class file
 
-import { writeSpecification } from "./specification"
+import { writeBodyT, writeSpecification, writeTargetT } from "./specification"
 
 const filename = 'test/data.json'; // replace with your actual file name
 
@@ -9,10 +9,10 @@ const jsonData = JsonParser.readJsonFromFile(filename);
 
 if (jsonData) {
     // Parse JSON data
-    const parsedData = JsonParser.parseJson(jsonData);
-    if (parsedData) {
-        const result = writeSpecification(parsedData);
-        console.log(result)
+    const spec = JsonParser.parseJson(jsonData);
+    if (spec) {
+        const body = (writeBodyT(spec.body));
+        console.log(body);
     } else {
         console.error('Failed to parse JSON data');
     }

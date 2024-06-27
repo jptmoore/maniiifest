@@ -1,4 +1,5 @@
 {
+    "id" : "https://example.com/annotation/123",
     "type": "Annotation",
     "motivation": "commenting",
     "body": {
