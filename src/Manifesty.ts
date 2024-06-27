@@ -1,26 +1,25 @@
-import { readSpecification, writeSpecification, writeBodyT, writeTargetT } from "./specification";
+import { readSpecification, writeSpecification, writeBodyT, writeTargetT, Specification, TargetT, BodyT } from "./specification";
 
 export class Manifesty {
-    spec: any | null;
+    spec: any;
 
     constructor(data: any) {
         try {
             this.spec = readSpecification(data);
         } catch (error) {
             console.error("Failed to read specification:", error);
-            this.spec = null;
         }
     }
 
-    getSpecification(): any | null {
+    getSpecification(): Specification {
         return writeSpecification(this.spec);
     }
 
-    getBody(): any | null {
+    getBody(): BodyT {
         return writeBodyT(this.spec.body);
     }
 
-    getTarget(): any | null {
+    getTarget(): TargetT {
         return writeTargetT(this.spec.target);
     }
 }
