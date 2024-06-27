@@ -1,4 +1,4 @@
-type specification = {
+type specification_t = {
   ?id : string option;
   _type <json name="type"> : string;
   motivation : string; 

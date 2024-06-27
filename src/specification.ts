@@ -1,4 +1,3 @@
-
 import { normalize,restore } from "./adapter";
 
 export function writeTargetT(x: any, context: any = x): TargetT {
@@ -25,7 +24,7 @@ export function readTargetT(x: any, context: any = x): TargetT {
 /* tslint:disable */
 /* eslint-disable */
 
-export type Specification = {
+export type SpecificationT = {
   id?: string;
   type: string;
   motivation: string;
@@ -53,25 +52,25 @@ export type TargetT2 = {
   source: string;
 }
 
-export function writeSpecification(x: Specification, context: any = x): any {
+export function writeSpecificationT(x: SpecificationT, context: any = x): any {
   return {
     'id': _atd_write_optional_field(_atd_write_string, x.id, x),
-    'type': _atd_write_required_field('Specification', 'type', _atd_write_string, x.type, x),
-    'motivation': _atd_write_required_field('Specification', 'motivation', _atd_write_string, x.motivation, x),
-    'body': _atd_write_required_field('Specification', 'body', writeBodyT, x.body, x),
-    'target': _atd_write_required_field('Specification', 'target', writeTargetT, x.target, x),
+    'type': _atd_write_required_field('SpecificationT', 'type', _atd_write_string, x.type, x),
+    'motivation': _atd_write_required_field('SpecificationT', 'motivation', _atd_write_string, x.motivation, x),
+    'body': _atd_write_required_field('SpecificationT', 'body', writeBodyT, x.body, x),
+    'target': _atd_write_required_field('SpecificationT', 'target', writeTargetT, x.target, x),
     'created': _atd_write_optional_field(_atd_write_string, x.created, x),
     'modified': _atd_write_optional_field(_atd_write_string, x.modified, x),
   };
 }
 
-export function readSpecification(x: any, context: any = x): Specification {
+export function readSpecificationT(x: any, context: any = x): SpecificationT {
   return {
     id: _atd_read_optional_field(_atd_read_string, x['id'], x),
-    type: _atd_read_required_field('Specification', 'type', _atd_read_string, x['type'], x),
-    motivation: _atd_read_required_field('Specification', 'motivation', _atd_read_string, x['motivation'], x),
-    body: _atd_read_required_field('Specification', 'body', readBodyT, x['body'], x),
-    target: _atd_read_required_field('Specification', 'target', readTargetT, x['target'], x),
+    type: _atd_read_required_field('SpecificationT', 'type', _atd_read_string, x['type'], x),
+    motivation: _atd_read_required_field('SpecificationT', 'motivation', _atd_read_string, x['motivation'], x),
+    body: _atd_read_required_field('SpecificationT', 'body', readBodyT, x['body'], x),
+    target: _atd_read_required_field('SpecificationT', 'target', readTargetT, x['target'], x),
     created: _atd_read_optional_field(_atd_read_string, x['created'], x),
     modified: _atd_read_optional_field(_atd_read_string, x['modified'], x),
   };
