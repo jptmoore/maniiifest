@@ -11,7 +11,8 @@ const filename = 'test/data.json';
             return;
         }
         const parser = new Manifesty(jsonData);
-        console.log(parser.getTarget());
+        const result = parser.getSpecification().type;
+        console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);
     }

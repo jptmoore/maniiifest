@@ -1,6 +1,6 @@
 type specification = {
   ?id : string option;
-  t <json name="type"> : string;
+  _type <json name="type"> : string;
   motivation : string; 
   body : body_t;
   target : target_t;
@@ -9,7 +9,7 @@ type specification = {
 }
 
 type body_t = {
-  t <json name="type"> : string;
+  _type <json name="type"> : string;
   language : string;
   format : string;
   value : string
@@ -23,7 +23,7 @@ type target_t = [
 type target_t1 = string
 
 type target_t2 = {
-  t <json name="type"> : string;
+  _type <json name="type"> : string;
   source: string;
 } 
 
