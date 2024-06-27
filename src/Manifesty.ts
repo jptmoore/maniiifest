@@ -20,6 +20,7 @@ export class Manifesty {
     }
 
     getTarget(): TargetT {
+        //this.specification.target.kind
         return writeTargetT(this.specification.target);
     }
 }
