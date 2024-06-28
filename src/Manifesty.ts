@@ -1,35 +1,35 @@
-import * as Spec from "./specification";
-import type * as SpecTypes from "./specification";
+import * as F from "./specification";
+import type * as T from "./specification";
 
 export class Manifesty {
     specification: any;
 
     constructor(data: any) {
         try {
-            this.specification = Spec.readSpecificationT(data);
+            this.specification = F.readSpecificationT(data);
         } catch (error) {
             console.error("Failed to read specification:", error);
         }
     }
 
-    getSpecification(): SpecTypes.SpecificationT {
-        return Spec.writeSpecificationT(this.specification);
+    getSpecification(): T.SpecificationT {
+        return F.writeSpecificationT(this.specification);
     }
 
-    getAnnotations(): SpecTypes.W3cAnnotationT {
-        return Spec.writeW3cAnnotationT(this.specification.annotations);
+    getAnnotations(): T.W3cAnnotationT {
+        return F.writeW3cAnnotationT(this.specification.annotations);
     }
 
-    getBody(): SpecTypes.W3cBodyT {
-        return Spec.writeW3cBodyT(this.specification.body);
+    getBody(): T.W3cBodyT {
+        return F.writeW3cBodyT(this.specification.body);
     }
 
-    getTarget(): SpecTypes.W3cTargetT1 | SpecTypes.W3cTargetT2 {
+    getTarget(): T.W3cTargetT1 | T.W3cTargetT2 {
         const target = this.specification.target;
         if (target.kind === "T1") {
-            return Spec.writeW3cTargetT1(target.value);
+            return F.writeW3cTargetT1(target.value);
         } else if (target.kind === "T2") {
-            return Spec.writeW3cTargetT2(target.value);
+            return F.writeW3cTargetT2(target.value);
         }
         throw new Error("Unknown target kind.");
     }
