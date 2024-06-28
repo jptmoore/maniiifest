@@ -2,10 +2,10 @@
 
 import { normalize,restore } from "./adapter";
 
-export function writeTargetT(x: any, context: any = x): TargetT {
-    return restore(x, context, _writeTargetT);
+export function writeW3cTargetT(x: any, context: any = x): W3cTargetT {
+    return restore(x, context, _writeW3cTargetT);
 }
 
-export function readTargetT(x: any, context: any = x): TargetT {
-    return normalize(x, context, _readTargetT);
+export function readW3cTargetT(x: any, context: any = x): W3cTargetT {
+    return normalize(x, context, _readW3cTargetT);
 }

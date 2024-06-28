@@ -12,13 +12,8 @@ const filename = 'test/data.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const target = parser.getTarget();
-        if (typeof target === "string") {
-            console.log(target);
-        } else
-        if (typeof target === "object") {
-            console.log(target);
-        } 
+        const annotations = parser.getAnnotations();
+        console.log("Annotations:", annotations);
     } catch (error) {
         console.error("An error occurred:", error);
     }
