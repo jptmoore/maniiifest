@@ -16,20 +16,20 @@ export class Manifesty {
         return F.writeSpecificationT(this.specification);
     }
 
-    getAnnotations(): T.W3cAnnotationT {
+    getW3cAnnotation(): T.W3cAnnotationT {
         return F.writeW3cAnnotationT(this.specification.annotations);
     }
 
-    getBody(): T.W3cBodyT {
-        return F.writeW3cBodyT(this.specification.body);
+    getW3cAnnotationBody(): T.W3cAnnotationBodyT {
+        return F.writeW3cAnnotationBodyT(this.specification.annotations.body);
     }
 
-    getTarget(): T.W3cTargetT1 | T.W3cTargetT2 {
-        const target = this.specification.target;
+    getTarget(): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
+        const target = this.specification.annotations.target;
         if (target.kind === "T1") {
-            return F.writeW3cTargetT1(target.value);
+            return F.writeW3cAnnotationTargetT1(target.value);
         } else if (target.kind === "T2") {
-            return F.writeW3cTargetT2(target.value);
+            return F.writeW3cAnnotationTargetT2(target.value);
         }
         throw new Error("Unknown target kind.");
     }

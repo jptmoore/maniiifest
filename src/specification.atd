@@ -8,26 +8,26 @@ type w3c_annotation_t = {
   id : string;
   _type <json name="type"> : string;
   motivation : string; 
-  body : w3c_body_t;
-  target : w3c_target_t;
+  body : w3c_annotation_body_t;
+  target : w3c_annotation_target_t;
   ?created : string option;
   ?modified : string option
 }
 
-type w3c_body_t = {
+type w3c_annotation_body_t = {
   _type <json name="type"> : string;
   language : string;
   value : string
 }
 
-type w3c_target_t = [
-  | T1 of w3c_target_t1
-  | T2 of w3c_target_t2
+type w3c_annotation_target_t = [
+  | T1 of w3c_annotation_target_t1
+  | T2 of w3c_annotation_target_t2
 ]  
 
-type w3c_target_t1 = string
+type w3c_annotation_target_t1 = string
 
-type w3c_target_t2 = {
+type w3c_annotation_target_t2 = {
   _type <json name="type"> : string;
   source: string;
 } 

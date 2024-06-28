@@ -2,10 +2,10 @@
 
 import { normalize,restore } from "./adapter";
 
-export function writeW3cTargetT(x: any, context: any = x): W3cTargetT {
-    return restore(x, context, _writeW3cTargetT);
+export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
+    return restore(x, context, _writeW3cAnnotationTargetT);
 }
 
-export function readW3cTargetT(x: any, context: any = x): W3cTargetT {
-    return normalize(x, context, _readW3cTargetT);
+export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
+    return normalize(x, context, _readW3cAnnotationTargetT);
 }

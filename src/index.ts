@@ -12,8 +12,8 @@ const filename = 'test/data.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const annotations = parser.getAnnotations();
-        console.log("Annotations:", annotations);
+        const result = parser.getW3cAnnotationBody();
+        console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);
     }

@@ -24,25 +24,25 @@ export type W3cAnnotationT = {
   id: string;
   type: string;
   motivation: string;
-  body: W3cBodyT;
-  target: W3cTargetT;
+  body: W3cAnnotationBodyT;
+  target: W3cAnnotationTargetT;
   created?: string;
   modified?: string;
 }
 
-export type W3cBodyT = {
+export type W3cAnnotationBodyT = {
   type: string;
   language: string;
   value: string;
 }
 
-export type W3cTargetT =
-| { kind: 'T1'; value: W3cTargetT1 }
-| { kind: 'T2'; value: W3cTargetT2 }
+export type W3cAnnotationTargetT =
+| { kind: 'T1'; value: W3cAnnotationTargetT1 }
+| { kind: 'T2'; value: W3cAnnotationTargetT2 }
 
-export type W3cTargetT1 = string
+export type W3cAnnotationTargetT1 = string
 
-export type W3cTargetT2 = {
+export type W3cAnnotationTargetT2 = {
   type: string;
   source: string;
 }
@@ -68,8 +68,8 @@ export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
     'id': _atd_write_required_field('W3cAnnotationT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('W3cAnnotationT', 'type', _atd_write_string, x.type, x),
     'motivation': _atd_write_required_field('W3cAnnotationT', 'motivation', _atd_write_string, x.motivation, x),
-    'body': _atd_write_required_field('W3cAnnotationT', 'body', writeW3cBodyT, x.body, x),
-    'target': _atd_write_required_field('W3cAnnotationT', 'target', writeW3cTargetT, x.target, x),
+    'body': _atd_write_required_field('W3cAnnotationT', 'body', writeW3cAnnotationBodyT, x.body, x),
+    'target': _atd_write_required_field('W3cAnnotationT', 'target', writeW3cAnnotationTargetT, x.target, x),
     'created': _atd_write_optional_field(_atd_write_string, x.created, x),
     'modified': _atd_write_optional_field(_atd_write_string, x.modified, x),
   };
@@ -80,70 +80,70 @@ export function readW3cAnnotationT(x: any, context: any = x): W3cAnnotationT {
     id: _atd_read_required_field('W3cAnnotationT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('W3cAnnotationT', 'type', _atd_read_string, x['type'], x),
     motivation: _atd_read_required_field('W3cAnnotationT', 'motivation', _atd_read_string, x['motivation'], x),
-    body: _atd_read_required_field('W3cAnnotationT', 'body', readW3cBodyT, x['body'], x),
-    target: _atd_read_required_field('W3cAnnotationT', 'target', readW3cTargetT, x['target'], x),
+    body: _atd_read_required_field('W3cAnnotationT', 'body', readW3cAnnotationBodyT, x['body'], x),
+    target: _atd_read_required_field('W3cAnnotationT', 'target', readW3cAnnotationTargetT, x['target'], x),
     created: _atd_read_optional_field(_atd_read_string, x['created'], x),
     modified: _atd_read_optional_field(_atd_read_string, x['modified'], x),
   };
 }
 
-export function writeW3cBodyT(x: W3cBodyT, context: any = x): any {
+export function writeW3cAnnotationBodyT(x: W3cAnnotationBodyT, context: any = x): any {
   return {
-    'type': _atd_write_required_field('W3cBodyT', 'type', _atd_write_string, x.type, x),
-    'language': _atd_write_required_field('W3cBodyT', 'language', _atd_write_string, x.language, x),
-    'value': _atd_write_required_field('W3cBodyT', 'value', _atd_write_string, x.value, x),
+    'type': _atd_write_required_field('W3cAnnotationBodyT', 'type', _atd_write_string, x.type, x),
+    'language': _atd_write_required_field('W3cAnnotationBodyT', 'language', _atd_write_string, x.language, x),
+    'value': _atd_write_required_field('W3cAnnotationBodyT', 'value', _atd_write_string, x.value, x),
   };
 }
 
-export function readW3cBodyT(x: any, context: any = x): W3cBodyT {
+export function readW3cAnnotationBodyT(x: any, context: any = x): W3cAnnotationBodyT {
   return {
-    type: _atd_read_required_field('W3cBodyT', 'type', _atd_read_string, x['type'], x),
-    language: _atd_read_required_field('W3cBodyT', 'language', _atd_read_string, x['language'], x),
-    value: _atd_read_required_field('W3cBodyT', 'value', _atd_read_string, x['value'], x),
+    type: _atd_read_required_field('W3cAnnotationBodyT', 'type', _atd_read_string, x['type'], x),
+    language: _atd_read_required_field('W3cAnnotationBodyT', 'language', _atd_read_string, x['language'], x),
+    value: _atd_read_required_field('W3cAnnotationBodyT', 'value', _atd_read_string, x['value'], x),
   };
 }
 
-export function _writeW3cTargetT(x: W3cTargetT, context: any = x): any {
+export function _writeW3cAnnotationTargetT(x: W3cAnnotationTargetT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
-      return ['T1', writeW3cTargetT1(x.value, x)]
+      return ['T1', writeW3cAnnotationTargetT1(x.value, x)]
     case 'T2':
-      return ['T2', writeW3cTargetT2(x.value, x)]
+      return ['T2', writeW3cAnnotationTargetT2(x.value, x)]
   }
 }
 
-export function _readW3cTargetT(x: any, context: any = x): W3cTargetT {
+export function _readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
     case 'T1':
-      return { kind: 'T1', value: readW3cTargetT1(x[1], x) }
+      return { kind: 'T1', value: readW3cAnnotationTargetT1(x[1], x) }
     case 'T2':
-      return { kind: 'T2', value: readW3cTargetT2(x[1], x) }
+      return { kind: 'T2', value: readW3cAnnotationTargetT2(x[1], x) }
     default:
-      _atd_bad_json('W3cTargetT', x, context)
+      _atd_bad_json('W3cAnnotationTargetT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeW3cTargetT1(x: W3cTargetT1, context: any = x): any {
+export function writeW3cAnnotationTargetT1(x: W3cAnnotationTargetT1, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readW3cTargetT1(x: any, context: any = x): W3cTargetT1 {
+export function readW3cAnnotationTargetT1(x: any, context: any = x): W3cAnnotationTargetT1 {
   return _atd_read_string(x, context);
 }
 
-export function writeW3cTargetT2(x: W3cTargetT2, context: any = x): any {
+export function writeW3cAnnotationTargetT2(x: W3cAnnotationTargetT2, context: any = x): any {
   return {
-    'type': _atd_write_required_field('W3cTargetT2', 'type', _atd_write_string, x.type, x),
-    'source': _atd_write_required_field('W3cTargetT2', 'source', _atd_write_string, x.source, x),
+    'type': _atd_write_required_field('W3cAnnotationTargetT2', 'type', _atd_write_string, x.type, x),
+    'source': _atd_write_required_field('W3cAnnotationTargetT2', 'source', _atd_write_string, x.source, x),
   };
 }
 
-export function readW3cTargetT2(x: any, context: any = x): W3cTargetT2 {
+export function readW3cAnnotationTargetT2(x: any, context: any = x): W3cAnnotationTargetT2 {
   return {
-    type: _atd_read_required_field('W3cTargetT2', 'type', _atd_read_string, x['type'], x),
-    source: _atd_read_required_field('W3cTargetT2', 'source', _atd_read_string, x['source'], x),
+    type: _atd_read_required_field('W3cAnnotationTargetT2', 'type', _atd_read_string, x['type'], x),
+    source: _atd_read_required_field('W3cAnnotationTargetT2', 'source', _atd_read_string, x['source'], x),
   };
 }
 
@@ -519,10 +519,10 @@ function _atd_write_field_with_default<T>(
 
 import { normalize,restore } from "./adapter";
 
-export function writeW3cTargetT(x: any, context: any = x): W3cTargetT {
-    return restore(x, context, _writeW3cTargetT);
+export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
+    return restore(x, context, _writeW3cAnnotationTargetT);
 }
 
-export function readW3cTargetT(x: any, context: any = x): W3cTargetT {
-    return normalize(x, context, _readW3cTargetT);
+export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
+    return normalize(x, context, _readW3cAnnotationTargetT);
 }
