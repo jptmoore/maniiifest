@@ -17,7 +17,7 @@
 export type SpecificationT = {
   id: string;
   type: string;
-  annotations: W3cAnnotationT;
+  annotations: W3cAnnotationT[];
 }
 
 export type W3cAnnotationT = {
@@ -51,7 +51,7 @@ export function writeSpecificationT(x: SpecificationT, context: any = x): any {
   return {
     'id': _atd_write_required_field('SpecificationT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('SpecificationT', 'type', _atd_write_string, x.type, x),
-    'annotations': _atd_write_required_field('SpecificationT', 'annotations', writeW3cAnnotationT, x.annotations, x),
+    'annotations': _atd_write_required_field('SpecificationT', 'annotations', _atd_write_array(writeW3cAnnotationT), x.annotations, x),
   };
 }
 
@@ -59,7 +59,7 @@ export function readSpecificationT(x: any, context: any = x): SpecificationT {
   return {
     id: _atd_read_required_field('SpecificationT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('SpecificationT', 'type', _atd_read_string, x['type'], x),
-    annotations: _atd_read_required_field('SpecificationT', 'annotations', readW3cAnnotationT, x['annotations'], x),
+    annotations: _atd_read_required_field('SpecificationT', 'annotations', _atd_read_array(readW3cAnnotationT), x['annotations'], x),
   };
 }
 

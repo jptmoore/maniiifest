@@ -16,21 +16,21 @@ export class Manifesty {
         return F.writeSpecificationT(this.specification);
     }
 
-    getW3cAnnotation(): T.W3cAnnotationT {
-        return F.writeW3cAnnotationT(this.specification.annotations);
+    getW3cAnnotations(): T.W3cAnnotationT[] {
+        return this.specification.annotations.map(F.writeW3cAnnotationT);
     }
 
-    getW3cAnnotationBody(): T.W3cAnnotationBodyT {
-        return F.writeW3cAnnotationBodyT(this.specification.annotations.body);
+    getW3cAnnotationsBody(): T.W3cAnnotationBodyT[] {
+        return this.getW3cAnnotations().map((annotation) => F.writeW3cAnnotationBodyT(annotation.body));
     }
 
-    getTarget(): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
-        const target = this.specification.annotations.target;
-        if (target.kind === "T1") {
-            return F.writeW3cAnnotationTargetT1(target.value);
-        } else if (target.kind === "T2") {
-            return F.writeW3cAnnotationTargetT2(target.value);
-        }
-        throw new Error("Unknown target kind.");
-    }
+    // getTarget(): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
+    //     const target = this.specification.annotations.target;
+    //     if (target.kind === "T1") {
+    //         return F.writeW3cAnnotationTargetT1(target.value);
+    //     } else if (target.kind === "T2") {
+    //         return F.writeW3cAnnotationTargetT2(target.value);
+    //     }
+    //     throw new Error("Unknown target kind.");
+    // }
 }
