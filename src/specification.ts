@@ -16,7 +16,7 @@
 
 export type SpecificationT = {
   id?: string;
-  _type: string;
+  type: string;
   motivation: string;
   body: BodyT;
   target: TargetT;
@@ -25,7 +25,7 @@ export type SpecificationT = {
 }
 
 export type BodyT = {
-  _type: string;
+  type: string;
   language: string;
   value: string;
 }
@@ -37,14 +37,14 @@ export type TargetT =
 export type TargetT1 = string
 
 export type TargetT2 = {
-  _type: string;
+  type: string;
   source: string;
 }
 
 export function writeSpecificationT(x: SpecificationT, context: any = x): any {
   return {
     'id': _atd_write_optional_field(_atd_write_string, x.id, x),
-    'type': _atd_write_required_field('SpecificationT', '_type', _atd_write_string, x._type, x),
+    'type': _atd_write_required_field('SpecificationT', 'type', _atd_write_string, x.type, x),
     'motivation': _atd_write_required_field('SpecificationT', 'motivation', _atd_write_string, x.motivation, x),
     'body': _atd_write_required_field('SpecificationT', 'body', writeBodyT, x.body, x),
     'target': _atd_write_required_field('SpecificationT', 'target', writeTargetT, x.target, x),
@@ -56,7 +56,7 @@ export function writeSpecificationT(x: SpecificationT, context: any = x): any {
 export function readSpecificationT(x: any, context: any = x): SpecificationT {
   return {
     id: _atd_read_optional_field(_atd_read_string, x['id'], x),
-    _type: _atd_read_required_field('SpecificationT', 'type', _atd_read_string, x['type'], x),
+    type: _atd_read_required_field('SpecificationT', 'type', _atd_read_string, x['type'], x),
     motivation: _atd_read_required_field('SpecificationT', 'motivation', _atd_read_string, x['motivation'], x),
     body: _atd_read_required_field('SpecificationT', 'body', readBodyT, x['body'], x),
     target: _atd_read_required_field('SpecificationT', 'target', readTargetT, x['target'], x),
@@ -67,7 +67,7 @@ export function readSpecificationT(x: any, context: any = x): SpecificationT {
 
 export function writeBodyT(x: BodyT, context: any = x): any {
   return {
-    'type': _atd_write_required_field('BodyT', '_type', _atd_write_string, x._type, x),
+    'type': _atd_write_required_field('BodyT', 'type', _atd_write_string, x.type, x),
     'language': _atd_write_required_field('BodyT', 'language', _atd_write_string, x.language, x),
     'value': _atd_write_required_field('BodyT', 'value', _atd_write_string, x.value, x),
   };
@@ -75,7 +75,7 @@ export function writeBodyT(x: BodyT, context: any = x): any {
 
 export function readBodyT(x: any, context: any = x): BodyT {
   return {
-    _type: _atd_read_required_field('BodyT', 'type', _atd_read_string, x['type'], x),
+    type: _atd_read_required_field('BodyT', 'type', _atd_read_string, x['type'], x),
     language: _atd_read_required_field('BodyT', 'language', _atd_read_string, x['language'], x),
     value: _atd_read_required_field('BodyT', 'value', _atd_read_string, x['value'], x),
   };
@@ -113,14 +113,14 @@ export function readTargetT1(x: any, context: any = x): TargetT1 {
 
 export function writeTargetT2(x: TargetT2, context: any = x): any {
   return {
-    'type': _atd_write_required_field('TargetT2', '_type', _atd_write_string, x._type, x),
+    'type': _atd_write_required_field('TargetT2', 'type', _atd_write_string, x.type, x),
     'source': _atd_write_required_field('TargetT2', 'source', _atd_write_string, x.source, x),
   };
 }
 
 export function readTargetT2(x: any, context: any = x): TargetT2 {
   return {
-    _type: _atd_read_required_field('TargetT2', 'type', _atd_read_string, x['type'], x),
+    type: _atd_read_required_field('TargetT2', 'type', _atd_read_string, x['type'], x),
     source: _atd_read_required_field('TargetT2', 'source', _atd_read_string, x['source'], x),
   };
 }
@@ -142,23 +142,23 @@ function _atd_missing_ts_field(type_name: string, ts_field_name: string) {
                     ` in TypeScript object of type '${type_name}'`)
 }
 
-function _atd_bad_json(expected_type: string, json_value: any, context: any) {
+function _atd_bad_json(expectedtype: string, json_value: any, context: any) {
   let value_str = JSON.stringify(json_value)
   if (value_str.length > 200)
     value_str = value_str.substring(0, 200) + '…';
 
   throw new Error(`incompatible JSON value where` +
-                  ` type '${expected_type}' was expected: '${value_str}'.` +
+                  ` type '${expectedtype}' was expected: '${value_str}'.` +
                   ` Occurs in '${JSON.stringify(context)}'.`)
 }
 
-function _atd_bad_ts(expected_type: string, ts_value: any, context: any) {
+function _atd_bad_ts(expectedtype: string, ts_value: any, context: any) {
   let value_str = JSON.stringify(ts_value)
   if (value_str.length > 200)
     value_str = value_str.substring(0, 200) + '…';
 
   throw new Error(`incompatible TypeScript value where` +
-                  ` type '${expected_type}' was expected: '${value_str}'.` +
+                  ` type '${expectedtype}' was expected: '${value_str}'.` +
                   ` Occurs in '${JSON.stringify(context)}'.`)
 }
 
@@ -492,6 +492,8 @@ function _atd_write_field_with_default<T>(
   const value = (x === undefined || x === null) ? default_ : x
   return write_elt(value, context)
 }
+
+///// appended to specification.ts
 
 import { normalize,restore } from "./adapter";
 

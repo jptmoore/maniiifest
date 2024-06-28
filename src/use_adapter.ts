@@ -1,3 +1,5 @@
+///// appended to specification.ts
+
 import { normalize,restore } from "./adapter";
 
 export function writeTargetT(x: any, context: any = x): TargetT {
