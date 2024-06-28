@@ -11,7 +11,6 @@ type specification_t = {
 type body_t = {
   _type <json name="type"> : string;
   language : string;
-  format : string;
   value : string
 }
 
