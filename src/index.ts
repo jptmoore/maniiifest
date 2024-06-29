@@ -12,7 +12,8 @@ const filename = 'test/data.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getW3cAnnotationsBody();
+        //const result = parser.getW3cAnnotationTargetAtIndex({ index: 0 });
+        const result = parser.getAllW3cAnnotationTargets();
         console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);
