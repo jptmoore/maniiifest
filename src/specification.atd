@@ -7,9 +7,9 @@ type specification_t = {
 type w3c_annotation_t = {
   id : string;
   _type <json name="type"> : string;
-  motivation : string; 
-  body : w3c_annotation_body_t;
-  target : w3c_annotation_target_t;
+  ?motivation : string option; 
+  ?body : w3c_annotation_body_t option;
+  ?target : w3c_annotation_target_t option;
   ?created : string option;
   ?modified : string option
 }

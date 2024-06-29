@@ -23,9 +23,9 @@ export type SpecificationT = {
 export type W3cAnnotationT = {
   id: string;
   type: string;
-  motivation: string;
-  body: W3cAnnotationBodyT;
-  target: W3cAnnotationTargetT;
+  motivation?: string;
+  body?: W3cAnnotationBodyT;
+  target?: W3cAnnotationTargetT;
   created?: string;
   modified?: string;
 }
@@ -67,9 +67,9 @@ export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
   return {
     'id': _atd_write_required_field('W3cAnnotationT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('W3cAnnotationT', 'type', _atd_write_string, x.type, x),
-    'motivation': _atd_write_required_field('W3cAnnotationT', 'motivation', _atd_write_string, x.motivation, x),
-    'body': _atd_write_required_field('W3cAnnotationT', 'body', writeW3cAnnotationBodyT, x.body, x),
-    'target': _atd_write_required_field('W3cAnnotationT', 'target', writeW3cAnnotationTargetT, x.target, x),
+    'motivation': _atd_write_optional_field(_atd_write_string, x.motivation, x),
+    'body': _atd_write_optional_field(writeW3cAnnotationBodyT, x.body, x),
+    'target': _atd_write_optional_field(writeW3cAnnotationTargetT, x.target, x),
     'created': _atd_write_optional_field(_atd_write_string, x.created, x),
     'modified': _atd_write_optional_field(_atd_write_string, x.modified, x),
   };
@@ -79,9 +79,9 @@ export function readW3cAnnotationT(x: any, context: any = x): W3cAnnotationT {
   return {
     id: _atd_read_required_field('W3cAnnotationT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('W3cAnnotationT', 'type', _atd_read_string, x['type'], x),
-    motivation: _atd_read_required_field('W3cAnnotationT', 'motivation', _atd_read_string, x['motivation'], x),
-    body: _atd_read_required_field('W3cAnnotationT', 'body', readW3cAnnotationBodyT, x['body'], x),
-    target: _atd_read_required_field('W3cAnnotationT', 'target', readW3cAnnotationTargetT, x['target'], x),
+    motivation: _atd_read_optional_field(_atd_read_string, x['motivation'], x),
+    body: _atd_read_optional_field(readW3cAnnotationBodyT, x['body'], x),
+    target: _atd_read_optional_field(readW3cAnnotationTargetT, x['target'], x),
     created: _atd_read_optional_field(_atd_read_string, x['created'], x),
     modified: _atd_read_optional_field(_atd_read_string, x['modified'], x),
   };
