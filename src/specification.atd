@@ -1,7 +1,7 @@
 type specification_t = {
   id : string;
   _type <json name="type"> : string;
-  annotations : w3c_annotation_t list;
+  ?annotations : w3c_annotation_t list option;
 }
 
 type w3c_annotation_t = {
