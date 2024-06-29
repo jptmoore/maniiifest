@@ -11,7 +11,9 @@
         "language": "en",
         "value": "I love this manifest!"
       },
-      "target": "https://example.org/iiif/book1/manifest"
+      "target": {
+        "type": "Canvas",
+        "source": "https://example.org/iiif/book1/page/a1"}
     }
   ]
 }
