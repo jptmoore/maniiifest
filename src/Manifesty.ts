@@ -16,14 +16,32 @@ export class Manifesty {
         return F.writeSpecificationT(this.specification);
     }
 
-    getW3cAnnotations(): T.W3cAnnotationT[] {
-        return this.specification.annotations.map(F.writeW3cAnnotationT);
+    getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
+        return F.writeW3cAnnotationT(this.specification.annotations[index]);
+    }
+    
+    getAllW3cAnnotations(): Array<T.W3cAnnotationT> {
+        const annotations = [];
+        for (let index = 0; index < this.specification.annotations.length; index++) {
+            const annotation = this.getW3cAnnotationAtIndex({ index });
+            annotations.push(annotation);
+        }
+        return annotations;
     }
 
-    getW3cAnnotationsBody(): T.W3cAnnotationBodyT[] {
-        return this.getW3cAnnotations().map((annotation) => F.writeW3cAnnotationBodyT(annotation.body));
+    getW3cAnnnotationBodyAtIndex({ index }: { index: number }): T.W3cAnnotationBodyT {
+        return F.writeW3cAnnotationBodyT(this.specification.annotations[index].body);
     }
 
+    getAllW3cAnnotationsBody(): Array<T.W3cAnnotationBodyT> {
+        const bodies = [];
+        for (let index = 0; index < this.specification.annotations.length; index++) {
+            const body = this.getW3cAnnnotationBodyAtIndex({ index });
+            bodies.push(body);
+        }
+        return bodies;
+        
+    }
 
     getW3cAnnotationTargetAtIndex({ index }: { index: number }): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
         const target = this.specification.annotations[index].target;
