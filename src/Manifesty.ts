@@ -24,7 +24,12 @@ export class Manifesty {
     }
 
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
-        return F.writeW3cAnnotationT(this.specification.annotations[index]);
+        switch (this.specification.kind) {
+            case "Manifest":
+                return F.writeW3cAnnotationT(this.specification.value.annotations[index]);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
     }
     
     getAllW3cAnnotations(): Array<T.W3cAnnotationT> {
