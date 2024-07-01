@@ -12,7 +12,7 @@ export class Manifesty {
         }
     }
 
-    getSpecification(): T.SpecificationT {
+    getSpecification(): T.ManifestT | T.CollectionT {
         switch (this.specification.kind) {
             case "Manifest":
                 return F.writeManifestT(this.specification.value);
