@@ -23,10 +23,23 @@ export class Manifesty {
         }
     }
 
+    getSpecificationType(): "Manifest" | "Collection" {
+        return this.specification.kind;
+    }
+
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
-        switch (this.specification.kind) {
+        switch (this.getSpecificationType()) {
             case "Manifest":
                 return F.writeW3cAnnotationT(this.specification.value.annotations[index]);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
+    getW3cAnnotationCount(): number {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return this.specification.value.annotations.length;
             default:
                 throw new Error("Not of type Manifest.");
         }
@@ -34,7 +47,7 @@ export class Manifesty {
     
     getAllW3cAnnotations(): Array<T.W3cAnnotationT> {
         const annotations = [];
-        for (let index = 0; index < this.specification.annotations.length; index++) {
+        for (let index = 0; index < this.getW3cAnnotationCount(); index++) {
             const annotation = this.getW3cAnnotationAtIndex({ index });
             annotations.push(annotation);
         }
@@ -42,12 +55,26 @@ export class Manifesty {
     }
 
     getW3cAnnnotationBodyAtIndex({ index }: { index: number }): T.W3cAnnotationBodyT {
-        return F.writeW3cAnnotationBodyT(this.specification.annotations[index].body);
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return F.writeW3cAnnotationBodyT(this.specification.value.annotations[index].body);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
+    getW3cAnnotationBodyCount(): number {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return this.specification.value.annotations.length;
+            default:
+                throw new Error("Not of type Manifest.");
+        }
     }
 
     getAllW3cAnnotationsBody(): Array<T.W3cAnnotationBodyT> {
         const bodies = [];
-        for (let index = 0; index < this.specification.annotations.length; index++) {
+        for (let index = 0; index < this.getW3cAnnotationBodyCount(); index++) {
             const body = this.getW3cAnnnotationBodyAtIndex({ index });
             bodies.push(body);
         }
@@ -56,20 +83,34 @@ export class Manifesty {
     }
 
     getW3cAnnotationTargetAtIndex({ index }: { index: number }): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
-        const target = this.specification.annotations[index].target;
-        switch (target.kind) {
-            case "T1":
-                return F.writeW3cAnnotationTargetT1(target.value);
-            case "T2":
-                return F.writeW3cAnnotationTargetT2(target.value);
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                const target = this.specification.value.annotations[index].target;
+                switch (target.kind) {
+                    case "T1":
+                        return F.writeW3cAnnotationTargetT1(target.value);
+                    case "T2":
+                        return F.writeW3cAnnotationTargetT2(target.value);
+                    default:
+                        throw new Error("Unknown target kind.");
+                }
             default:
-                throw new Error("Unknown target kind.");
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
+    getW3cAnnotationTargetCount(): number {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return this.specification.value.annotations.length;
+            default:
+                throw new Error("Not of type Manifest.");
         }
     }
 
     getAllW3cAnnotationTargets(): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
         const targets = [];
-        for (let index = 0; index < this.specification.annotations.length; index++) {
+        for (let index = 0; index < this.getW3cAnnotationTargetCount(); index++) {
             const target = this.getW3cAnnotationTargetAtIndex({ index });
             targets.push(target);
         }
