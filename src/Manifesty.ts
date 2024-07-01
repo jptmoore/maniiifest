@@ -13,12 +13,14 @@ export class Manifesty {
     }
 
     getSpecification(): T.SpecificationT {
-        if (this.specification.kind === "Manifest") {
-            return F.writeManifestT(this.specification.value);
-        } else if (this.specification.kind === "Collection") {
-            return F.writeCollectionT(this.specification.value);
+        switch (this.specification.kind) {
+            case "Manifest":
+                return F.writeManifestT(this.specification.value);
+            case "Collection":
+                return F.writeCollectionT(this.specification.value);
+            default:
+                throw new Error("Unknown specification kind.");
         }
-        throw new Error("Unknown specification kind.");
     }
 
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
@@ -50,12 +52,14 @@ export class Manifesty {
 
     getW3cAnnotationTargetAtIndex({ index }: { index: number }): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
         const target = this.specification.annotations[index].target;
-        if (target.kind === "T1") {
-            return F.writeW3cAnnotationTargetT1(target.value);
-        } else if (target.kind === "T2") {
-            return F.writeW3cAnnotationTargetT2(target.value);
+        switch (target.kind) {
+            case "T1":
+                return F.writeW3cAnnotationTargetT1(target.value);
+            case "T2":
+                return F.writeW3cAnnotationTargetT2(target.value);
+            default:
+                throw new Error("Unknown target kind.");
         }
-        throw new Error("Unknown target kind.");
     }
 
     getAllW3cAnnotationTargets(): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
