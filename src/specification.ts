@@ -14,7 +14,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SpecificationT = {
+export type SpecificationT = ManifestT
+
+export type CollectionT = {
+  id: string;
+  type: string;
+  items?: ManifestT[];
+}
+
+export type ManifestT = {
   id: string;
   type: string;
   annotations?: W3cAnnotationT[];
@@ -48,17 +56,41 @@ export type W3cAnnotationTargetT2 = {
 }
 
 export function writeSpecificationT(x: SpecificationT, context: any = x): any {
+  return writeManifestT(x, context);
+}
+
+export function readSpecificationT(x: any, context: any = x): SpecificationT {
+  return readManifestT(x, context);
+}
+
+export function writeCollectionT(x: CollectionT, context: any = x): any {
   return {
-    'id': _atd_write_required_field('SpecificationT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('SpecificationT', 'type', _atd_write_string, x.type, x),
+    'id': _atd_write_required_field('CollectionT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('CollectionT', 'type', _atd_write_string, x.type, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeManifestT), x.items, x),
+  };
+}
+
+export function readCollectionT(x: any, context: any = x): CollectionT {
+  return {
+    id: _atd_read_required_field('CollectionT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('CollectionT', 'type', _atd_read_string, x['type'], x),
+    items: _atd_read_optional_field(_atd_read_array(readManifestT), x['items'], x),
+  };
+}
+
+export function writeManifestT(x: ManifestT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('ManifestT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ManifestT', 'type', _atd_write_string, x.type, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.annotations, x),
   };
 }
 
-export function readSpecificationT(x: any, context: any = x): SpecificationT {
+export function readManifestT(x: any, context: any = x): ManifestT {
   return {
-    id: _atd_read_required_field('SpecificationT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('SpecificationT', 'type', _atd_read_string, x['type'], x),
+    id: _atd_read_required_field('ManifestT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ManifestT', 'type', _atd_read_string, x['type'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['annotations'], x),
   };
 }

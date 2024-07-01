@@ -1,4 +1,12 @@
-type specification_t = {
+type specification_t = manifest_t
+
+type collection_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?items : manifest_t list option;
+}
+
+type manifest_t = {
   id : string;
   _type <json name="type"> : string;
   ?annotations : w3c_annotation_t list option;
