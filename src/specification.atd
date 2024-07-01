@@ -1,4 +1,7 @@
-type specification_t = manifest_t
+type specification_t = [
+  | Manifest of manifest_t
+  | Collection of collection_t
+]
 
 type collection_t = {
   id : string;

@@ -14,7 +14,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type SpecificationT = ManifestT
+export type SpecificationT =
+| { kind: 'Manifest'; value: ManifestT }
+| { kind: 'Collection'; value: CollectionT }
 
 export type CollectionT = {
   id: string;
@@ -55,12 +57,26 @@ export type W3cAnnotationTargetT2 = {
   source: string;
 }
 
-export function writeSpecificationT(x: SpecificationT, context: any = x): any {
-  return writeManifestT(x, context);
+export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
+  switch (x.kind) {
+    case 'Manifest':
+      return ['Manifest', writeManifestT(x.value, x)]
+    case 'Collection':
+      return ['Collection', writeCollectionT(x.value, x)]
+  }
 }
 
-export function readSpecificationT(x: any, context: any = x): SpecificationT {
-  return readManifestT(x, context);
+export function _readSpecificationT(x: any, context: any = x): SpecificationT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'Manifest':
+      return { kind: 'Manifest', value: readManifestT(x[1], x) }
+    case 'Collection':
+      return { kind: 'Collection', value: readCollectionT(x[1], x) }
+    default:
+      _atd_bad_json('SpecificationT', x, context)
+      throw new Error('impossible')
+  }
 }
 
 export function writeCollectionT(x: CollectionT, context: any = x): any {
@@ -549,7 +565,16 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize,restore } from "./adapter";
+import { normalize,normalize_specification,restore, restore_specification } from "./adapter";
+
+export function writeSpecificationT(x: any, context: any = x): SpecificationT {
+    return restore_specification(x, context, _writeSpecificationT);
+}
+
+export function readSpecificationT(x: any, context: any = x): SpecificationT {
+    return normalize_specification(x, context, _readSpecificationT);
+}
+
 
 export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
     return restore(x, context, _writeW3cAnnotationTargetT);

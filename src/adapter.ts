@@ -17,3 +17,22 @@ export function normalize<T, R>(x: T, context: any = x, fn: (input: [string, T],
     }
 }
 
+export function restore_specification<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error('Result array must contain at least two items.');
+    }
+    return resultList[1];
+}
+
+export function normalize_specification<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (x.type === 'Manifest') {
+        return fn(['Manifest', x], context);
+    } else if (x.type === 'Collection') {
+        return fn(['Collection', x], context);
+    } else {
+        throw new Error('Input type did not match expected types.');
+    }
+}
+
+

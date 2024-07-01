@@ -13,7 +13,12 @@ export class Manifesty {
     }
 
     getSpecification(): T.SpecificationT {
-        return F.writeSpecificationT(this.specification);
+        if (this.specification.kind === "Manifest") {
+            return F.writeManifestT(this.specification.value);
+        } else if (this.specification.kind === "Collection") {
+            return F.writeCollectionT(this.specification.value);
+        }
+        throw new Error("Unknown specification kind.");
     }
 
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
