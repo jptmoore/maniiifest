@@ -1,6 +1,20 @@
 {
   "id": "https://example.org/iiif/book1/page/manifest/a1",
   "type": "Manifest",
+  "label": [
+    [
+      "en",
+      [
+        "Example Organization Homepage"
+      ]
+    ],
+    [
+      "format",
+      [
+        "html"
+      ]
+    ]
+  ],
   "annotations": [
     {
       "id": "https://example.org/iiif/book1/page/manifest/a1",
@@ -13,7 +27,8 @@
       },
       "target": {
         "type": "Canvas",
-        "source": "https://example.org/iiif/book1/page/a1"}
+        "source": "https://example.org/iiif/book1/page/a1"
+      }
     }
   ]
 }

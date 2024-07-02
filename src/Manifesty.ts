@@ -23,6 +23,10 @@ export class Manifesty {
         }
     }
 
+    getJson(): any {
+        return JSON.stringify(this.getSpecification())
+    }
+
     getSpecificationType(): "Manifest" | "Collection" {
         return this.specification.kind;
     }
@@ -116,5 +120,6 @@ export class Manifesty {
         }
         return targets;
     }
+
 
 }
