@@ -21,7 +21,7 @@ export type SpecificationT =
 export type CollectionT = {
   id: string;
   type: string;
-  items?: ManifestT[];
+  items?: SpecificationT[];
 }
 
 export type ManifestT = {
@@ -83,7 +83,7 @@ export function writeCollectionT(x: CollectionT, context: any = x): any {
   return {
     'id': _atd_write_required_field('CollectionT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('CollectionT', 'type', _atd_write_string, x.type, x),
-    'items': _atd_write_optional_field(_atd_write_array(writeManifestT), x.items, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeSpecificationT), x.items, x),
   };
 }
 
@@ -91,7 +91,7 @@ export function readCollectionT(x: any, context: any = x): CollectionT {
   return {
     id: _atd_read_required_field('CollectionT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('CollectionT', 'type', _atd_read_string, x['type'], x),
-    items: _atd_read_optional_field(_atd_read_array(readManifestT), x['items'], x),
+    items: _atd_read_optional_field(_atd_read_array(readSpecificationT), x['items'], x),
   };
 }
 

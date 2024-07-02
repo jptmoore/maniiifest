@@ -6,7 +6,7 @@ type specification_t = [
 type collection_t = {
   id : string;
   _type <json name="type"> : string;
-  ?items : manifest_t list option;
+  ?items : specification_t list option;
 }
 
 type manifest_t = {

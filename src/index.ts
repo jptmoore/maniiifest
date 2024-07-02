@@ -1,7 +1,7 @@
 import { readJsonFromFile } from './utils'
 import { Manifesty } from './Manifesty';
 
-const filename = 'test/manifest.json';
+const filename = 'test/collection.json';
 
 (function () {
     try {
@@ -12,7 +12,7 @@ const filename = 'test/manifest.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getW3cAnnotationTargetAtIndex({ index: 0 });
+        const result = parser.getSpecification();
         console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);
