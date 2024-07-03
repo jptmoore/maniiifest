@@ -17,7 +17,10 @@ type manifest_t = {
   ?annotations : w3c_annotation_t list option;
 }
 
-type label_t = (string * string list) list
+type label_t = [ 
+  | T1 of string  
+  | T2 of (string * string list) list
+]
 
 type w3c_annotation_t = {
   id : string;

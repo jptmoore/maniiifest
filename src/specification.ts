@@ -32,7 +32,9 @@ export type ManifestT = {
   annotations?: W3cAnnotationT[];
 }
 
-export type LabelT = [string, string[]][]
+export type LabelT =
+| { kind: 'T1'; value: string }
+| { kind: 'T2'; value: [string, string[]][] }
 
 export type W3cAnnotationT = {
   id: string;
@@ -119,12 +121,26 @@ export function readManifestT(x: any, context: any = x): ManifestT {
   };
 }
 
-export function writeLabelT(x: LabelT, context: any = x): any {
-  return _atd_write_array(((x, context) => [_atd_write_string(x[0], x), _atd_write_array(_atd_write_string)(x[1], x)]))(x, context);
+export function _writeLabelT(x: LabelT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', _atd_write_string(x.value, x)]
+    case 'T2':
+      return ['T2', _atd_write_array(((x, context) => [_atd_write_string(x[0], x), _atd_write_array(_atd_write_string)(x[1], x)]))(x.value, x)]
+  }
 }
 
-export function readLabelT(x: any, context: any = x): LabelT {
-  return _atd_read_array(((x, context): [string, string[]] => { _atd_check_json_tuple(2, x, context); return [_atd_read_string(x[0], x), _atd_read_array(_atd_read_string)(x[1], x)] }))(x, context);
+export function _readLabelT(x: any, context: any = x): LabelT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: _atd_read_string(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: _atd_read_array(((x, context): [string, string[]] => { _atd_check_json_tuple(2, x, context); return [_atd_read_string(x[0], x), _atd_read_array(_atd_read_string)(x[1], x)] }))(x[1], x) }
+    default:
+      _atd_bad_json('LabelT', x, context)
+      throw new Error('impossible')
+  }
 }
 
 export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
@@ -581,7 +597,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_target,normalize_specification,restore_target, restore_specification } from "./adapter";
+import { normalize_label, normalize_target,normalize_specification,restore_target, restore_specification, restore_label } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -598,4 +614,12 @@ export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotati
 
 export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
     return normalize_target(x, context, _readW3cAnnotationTargetT);
+}
+
+export function writeLabelT(x: any, context: any = x): LabelT {
+    return restore_label(x, context, _writeLabelT);
+}
+
+export function readLabelT(x: any, context: any = x): LabelT {
+    return normalize_label(x, context, _readLabelT);
 }

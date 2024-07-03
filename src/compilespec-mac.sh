@@ -7,6 +7,8 @@ sed -i '' 's/export function writeSpecificationT(/export function _writeSpecific
 sed -i '' 's/export function readSpecificationT(/export function _readSpecificationT(/g' specification.ts
 sed -i '' 's/export function writeW3cAnnotationTargetT(/export function _writeW3cAnnotationTargetT(/g' specification.ts
 sed -i '' 's/export function readW3cAnnotationTargetT(/export function _readW3cAnnotationTargetT(/g' specification.ts
+sed -i '' 's/export function writeLabelT(/export function _writeLabelT(/g' specification.ts
+sed -i '' 's/export function readLabelT(/export function _readLabelT(/g' specification.ts
 # rename _type to use type
 sed -i '' 's/_type/type/g' specification.ts
 # add adapter code

@@ -31,6 +31,15 @@ export class Manifesty {
         return this.specification.kind;
     }
 
+    getLabel(): T.LabelT {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return F.writeLabelT(this.specification.value.label);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
         switch (this.getSpecificationType()) {
             case "Manifest":
