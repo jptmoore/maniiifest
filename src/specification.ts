@@ -29,6 +29,7 @@ export type ManifestT = {
   id: string;
   type: string;
   label: LabelT;
+  metadata?: KeyValueStringT[];
   annotations?: W3cAnnotationT[];
 }
 
@@ -38,7 +39,14 @@ export type LabelT =
 
 export type LabelT1 = string
 
-export type LabelT2 = [string, string[]][]
+export type LabelT2 = LngStringT
+
+export type LngStringT = [string, string[]][]
+
+export type KeyValueStringT = {
+  label: LngStringT;
+  value: LngStringT;
+}
 
 export type W3cAnnotationT = {
   id: string;
@@ -112,6 +120,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'id': _atd_write_required_field('ManifestT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('ManifestT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_required_field('ManifestT', 'label', writeLabelT, x.label, x),
+    'metadata': _atd_write_optional_field(_atd_write_array(writeKeyValueStringT), x.metadata, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.annotations, x),
   };
 }
@@ -121,6 +130,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     id: _atd_read_required_field('ManifestT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('ManifestT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_required_field('ManifestT', 'label', readLabelT, x['label'], x),
+    metadata: _atd_read_optional_field(_atd_read_array(readKeyValueStringT), x['metadata'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['annotations'], x),
   };
 }
@@ -156,11 +166,33 @@ export function readLabelT1(x: any, context: any = x): LabelT1 {
 }
 
 export function writeLabelT2(x: LabelT2, context: any = x): any {
-  return _atd_write_array(((x, context) => [_atd_write_string(x[0], x), _atd_write_array(_atd_write_string)(x[1], x)]))(x, context);
+  return writeLngStringT(x, context);
 }
 
 export function readLabelT2(x: any, context: any = x): LabelT2 {
+  return readLngStringT(x, context);
+}
+
+export function writeLngStringT(x: LngStringT, context: any = x): any {
+  return _atd_write_array(((x, context) => [_atd_write_string(x[0], x), _atd_write_array(_atd_write_string)(x[1], x)]))(x, context);
+}
+
+export function readLngStringT(x: any, context: any = x): LngStringT {
   return _atd_read_array(((x, context): [string, string[]] => { _atd_check_json_tuple(2, x, context); return [_atd_read_string(x[0], x), _atd_read_array(_atd_read_string)(x[1], x)] }))(x, context);
+}
+
+export function writeKeyValueStringT(x: KeyValueStringT, context: any = x): any {
+  return {
+    'label': _atd_write_required_field('KeyValueStringT', 'label', writeLngStringT, x.label, x),
+    'value': _atd_write_required_field('KeyValueStringT', 'value', writeLngStringT, x.value, x),
+  };
+}
+
+export function readKeyValueStringT(x: any, context: any = x): KeyValueStringT {
+  return {
+    label: _atd_read_required_field('KeyValueStringT', 'label', readLngStringT, x['label'], x),
+    value: _atd_read_required_field('KeyValueStringT', 'value', readLngStringT, x['value'], x),
+  };
 }
 
 export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {

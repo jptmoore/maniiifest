@@ -14,6 +14,7 @@ type manifest_t = {
   id : string;
   _type <json name="type"> : string;
   label : label_t;
+  ?metadata : key_value_string_t list option;
   ?annotations : w3c_annotation_t list option;
 }
 
@@ -24,7 +25,14 @@ type label_t = [
 
 type label_t1 = string
 
-type label_t2 = (string * string list) list
+type label_t2 = lng_string_t
+
+type lng_string_t = (string * string list) list
+
+type key_value_string_t = {
+  label : lng_string_t;
+  value : lng_string_t;
+}
 
 type w3c_annotation_t = {
   id : string;
