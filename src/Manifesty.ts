@@ -57,10 +57,20 @@ export class Manifesty {
                 throw new Error("Not of type Manifest.");
         }
     }
-    
+
     getAllW3cAnnotations(): Array<T.W3cAnnotationT> {
         const annotations = [];
         for (let index = 0; index < this.getW3cAnnotationCount(); index++) {
+            const annotation = this.getW3cAnnotationAtIndex({ index });
+            annotations.push(annotation);
+        }
+        return annotations;
+    }
+
+    getSomeW3cAnnotations({ n }: { n: number }): Array<T.W3cAnnotationT> {
+        const annotations = [];
+        const count = Math.min(n, this.getW3cAnnotationCount());
+        for (let index = 0; index < count; index++) {
             const annotation = this.getW3cAnnotationAtIndex({ index });
             annotations.push(annotation);
         }
@@ -92,7 +102,17 @@ export class Manifesty {
             bodies.push(body);
         }
         return bodies;
-        
+
+    }
+
+    getSomeW3cAnnotationsBody({ n }: { n: number }): Array<T.W3cAnnotationBodyT> {
+        const bodies = [];
+        const count = Math.min(n, this.getW3cAnnotationBodyCount());
+        for (let index = 0; index < count; index++) {
+            const body = this.getW3cAnnnotationBodyAtIndex({ index });
+            bodies.push(body);
+        }
+        return bodies;
     }
 
     getW3cAnnotationTargetAtIndex({ index }: { index: number }): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
@@ -124,6 +144,16 @@ export class Manifesty {
     getAllW3cAnnotationTargets(): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
         const targets = [];
         for (let index = 0; index < this.getW3cAnnotationTargetCount(); index++) {
+            const target = this.getW3cAnnotationTargetAtIndex({ index });
+            targets.push(target);
+        }
+        return targets;
+    }
+
+    getSomeW3cAnnotationTargets({ n }: { n: number }): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
+        const targets = [];
+        const count = Math.min(n, this.getW3cAnnotationTargetCount());
+        for (let index = 0; index < count; index++) {
             const target = this.getW3cAnnotationTargetAtIndex({ index });
             targets.push(target);
         }
