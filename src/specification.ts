@@ -33,8 +33,12 @@ export type ManifestT = {
 }
 
 export type LabelT =
-| { kind: 'T1'; value: string }
-| { kind: 'T2'; value: [string, string[]][] }
+| { kind: 'T1'; value: LabelT1 }
+| { kind: 'T2'; value: LabelT2 }
+
+export type LabelT1 = string
+
+export type LabelT2 = [string, string[]][]
 
 export type W3cAnnotationT = {
   id: string;
@@ -124,9 +128,9 @@ export function readManifestT(x: any, context: any = x): ManifestT {
 export function _writeLabelT(x: LabelT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
-      return ['T1', _atd_write_string(x.value, x)]
+      return ['T1', writeLabelT1(x.value, x)]
     case 'T2':
-      return ['T2', _atd_write_array(((x, context) => [_atd_write_string(x[0], x), _atd_write_array(_atd_write_string)(x[1], x)]))(x.value, x)]
+      return ['T2', writeLabelT2(x.value, x)]
   }
 }
 
@@ -134,13 +138,29 @@ export function _readLabelT(x: any, context: any = x): LabelT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
     case 'T1':
-      return { kind: 'T1', value: _atd_read_string(x[1], x) }
+      return { kind: 'T1', value: readLabelT1(x[1], x) }
     case 'T2':
-      return { kind: 'T2', value: _atd_read_array(((x, context): [string, string[]] => { _atd_check_json_tuple(2, x, context); return [_atd_read_string(x[0], x), _atd_read_array(_atd_read_string)(x[1], x)] }))(x[1], x) }
+      return { kind: 'T2', value: readLabelT2(x[1], x) }
     default:
       _atd_bad_json('LabelT', x, context)
       throw new Error('impossible')
   }
+}
+
+export function writeLabelT1(x: LabelT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readLabelT1(x: any, context: any = x): LabelT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeLabelT2(x: LabelT2, context: any = x): any {
+  return _atd_write_array(((x, context) => [_atd_write_string(x[0], x), _atd_write_array(_atd_write_string)(x[1], x)]))(x, context);
+}
+
+export function readLabelT2(x: any, context: any = x): LabelT2 {
+  return _atd_read_array(((x, context): [string, string[]] => { _atd_check_json_tuple(2, x, context); return [_atd_read_string(x[0], x), _atd_read_array(_atd_read_string)(x[1], x)] }))(x, context);
 }
 
 export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
