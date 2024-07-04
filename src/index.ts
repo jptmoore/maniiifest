@@ -12,8 +12,8 @@ const filename = 'test/manifest.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getJson();
-        console.log(result);
+        const result = parser.getMetadataAtIndex({ index: 0 });
+        console.log(result.label);
     } catch (error) {
         console.error("An error occurred:", error);
     }

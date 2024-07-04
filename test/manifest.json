@@ -2,9 +2,24 @@
   "id": "https://example.org/iiif/book1/page/manifest/a1",
   "type": "Manifest",
   "label": {
-    "en": ["Example Object Title"],
-    "fr": ["Exemple de titre d'objet"]
+    "en": [
+      "Example Object Title"
+    ]
   },
+  "metadata": [
+    {
+      "label": {
+        "en": [
+          "Author"
+        ]
+      },
+      "value": {
+        "none": [
+          "Anne Author"
+        ]
+      }
+    }
+  ],
   "annotations": [
     {
       "id": "https://example.org/iiif/book1/page/manifest/a1",

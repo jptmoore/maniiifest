@@ -29,23 +29,15 @@ export type ManifestT = {
   id: string;
   type: string;
   label: LabelT;
-  metadata?: KeyValueStringT[];
+  metadata?: MetadataT[];
   annotations?: W3cAnnotationT[];
 }
 
-export type LabelT =
-| { kind: 'T1'; value: LabelT1 }
-| { kind: 'T2'; value: LabelT2 }
+export type LabelT = any
 
-export type LabelT1 = string
-
-export type LabelT2 = LngStringT
-
-export type LngStringT = [string, string[]][]
-
-export type KeyValueStringT = {
-  label: LngStringT;
-  value: LngStringT;
+export type MetadataT = {
+  label: any;
+  value: any;
 }
 
 export type W3cAnnotationT = {
@@ -120,7 +112,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'id': _atd_write_required_field('ManifestT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('ManifestT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_required_field('ManifestT', 'label', writeLabelT, x.label, x),
-    'metadata': _atd_write_optional_field(_atd_write_array(writeKeyValueStringT), x.metadata, x),
+    'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.annotations, x),
   };
 }
@@ -130,68 +122,30 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     id: _atd_read_required_field('ManifestT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('ManifestT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_required_field('ManifestT', 'label', readLabelT, x['label'], x),
-    metadata: _atd_read_optional_field(_atd_read_array(readKeyValueStringT), x['metadata'], x),
+    metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['annotations'], x),
   };
 }
 
-export function _writeLabelT(x: LabelT, context: any = x): any {
-  switch (x.kind) {
-    case 'T1':
-      return ['T1', writeLabelT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeLabelT2(x.value, x)]
-  }
+export function writeLabelT(x: LabelT, context: any = x): any {
+  return ((x: any, context): any => x)(x, context);
 }
 
-export function _readLabelT(x: any, context: any = x): LabelT {
-  _atd_check_json_tuple(2, x, context)
-  switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readLabelT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readLabelT2(x[1], x) }
-    default:
-      _atd_bad_json('LabelT', x, context)
-      throw new Error('impossible')
-  }
+export function readLabelT(x: any, context: any = x): LabelT {
+  return ((x: any, context): any => x)(x, context);
 }
 
-export function writeLabelT1(x: LabelT1, context: any = x): any {
-  return _atd_write_string(x, context);
-}
-
-export function readLabelT1(x: any, context: any = x): LabelT1 {
-  return _atd_read_string(x, context);
-}
-
-export function writeLabelT2(x: LabelT2, context: any = x): any {
-  return writeLngStringT(x, context);
-}
-
-export function readLabelT2(x: any, context: any = x): LabelT2 {
-  return readLngStringT(x, context);
-}
-
-export function writeLngStringT(x: LngStringT, context: any = x): any {
-  return _atd_write_array(((x, context) => [_atd_write_string(x[0], x), _atd_write_array(_atd_write_string)(x[1], x)]))(x, context);
-}
-
-export function readLngStringT(x: any, context: any = x): LngStringT {
-  return _atd_read_array(((x, context): [string, string[]] => { _atd_check_json_tuple(2, x, context); return [_atd_read_string(x[0], x), _atd_read_array(_atd_read_string)(x[1], x)] }))(x, context);
-}
-
-export function writeKeyValueStringT(x: KeyValueStringT, context: any = x): any {
+export function writeMetadataT(x: MetadataT, context: any = x): any {
   return {
-    'label': _atd_write_required_field('KeyValueStringT', 'label', writeLngStringT, x.label, x),
-    'value': _atd_write_required_field('KeyValueStringT', 'value', writeLngStringT, x.value, x),
+    'label': _atd_write_required_field('MetadataT', 'label', ((x: any, context): any => x), x.label, x),
+    'value': _atd_write_required_field('MetadataT', 'value', ((x: any, context): any => x), x.value, x),
   };
 }
 
-export function readKeyValueStringT(x: any, context: any = x): KeyValueStringT {
+export function readMetadataT(x: any, context: any = x): MetadataT {
   return {
-    label: _atd_read_required_field('KeyValueStringT', 'label', readLngStringT, x['label'], x),
-    value: _atd_read_required_field('KeyValueStringT', 'value', readLngStringT, x['value'], x),
+    label: _atd_read_required_field('MetadataT', 'label', ((x: any, context): any => x), x['label'], x),
+    value: _atd_read_required_field('MetadataT', 'value', ((x: any, context): any => x), x['value'], x),
   };
 }
 
@@ -649,7 +603,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_label, normalize_target,normalize_specification,restore_target, restore_specification, restore_label } from "./adapter";
+import { normalize_metadata, normalize_label, normalize_target,normalize_specification,restore_target, restore_specification, restore_label } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -668,10 +622,4 @@ export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotatio
     return normalize_target(x, context, _readW3cAnnotationTargetT);
 }
 
-export function writeLabelT(x: any, context: any = x): LabelT {
-    return restore_label(x, context, _writeLabelT);
-}
 
-export function readLabelT(x: any, context: any = x): LabelT {
-    return normalize_label(x, context, _readLabelT);
-}

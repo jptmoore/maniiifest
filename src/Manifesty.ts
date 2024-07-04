@@ -40,6 +40,53 @@ export class Manifesty {
         }
     }
 
+    getMetadata(): T.MetadataT {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return F.writeMetadataT(this.specification.value.metadata);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+    
+    getMetadataAtIndex({ index }: { index: number }): T.MetadataT {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return F.writeMetadataT(this.specification.value.metadata[index]);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
+    getMetadataCount(): number {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return this.specification.value.metadata.length;
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
+    getAllMetadata(): Array<T.MetadataT> {
+        const metadata = [];
+        for (let index = 0; index < this.getMetadataCount(); index++) {
+            const meta = this.getMetadataAtIndex({ index });
+            metadata.push(meta);
+        }
+        return metadata;
+    }
+
+    getSomeMetadata({ n }: { n: number }): Array<T.MetadataT> {
+        const metadata = [];
+        const count = Math.min(n, this.getMetadataCount());
+        for (let index = 0; index < count; index++) {
+            const meta = this.getMetadataAtIndex({ index });
+            metadata.push(meta);
+        }
+        return metadata;
+    }
+    
+
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
         switch (this.getSpecificationType()) {
             case "Manifest":

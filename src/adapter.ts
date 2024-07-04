@@ -36,28 +36,3 @@ export function normalize_specification<T extends { type: string }, R>(x: T, con
 }
 
 
-
-export function normalize_label<T, R>(x: T, context: any = x, fn: (input: [string, any], context: any) => R): R {
-    if (typeof x === 'string') {
-        return fn(['T1', x], context);
-    } else if (typeof x === 'object' && x !== null && !Array.isArray(x)) {
-        const arrayRepresentation = Object.entries(x);
-        return fn(['T2', arrayRepresentation], context);
-    } else {
-        throw new Error('Input type did not match expected types.');
-    }
-}
-
-
-export function restore_label<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): { [key: string]: string[] } {
-    const resultList = fn(x, context);
-    if (resultList.length < 2) {
-        throw new Error('Result array must contain at least two items.');
-    }
-    // Assuming resultList[1] is an array of [string, string[]] tuples
-    const listRepresentation = resultList[1] as [string, string[]][];
-    return listRepresentation.reduce<{ [key: string]: string[] }>((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-    }, {});
-}
