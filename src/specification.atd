@@ -15,10 +15,16 @@ type manifest_t = {
   _type <json name="type"> : string;
   label : label_t;
   ?metadata : metadata_t list option;
+  ?requiredStatement : required_statement_t option;
   ?annotations : w3c_annotation_t list option;
 }
 
 type metadata_t = {
+  label : lng_string_t;
+  value : lng_string_t;
+}
+
+type required_statement_t = {
   label : lng_string_t;
   value : lng_string_t;
 }

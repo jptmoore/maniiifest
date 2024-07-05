@@ -20,6 +20,10 @@
       }
     }
   ],
+  "requiredStatement": {
+    "label": { "en": [ "Attribution" ] },
+    "value": { "en": [ "Provided by Example Organization" ] }
+  },
   "annotations": [
     {
       "id": "https://example.org/iiif/book1/page/manifest/a1",

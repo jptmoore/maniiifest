@@ -40,6 +40,15 @@ export class Manifesty {
         }
     }
 
+    getRequiredStatement(): T.RequiredStatementT {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return F.writeRequiredStatementT(this.specification.value.requiredStatement);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
     getMetadata(): T.MetadataT {
         switch (this.getSpecificationType()) {
             case "Manifest":

@@ -12,7 +12,7 @@ const filename = 'test/manifest.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getJson();
+        const result = parser.getRequiredStatement();
         console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);

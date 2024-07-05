@@ -30,10 +30,16 @@ export type ManifestT = {
   type: string;
   label: LabelT;
   metadata?: MetadataT[];
+  requiredStatement?: RequiredStatementT;
   annotations?: W3cAnnotationT[];
 }
 
 export type MetadataT = {
+  label: LngStringT;
+  value: LngStringT;
+}
+
+export type RequiredStatementT = {
   label: LngStringT;
   value: LngStringT;
 }
@@ -115,6 +121,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'type': _atd_write_required_field('ManifestT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_required_field('ManifestT', 'label', writeLabelT, x.label, x),
     'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
+    'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.annotations, x),
   };
 }
@@ -125,6 +132,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     type: _atd_read_required_field('ManifestT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_required_field('ManifestT', 'label', readLabelT, x['label'], x),
     metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
+    requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['annotations'], x),
   };
 }
@@ -140,6 +148,20 @@ export function readMetadataT(x: any, context: any = x): MetadataT {
   return {
     label: _atd_read_required_field('MetadataT', 'label', readLngStringT, x['label'], x),
     value: _atd_read_required_field('MetadataT', 'value', readLngStringT, x['value'], x),
+  };
+}
+
+export function writeRequiredStatementT(x: RequiredStatementT, context: any = x): any {
+  return {
+    'label': _atd_write_required_field('RequiredStatementT', 'label', writeLngStringT, x.label, x),
+    'value': _atd_write_required_field('RequiredStatementT', 'value', writeLngStringT, x.value, x),
+  };
+}
+
+export function readRequiredStatementT(x: any, context: any = x): RequiredStatementT {
+  return {
+    label: _atd_read_required_field('RequiredStatementT', 'label', readLngStringT, x['label'], x),
+    value: _atd_read_required_field('RequiredStatementT', 'value', readLngStringT, x['value'], x),
   };
 }
 
@@ -613,7 +635,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_metadata, normalize_label, normalize_target,normalize_specification,restore_target, restore_specification, restore_label, restore_lng_string, normalize_lng_string } from "./adapter";
+import { normalize_target,normalize_specification,restore_target, restore_specification } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
