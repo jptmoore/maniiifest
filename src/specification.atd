@@ -18,12 +18,14 @@ type manifest_t = {
   ?annotations : w3c_annotation_t list option;
 }
 
-type label_t = abstract
-
 type metadata_t = {
-  label : abstract;
-  value : abstract;
+  label : lng_string_t;
+  value : lng_string_t;
 }
+
+type label_t = lng_string_t
+
+type lng_string_t = (string * string list) list <json repr="object">
 
 type w3c_annotation_t = {
   id : string;

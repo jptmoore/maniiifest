@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_metadata, normalize_label, normalize_target,normalize_specification,restore_target, restore_specification, restore_label } from "./adapter";
+import { normalize_target,normalize_specification,restore_target, restore_specification } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -18,5 +18,3 @@ export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotati
 export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
     return normalize_target(x, context, _readW3cAnnotationTargetT);
 }
-
-

@@ -33,12 +33,14 @@ export type ManifestT = {
   annotations?: W3cAnnotationT[];
 }
 
-export type LabelT = any
-
 export type MetadataT = {
-  label: any;
-  value: any;
+  label: LngStringT;
+  value: LngStringT;
 }
+
+export type LabelT = LngStringT
+
+export type LngStringT = [string, string[]][]
 
 export type W3cAnnotationT = {
   id: string;
@@ -127,26 +129,34 @@ export function readManifestT(x: any, context: any = x): ManifestT {
   };
 }
 
-export function writeLabelT(x: LabelT, context: any = x): any {
-  return ((x: any, context): any => x)(x, context);
-}
-
-export function readLabelT(x: any, context: any = x): LabelT {
-  return ((x: any, context): any => x)(x, context);
-}
-
 export function writeMetadataT(x: MetadataT, context: any = x): any {
   return {
-    'label': _atd_write_required_field('MetadataT', 'label', ((x: any, context): any => x), x.label, x),
-    'value': _atd_write_required_field('MetadataT', 'value', ((x: any, context): any => x), x.value, x),
+    'label': _atd_write_required_field('MetadataT', 'label', writeLngStringT, x.label, x),
+    'value': _atd_write_required_field('MetadataT', 'value', writeLngStringT, x.value, x),
   };
 }
 
 export function readMetadataT(x: any, context: any = x): MetadataT {
   return {
-    label: _atd_read_required_field('MetadataT', 'label', ((x: any, context): any => x), x['label'], x),
-    value: _atd_read_required_field('MetadataT', 'value', ((x: any, context): any => x), x['value'], x),
+    label: _atd_read_required_field('MetadataT', 'label', readLngStringT, x['label'], x),
+    value: _atd_read_required_field('MetadataT', 'value', readLngStringT, x['value'], x),
   };
+}
+
+export function writeLabelT(x: LabelT, context: any = x): any {
+  return writeLngStringT(x, context);
+}
+
+export function readLabelT(x: any, context: any = x): LabelT {
+  return readLngStringT(x, context);
+}
+
+export function writeLngStringT(x: LngStringT, context: any = x): any {
+  return _atd_write_assoc_array_to_object(_atd_write_array(_atd_write_string))(x, context);
+}
+
+export function readLngStringT(x: any, context: any = x): LngStringT {
+  return _atd_read_assoc_object_into_array(_atd_read_array(_atd_read_string))(x, context);
 }
 
 export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
@@ -603,7 +613,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_metadata, normalize_label, normalize_target,normalize_specification,restore_target, restore_specification, restore_label } from "./adapter";
+import { normalize_metadata, normalize_label, normalize_target,normalize_specification,restore_target, restore_specification, restore_label, restore_lng_string, normalize_lng_string } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -621,5 +631,3 @@ export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotati
 export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
     return normalize_target(x, context, _readW3cAnnotationTargetT);
 }
-
-
