@@ -38,6 +38,15 @@ type thumbnail_t = {
   ?format : string option;
   ?width : int option;
   ?height : int option;
+  ?service : service_t list option;
+}
+
+type service_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?profile : string option;
+  ?label : label_t option;
+  ?service : service_t list option;
 }
 
 type label_t = lng_string_t

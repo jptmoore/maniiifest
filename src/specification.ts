@@ -53,6 +53,15 @@ export type ThumbnailT = {
   format?: string;
   width?: number /*int*/;
   height?: number /*int*/;
+  service?: ServiceT[];
+}
+
+export type ServiceT = {
+  id: string;
+  type: string;
+  profile?: string;
+  label?: LabelT;
+  service?: ServiceT[];
 }
 
 export type LabelT = LngStringT
@@ -190,6 +199,7 @@ export function writeThumbnailT(x: ThumbnailT, context: any = x): any {
     'format': _atd_write_optional_field(_atd_write_string, x.format, x),
     'width': _atd_write_optional_field(_atd_write_int, x.width, x),
     'height': _atd_write_optional_field(_atd_write_int, x.height, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
   };
 }
 
@@ -201,6 +211,27 @@ export function readThumbnailT(x: any, context: any = x): ThumbnailT {
     format: _atd_read_optional_field(_atd_read_string, x['format'], x),
     width: _atd_read_optional_field(_atd_read_int, x['width'], x),
     height: _atd_read_optional_field(_atd_read_int, x['height'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+  };
+}
+
+export function writeServiceT(x: ServiceT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('ServiceT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ServiceT', 'type', _atd_write_string, x.type, x),
+    'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+  };
+}
+
+export function readServiceT(x: any, context: any = x): ServiceT {
+  return {
+    id: _atd_read_required_field('ServiceT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ServiceT', 'type', _atd_read_string, x['type'], x),
+    profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
   };
 }
 

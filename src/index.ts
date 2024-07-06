@@ -12,7 +12,7 @@ const filename = 'test/detailed.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getAllThumbnails();
+        const result = parser.getSpecification();
         console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);

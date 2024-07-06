@@ -140,7 +140,6 @@ export class Manifesty {
         }
         return thumbnails;
     }
-    
 
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
         switch (this.getSpecificationType()) {
