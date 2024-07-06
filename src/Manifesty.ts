@@ -103,6 +103,43 @@ export class Manifesty {
         }
         return metadata;
     }
+
+    getThumbnailCount(): number {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return this.specification.value.thumbnail.length;
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
+    getThumbnailAtIndex({ index }: { index: number }): T.ThumbnailT {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return F.writeThumbnailT(this.specification.value.thumbnail[index]);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
+    getSomeThumbnails({ n }: { n: number }): Array<T.ThumbnailT> {
+        const thumbnails = [];
+        const count = Math.min(n, this.getThumbnailCount());
+        for (let index = 0; index < count; index++) {
+            const thumbnail = this.getThumbnailAtIndex({ index });
+            thumbnails.push(thumbnail);
+        }
+        return thumbnails;
+    }
+
+    getAllThumbnails(): Array<T.ThumbnailT> {
+        const thumbnails = [];
+        for (let index = 0; index < this.getThumbnailCount(); index++) {
+            const thumbnail = this.getThumbnailAtIndex({ index });
+            thumbnails.push(thumbnail);
+        }
+        return thumbnails;
+    }
     
 
     getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {

@@ -32,6 +32,7 @@ export type ManifestT = {
   metadata?: MetadataT[];
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
+  thumbnail?: ThumbnailT[];
   annotations?: W3cAnnotationT[];
 }
 
@@ -43,6 +44,15 @@ export type MetadataT = {
 export type RequiredStatementT = {
   label: LngStringT;
   value: LngStringT;
+}
+
+export type ThumbnailT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+  format?: string;
+  width?: number /*int*/;
+  height?: number /*int*/;
 }
 
 export type LabelT = LngStringT
@@ -126,6 +136,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.annotations, x),
   };
 }
@@ -138,6 +149,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['annotations'], x),
   };
 }
@@ -167,6 +179,28 @@ export function readRequiredStatementT(x: any, context: any = x): RequiredStatem
   return {
     label: _atd_read_required_field('RequiredStatementT', 'label', readLngStringT, x['label'], x),
     value: _atd_read_required_field('RequiredStatementT', 'value', readLngStringT, x['value'], x),
+  };
+}
+
+export function writeThumbnailT(x: ThumbnailT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('ThumbnailT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ThumbnailT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'format': _atd_write_optional_field(_atd_write_string, x.format, x),
+    'width': _atd_write_optional_field(_atd_write_int, x.width, x),
+    'height': _atd_write_optional_field(_atd_write_int, x.height, x),
+  };
+}
+
+export function readThumbnailT(x: any, context: any = x): ThumbnailT {
+  return {
+    id: _atd_read_required_field('ThumbnailT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ThumbnailT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    format: _atd_read_optional_field(_atd_read_string, x['format'], x),
+    width: _atd_read_optional_field(_atd_read_int, x['width'], x),
+    height: _atd_read_optional_field(_atd_read_int, x['height'], x),
   };
 }
 
