@@ -1,7 +1,7 @@
 import { readJsonFromFile } from './utils'
 import { Manifesty } from './Manifesty';
 
-const filename = 'test/manifest.json';
+const filename = 'test/detailed.json';
 
 (function () {
     try {
@@ -12,7 +12,7 @@ const filename = 'test/manifest.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getRequiredStatement();
+        const result = parser.getSpecification();
         console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);

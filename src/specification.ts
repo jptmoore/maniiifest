@@ -31,6 +31,7 @@ export type ManifestT = {
   label: LabelT;
   metadata?: MetadataT[];
   requiredStatement?: RequiredStatementT;
+  summary?: SummaryT;
   annotations?: W3cAnnotationT[];
 }
 
@@ -45,6 +46,8 @@ export type RequiredStatementT = {
 }
 
 export type LabelT = LngStringT
+
+export type SummaryT = LngStringT
 
 export type LngStringT = [string, string[]][]
 
@@ -122,6 +125,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'label': _atd_write_required_field('ManifestT', 'label', writeLabelT, x.label, x),
     'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
+    'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.annotations, x),
   };
 }
@@ -133,6 +137,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     label: _atd_read_required_field('ManifestT', 'label', readLabelT, x['label'], x),
     metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
+    summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['annotations'], x),
   };
 }
@@ -170,6 +175,14 @@ export function writeLabelT(x: LabelT, context: any = x): any {
 }
 
 export function readLabelT(x: any, context: any = x): LabelT {
+  return readLngStringT(x, context);
+}
+
+export function writeSummaryT(x: SummaryT, context: any = x): any {
+  return writeLngStringT(x, context);
+}
+
+export function readSummaryT(x: any, context: any = x): SummaryT {
   return readLngStringT(x, context);
 }
 

@@ -49,6 +49,15 @@ export class Manifesty {
         }
     }
 
+    getSummary(): T.SummaryT {
+        switch (this.getSpecificationType()) {
+            case "Manifest":
+                return F.writeSummaryT(this.specification.value.summary);
+            default:
+                throw new Error("Not of type Manifest.");
+        }
+    }
+
     getMetadata(): T.MetadataT {
         switch (this.getSpecificationType()) {
             case "Manifest":
