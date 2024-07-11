@@ -12,7 +12,7 @@ const filename = 'test/detailed.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getW3cAnnotationsBodyCount();
+        const result = parser.getW3cAnnotationsTargetCount();
         console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);
