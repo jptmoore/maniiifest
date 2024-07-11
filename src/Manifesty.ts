@@ -178,78 +178,83 @@ export class Manifesty {
         return annotations;
     }
 
-
-    getAllW3cAnnotationsBody(): Array<T.W3cAnnotationBodyT> {
-        return Array.isArray(this.specification.value.annotations)
-            ? this.specification.value.annotations.flatMap((annotation_page: T.W3cAnnotationPageT) =>
-                annotation_page.items?.flatMap(item => item.body ? [item.body] : []) || []
-            )
-            : [];
-    }
-
-    getSomeW3cAnnotationsBody({ n }: { n: number }): Array<T.W3cAnnotationBodyT> {
-        if (!Array.isArray(this.specification.value.annotations) || n <= 0) return [];
+    getSliceOfW3cAnnotationsBody({ start, end }: { start: number; end: number }): Array<T.W3cAnnotationBodyT> {
+        if (!Array.isArray(this.specification.value.annotations) || start < 0 || end <= start) return [];
+        let currentIndex = 0;
         const result: Array<T.W3cAnnotationBodyT> = [];
+
         for (const annotation_page of this.specification.value.annotations) {
-            if (result.length >= n) break;
-            const bodies = annotation_page.items?.flatMap((item: T.W3cAnnotationT) => item.body ? [item.body] : []) || [];
-            result.push(...bodies);
+            if (currentIndex >= end) break; // Early exit if end of range is reached
+            const items = annotation_page.items || [];
+            for (const item of items) {
+                if (item.body) {
+                    if (currentIndex >= start && currentIndex < end) {
+                        result.push(item.body);
+                    }
+                    currentIndex++;
+                    if (currentIndex >= end) break; // Stop adding bodies once the end of the range is reached
+                }
+            }
         }
-        return result.slice(0, n);
+
+        return result;
     }
 
+    getAllAnnotationsBody(): Array<T.W3cAnnotationBodyT> {
+        return this.getSliceOfW3cAnnotationsBody({ start: 0, end: this.getW3cAnnotationsBodyCount() });
+    }
 
     getW3cAnnotationsBodyCount(): number {
         if (!Array.isArray(this.specification.value.annotations)) {
             return 0;
         }
-        return this.specification.value.annotations.reduce((count: number, annotation_page: { items: any[]; }) =>
+        return this.specification.value.annotations.reduce((count: number, annotation_page: { items: T.W3cAnnotationT[]; }) =>
             count + (annotation_page.items?.reduce((itemCount, item) => itemCount + (item.body ? 1 : 0), 0) || 0),
             0);
     }
 
-    getAllW3cAnnotationsTarget(): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
-        return Array.isArray(this.specification.value.annotations)
-            ? this.specification.value.annotations.flatMap((annotation_page: T.W3cAnnotationPageT) =>
-                annotation_page.items?.flatMap(item => {
-                    switch (item.target?.kind) {
-                        case "T1":
-                            return F.writeW3cAnnotationTargetT1(item.target.value);
-                        case "T2":
-                            return F.writeW3cAnnotationTargetT2(item.target.value);
-                        default:
-                            throw new Error("Unknown target kind.");
+    getSliceOfAnnotationsTarget({ start, end }: { start: number; end: number }): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
+        if (!Array.isArray(this.specification.value.annotations) || start < 0 || end <= start) return [];
+        let currentIndex = 0;
+        const result: Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> = [];
+
+        for (const annotation_page of this.specification.value.annotations) {
+            if (currentIndex >= end) break; // Early exit if end of range is reached
+            const items = annotation_page.items || [];
+            for (const item of items) {
+                if (item.target) {
+                    if (currentIndex >= start && currentIndex < end) {
+                        switch (item.target.kind) {
+                            case "T1":
+                                result.push(F.writeW3cAnnotationTargetT1(item.target.value));
+                                break;
+                            case "T2":
+                                result.push(F.writeW3cAnnotationTargetT2(item.target.value));
+                                break;
+                            default:
+                                throw new Error("Unknown target kind.");
+                        }
                     }
-                })
-            )
-            : [];
+                    currentIndex++;
+                    if (currentIndex >= end) break; // Stop adding targets once the end of the range is reached
+                }
+            }
+        }
+
+        return result;
     }
 
-    getSomeW3cAnnotationsTarget({ n }: { n: number }): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
-        if (!Array.isArray(this.specification.value.annotations) || n <= 0) return [];
-        const result: Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> = [];
-        for (const annotation_page of this.specification.value.annotations) {
-            if (result.length >= n) break;
-            const targets = annotation_page.items?.flatMap((item: T.W3cAnnotationT) => {
-                switch (item.target?.kind) {
-                    case "T1":
-                        return F.writeW3cAnnotationTargetT1(item.target.value);
-                    case "T2":
-                        return F.writeW3cAnnotationTargetT2(item.target.value);
-                    default:
-                        throw new Error("Unknown target kind.");
-                }
-            }) || [];
-            result.push(...targets);
-        }
-        return result.slice(0, n);
+
+    getAllW3cAnnotationsTarget(): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
+        return this.getSliceOfAnnotationsTarget({ start: 0, end: this.getW3cAnnotationsTargetCount() });
     }
+
 
     getW3cAnnotationsTargetCount(): number {
         if (!Array.isArray(this.specification.value.annotations)) {
             return 0;
         }
-        return this.specification.value.annotations.reduce((count: number, annotation_page: { items: any[]; }) =>
+        return this.specification.value.annotations.reduce((count: number, annotation_page: { items: T.W3cAnnotationT[]; }) =>
             count + (annotation_page.items?.reduce((itemCount, item) => itemCount + (item.target ? 1 : 0), 0) || 0),
             0);
     }
