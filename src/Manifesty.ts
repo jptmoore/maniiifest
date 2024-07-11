@@ -94,16 +94,6 @@ export class Manifesty {
         return metadata;
     }
 
-    getSomeMetadata({ n }: { n: number }): Array<T.MetadataT> {
-        const metadata = [];
-        const count = Math.min(n, this.getMetadataCount());
-        for (let index = 0; index < count; index++) {
-            const meta = this.getMetadataAtIndex({ index });
-            metadata.push(meta);
-        }
-        return metadata;
-    }
-
     getThumbnailCount(): number {
         switch (this.getSpecificationType()) {
             case "Manifest":
@@ -122,16 +112,6 @@ export class Manifesty {
         }
     }
 
-    getSomeThumbnails({ n }: { n: number }): Array<T.ThumbnailT> {
-        const thumbnails = [];
-        const count = Math.min(n, this.getThumbnailCount());
-        for (let index = 0; index < count; index++) {
-            const thumbnail = this.getThumbnailAtIndex({ index });
-            thumbnails.push(thumbnail);
-        }
-        return thumbnails;
-    }
-
     getAllThumbnails(): Array<T.ThumbnailT> {
         const thumbnails = [];
         for (let index = 0; index < this.getThumbnailCount(); index++) {
@@ -139,15 +119,6 @@ export class Manifesty {
             thumbnails.push(thumbnail);
         }
         return thumbnails;
-    }
-
-    getW3cAnnotationAtIndex({ index }: { index: number }): T.W3cAnnotationT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeW3cAnnotationT(this.specification.value.annotations[index]);
-            default:
-                throw new Error("Not of type Manifest.");
-        }
     }
 
     getW3cAnnotationCount(): number {
@@ -159,24 +130,24 @@ export class Manifesty {
         }
     }
 
-    getAllW3cAnnotations(): Array<T.W3cAnnotationT> {
-        const annotations = [];
-        for (let index = 0; index < this.getW3cAnnotationCount(); index++) {
-            const annotation = this.getW3cAnnotationAtIndex({ index });
-            annotations.push(annotation);
+    getSliceOfW3cAnnotations({ start, end }: { start: number; end: number }): Array<T.W3cAnnotationPageT> {
+        if (!Array.isArray(this.specification.value.annotations) || start < 0 || end <= start) return [];
+        const result: Array<T.W3cAnnotationPageT> = [];
+        const annotations = this.specification.value.annotations;
+    
+        // Directly iterate over the range, avoiding the creation of a large intermediate array.
+        for (let i = start; i < end && i < annotations.length; i++) {
+            const annotation = annotations[i];
+            result.push(F.writeW3cAnnotationPageT(annotation));
         }
-        return annotations;
+    
+        return result;
     }
 
-    getSomeW3cAnnotations({ n }: { n: number }): Array<T.W3cAnnotationT> {
-        const annotations = [];
-        const count = Math.min(n, this.getW3cAnnotationCount());
-        for (let index = 0; index < count; index++) {
-            const annotation = this.getW3cAnnotationAtIndex({ index });
-            annotations.push(annotation);
-        }
-        return annotations;
+    getAllW3cAnnotations(): Array<T.W3cAnnotationPageT> {
+        return this.getSliceOfW3cAnnotations({ start: 0, end: this.getW3cAnnotationCount() });
     }
+        
 
     getSliceOfW3cAnnotationsBody({ start, end }: { start: number; end: number }): Array<T.W3cAnnotationBodyT> {
         if (!Array.isArray(this.specification.value.annotations) || start < 0 || end <= start) return [];

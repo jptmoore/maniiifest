@@ -33,6 +33,11 @@ export type ManifestT = {
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
   thumbnail?: ThumbnailT[];
+  items?: ItemsT[];
+  annotations?: W3cAnnotationPageT[];
+}
+
+export type ItemsT = {
   annotations?: W3cAnnotationPageT[];
 }
 
@@ -152,6 +157,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeItemsT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
 }
@@ -165,6 +171,19 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    items: _atd_read_optional_field(_atd_read_array(readItemsT), x['items'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+  };
+}
+
+export function writeItemsT(x: ItemsT, context: any = x): any {
+  return {
+    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+  };
+}
+
+export function readItemsT(x: any, context: any = x): ItemsT {
+  return {
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
   };
 }
