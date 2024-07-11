@@ -66,7 +66,7 @@ export class Manifesty {
                 throw new Error("Not of type Manifest.");
         }
     }
-    
+
     getMetadataAtIndex({ index }: { index: number }): T.MetadataT {
         switch (this.getSpecificationType()) {
             case "Manifest":
@@ -178,43 +178,45 @@ export class Manifesty {
         return annotations;
     }
 
-    getW3cAnnnotationBodyAtIndex({ index }: { index: number }): T.W3cAnnotationBodyT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeW3cAnnotationBodyT(this.specification.value.annotations[index].body);
-            default:
-                throw new Error("Not of type Manifest.");
-        }
-    }
-
-    getW3cAnnotationBodyCount(): number {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return this.specification.value.annotations.length;
-            default:
-                throw new Error("Not of type Manifest.");
-        }
-    }
 
     getAllW3cAnnotationsBody(): Array<T.W3cAnnotationBodyT> {
-        const bodies = [];
-        for (let index = 0; index < this.getW3cAnnotationBodyCount(); index++) {
-            const body = this.getW3cAnnnotationBodyAtIndex({ index });
-            bodies.push(body);
-        }
-        return bodies;
-
+        return Array.isArray(this.specification.value.annotations)
+            ? this.specification.value.annotations.flatMap((annotation_page: T.W3cAnnotationPageT) =>
+                annotation_page.items?.flatMap(item => item.body ? [item.body] : []) || []
+            )
+            : [];
     }
+
+
 
     getSomeW3cAnnotationsBody({ n }: { n: number }): Array<T.W3cAnnotationBodyT> {
-        const bodies = [];
-        const count = Math.min(n, this.getW3cAnnotationBodyCount());
-        for (let index = 0; index < count; index++) {
-            const body = this.getW3cAnnnotationBodyAtIndex({ index });
-            bodies.push(body);
+        if (!Array.isArray(this.specification.value.annotations) || n <= 0) return [];
+        const result: Array<T.W3cAnnotationBodyT> = [];
+        for (const annotation_page of this.specification.value.annotations) {
+            if (result.length >= n) break;
+            const bodies = annotation_page.items?.flatMap((item: T.W3cAnnotationT) => item.body ? [item.body] : []) || [];
+            result.push(...bodies);
         }
-        return bodies;
+        return result.slice(0, n);
     }
+
+
+    getW3cAnnotationsBodyCount(): number {
+        let count = 0;
+        if (Array.isArray(this.specification.value.annotations)) {
+            for (const annotation_page of this.specification.value.annotations) {
+                if (Array.isArray(annotation_page.items)) {
+                    for (const item of annotation_page.items) {
+                        if (item.body) {
+                            count++;
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
 
     getW3cAnnotationTargetAtIndex({ index }: { index: number }): T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2 {
         switch (this.getSpecificationType()) {

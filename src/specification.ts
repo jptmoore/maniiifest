@@ -33,7 +33,13 @@ export type ManifestT = {
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
   thumbnail?: ThumbnailT[];
-  annotations?: W3cAnnotationT[];
+  annotations?: W3cAnnotationPageT[];
+}
+
+export type W3cAnnotationPageT = {
+  id: string;
+  type: string;
+  items?: W3cAnnotationT[];
 }
 
 export type MetadataT = {
@@ -146,7 +152,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
-    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.annotations, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
 }
 
@@ -159,7 +165,23 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
-    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['annotations'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+  };
+}
+
+export function writeW3cAnnotationPageT(x: W3cAnnotationPageT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('W3cAnnotationPageT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('W3cAnnotationPageT', 'type', _atd_write_string, x.type, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.items, x),
+  };
+}
+
+export function readW3cAnnotationPageT(x: any, context: any = x): W3cAnnotationPageT {
+  return {
+    id: _atd_read_required_field('W3cAnnotationPageT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('W3cAnnotationPageT', 'type', _atd_read_string, x['type'], x),
+    items: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['items'], x),
   };
 }
 
