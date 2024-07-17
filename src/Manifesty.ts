@@ -1,13 +1,6 @@
 import * as F from "./specification";
 import type * as T from "./specification";
 
-class UndefinedPropertyError extends Error {
-    constructor(property: string) {
-        super(`${property} is undefined`);
-        this.name = 'UndefinedPropertyError';
-    }
-}
-
 export class Manifesty {
     specification: any;
 
@@ -18,36 +11,6 @@ export class Manifesty {
             console.error("Failed to read specification:", error);
         }
     }
-
-    getSpecification(): T.SpecificationT {
-        if (!this.specification) {
-            throw new UndefinedPropertyError('Specification');
-        }
-        return F.writeSpecificationT(this.specification);
-    }
-
-    getLabel(): T.LabelT {
-        if (!this.specification?.value?.label) {
-            throw new UndefinedPropertyError('Label');
-        }
-        return F.writeLabelT(this.specification.value.label);
-    }
-
-    getRequiredStatement(): T.RequiredStatementT {
-        if (!this.specification?.value?.requiredStatement) {
-            throw new UndefinedPropertyError('Required statement');
-        }
-        return F.writeRequiredStatementT(this.specification.value.requiredStatement);
-    }
-
-    getSummary(): T.SummaryT {
-        if (!this.specification?.value?.summary) {
-            throw new UndefinedPropertyError('Summary');
-        }
-        return F.writeSummaryT(this.specification.value.summary);
-    }
-
-
 
     *getCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
         for (const canvas of this.specification.value.items ?? []) {
@@ -90,8 +53,8 @@ export class Manifesty {
             for (const annotationPage of canvas.items ?? []) {
                 for (const annotation of annotationPage.items ?? []) {
                     for (const service of annotation.body.service ?? []) {
-                            yield F.writeServiceT(service);
-                        }
+                        yield F.writeServiceT(service);
+                    }
                 }
             }
         }
@@ -102,10 +65,10 @@ export class Manifesty {
             for (const annotationPage of canvas.items ?? []) {
                 for (const annotation of annotationPage.items ?? []) {
                     for (const service of annotation.body.service ?? []) {
-                            for (const serviceService of service.value.service ?? []) {
-                                yield F.writeServiceT(serviceService);
-                            }
+                        for (const serviceService of service.value.service ?? []) {
+                            yield F.writeServiceT(serviceService);
                         }
+                    }
                 }
             }
         }
@@ -116,13 +79,13 @@ export class Manifesty {
             yield F.writeCanvasT(canvas);
         }
     }
-    
+
     *getThumbnail(): IterableIterator<T.ThumbnailT> {
         for (const thumbnail of this.specification.value.thumbnail ?? []) {
             yield F.writeThumbnailT(thumbnail);
         }
     }
-    
+
     *getMetadata(): IterableIterator<T.MetadataT> {
         for (const metadata of this.specification.value.metadata ?? []) {
             yield F.writeMetadataT(metadata);
@@ -130,16 +93,35 @@ export class Manifesty {
     }
 
     *getManifest(): IterableIterator<T.ManifestT> {
-        const traverse = function*(items: Array<{ kind: string; value: any }>): IterableIterator<T.ManifestT> {
-            for (const item of items) {
-                if (item.kind === 'Manifest') {
-                    yield F.writeManifestT(item.value);
-                } else if (item.kind === 'Collection') {
-                    yield* traverse(item.value.items); // Recursively traverse if the item is a collection
+        if (this.specification.kind === 'Manifest') {
+            yield F.writeManifestT(this.specification.value);
+        } else if (this.specification.kind === 'Collection') {
+            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.ManifestT> {
+                for (const item of items) {
+                    if (item.kind === 'Manifest') {
+                        yield F.writeManifestT(item.value);
+                    } else if (item.kind === 'Collection') {
+                        yield* traverse(item.value.items); 
+                    }
                 }
-            }
-        };
-        yield* traverse(this.specification.value.items);
+            };
+            yield* traverse(this.specification.value.items);
+        }
+    }
+
+    *getCollection(): IterableIterator<T.CollectionT> {
+        if (this.specification.kind === 'Collection') {
+            yield F.writeCollectionT(this.specification.value);
+            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.CollectionT> {
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        yield F.writeCollectionT(item.value);
+                        yield* traverse(item.value.items); 
+                    }
+                }
+            };
+            yield* traverse(this.specification.value.items);
+        }
     }
 
 }

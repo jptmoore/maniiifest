@@ -22,6 +22,7 @@ export type CollectionT = {
   id: string;
   type: string;
   label: LabelT;
+  metadata?: MetadataT[];
   items?: SpecificationT[];
 }
 
@@ -178,6 +179,7 @@ export function writeCollectionT(x: CollectionT, context: any = x): any {
     'id': _atd_write_required_field('CollectionT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('CollectionT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_required_field('CollectionT', 'label', writeLabelT, x.label, x),
+    'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
     'items': _atd_write_optional_field(_atd_write_array(writeSpecificationT), x.items, x),
   };
 }
@@ -187,6 +189,7 @@ export function readCollectionT(x: any, context: any = x): CollectionT {
     id: _atd_read_required_field('CollectionT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('CollectionT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_required_field('CollectionT', 'label', readLabelT, x['label'], x),
+    metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
     items: _atd_read_optional_field(_atd_read_array(readSpecificationT), x['items'], x),
   };
 }

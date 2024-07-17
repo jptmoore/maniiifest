@@ -7,6 +7,7 @@ type collection_t = {
   id : string;
   _type <json name="type"> : string;
   label : label_t;
+  ?metadata : metadata_t list option;
   ?items : specification_t list option;
 }
 
