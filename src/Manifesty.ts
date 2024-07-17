@@ -144,6 +144,7 @@ export class Manifesty {
         return result;
     }
 
+
     getAllW3cAnnotations(): Array<T.W3cAnnotationPageT> {
         return this.getSliceOfW3cAnnotations({ start: 0, end: this.getW3cAnnotationCount() });
     }
@@ -294,6 +295,20 @@ export class Manifesty {
 
     getCanvasLabelCount(): number {
         return this.getCanvasCount();
+    }
+
+    *getCanvasW3cAnnotations(): IterableIterator<T.W3cAnnotationT> {
+        if (!Array.isArray(this.specification.value.items)) return;
+        for (const canvas of this.specification.value.items) {
+            if (!Array.isArray(canvas.annotations)) continue;
+            for (const annotationPage of canvas.annotations) {
+                if (Array.isArray(annotationPage.items)) {
+                    for (const annotation of annotationPage.items) {
+                        yield F.writeW3cAnnotationT(annotation);
+                    }   
+                }
+            }
+        }
     }
 
 }
