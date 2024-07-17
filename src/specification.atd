@@ -113,8 +113,8 @@ type service_t1 = {
 }
 
 type service_t2 = {
-  at_id <json name="@id"> : string;
-  at_type <json name="@type"> : string;  
+  id <json name="@id"> : string;
+  _type <json name="@type"> : string;  
   ?profile : string option;
   ?label : label_t option;
   ?service : service_t list option;
