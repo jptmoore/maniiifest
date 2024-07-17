@@ -1,6 +1,13 @@
 import * as F from "./specification";
 import type * as T from "./specification";
 
+class UndefinedPropertyError extends Error {
+    constructor(property: string) {
+        super(`${property} is undefined`);
+        this.name = 'UndefinedPropertyError';
+    }
+}
+
 export class Manifesty {
     specification: any;
 
@@ -12,302 +19,79 @@ export class Manifesty {
         }
     }
 
-    getSpecification(): T.ManifestT | T.CollectionT {
-        switch (this.specification.kind) {
-            case "Manifest":
-                return F.writeManifestT(this.specification.value);
-            case "Collection":
-                return F.writeCollectionT(this.specification.value);
-            default:
-                throw new Error("Unknown specification kind.");
+    getSpecification(): T.SpecificationT {
+        if (!this.specification) {
+            throw new UndefinedPropertyError('Specification');
         }
-    }
-
-    getJson(): any {
-        return JSON.stringify(this.getSpecification())
-    }
-
-    getSpecificationType(): "Manifest" | "Collection" {
-        return this.specification.kind;
+        return F.writeSpecificationT(this.specification);
     }
 
     getLabel(): T.LabelT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeLabelT(this.specification.value.label);
-            default:
-                throw new Error("Not of type Manifest.");
+        if (!this.specification?.value?.label) {
+            throw new UndefinedPropertyError('Label');
         }
+        return F.writeLabelT(this.specification.value.label);
     }
 
     getRequiredStatement(): T.RequiredStatementT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeRequiredStatementT(this.specification.value.requiredStatement);
-            default:
-                throw new Error("Not of type Manifest.");
+        if (!this.specification?.value?.requiredStatement) {
+            throw new UndefinedPropertyError('Required statement');
         }
+        return F.writeRequiredStatementT(this.specification.value.requiredStatement);
     }
 
     getSummary(): T.SummaryT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeSummaryT(this.specification.value.summary);
-            default:
-                throw new Error("Not of type Manifest.");
+        if (!this.specification?.value?.summary) {
+            throw new UndefinedPropertyError('Summary');
         }
+        return F.writeSummaryT(this.specification.value.summary);
     }
 
-    getMetadata(): T.MetadataT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeMetadataT(this.specification.value.metadata);
-            default:
-                throw new Error("Not of type Manifest.");
+
+
+    *getCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
+        if (!Array.isArray(this.specification?.value?.items)) {
+            throw new UndefinedPropertyError('Canvas items');
         }
-    }
-
-    getMetadataAtIndex({ index }: { index: number }): T.MetadataT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeMetadataT(this.specification.value.metadata[index]);
-            default:
-                throw new Error("Not of type Manifest.");
-        }
-    }
-
-    getMetadataCount(): number {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return this.specification.value.metadata.length;
-            default:
-                throw new Error("Not of type Manifest.");
-        }
-    }
-
-    getAllMetadata(): Array<T.MetadataT> {
-        const metadata = [];
-        for (let index = 0; index < this.getMetadataCount(); index++) {
-            const meta = this.getMetadataAtIndex({ index });
-            metadata.push(meta);
-        }
-        return metadata;
-    }
-
-    getThumbnailCount(): number {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return this.specification.value.thumbnail.length;
-            default:
-                throw new Error("Not of type Manifest.");
-        }
-    }
-
-    getThumbnailAtIndex({ index }: { index: number }): T.ThumbnailT {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return F.writeThumbnailT(this.specification.value.thumbnail[index]);
-            default:
-                throw new Error("Not of type Manifest.");
-        }
-    }
-
-    getAllThumbnails(): Array<T.ThumbnailT> {
-        const thumbnails = [];
-        for (let index = 0; index < this.getThumbnailCount(); index++) {
-            const thumbnail = this.getThumbnailAtIndex({ index });
-            thumbnails.push(thumbnail);
-        }
-        return thumbnails;
-    }
-
-    getW3cAnnotationCount(): number {
-        switch (this.getSpecificationType()) {
-            case "Manifest":
-                return this.specification.value.annotations.length;
-            default:
-                throw new Error("Not of type Manifest.");
-        }
-    }
-
-    getSliceOfW3cAnnotations({ start, end }: { start: number; end: number }): Array<T.W3cAnnotationPageT> {
-        if (!Array.isArray(this.specification.value.annotations) || start < 0 || end <= start) return [];
-        const result: Array<T.W3cAnnotationPageT> = [];
-        const annotations = this.specification.value.annotations;
-    
-        // Directly iterate over the range, avoiding the creation of a large intermediate array.
-        for (let i = start; i < end && i < annotations.length; i++) {
-            const annotation = annotations[i];
-            result.push(F.writeW3cAnnotationPageT(annotation));
-        }
-    
-        return result;
-    }
-
-
-    getAllW3cAnnotations(): Array<T.W3cAnnotationPageT> {
-        return this.getSliceOfW3cAnnotations({ start: 0, end: this.getW3cAnnotationCount() });
-    }
-        
-
-    getSliceOfW3cAnnotationsBody({ start, end }: { start: number; end: number }): Array<T.W3cAnnotationBodyT> {
-        if (!Array.isArray(this.specification.value.annotations) || start < 0 || end <= start) return [];
-        let currentIndex = 0;
-        const result: Array<T.W3cAnnotationBodyT> = [];
-
-        for (const annotation_page of this.specification.value.annotations) {
-            if (currentIndex >= end) break; // Early exit if end of range is reached
-            const items = annotation_page.items || [];
-            for (const item of items) {
-                if (item.body) {
-                    if (currentIndex >= start && currentIndex < end) {
-                        result.push(item.body);
-                    }
-                    currentIndex++;
-                    if (currentIndex >= end) break; // Stop adding bodies once the end of the range is reached
-                }
-            }
-        }
-
-        return result;
-    }
-
-    getAllAnnotationsBody(): Array<T.W3cAnnotationBodyT> {
-        return this.getSliceOfW3cAnnotationsBody({ start: 0, end: this.getW3cAnnotationsBodyCount() });
-    }
-
-    getW3cAnnotationsBodyCount(): number {
-        if (!Array.isArray(this.specification.value.annotations)) {
-            return 0;
-        }
-        return this.specification.value.annotations.reduce((count: number, annotation_page: { items: T.W3cAnnotationT[]; }) =>
-            count + (annotation_page.items?.reduce((itemCount, item) => itemCount + (item.body ? 1 : 0), 0) || 0),
-            0);
-    }
-
-    getSliceOfAnnotationsTarget({ start, end }: { start: number; end: number }): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
-        if (!Array.isArray(this.specification.value.annotations) || start < 0 || end <= start) return [];
-        let currentIndex = 0;
-        const result: Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> = [];
-
-        for (const annotation_page of this.specification.value.annotations) {
-            if (currentIndex >= end) break; // Early exit if end of range is reached
-            const items = annotation_page.items || [];
-            for (const item of items) {
-                if (item.target) {
-                    if (currentIndex >= start && currentIndex < end) {
-                        switch (item.target.kind) {
-                            case "T1":
-                                result.push(F.writeW3cAnnotationTargetT1(item.target.value));
-                                break;
-                            case "T2":
-                                result.push(F.writeW3cAnnotationTargetT2(item.target.value));
-                                break;
-                            default:
-                                throw new Error("Unknown target kind.");
-                        }
-                    }
-                    currentIndex++;
-                    if (currentIndex >= end) break; // Stop adding targets once the end of the range is reached
-                }
-            }
-        }
-
-        return result;
-    }
-
-
-    getAllW3cAnnotationsTarget(): Array<T.W3cAnnotationTargetT1 | T.W3cAnnotationTargetT2> {
-        return this.getSliceOfAnnotationsTarget({ start: 0, end: this.getW3cAnnotationsTargetCount() });
-    }
-
-
-    getW3cAnnotationsTargetCount(): number {
-        if (!Array.isArray(this.specification.value.annotations)) {
-            return 0;
-        }
-        return this.specification.value.annotations.reduce((count: number, annotation_page: { items: T.W3cAnnotationT[]; }) =>
-            count + (annotation_page.items?.reduce((itemCount, item) => itemCount + (item.target ? 1 : 0), 0) || 0),
-            0);
-    }
-    
-    getSliceOfCanvas({ start, end }: { start: number; end: number }): Array<T.CanvasT> {
-        if (!Array.isArray(this.specification.value.items) || start < 0 || end <= start) return [];
-        const result: Array<T.CanvasT> = [];
-        const items = this.specification.value.items;
-    
-        // Directly iterate over the range, avoiding the creation of a large intermediate array.
-        for (let i = start; i < end && i < items.length; i++) {
-            const canvas = items[i];
-            result.push(F.writeCanvasT(canvas));
-        }
-    
-        return result;
-    }
-
-    getAllCanvas(): Array<T.CanvasT> {
-        return this.getSliceOfCanvas({ start: 0, end: this.getCanvasCount() });
-    }
-
-    getCanvasCount(): number {
-        return this.specification.value.items.length;
-    }
-
-    getSliceOfCanvasId({ start, end }: { start: number; end: number }): Array<string> {
-        if (!Array.isArray(this.specification.value.items) || start < 0 || end <= start) return [];
-        const result: Array<string> = [];
-        const items = this.specification.value.items;
-    
-        // Directly iterate over the range, avoiding the creation of a large intermediate array.
-        for (let i = start; i < end && i < items.length; i++) {
-            const canvas = items[i];
-            result.push(canvas.id);
-        }
-    
-        return result;
-    }
-
-    getCanvasIdCount(): number {
-        return this.getCanvasCount();
-    }
-
-    getAllCanvasId(): Array<string> {
-        return this.getSliceOfCanvasId({ start: 0, end: this.getCanvasCount() });
-    }
-
-    getSliceOfCanvasLabel({ start, end }: { start: number; end: number }): Array<T.LabelT> {
-        if (!Array.isArray(this.specification.value.items) || start < 0 || end <= start) return [];
-        const result: Array<T.LabelT> = [];
-        const items = this.specification.value.items;
-    
-        // Directly iterate over the range, avoiding the creation of a large intermediate array.
-        for (let i = start; i < end && i < items.length; i++) {
-            const canvas = items[i];
-            result.push(F.writeLabelT(canvas.label));
-        }
-    
-        return result;
-    }
-
-    getAllCanvasLabel(): Array<T.LabelT> {
-        return this.getSliceOfCanvasLabel({ start: 0, end: this.getCanvasCount() });
-    }
-
-    getCanvasLabelCount(): number {
-        return this.getCanvasCount();
-    }
-
-    *getCanvasW3cAnnotations(): IterableIterator<T.W3cAnnotationT> {
-        if (!Array.isArray(this.specification.value.items)) return;
         for (const canvas of this.specification.value.items) {
-            if (!Array.isArray(canvas.annotations)) continue;
+            if (!Array.isArray(canvas.annotations)) {
+                throw new UndefinedPropertyError('Canvas annotations');
+            }
             for (const annotationPage of canvas.annotations) {
-                if (Array.isArray(annotationPage.items)) {
-                    for (const annotation of annotationPage.items) {
-                        yield F.writeW3cAnnotationT(annotation);
-                    }   
+                if (!Array.isArray(annotationPage.items)) {
+                    throw new UndefinedPropertyError('Annotation page items');
+                }
+                for (const annotation of annotationPage.items) {
+                    yield F.writeW3cAnnotationT(annotation);
                 }
             }
+        }
+    }
+
+    *getCanvas(): IterableIterator<T.CanvasT> {
+        if (!Array.isArray(this.specification?.value?.items)) {
+            throw new UndefinedPropertyError('Canvas items');
+        }
+        for (const canvas of this.specification.value.items) {
+            yield F.writeCanvasT(canvas);
+        }
+    }
+    
+    *getThumbnail(): IterableIterator<T.ThumbnailT> {
+        if (!Array.isArray(this.specification?.value?.thumbnail)) {
+            throw new UndefinedPropertyError('Thumbnail');
+        }
+        for (const thumbnail of this.specification.value.thumbnail) {
+            yield F.writeThumbnailT(thumbnail);
+        }
+    }
+    
+    *getMetadata(): IterableIterator<T.MetadataT> {
+        if (!Array.isArray(this.specification?.value?.metadata)) {
+            throw new UndefinedPropertyError('Metadata');
+        }
+        for (const metadata of this.specification.value.metadata) {
+            yield F.writeMetadataT(metadata);
         }
     }
 
