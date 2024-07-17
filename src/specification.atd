@@ -95,11 +95,23 @@ type thumbnail_t = {
   ?service : service_t list option;
 }
 
-type service_t = {
-  ?id : string option;
-  ?_type <json name="type"> : string option;
-  ?at_id <json name="@id"> : string option;
-  ?at_type <json name="@type"> : string option;  
+
+type service_t = [
+  | T1 of service_t1
+  | T2 of service_t2
+]
+
+type service_t1 = {
+  id : string;
+  _type <json name="type"> : string; 
+  ?profile : string option;
+  ?label : label_t option;
+  ?service : service_t list option;
+}
+
+type service_t2 = {
+  at_id <json name="@id"> : string;
+  at_type <json name="@type"> : string;  
   ?profile : string option;
   ?label : label_t option;
   ?service : service_t list option;

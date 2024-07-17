@@ -108,11 +108,21 @@ export type ThumbnailT = {
   service?: ServiceT[];
 }
 
-export type ServiceT = {
-  id?: string;
-  type?: string;
-  at_id?: string;
-  attype?: string;
+export type ServiceT =
+| { kind: 'T1'; value: ServiceT1 }
+| { kind: 'T2'; value: ServiceT2 }
+
+export type ServiceT1 = {
+  id: string;
+  type: string;
+  profile?: string;
+  label?: LabelT;
+  service?: ServiceT[];
+}
+
+export type ServiceT2 = {
+  at_id: string;
+  attype: string;
   profile?: string;
   label?: LabelT;
   service?: ServiceT[];
@@ -391,24 +401,62 @@ export function readThumbnailT(x: any, context: any = x): ThumbnailT {
   };
 }
 
-export function writeServiceT(x: ServiceT, context: any = x): any {
+export function _writeServiceT(x: ServiceT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeServiceT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeServiceT2(x.value, x)]
+  }
+}
+
+export function _readServiceT(x: any, context: any = x): ServiceT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readServiceT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readServiceT2(x[1], x) }
+    default:
+      _atd_bad_json('ServiceT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeServiceT1(x: ServiceT1, context: any = x): any {
   return {
-    'id': _atd_write_optional_field(_atd_write_string, x.id, x),
-    'type': _atd_write_optional_field(_atd_write_string, x.type, x),
-    '@id': _atd_write_optional_field(_atd_write_string, x.at_id, x),
-    '@type': _atd_write_optional_field(_atd_write_string, x.attype, x),
+    'id': _atd_write_required_field('ServiceT1', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ServiceT1', 'type', _atd_write_string, x.type, x),
     'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
   };
 }
 
-export function readServiceT(x: any, context: any = x): ServiceT {
+export function readServiceT1(x: any, context: any = x): ServiceT1 {
   return {
-    id: _atd_read_optional_field(_atd_read_string, x['id'], x),
-    type: _atd_read_optional_field(_atd_read_string, x['type'], x),
-    at_id: _atd_read_optional_field(_atd_read_string, x['@id'], x),
-    attype: _atd_read_optional_field(_atd_read_string, x['@type'], x),
+    id: _atd_read_required_field('ServiceT1', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ServiceT1', 'type', _atd_read_string, x['type'], x),
+    profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+  };
+}
+
+export function writeServiceT2(x: ServiceT2, context: any = x): any {
+  return {
+    '@id': _atd_write_required_field('ServiceT2', 'at_id', _atd_write_string, x.at_id, x),
+    '@type': _atd_write_required_field('ServiceT2', 'attype', _atd_write_string, x.attype, x),
+    'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+  };
+}
+
+export function readServiceT2(x: any, context: any = x): ServiceT2 {
+  return {
+    at_id: _atd_read_required_field('ServiceT2', '@id', _atd_read_string, x['@id'], x),
+    attype: _atd_read_required_field('ServiceT2', '@type', _atd_read_string, x['@type'], x),
     profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
@@ -869,7 +917,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_target,normalize_specification,restore_target, restore_specification } from "./adapter";
+import { normalize_target,normalize_specification,restore_target, restore_specification, normalize_service, restore_service } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -886,4 +934,12 @@ export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotati
 
 export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
     return normalize_target(x, context, _readW3cAnnotationTargetT);
+}
+
+export function writeServiceT(x: any, context: any = x): ServiceT {
+    return restore_service(x, context, _writeServiceT);
+}
+
+export function readServiceT(x: any, context: any = x): ServiceT {
+    return normalize_service(x, context, _readServiceT);
 }
