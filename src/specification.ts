@@ -40,7 +40,7 @@ export type ManifestT = {
 export type CanvasT = {
   id: string;
   type: string;
-  label: LabelT;
+  label?: LabelT;
   annotations?: W3cAnnotationPageT[];
 }
 
@@ -183,7 +183,7 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
   return {
     'id': _atd_write_required_field('CanvasT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('CanvasT', 'type', _atd_write_string, x.type, x),
-    'label': _atd_write_required_field('CanvasT', 'label', writeLabelT, x.label, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
 }
@@ -192,7 +192,7 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
   return {
     id: _atd_read_required_field('CanvasT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('CanvasT', 'type', _atd_read_string, x['type'], x),
-    label: _atd_read_required_field('CanvasT', 'label', readLabelT, x['label'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
   };
 }
