@@ -27,6 +27,8 @@ type canvas_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
+  ?height : int option;
+  ?width : int option;
   ?items : annotation_page_t list option;
   ?annotations : w3c_annotation_page_t list option;
 }

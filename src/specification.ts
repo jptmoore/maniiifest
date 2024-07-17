@@ -42,6 +42,8 @@ export type CanvasT = {
   id: string;
   type: string;
   label?: LabelT;
+  height?: number /*int*/;
+  width?: number /*int*/;
   items?: AnnotationPageT[];
   annotations?: W3cAnnotationPageT[];
 }
@@ -227,6 +229,8 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
     'id': _atd_write_required_field('CanvasT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('CanvasT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'height': _atd_write_optional_field(_atd_write_int, x.height, x),
+    'width': _atd_write_optional_field(_atd_write_int, x.width, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
@@ -237,6 +241,8 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
     id: _atd_read_required_field('CanvasT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('CanvasT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
+    height: _atd_read_optional_field(_atd_read_int, x['height'], x),
+    width: _atd_read_optional_field(_atd_read_int, x['width'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
   };
