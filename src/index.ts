@@ -1,7 +1,7 @@
 import { readJsonFromFile } from './utils'
 import { Manifesty } from './Manifesty';
 
-const filename = 'test/detailed.json';
+const filename = 'test/welcome.json';
 
 (function () {
     try {
@@ -13,7 +13,7 @@ const filename = 'test/detailed.json';
 
         const parser = new Manifesty(jsonData);
 
-        for (const item of parser.getCanvasAnnotationBodyServiceService()) {
+        for (const item of parser.getManifest()) {
             console.log(item);
         }
 

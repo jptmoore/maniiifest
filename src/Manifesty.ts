@@ -129,4 +129,17 @@ export class Manifesty {
         }
     }
 
+    *getManifest(): IterableIterator<T.ManifestT> {
+        const traverse = function*(items: Array<{ kind: string; value: any }>): IterableIterator<T.ManifestT> {
+            for (const item of items) {
+                if (item.kind === 'Manifest') {
+                    yield F.writeManifestT(item.value);
+                } else if (item.kind === 'Collection') {
+                    yield* traverse(item.value.items); // Recursively traverse if the item is a collection
+                }
+            }
+        };
+        yield* traverse(this.specification.value.items);
+    }
+
 }
