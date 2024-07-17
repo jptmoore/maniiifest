@@ -50,47 +50,37 @@ export class Manifesty {
 
 
     *getCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
-        if (!Array.isArray(this.specification?.value?.items)) {
-            throw new UndefinedPropertyError('Canvas items');
-        }
-        for (const canvas of this.specification.value.items) {
-            if (!Array.isArray(canvas.annotations)) {
-                throw new UndefinedPropertyError('Canvas annotations');
-            }
-            for (const annotationPage of canvas.annotations) {
-                if (!Array.isArray(annotationPage.items)) {
-                    throw new UndefinedPropertyError('Annotation page items');
-                }
-                for (const annotation of annotationPage.items) {
+        for (const canvas of this.specification.value.items ?? []) {
+            for (const annotationPage of canvas.annotations ?? []) {
+                for (const annotation of annotationPage.items ?? []) {
                     yield F.writeW3cAnnotationT(annotation);
                 }
             }
         }
     }
 
-    *getCanvas(): IterableIterator<T.CanvasT> {
-        if (!Array.isArray(this.specification?.value?.items)) {
-            throw new UndefinedPropertyError('Canvas items');
+    *getCanvasW3cAnnotationPage(): IterableIterator<T.W3cAnnotationPageT> {
+        for (const canvas of this.specification.value.items ?? []) {
+            for (const annotationPage of canvas.annotations ?? []) {
+                yield F.writeW3cAnnotationPageT(annotationPage);
+            }
         }
-        for (const canvas of this.specification.value.items) {
+    }
+
+    *getCanvas(): IterableIterator<T.CanvasT> {
+        for (const canvas of this.specification.value.items ?? []) {
             yield F.writeCanvasT(canvas);
         }
     }
     
     *getThumbnail(): IterableIterator<T.ThumbnailT> {
-        if (!Array.isArray(this.specification?.value?.thumbnail)) {
-            throw new UndefinedPropertyError('Thumbnail');
-        }
-        for (const thumbnail of this.specification.value.thumbnail) {
+        for (const thumbnail of this.specification.value.thumbnail ?? []) {
             yield F.writeThumbnailT(thumbnail);
         }
     }
     
     *getMetadata(): IterableIterator<T.MetadataT> {
-        if (!Array.isArray(this.specification?.value?.metadata)) {
-            throw new UndefinedPropertyError('Metadata');
-        }
-        for (const metadata of this.specification.value.metadata) {
+        for (const metadata of this.specification.value.metadata ?? []) {
             yield F.writeMetadataT(metadata);
         }
     }
