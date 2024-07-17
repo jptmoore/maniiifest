@@ -26,7 +26,47 @@ type canvas_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
+  ?items : annotation_page_t list option;
   ?annotations : w3c_annotation_page_t list option;
+}
+
+type annotation_page_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?items : annotation_t list option;
+}
+
+
+type annotation_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?motivation : string option; 
+  ?body : annotation_body_t option;
+  ?target : annotation_target_t option;
+  ?created : string option;
+  ?modified : string option;
+}
+
+type annotation_body_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?format : string option;
+  ?service : service_t list option;
+  ?height : int option;
+  ?width : int option;
+
+}
+
+type annotation_target_t = w3c_annotation_target_t
+
+type w3c_annotation_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?motivation : string option; 
+  ?body : w3c_annotation_body_t option;
+  ?target : w3c_annotation_target_t option;
+  ?created : string option;
+  ?modified : string option
 }
 
 type w3c_annotation_page_t = {
@@ -56,8 +96,10 @@ type thumbnail_t = {
 }
 
 type service_t = {
-  id : string;
-  _type <json name="type"> : string;
+  ?id : string option;
+  ?_type <json name="type"> : string option;
+  ?at_id <json name="@id"> : string option;
+  ?at_type <json name="@type"> : string option;  
   ?profile : string option;
   ?label : label_t option;
   ?service : service_t list option;
@@ -69,15 +111,6 @@ type summary_t = lng_string_t
 
 type lng_string_t = (string * string list) list <json repr="object">
 
-type w3c_annotation_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?motivation : string option; 
-  ?body : w3c_annotation_body_t option;
-  ?target : w3c_annotation_target_t option;
-  ?created : string option;
-  ?modified : string option
-}
 
 type w3c_annotation_body_t = {
   _type <json name="type"> : string;

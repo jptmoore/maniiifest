@@ -41,7 +41,45 @@ export type CanvasT = {
   id: string;
   type: string;
   label?: LabelT;
+  items?: AnnotationPageT[];
   annotations?: W3cAnnotationPageT[];
+}
+
+export type AnnotationPageT = {
+  id: string;
+  type: string;
+  items?: AnnotationT[];
+}
+
+export type AnnotationT = {
+  id: string;
+  type: string;
+  motivation?: string;
+  body?: AnnotationBodyT;
+  target?: AnnotationTargetT;
+  created?: string;
+  modified?: string;
+}
+
+export type AnnotationBodyT = {
+  id: string;
+  type: string;
+  format?: string;
+  service?: ServiceT[];
+  height?: number /*int*/;
+  width?: number /*int*/;
+}
+
+export type AnnotationTargetT = W3cAnnotationTargetT
+
+export type W3cAnnotationT = {
+  id: string;
+  type: string;
+  motivation?: string;
+  body?: W3cAnnotationBodyT;
+  target?: W3cAnnotationTargetT;
+  created?: string;
+  modified?: string;
 }
 
 export type W3cAnnotationPageT = {
@@ -71,8 +109,10 @@ export type ThumbnailT = {
 }
 
 export type ServiceT = {
-  id: string;
-  type: string;
+  id?: string;
+  type?: string;
+  at_id?: string;
+  attype?: string;
   profile?: string;
   label?: LabelT;
   service?: ServiceT[];
@@ -83,16 +123,6 @@ export type LabelT = LngStringT
 export type SummaryT = LngStringT
 
 export type LngStringT = [string, string[]][]
-
-export type W3cAnnotationT = {
-  id: string;
-  type: string;
-  motivation?: string;
-  body?: W3cAnnotationBodyT;
-  target?: W3cAnnotationTargetT;
-  created?: string;
-  modified?: string;
-}
 
 export type W3cAnnotationBodyT = {
   type: string;
@@ -184,6 +214,7 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
     'id': _atd_write_required_field('CanvasT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('CanvasT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
 }
@@ -193,7 +224,102 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
     id: _atd_read_required_field('CanvasT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('CanvasT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
+    items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+  };
+}
+
+export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('AnnotationPageT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('AnnotationPageT', 'type', _atd_write_string, x.type, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeAnnotationT), x.items, x),
+  };
+}
+
+export function readAnnotationPageT(x: any, context: any = x): AnnotationPageT {
+  return {
+    id: _atd_read_required_field('AnnotationPageT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('AnnotationPageT', 'type', _atd_read_string, x['type'], x),
+    items: _atd_read_optional_field(_atd_read_array(readAnnotationT), x['items'], x),
+  };
+}
+
+export function writeAnnotationT(x: AnnotationT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('AnnotationT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('AnnotationT', 'type', _atd_write_string, x.type, x),
+    'motivation': _atd_write_optional_field(_atd_write_string, x.motivation, x),
+    'body': _atd_write_optional_field(writeAnnotationBodyT, x.body, x),
+    'target': _atd_write_optional_field(writeAnnotationTargetT, x.target, x),
+    'created': _atd_write_optional_field(_atd_write_string, x.created, x),
+    'modified': _atd_write_optional_field(_atd_write_string, x.modified, x),
+  };
+}
+
+export function readAnnotationT(x: any, context: any = x): AnnotationT {
+  return {
+    id: _atd_read_required_field('AnnotationT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('AnnotationT', 'type', _atd_read_string, x['type'], x),
+    motivation: _atd_read_optional_field(_atd_read_string, x['motivation'], x),
+    body: _atd_read_optional_field(readAnnotationBodyT, x['body'], x),
+    target: _atd_read_optional_field(readAnnotationTargetT, x['target'], x),
+    created: _atd_read_optional_field(_atd_read_string, x['created'], x),
+    modified: _atd_read_optional_field(_atd_read_string, x['modified'], x),
+  };
+}
+
+export function writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('AnnotationBodyT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('AnnotationBodyT', 'type', _atd_write_string, x.type, x),
+    'format': _atd_write_optional_field(_atd_write_string, x.format, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'height': _atd_write_optional_field(_atd_write_int, x.height, x),
+    'width': _atd_write_optional_field(_atd_write_int, x.width, x),
+  };
+}
+
+export function readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
+  return {
+    id: _atd_read_required_field('AnnotationBodyT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('AnnotationBodyT', 'type', _atd_read_string, x['type'], x),
+    format: _atd_read_optional_field(_atd_read_string, x['format'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    height: _atd_read_optional_field(_atd_read_int, x['height'], x),
+    width: _atd_read_optional_field(_atd_read_int, x['width'], x),
+  };
+}
+
+export function writeAnnotationTargetT(x: AnnotationTargetT, context: any = x): any {
+  return writeW3cAnnotationTargetT(x, context);
+}
+
+export function readAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
+  return readW3cAnnotationTargetT(x, context);
+}
+
+export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('W3cAnnotationT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('W3cAnnotationT', 'type', _atd_write_string, x.type, x),
+    'motivation': _atd_write_optional_field(_atd_write_string, x.motivation, x),
+    'body': _atd_write_optional_field(writeW3cAnnotationBodyT, x.body, x),
+    'target': _atd_write_optional_field(writeW3cAnnotationTargetT, x.target, x),
+    'created': _atd_write_optional_field(_atd_write_string, x.created, x),
+    'modified': _atd_write_optional_field(_atd_write_string, x.modified, x),
+  };
+}
+
+export function readW3cAnnotationT(x: any, context: any = x): W3cAnnotationT {
+  return {
+    id: _atd_read_required_field('W3cAnnotationT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('W3cAnnotationT', 'type', _atd_read_string, x['type'], x),
+    motivation: _atd_read_optional_field(_atd_read_string, x['motivation'], x),
+    body: _atd_read_optional_field(readW3cAnnotationBodyT, x['body'], x),
+    target: _atd_read_optional_field(readW3cAnnotationTargetT, x['target'], x),
+    created: _atd_read_optional_field(_atd_read_string, x['created'], x),
+    modified: _atd_read_optional_field(_atd_read_string, x['modified'], x),
   };
 }
 
@@ -267,8 +393,10 @@ export function readThumbnailT(x: any, context: any = x): ThumbnailT {
 
 export function writeServiceT(x: ServiceT, context: any = x): any {
   return {
-    'id': _atd_write_required_field('ServiceT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('ServiceT', 'type', _atd_write_string, x.type, x),
+    'id': _atd_write_optional_field(_atd_write_string, x.id, x),
+    'type': _atd_write_optional_field(_atd_write_string, x.type, x),
+    '@id': _atd_write_optional_field(_atd_write_string, x.at_id, x),
+    '@type': _atd_write_optional_field(_atd_write_string, x.attype, x),
     'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
@@ -277,8 +405,10 @@ export function writeServiceT(x: ServiceT, context: any = x): any {
 
 export function readServiceT(x: any, context: any = x): ServiceT {
   return {
-    id: _atd_read_required_field('ServiceT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('ServiceT', 'type', _atd_read_string, x['type'], x),
+    id: _atd_read_optional_field(_atd_read_string, x['id'], x),
+    type: _atd_read_optional_field(_atd_read_string, x['type'], x),
+    at_id: _atd_read_optional_field(_atd_read_string, x['@id'], x),
+    attype: _atd_read_optional_field(_atd_read_string, x['@type'], x),
     profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
@@ -307,30 +437,6 @@ export function writeLngStringT(x: LngStringT, context: any = x): any {
 
 export function readLngStringT(x: any, context: any = x): LngStringT {
   return _atd_read_assoc_object_into_array(_atd_read_array(_atd_read_string))(x, context);
-}
-
-export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
-  return {
-    'id': _atd_write_required_field('W3cAnnotationT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('W3cAnnotationT', 'type', _atd_write_string, x.type, x),
-    'motivation': _atd_write_optional_field(_atd_write_string, x.motivation, x),
-    'body': _atd_write_optional_field(writeW3cAnnotationBodyT, x.body, x),
-    'target': _atd_write_optional_field(writeW3cAnnotationTargetT, x.target, x),
-    'created': _atd_write_optional_field(_atd_write_string, x.created, x),
-    'modified': _atd_write_optional_field(_atd_write_string, x.modified, x),
-  };
-}
-
-export function readW3cAnnotationT(x: any, context: any = x): W3cAnnotationT {
-  return {
-    id: _atd_read_required_field('W3cAnnotationT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('W3cAnnotationT', 'type', _atd_read_string, x['type'], x),
-    motivation: _atd_read_optional_field(_atd_read_string, x['motivation'], x),
-    body: _atd_read_optional_field(readW3cAnnotationBodyT, x['body'], x),
-    target: _atd_read_optional_field(readW3cAnnotationTargetT, x['target'], x),
-    created: _atd_read_optional_field(_atd_read_string, x['created'], x),
-    modified: _atd_read_optional_field(_atd_read_string, x['modified'], x),
-  };
 }
 
 export function writeW3cAnnotationBodyT(x: W3cAnnotationBodyT, context: any = x): any {

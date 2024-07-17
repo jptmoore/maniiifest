@@ -12,7 +12,7 @@ const filename = 'test/detailed.json';
         }
 
         const parser = new Manifesty(jsonData);
-        for (const item of parser.getCanvas()) {
+        for (const item of parser.getCanvasAnnotation()) {
             console.log(item);
         }
 

@@ -67,6 +67,24 @@ export class Manifesty {
         }
     }
 
+    *getCanvasAnnotationPage(): IterableIterator<T.AnnotationPageT> {
+        for (const canvas of this.specification.value.items ?? []) {
+            for (const annotationPage of canvas.items ?? []) {
+                yield F.writeAnnotationPageT(annotationPage);
+            }
+        }
+    }
+
+    *getCanvasAnnotation(): IterableIterator<T.AnnotationT> {
+        for (const canvas of this.specification.value.items ?? []) {
+            for (const annotationPage of canvas.items ?? []) {
+                for (const annotation of annotationPage.items ?? []) {
+                    yield F.writeAnnotationT(annotation);
+                }
+            }
+        }
+    }
+
     *getCanvas(): IterableIterator<T.CanvasT> {
         for (const canvas of this.specification.value.items ?? []) {
             yield F.writeCanvasT(canvas);
