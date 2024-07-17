@@ -229,5 +229,27 @@ export class Manifesty {
             count + (annotation_page.items?.reduce((itemCount, item) => itemCount + (item.target ? 1 : 0), 0) || 0),
             0);
     }
+    
+    getSliceOfCanvas({ start, end }: { start: number; end: number }): Array<T.CanvasT> {
+        if (!Array.isArray(this.specification.value.items) || start < 0 || end <= start) return [];
+        const result: Array<T.CanvasT> = [];
+        const items = this.specification.value.items;
+    
+        // Directly iterate over the range, avoiding the creation of a large intermediate array.
+        for (let i = start; i < end && i < items.length; i++) {
+            const canvas = items[i];
+            result.push(F.writeCanvasT(canvas));
+        }
+    
+        return result;
+    }
+
+    getAllCanvas(): Array<T.CanvasT> {
+        return this.getSliceOfCanvas({ start: 0, end: this.getCanvasCount() });
+    }
+
+    getCanvasCount(): number {
+        return this.specification.value.items.length;
+    }
 
 }
