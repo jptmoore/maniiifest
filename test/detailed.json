@@ -283,29 +283,7 @@
               "language": "en",
               "value": "I love this manifest!"
             },
-            "target": "https://example.org/iiif/book1/manifest1"
-          },
-          {
-            "id": "https://example.org/iiif/book1/page/manifest/a2",
-            "type": "Annotation",
-            "motivation": "commenting",
-            "body": {
-              "type": "TextualBody",
-              "language": "en",
-              "value": "I hate this manifest!"
-            },
-            "target": "https://example.org/iiif/book1/manifest2"
-          },
-          {
-            "id": "https://example.org/iiif/book1/page/manifest/a3",
-            "type": "Annotation",
-            "motivation": "commenting",
-            "body": {
-              "type": "TextualBody",
-              "language": "en",
-              "value": "I'm indifferent to this manifest!"
-            },
-            "target": "https://example.org/iiif/book1/manifest3"
+            "target": "https://example.org/iiif/book1/manifest"
           }
         ]
       }
