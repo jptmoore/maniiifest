@@ -266,12 +266,34 @@ export class Manifesty {
         return result;
     }
 
+    getCanvasIdCount(): number {
+        return this.getCanvasCount();
+    }
+
     getAllCanvasId(): Array<string> {
         return this.getSliceOfCanvasId({ start: 0, end: this.getCanvasCount() });
     }
 
-    getCanvasIdAtIndex({ index }: { index: number }): string {
-        return this.specification.value.items[index].id;
+    getSliceOfCanvasLabel({ start, end }: { start: number; end: number }): Array<T.LabelT> {
+        if (!Array.isArray(this.specification.value.items) || start < 0 || end <= start) return [];
+        const result: Array<T.LabelT> = [];
+        const items = this.specification.value.items;
+    
+        // Directly iterate over the range, avoiding the creation of a large intermediate array.
+        for (let i = start; i < end && i < items.length; i++) {
+            const canvas = items[i];
+            result.push(F.writeLabelT(canvas.label));
+        }
+    
+        return result;
+    }
+
+    getAllCanvasLabel(): Array<T.LabelT> {
+        return this.getSliceOfCanvasLabel({ start: 0, end: this.getCanvasCount() });
+    }
+
+    getCanvasLabelCount(): number {
+        return this.getCanvasCount();
     }
 
 }
