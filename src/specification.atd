@@ -18,11 +18,14 @@ type manifest_t = {
   ?requiredStatement : required_statement_t option;
   ?summary : summary_t option;
   ?thumbnail : thumbnail_t list option;
-  ?items : items_t list option;
+  ?items : canvas_t list option;
   ?annotations : w3c_annotation_page_t list option;
 }
 
-type items_t = {
+type canvas_t = {
+  id : string;
+  _type <json name="type"> : string;
+  label : label_t;
   ?annotations : w3c_annotation_page_t list option;
 }
 
