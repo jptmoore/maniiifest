@@ -12,10 +12,10 @@ const filename = 'test/detailed.json';
         }
 
         const parser = new Manifesty(jsonData);
-        for (const item of parser.getCanvasAnnotation()) {
+
+        for (const item of parser.getCanvasAnnotationBodyServiceService()) {
             console.log(item);
         }
-
 
 
     } catch (error) {

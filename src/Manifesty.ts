@@ -85,6 +85,32 @@ export class Manifesty {
         }
     }
 
+    *getCanvasAnnotationBodyService(): IterableIterator<T.ServiceT> {
+        for (const canvas of this.specification.value.items ?? []) {
+            for (const annotationPage of canvas.items ?? []) {
+                for (const annotation of annotationPage.items ?? []) {
+                    for (const service of annotation.body.service ?? []) {
+                            yield F.writeServiceT(service);
+                        }
+                }
+            }
+        }
+    }
+
+    *getCanvasAnnotationBodyServiceService(): IterableIterator<T.ServiceT> {
+        for (const canvas of this.specification.value.items ?? []) {
+            for (const annotationPage of canvas.items ?? []) {
+                for (const annotation of annotationPage.items ?? []) {
+                    for (const service of annotation.body.service ?? []) {
+                            for (const serviceService of service.value.service ?? []) {
+                                yield F.writeServiceT(serviceService);
+                            }
+                        }
+                }
+            }
+        }
+    }
+
     *getCanvas(): IterableIterator<T.CanvasT> {
         for (const canvas of this.specification.value.items ?? []) {
             yield F.writeCanvasT(canvas);
