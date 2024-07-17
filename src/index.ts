@@ -12,7 +12,7 @@ const filename = 'test/detailed.json';
         }
 
         const parser = new Manifesty(jsonData);
-        const result = parser.getAllCanvas();
+        const result = parser.getSliceOfCanvasId({start: 0, end: 5});
         console.log(result);
     } catch (error) {
         console.error("An error occurred:", error);

@@ -252,4 +252,26 @@ export class Manifesty {
         return this.specification.value.items.length;
     }
 
+    getSliceOfCanvasId({ start, end }: { start: number; end: number }): Array<string> {
+        if (!Array.isArray(this.specification.value.items) || start < 0 || end <= start) return [];
+        const result: Array<string> = [];
+        const items = this.specification.value.items;
+    
+        // Directly iterate over the range, avoiding the creation of a large intermediate array.
+        for (let i = start; i < end && i < items.length; i++) {
+            const canvas = items[i];
+            result.push(canvas.id);
+        }
+    
+        return result;
+    }
+
+    getAllCanvasId(): Array<string> {
+        return this.getSliceOfCanvasId({ start: 0, end: this.getCanvasCount() });
+    }
+
+    getCanvasIdAtIndex({ index }: { index: number }): string {
+        return this.specification.value.items[index].id;
+    }
+
 }
