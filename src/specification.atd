@@ -25,7 +25,7 @@ type manifest_t = {
 type canvas_t = {
   id : string;
   _type <json name="type"> : string;
-  label : label_t;
+  ?label : label_t option;
   ?annotations : w3c_annotation_page_t list option;
 }
 
