@@ -1,7 +1,7 @@
 import { readJsonFromFile } from './utils'
 import { Manifesty } from './Manifesty';
 
-const filename = 'test/detailed.json';
+const filename = 'test/collection.json';
 
 (function () {
     try {
