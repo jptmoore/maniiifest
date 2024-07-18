@@ -41,6 +41,8 @@ export type ManifestT = {
   navDate?: string;
   rights?: string;
   seeAlso?: SeeAlsoT[];
+  homepage?: HomepageT[];
+  provider?: ProviderT[];
   items?: CanvasT[];
   annotations?: W3cAnnotationPageT[];
 }
@@ -95,6 +97,9 @@ export type W3cAnnotationT = {
 export type W3cAnnotationPageT = {
   id: string;
   type: string;
+  service?: ServiceT[];
+  rendering?: RendingT[];
+  thumbnail?: ThumbnailT[];
   items?: W3cAnnotationT[];
 }
 
@@ -108,14 +113,24 @@ export type RequiredStatementT = {
   value: LngStringT;
 }
 
-export type ThumbnailT = {
+export type ThumbnailT = ResourceT
+
+export type LogoT = ResourceT
+
+export type ResourceT = {
   id: string;
   type: string;
   label?: LabelT;
   format?: string;
+  profile?: string;
   width?: number /*int*/;
   height?: number /*int*/;
+  duration?: number /*int*/;
+  language?: string;
+  rendering?: RendingT[];
+  thumbnail?: ThumbnailT[];
   service?: ServiceT[];
+  annotations?: AnnotationPageT[];
 }
 
 export type ServiceT =
@@ -165,6 +180,31 @@ export type SeeAlsoT = {
   label?: LabelT;
   format?: string;
   profile?: string;
+}
+
+export type HomepageT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+  format?: string;
+  language?: string[];
+}
+
+export type RendingT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+  format?: string;
+  profile?: string;
+}
+
+export type ProviderT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+  homepage?: HomepageT[];
+  logo?: LogoT[];
+  seeAlso?: SeeAlsoT[];
 }
 
 export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
@@ -225,6 +265,8 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'navDate': _atd_write_optional_field(_atd_write_string, x.navDate, x),
     'rights': _atd_write_optional_field(_atd_write_string, x.rights, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
+    'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
+    'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'items': _atd_write_optional_field(_atd_write_array(writeCanvasT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
@@ -246,6 +288,8 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     navDate: _atd_read_optional_field(_atd_read_string, x['navDate'], x),
     rights: _atd_read_optional_field(_atd_read_string, x['rights'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
+    homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
+    provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     items: _atd_read_optional_field(_atd_read_array(readCanvasT), x['items'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
   };
@@ -373,6 +417,9 @@ export function writeW3cAnnotationPageT(x: W3cAnnotationPageT, context: any = x)
   return {
     'id': _atd_write_required_field('W3cAnnotationPageT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('W3cAnnotationPageT', 'type', _atd_write_string, x.type, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'items': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.items, x),
   };
 }
@@ -381,6 +428,9 @@ export function readW3cAnnotationPageT(x: any, context: any = x): W3cAnnotationP
   return {
     id: _atd_read_required_field('W3cAnnotationPageT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('W3cAnnotationPageT', 'type', _atd_read_string, x['type'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     items: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['items'], x),
   };
 }
@@ -414,26 +464,54 @@ export function readRequiredStatementT(x: any, context: any = x): RequiredStatem
 }
 
 export function writeThumbnailT(x: ThumbnailT, context: any = x): any {
-  return {
-    'id': _atd_write_required_field('ThumbnailT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('ThumbnailT', 'type', _atd_write_string, x.type, x),
-    'label': _atd_write_optional_field(writeLabelT, x.label, x),
-    'format': _atd_write_optional_field(_atd_write_string, x.format, x),
-    'width': _atd_write_optional_field(_atd_write_int, x.width, x),
-    'height': _atd_write_optional_field(_atd_write_int, x.height, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
-  };
+  return writeResourceT(x, context);
 }
 
 export function readThumbnailT(x: any, context: any = x): ThumbnailT {
+  return readResourceT(x, context);
+}
+
+export function writeLogoT(x: LogoT, context: any = x): any {
+  return writeResourceT(x, context);
+}
+
+export function readLogoT(x: any, context: any = x): LogoT {
+  return readResourceT(x, context);
+}
+
+export function writeResourceT(x: ResourceT, context: any = x): any {
   return {
-    id: _atd_read_required_field('ThumbnailT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('ThumbnailT', 'type', _atd_read_string, x['type'], x),
+    'id': _atd_write_required_field('ResourceT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ResourceT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'format': _atd_write_optional_field(_atd_write_string, x.format, x),
+    'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
+    'width': _atd_write_optional_field(_atd_write_int, x.width, x),
+    'height': _atd_write_optional_field(_atd_write_int, x.height, x),
+    'duration': _atd_write_optional_field(_atd_write_int, x.duration, x),
+    'language': _atd_write_optional_field(_atd_write_string, x.language, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
+  };
+}
+
+export function readResourceT(x: any, context: any = x): ResourceT {
+  return {
+    id: _atd_read_required_field('ResourceT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ResourceT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(_atd_read_string, x['format'], x),
+    profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
     width: _atd_read_optional_field(_atd_read_int, x['width'], x),
     height: _atd_read_optional_field(_atd_read_int, x['height'], x),
+    duration: _atd_read_optional_field(_atd_read_int, x['duration'], x),
+    language: _atd_read_optional_field(_atd_read_string, x['language'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
 
@@ -596,6 +674,68 @@ export function readSeeAlsoT(x: any, context: any = x): SeeAlsoT {
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(_atd_read_string, x['format'], x),
     profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
+  };
+}
+
+export function writeHomepageT(x: HomepageT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('HomepageT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('HomepageT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'format': _atd_write_optional_field(_atd_write_string, x.format, x),
+    'language': _atd_write_optional_field(_atd_write_array(_atd_write_string), x.language, x),
+  };
+}
+
+export function readHomepageT(x: any, context: any = x): HomepageT {
+  return {
+    id: _atd_read_required_field('HomepageT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('HomepageT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    format: _atd_read_optional_field(_atd_read_string, x['format'], x),
+    language: _atd_read_optional_field(_atd_read_array(_atd_read_string), x['language'], x),
+  };
+}
+
+export function writeRendingT(x: RendingT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('RendingT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('RendingT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'format': _atd_write_optional_field(_atd_write_string, x.format, x),
+    'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
+  };
+}
+
+export function readRendingT(x: any, context: any = x): RendingT {
+  return {
+    id: _atd_read_required_field('RendingT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('RendingT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    format: _atd_read_optional_field(_atd_read_string, x['format'], x),
+    profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
+  };
+}
+
+export function writeProviderT(x: ProviderT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('ProviderT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ProviderT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
+    'logo': _atd_write_optional_field(_atd_write_array(writeLogoT), x.logo, x),
+    'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
+  };
+}
+
+export function readProviderT(x: any, context: any = x): ProviderT {
+  return {
+    id: _atd_read_required_field('ProviderT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ProviderT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
+    logo: _atd_read_optional_field(_atd_read_array(readLogoT), x['logo'], x),
+    seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
   };
 }
 

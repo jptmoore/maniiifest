@@ -26,6 +26,8 @@ type manifest_t = {
   ?navDate : string option;
   ?rights : string option;
   ?seeAlso : see_also_t list option;
+  ?homepage : homepage_t list option;
+  ?provider : provider_t list option;
   ?items : canvas_t list option;
   ?annotations : w3c_annotation_page_t list option;
 }
@@ -82,6 +84,9 @@ type w3c_annotation_t = {
 type w3c_annotation_page_t = {
   id : string;
   _type <json name="type"> : string;
+  ?service : service_t list option;
+  ?rendering : rending_t list option;
+  ?thumbnail : thumbnail_t list option;
   ?items : w3c_annotation_t list option;
 }
 
@@ -95,14 +100,24 @@ type required_statement_t = {
   value : lng_string_t;
 }
 
-type thumbnail_t = {
+type thumbnail_t = resource_t
+
+type logo_t = resource_t
+
+type resource_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
   ?format : string option;
+  ?profile : string option;
   ?width : int option;
   ?height : int option;
+  ?duration : int option;
+  ?language : string option;
+  ?rendering : rending_t list option;
+  ?thumbnail : thumbnail_t list option;
   ?service : service_t list option;
+  ?annotations : annotation_page_t list option;
 }
 
 
@@ -156,4 +171,29 @@ type see_also_t = {
   ?label : label_t option;
   ?format : string option;
   ?profile : string option;
+}
+
+type homepage_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?label : label_t option;
+  ?format : string option;
+  ?language : string list option;
+}
+
+type rending_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?label : label_t option;
+  ?format : string option;
+  ?profile : string option;
+}
+
+type provider_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?label : label_t option;
+  ?homepage : homepage_t list option;
+  ?logo : logo_t list option;
+  ?seeAlso : see_also_t list option;
 }
