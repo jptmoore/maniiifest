@@ -31,6 +31,8 @@ export type ManifestT = {
   type: string;
   label: LabelT;
   metadata?: MetadataT[];
+  service?: ServiceT[];
+  services?: ServiceT[];
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
   thumbnail?: ThumbnailT[];
@@ -119,7 +121,6 @@ export type ServiceT1 = {
   id: string;
   type: string;
   profile?: string;
-  label?: LabelT;
   service?: ServiceT[];
 }
 
@@ -127,7 +128,6 @@ export type ServiceT2 = {
   id: string;
   type: string;
   profile?: string;
-  label?: LabelT;
   service?: ServiceT[];
 }
 
@@ -202,6 +202,8 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'type': _atd_write_required_field('ManifestT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_required_field('ManifestT', 'label', writeLabelT, x.label, x),
     'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'services': _atd_write_optional_field(_atd_write_array(writeServiceT), x.services, x),
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
@@ -216,6 +218,8 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     type: _atd_read_required_field('ManifestT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_required_field('ManifestT', 'label', readLabelT, x['label'], x),
     metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    services: _atd_read_optional_field(_atd_read_array(readServiceT), x['services'], x),
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
@@ -437,7 +441,6 @@ export function writeServiceT1(x: ServiceT1, context: any = x): any {
     'id': _atd_write_required_field('ServiceT1', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('ServiceT1', 'type', _atd_write_string, x.type, x),
     'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
-    'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
   };
 }
@@ -447,7 +450,6 @@ export function readServiceT1(x: any, context: any = x): ServiceT1 {
     id: _atd_read_required_field('ServiceT1', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('ServiceT1', 'type', _atd_read_string, x['type'], x),
     profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
-    label: _atd_read_optional_field(readLabelT, x['label'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
   };
 }
@@ -457,7 +459,6 @@ export function writeServiceT2(x: ServiceT2, context: any = x): any {
     '@id': _atd_write_required_field('ServiceT2', 'id', _atd_write_string, x.id, x),
     '@type': _atd_write_required_field('ServiceT2', 'type', _atd_write_string, x.type, x),
     'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
-    'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
   };
 }
@@ -467,7 +468,6 @@ export function readServiceT2(x: any, context: any = x): ServiceT2 {
     id: _atd_read_required_field('ServiceT2', '@id', _atd_read_string, x['@id'], x),
     type: _atd_read_required_field('ServiceT2', '@type', _atd_read_string, x['@type'], x),
     profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
-    label: _atd_read_optional_field(readLabelT, x['label'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
   };
 }
