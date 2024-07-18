@@ -22,10 +22,10 @@ type manifest_t = {
   ?summary : summary_t option;
   ?thumbnail : thumbnail_t list option;
   ?rendering : rending_t list option;
-  ?viewingDirection : string option;
-  ?behavior : string list option;
-  ?navDate : string option;
-  ?rights : string option;
+  ?viewingDirection : viewing_direction_t option;
+  ?behavior : behavior_t list option;
+  ?navDate : nav_date_t option;
+  ?rights : rights_t option;
   ?seeAlso : see_also_t list option;
   ?homepage : homepage_t list option;
   ?provider : provider_t list option;
@@ -39,8 +39,8 @@ type canvas_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
-  ?height : int option;
-  ?width : int option;
+  ?height : height_t option;
+  ?width : width_t option;
   ?items : annotation_page_t list option;
   ?annotations : w3c_annotation_page_t list option;
 }
@@ -58,17 +58,17 @@ type annotation_t = {
   ?motivation : string option; 
   ?body : annotation_body_t option;
   ?target : annotation_target_t option;
-  ?created : string option;
-  ?modified : string option;
+  ?created : created_t option;
+  ?modified : modified_t option;
 }
 
 type annotation_body_t = {
   id : string;
   _type <json name="type"> : string;
-  ?format : string option;
+  ?format : format_t option;
   ?service : service_t list option;
-  ?height : int option;
-  ?width : int option;
+  ?height : height_t option;
+  ?width : width_t option;
 
 }
 
@@ -77,11 +77,11 @@ type annotation_target_t = w3c_annotation_target_t
 type w3c_annotation_t = {
   id : string;
   _type <json name="type"> : string;
-  ?motivation : string option; 
+  ?motivation : motivation_t option; 
   ?body : w3c_annotation_body_t option;
   ?target : w3c_annotation_target_t option;
-  ?created : string option;
-  ?modified : string option
+  ?created : created_t option;
+  ?modified : modified_t option
 }
 
 type w3c_annotation_page_t = {
@@ -111,12 +111,12 @@ type resource_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
-  ?format : string option;
-  ?profile : string option;
-  ?width : int option;
-  ?height : int option;
-  ?duration : int option;
-  ?language : string option;
+  ?format : format_t option;
+  ?profile : profile_t option;
+  ?width : width_t option;
+  ?height : height_t option;
+  ?duration : duration_t option;
+  ?language : language_t option;
   ?rendering : rending_t list option;
   ?thumbnail : thumbnail_t list option;
   ?service : service_t list option;
@@ -132,14 +132,14 @@ type service_t = [
 type service_t1 = {
   id : string;
   _type <json name="type"> : string; 
-  ?profile : string option;
+  ?profile : profile_t option;
   ?service : service_t list option;
 }
 
 type service_t2 = {
   id <json name="@id"> : string;
   _type <json name="@type"> : string;  
-  ?profile : string option;
+  ?profile : profile_t option;
   ?service : service_t list option;
 }
 
@@ -152,8 +152,8 @@ type lng_string_t = (string * string list) list <json repr="object">
 
 type w3c_annotation_body_t = {
   _type <json name="type"> : string;
-  language : string;
-  value : string
+  language : language_t;
+  value : value_t;
 }
 
 type w3c_annotation_target_t = [
@@ -165,31 +165,31 @@ type w3c_annotation_target_t1 = string
 
 type w3c_annotation_target_t2 = {
   _type <json name="type"> : string;
-  source: string;
+  source: source_t;
 } 
 
 type see_also_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
-  ?format : string option;
-  ?profile : string option;
+  ?format : format_t option;
+  ?profile : profile_t option;
 }
 
 type homepage_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
-  ?format : string option;
-  ?language : string list option;
+  ?format : format_t option;
+  ?language : language_t list option;
 }
 
 type rending_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
-  ?format : string option;
-  ?profile : string option;
+  ?format : format_t option;
+  ?profile : profile_t option;
 }
 
 type provider_t = {
@@ -212,3 +212,20 @@ type start_t = {
   _type <json name="type"> : string;
   ?label : label_t option  
 }
+
+type height_t = int
+type width_t = int
+type duration_t = int
+type created_t = string
+type modified_t = string
+type motivation_t = string
+type format_t = string
+type profile_t = string
+type language_t = string
+type viewing_direction_t = string
+type behavior_t = string
+type nav_date_t = string
+type rights_t = string
+type source_t = string
+type value_t = string
+
