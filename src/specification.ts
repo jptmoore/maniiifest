@@ -36,6 +36,11 @@ export type ManifestT = {
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
   thumbnail?: ThumbnailT[];
+  viewingDirection?: string;
+  behavior?: string[];
+  navDate?: string;
+  rights?: string;
+  seeAlso?: SeeAlsoT[];
   items?: CanvasT[];
   annotations?: W3cAnnotationPageT[];
 }
@@ -154,6 +159,14 @@ export type W3cAnnotationTargetT2 = {
   source: string;
 }
 
+export type SeeAlsoT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+  format?: string;
+  profile?: string;
+}
+
 export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
   switch (x.kind) {
     case 'Manifest':
@@ -207,6 +220,11 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'viewingDirection': _atd_write_optional_field(_atd_write_string, x.viewingDirection, x),
+    'behavior': _atd_write_optional_field(_atd_write_array(_atd_write_string), x.behavior, x),
+    'navDate': _atd_write_optional_field(_atd_write_string, x.navDate, x),
+    'rights': _atd_write_optional_field(_atd_write_string, x.rights, x),
+    'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
     'items': _atd_write_optional_field(_atd_write_array(writeCanvasT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
@@ -223,6 +241,11 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    viewingDirection: _atd_read_optional_field(_atd_read_string, x['viewingDirection'], x),
+    behavior: _atd_read_optional_field(_atd_read_array(_atd_read_string), x['behavior'], x),
+    navDate: _atd_read_optional_field(_atd_read_string, x['navDate'], x),
+    rights: _atd_read_optional_field(_atd_read_string, x['rights'], x),
+    seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
     items: _atd_read_optional_field(_atd_read_array(readCanvasT), x['items'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
   };
@@ -553,6 +576,26 @@ export function readW3cAnnotationTargetT2(x: any, context: any = x): W3cAnnotati
   return {
     type: _atd_read_required_field('W3cAnnotationTargetT2', 'type', _atd_read_string, x['type'], x),
     source: _atd_read_required_field('W3cAnnotationTargetT2', 'source', _atd_read_string, x['source'], x),
+  };
+}
+
+export function writeSeeAlsoT(x: SeeAlsoT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('SeeAlsoT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('SeeAlsoT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'format': _atd_write_optional_field(_atd_write_string, x.format, x),
+    'profile': _atd_write_optional_field(_atd_write_string, x.profile, x),
+  };
+}
+
+export function readSeeAlsoT(x: any, context: any = x): SeeAlsoT {
+  return {
+    id: _atd_read_required_field('SeeAlsoT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('SeeAlsoT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    format: _atd_read_optional_field(_atd_read_string, x['format'], x),
+    profile: _atd_read_optional_field(_atd_read_string, x['profile'], x),
   };
 }
 

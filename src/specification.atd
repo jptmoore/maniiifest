@@ -21,6 +21,11 @@ type manifest_t = {
   ?requiredStatement : required_statement_t option;
   ?summary : summary_t option;
   ?thumbnail : thumbnail_t list option;
+  ?viewingDirection : string option;
+  ?behavior : string list option;
+  ?navDate : string option;
+  ?rights : string option;
+  ?seeAlso : see_also_t list option;
   ?items : canvas_t list option;
   ?annotations : w3c_annotation_page_t list option;
 }
@@ -145,3 +150,10 @@ type w3c_annotation_target_t2 = {
   source: string;
 } 
 
+type see_also_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?label : label_t option;
+  ?format : string option;
+  ?profile : string option;
+}
