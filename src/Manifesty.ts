@@ -146,6 +146,30 @@ export class Manifesty {
             }
         }
     }
+
+
+    *getManifestThumbnailService(): IterableIterator<T.ServiceT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const thumbnail of this.specification.value.thumbnail ?? []) {
+                for (const service of thumbnail.service ?? []) {
+                    yield F.writeServiceT(service);
+                }
+            }
+        }
+    }
+
+    *getManifestThumbnailServiceService(): IterableIterator<T.ServiceT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const thumbnail of this.specification.value.thumbnail ?? []) {
+                for (const service of thumbnail.service ?? []) {
+                    for (const serviceService of service.value.service ?? []) {
+                        yield F.writeServiceT(serviceService);
+                    }
+                }
+            }
+        }
+    }
+
     *getManifestServiceService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const service of this.specification.value.service ?? []) {

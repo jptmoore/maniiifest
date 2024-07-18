@@ -13,9 +13,8 @@ const filename = 'test/detailed.json';
 
         const parser = new Manifesty(jsonData);
 
-        for (const item of parser.getManifestServiceService()) {
-            const service : any = item;
-            console.log(service);
+        for (const item of parser.getManifestThumbnailService()) {
+            console.log(item);
         }
 
 
