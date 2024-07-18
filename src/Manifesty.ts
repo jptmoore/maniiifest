@@ -138,4 +138,40 @@ export class Manifesty {
         }
     }
 
+
+    *getManifestService(): IterableIterator<T.ServiceT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const service of this.specification.value.service ?? []) {
+                yield F.writeServiceT(service);
+            }
+        }
+    }
+    *getManifestServiceService(): IterableIterator<T.ServiceT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const service of this.specification.value.service ?? []) {
+                for (const serviceService of service.value.service ?? []) {
+                    yield F.writeServiceT(serviceService);
+                }
+            }
+        }
+    }
+
+    *getManifestServices(): IterableIterator<T.ServiceT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const services of this.specification.value.services ?? []) {
+                yield F.writeServiceT(services);
+            }
+        }
+    }
+
+    *getManifestServicesService(): IterableIterator<T.ServiceT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const services of this.specification.value.services ?? []) {
+                for (const service of services.value.service ?? []) {
+                    yield F.writeServiceT(service);
+                }
+            }
+        }
+    }
+
 }
