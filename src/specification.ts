@@ -36,6 +36,7 @@ export type ManifestT = {
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
   thumbnail?: ThumbnailT[];
+  rendering?: RendingT[];
   viewingDirection?: string;
   behavior?: string[];
   navDate?: string;
@@ -43,6 +44,8 @@ export type ManifestT = {
   seeAlso?: SeeAlsoT[];
   homepage?: HomepageT[];
   provider?: ProviderT[];
+  partOf?: PartOfT[];
+  start?: StartT;
   items?: CanvasT[];
   annotations?: W3cAnnotationPageT[];
 }
@@ -207,6 +210,18 @@ export type ProviderT = {
   seeAlso?: SeeAlsoT[];
 }
 
+export type PartOfT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+}
+
+export type StartT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+}
+
 export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
   switch (x.kind) {
     case 'Manifest':
@@ -260,6 +275,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
     'viewingDirection': _atd_write_optional_field(_atd_write_string, x.viewingDirection, x),
     'behavior': _atd_write_optional_field(_atd_write_array(_atd_write_string), x.behavior, x),
     'navDate': _atd_write_optional_field(_atd_write_string, x.navDate, x),
@@ -267,6 +283,8 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
     'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
+    'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
+    'start': _atd_write_optional_field(writeStartT, x.start, x),
     'items': _atd_write_optional_field(_atd_write_array(writeCanvasT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
   };
@@ -283,6 +301,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
     viewingDirection: _atd_read_optional_field(_atd_read_string, x['viewingDirection'], x),
     behavior: _atd_read_optional_field(_atd_read_array(_atd_read_string), x['behavior'], x),
     navDate: _atd_read_optional_field(_atd_read_string, x['navDate'], x),
@@ -290,6 +309,8 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
     homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
+    partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
+    start: _atd_read_optional_field(readStartT, x['start'], x),
     items: _atd_read_optional_field(_atd_read_array(readCanvasT), x['items'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
   };
@@ -736,6 +757,38 @@ export function readProviderT(x: any, context: any = x): ProviderT {
     homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
     logo: _atd_read_optional_field(_atd_read_array(readLogoT), x['logo'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
+  };
+}
+
+export function writePartOfT(x: PartOfT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('PartOfT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('PartOfT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+  };
+}
+
+export function readPartOfT(x: any, context: any = x): PartOfT {
+  return {
+    id: _atd_read_required_field('PartOfT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('PartOfT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+  };
+}
+
+export function writeStartT(x: StartT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('StartT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('StartT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+  };
+}
+
+export function readStartT(x: any, context: any = x): StartT {
+  return {
+    id: _atd_read_required_field('StartT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('StartT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
   };
 }
 

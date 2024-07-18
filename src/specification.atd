@@ -21,6 +21,7 @@ type manifest_t = {
   ?requiredStatement : required_statement_t option;
   ?summary : summary_t option;
   ?thumbnail : thumbnail_t list option;
+  ?rendering : rending_t list option;
   ?viewingDirection : string option;
   ?behavior : string list option;
   ?navDate : string option;
@@ -28,6 +29,8 @@ type manifest_t = {
   ?seeAlso : see_also_t list option;
   ?homepage : homepage_t list option;
   ?provider : provider_t list option;
+  ?partOf : part_of_t list option;
+  ?start : start_t option;
   ?items : canvas_t list option;
   ?annotations : w3c_annotation_page_t list option;
 }
@@ -196,4 +199,16 @@ type provider_t = {
   ?homepage : homepage_t list option;
   ?logo : logo_t list option;
   ?seeAlso : see_also_t list option;
+}
+
+type part_of_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?label : label_t option;
+}
+
+type start_t = {
+  id : string;
+  _type <json name="type"> : string;
+  ?label : label_t option  
 }
