@@ -189,7 +189,7 @@ export type W3cAnnotationTargetT1 = string
 
 export type W3cAnnotationTargetT2 = {
   type: string;
-  source: SourceT;
+  source: IdT;
 }
 
 export type ExternalT = {
@@ -260,8 +260,6 @@ export type BehaviorT = string
 export type NavDateT = string
 
 export type RightsT = string
-
-export type SourceT = string
 
 export type ValueT = string
 
@@ -744,14 +742,14 @@ export function readW3cAnnotationTargetT1(x: any, context: any = x): W3cAnnotati
 export function writeW3cAnnotationTargetT2(x: W3cAnnotationTargetT2, context: any = x): any {
   return {
     'type': _atd_write_required_field('W3cAnnotationTargetT2', 'type', _atd_write_string, x.type, x),
-    'source': _atd_write_required_field('W3cAnnotationTargetT2', 'source', writeSourceT, x.source, x),
+    'source': _atd_write_required_field('W3cAnnotationTargetT2', 'source', writeIdT, x.source, x),
   };
 }
 
 export function readW3cAnnotationTargetT2(x: any, context: any = x): W3cAnnotationTargetT2 {
   return {
     type: _atd_read_required_field('W3cAnnotationTargetT2', 'type', _atd_read_string, x['type'], x),
-    source: _atd_read_required_field('W3cAnnotationTargetT2', 'source', readSourceT, x['source'], x),
+    source: _atd_read_required_field('W3cAnnotationTargetT2', 'source', readIdT, x['source'], x),
   };
 }
 
@@ -996,14 +994,6 @@ export function writeRightsT(x: RightsT, context: any = x): any {
 }
 
 export function readRightsT(x: any, context: any = x): RightsT {
-  return _atd_read_string(x, context);
-}
-
-export function writeSourceT(x: SourceT, context: any = x): any {
-  return _atd_write_string(x, context);
-}
-
-export function readSourceT(x: any, context: any = x): SourceT {
   return _atd_read_string(x, context);
 }
 

@@ -161,7 +161,7 @@ type w3c_annotation_target_t1 = string
 
 type w3c_annotation_target_t2 = {
   _type <json name="type"> : string;
-  source: source_t;
+  source: id_t;
 } 
 
 type external_t = {
@@ -214,6 +214,5 @@ type viewing_direction_t = string
 type behavior_t = string
 type nav_date_t = string
 type rights_t = string
-type source_t = string
 type value_t = string
 
