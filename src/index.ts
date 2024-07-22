@@ -13,8 +13,8 @@ const filename = 'test/detailed.json';
 
         const parser = new Manifesty(jsonData);
 
-        for (const item of parser.getManifest()) {
-            console.log(item);
+        for (const item of parser.getManifestW3cAnnotation()) {
+            console.log(item)
         }
 
 

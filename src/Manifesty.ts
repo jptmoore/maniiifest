@@ -198,4 +198,14 @@ export class Manifesty {
         }
     }
 
+    *getManifestW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const annotationPage of this.specification.value.annotations ?? []) {
+                for (const annotation of annotationPage.items ?? []) {
+                    yield F.writeW3cAnnotationT(annotation);
+                }
+            }
+        }
+    }
+
 }
