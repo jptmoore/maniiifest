@@ -50,6 +50,12 @@ export type ManifestT = {
   annotations?: W3cAnnotationPageT[];
 }
 
+export type ClassT = {
+  id: string;
+  type: string;
+  label?: LabelT;
+}
+
 export type CanvasT = {
   id: string;
   type: string;
@@ -144,6 +150,7 @@ export type ServiceT =
 export type ServiceT1 = {
   id: string;
   type: string;
+  label?: LabelT;
   profile?: ProfileT;
   service?: ServiceT[];
 }
@@ -207,17 +214,15 @@ export type ProviderT = {
   seeAlso?: SeeAlsoT[];
 }
 
-export type PartOfT = {
-  id: string;
-  type: string;
-  label?: LabelT;
-}
+export type PartOfT = ClassT
 
-export type StartT = {
-  id: string;
-  type: string;
-  label?: LabelT;
-}
+export type StartT = ClassT
+
+export type MotivationT = MotivationT1
+
+export type MotivationT1 = string
+
+export type MotivationT2 = string[]
 
 export type HeightT = number /*int*/
 
@@ -228,8 +233,6 @@ export type DurationT = number /*int*/
 export type CreatedT = string
 
 export type ModifiedT = string
-
-export type MotivationT = string
 
 export type FormatT = string
 
@@ -340,6 +343,22 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     start: _atd_read_optional_field(readStartT, x['start'], x),
     items: _atd_read_optional_field(_atd_read_array(readCanvasT), x['items'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+  };
+}
+
+export function writeClassT(x: ClassT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('ClassT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ClassT', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+  };
+}
+
+export function readClassT(x: any, context: any = x): ClassT {
+  return {
+    id: _atd_read_required_field('ClassT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ClassT', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
   };
 }
 
@@ -591,6 +610,7 @@ export function writeServiceT1(x: ServiceT1, context: any = x): any {
   return {
     'id': _atd_write_required_field('ServiceT1', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('ServiceT1', 'type', _atd_write_string, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
   };
@@ -600,6 +620,7 @@ export function readServiceT1(x: any, context: any = x): ServiceT1 {
   return {
     id: _atd_read_required_field('ServiceT1', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('ServiceT1', 'type', _atd_read_string, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
   };
@@ -786,35 +807,43 @@ export function readProviderT(x: any, context: any = x): ProviderT {
 }
 
 export function writePartOfT(x: PartOfT, context: any = x): any {
-  return {
-    'id': _atd_write_required_field('PartOfT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('PartOfT', 'type', _atd_write_string, x.type, x),
-    'label': _atd_write_optional_field(writeLabelT, x.label, x),
-  };
+  return writeClassT(x, context);
 }
 
 export function readPartOfT(x: any, context: any = x): PartOfT {
-  return {
-    id: _atd_read_required_field('PartOfT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('PartOfT', 'type', _atd_read_string, x['type'], x),
-    label: _atd_read_optional_field(readLabelT, x['label'], x),
-  };
+  return readClassT(x, context);
 }
 
 export function writeStartT(x: StartT, context: any = x): any {
-  return {
-    'id': _atd_write_required_field('StartT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('StartT', 'type', _atd_write_string, x.type, x),
-    'label': _atd_write_optional_field(writeLabelT, x.label, x),
-  };
+  return writeClassT(x, context);
 }
 
 export function readStartT(x: any, context: any = x): StartT {
-  return {
-    id: _atd_read_required_field('StartT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('StartT', 'type', _atd_read_string, x['type'], x),
-    label: _atd_read_optional_field(readLabelT, x['label'], x),
-  };
+  return readClassT(x, context);
+}
+
+export function writeMotivationT(x: MotivationT, context: any = x): any {
+  return writeMotivationT1(x, context);
+}
+
+export function readMotivationT(x: any, context: any = x): MotivationT {
+  return readMotivationT1(x, context);
+}
+
+export function writeMotivationT1(x: MotivationT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readMotivationT1(x: any, context: any = x): MotivationT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeMotivationT2(x: MotivationT2, context: any = x): any {
+  return _atd_write_array(_atd_write_string)(x, context);
+}
+
+export function readMotivationT2(x: any, context: any = x): MotivationT2 {
+  return _atd_read_array(_atd_read_string)(x, context);
 }
 
 export function writeHeightT(x: HeightT, context: any = x): any {
@@ -854,14 +883,6 @@ export function writeModifiedT(x: ModifiedT, context: any = x): any {
 }
 
 export function readModifiedT(x: any, context: any = x): ModifiedT {
-  return _atd_read_string(x, context);
-}
-
-export function writeMotivationT(x: MotivationT, context: any = x): any {
-  return _atd_write_string(x, context);
-}
-
-export function readMotivationT(x: any, context: any = x): MotivationT {
   return _atd_read_string(x, context);
 }
 

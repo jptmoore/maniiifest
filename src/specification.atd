@@ -35,10 +35,14 @@ type manifest_t = {
   ?annotations : w3c_annotation_page_t list option;
 }
 
-type canvas_t = {
+type class_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
+}
+
+type canvas_t = {
+  inherit class_t;
   ?height : height_t option;
   ?width : width_t option;
   ?items : annotation_page_t list option;
@@ -109,9 +113,7 @@ type thumbnail_t = resource_t
 type logo_t = resource_t
 
 type resource_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?label : label_t option;
+  inherit class_t;
   ?format : format_t option;
   ?profile : profile_t option;
   ?width : width_t option;
@@ -131,8 +133,7 @@ type service_t = [
 ]
 
 type service_t1 = {
-  id : string;
-  _type <json name="type"> : string; 
+  inherit class_t;
   ?profile : profile_t option;
   ?service : service_t list option;
 }
@@ -170,9 +171,7 @@ type w3c_annotation_target_t2 = {
 } 
 
 type external_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?label : label_t option;
+  inherit class_t;
   ?format : format_t option;
   ?profile : profile_t option;
 }
@@ -182,40 +181,33 @@ type see_also_t = external_t
 type rending_t = external_t
 
 type homepage_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?label : label_t option;
+  inherit class_t;
   ?format : format_t option;
   ?language : language_t list option;
 }
 
 type provider_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?label : label_t option;
+  inherit class_t;
   ?homepage : homepage_t list option;
   ?logo : logo_t list option;
   ?seeAlso : see_also_t list option;
 }
 
-type part_of_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?label : label_t option;
-}
+type part_of_t = class_t
 
-type start_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?label : label_t option  
-}
+type start_t = class_t
+
+type motivation_t = motivation_t1
+
+type motivation_t1 = string
+
+type motivation_t2 = string list
 
 type height_t = int
 type width_t = int
 type duration_t = int
 type created_t = string
 type modified_t = string
-type motivation_t = string
 type format_t = string
 type profile_t = string
 type language_t = string
