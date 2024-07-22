@@ -197,7 +197,10 @@ type part_of_t = class_t
 
 type start_t = class_t
 
-type motivation_t = motivation_t1
+type motivation_t = [
+  | T1 of motivation_t1
+  | T2 of motivation_t2
+]
 
 type motivation_t1 = string
 

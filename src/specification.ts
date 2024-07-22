@@ -218,7 +218,9 @@ export type PartOfT = ClassT
 
 export type StartT = ClassT
 
-export type MotivationT = MotivationT1
+export type MotivationT =
+| { kind: 'T1'; value: MotivationT1 }
+| { kind: 'T2'; value: MotivationT2 }
 
 export type MotivationT1 = string
 
@@ -826,12 +828,26 @@ export function readStartT(x: any, context: any = x): StartT {
   return readClassT(x, context);
 }
 
-export function writeMotivationT(x: MotivationT, context: any = x): any {
-  return writeMotivationT1(x, context);
+export function _writeMotivationT(x: MotivationT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeMotivationT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeMotivationT2(x.value, x)]
+  }
 }
 
-export function readMotivationT(x: any, context: any = x): MotivationT {
-  return readMotivationT1(x, context);
+export function _readMotivationT(x: any, context: any = x): MotivationT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readMotivationT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readMotivationT2(x[1], x) }
+    default:
+      _atd_bad_json('MotivationT', x, context)
+      throw new Error('impossible')
+  }
 }
 
 export function writeMotivationT1(x: MotivationT1, context: any = x): any {
@@ -1348,7 +1364,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_target,normalize_specification,restore_target, restore_specification, normalize_service, restore_service } from "./adapter";
+import { normalize_target,normalize_specification,restore_target, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -1373,4 +1389,12 @@ export function writeServiceT(x: any, context: any = x): ServiceT {
 
 export function readServiceT(x: any, context: any = x): ServiceT {
     return normalize_service(x, context, _readServiceT);
+}
+
+export function writeMotivationT(x: any, context: any = x): MotivationT {
+    return restore_motivation(x, context, _writeMotivationT);
+}
+
+export function readMotivationT(x: any, context: any = x): MotivationT {
+    return normalize_motivation(x, context, _readMotivationT);
 }

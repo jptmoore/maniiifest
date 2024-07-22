@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_target,normalize_specification,restore_target, restore_specification, normalize_service, restore_service } from "./adapter";
+import { normalize_target,normalize_specification,restore_target, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -25,4 +25,12 @@ export function writeServiceT(x: any, context: any = x): ServiceT {
 
 export function readServiceT(x: any, context: any = x): ServiceT {
     return normalize_service(x, context, _readServiceT);
+}
+
+export function writeMotivationT(x: any, context: any = x): MotivationT {
+    return restore_motivation(x, context, _writeMotivationT);
+}
+
+export function readMotivationT(x: any, context: any = x): MotivationT {
+    return normalize_motivation(x, context, _readMotivationT);
 }

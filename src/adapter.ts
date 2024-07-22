@@ -56,3 +56,21 @@ export function normalize_service<T, R>(x: T, context: any = {}, fn: (input: [st
         throw new Error('Input type did not match expected types.');
     }
 }
+
+export function restore_motivation<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error('Result array must contain at least two items.');
+    }
+    return resultList[1];
+}
+
+export function normalize_motivation<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (typeof (x) === 'string') {
+        return fn(['T1', x], context);
+    } else if (Array.isArray(x)) {
+        return fn(['T2', x], context);
+    } else {
+        throw new Error('Input type did not match expected types.');
+    }
+}

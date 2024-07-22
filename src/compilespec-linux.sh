@@ -12,6 +12,9 @@ sed -i 's/export function readW3cAnnotationTargetT(/export function _readW3cAnno
 sed -i 's/export function writeServiceT(/export function _writeServiceT(/g' specification.ts
 sed -i 's/export function readServiceT(/export function _readServiceT(/g' specification.ts
 
+sed -i 's/export function writeMotivationT(/export function _writeMotivationT(/g' specification.ts
+sed -i 's/export function readMotivationT(/export function _readMotivationT(/g' specification.ts
+
 # rename _type to use type
 sed -i 's/_type/type/g' specification.ts
 # add adapter code
