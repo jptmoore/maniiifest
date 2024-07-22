@@ -68,13 +68,7 @@ type annotation_t = {
 }
 
 type annotation_body_t = {
-  id : id_t;
-  _type <json name="type"> : type_t;
-  ?format : format_t option;
-  ?service : service_t list option;
-  ?height : height_t option;
-  ?width : width_t option;
-
+  inherit resource_t;
 }
 
 type annotation_target_t = w3c_annotation_target_t

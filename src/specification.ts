@@ -86,10 +86,17 @@ export type AnnotationT = {
 export type AnnotationBodyT = {
   id: IdT;
   type: TypeT;
+  label?: LabelT;
   format?: FormatT;
-  service?: ServiceT[];
-  height?: HeightT;
+  profile?: ProfileT;
   width?: WidthT;
+  height?: HeightT;
+  duration?: DurationT;
+  language?: LanguageT;
+  rendering?: RendingT[];
+  thumbnail?: ThumbnailT[];
+  service?: ServiceT[];
+  annotations?: AnnotationPageT[];
 }
 
 export type AnnotationTargetT = W3cAnnotationTargetT
@@ -438,10 +445,17 @@ export function writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any 
   return {
     'id': _atd_write_required_field('AnnotationBodyT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationBodyT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
-    'height': _atd_write_optional_field(writeHeightT, x.height, x),
+    'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
     'width': _atd_write_optional_field(writeWidthT, x.width, x),
+    'height': _atd_write_optional_field(writeHeightT, x.height, x),
+    'duration': _atd_write_optional_field(writeDurationT, x.duration, x),
+    'language': _atd_write_optional_field(writeLanguageT, x.language, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
 
@@ -449,10 +463,17 @@ export function readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
   return {
     id: _atd_read_required_field('AnnotationBodyT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationBodyT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
-    height: _atd_read_optional_field(readHeightT, x['height'], x),
+    profile: _atd_read_optional_field(readProfileT, x['profile'], x),
     width: _atd_read_optional_field(readWidthT, x['width'], x),
+    height: _atd_read_optional_field(readHeightT, x['height'], x),
+    duration: _atd_read_optional_field(readDurationT, x['duration'], x),
+    language: _atd_read_optional_field(readLanguageT, x['language'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
 
