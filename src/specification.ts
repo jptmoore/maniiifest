@@ -69,11 +69,12 @@ export type AnnotationPageT = {
 export type AnnotationT = {
   id: string;
   type: string;
-  motivation?: string;
+  service?: ServiceT[];
+  thumbnail?: ThumbnailT[];
+  rendering?: RendingT[];
+  motivation?: MotivationT;
   body?: AnnotationBodyT;
   target?: AnnotationTargetT;
-  created?: CreatedT;
-  modified?: ModifiedT;
 }
 
 export type AnnotationBodyT = {
@@ -177,13 +178,17 @@ export type W3cAnnotationTargetT2 = {
   source: SourceT;
 }
 
-export type SeeAlsoT = {
+export type ExternalT = {
   id: string;
   type: string;
   label?: LabelT;
   format?: FormatT;
   profile?: ProfileT;
 }
+
+export type SeeAlsoT = ExternalT
+
+export type RendingT = ExternalT
 
 export type HomepageT = {
   id: string;
@@ -191,14 +196,6 @@ export type HomepageT = {
   label?: LabelT;
   format?: FormatT;
   language?: LanguageT[];
-}
-
-export type RendingT = {
-  id: string;
-  type: string;
-  label?: LabelT;
-  format?: FormatT;
-  profile?: ProfileT;
 }
 
 export type ProviderT = {
@@ -390,11 +387,12 @@ export function writeAnnotationT(x: AnnotationT, context: any = x): any {
   return {
     'id': _atd_write_required_field('AnnotationT', 'id', _atd_write_string, x.id, x),
     'type': _atd_write_required_field('AnnotationT', 'type', _atd_write_string, x.type, x),
-    'motivation': _atd_write_optional_field(_atd_write_string, x.motivation, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'motivation': _atd_write_optional_field(writeMotivationT, x.motivation, x),
     'body': _atd_write_optional_field(writeAnnotationBodyT, x.body, x),
     'target': _atd_write_optional_field(writeAnnotationTargetT, x.target, x),
-    'created': _atd_write_optional_field(writeCreatedT, x.created, x),
-    'modified': _atd_write_optional_field(writeModifiedT, x.modified, x),
   };
 }
 
@@ -402,11 +400,12 @@ export function readAnnotationT(x: any, context: any = x): AnnotationT {
   return {
     id: _atd_read_required_field('AnnotationT', 'id', _atd_read_string, x['id'], x),
     type: _atd_read_required_field('AnnotationT', 'type', _atd_read_string, x['type'], x),
-    motivation: _atd_read_optional_field(_atd_read_string, x['motivation'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    motivation: _atd_read_optional_field(readMotivationT, x['motivation'], x),
     body: _atd_read_optional_field(readAnnotationBodyT, x['body'], x),
     target: _atd_read_optional_field(readAnnotationTargetT, x['target'], x),
-    created: _atd_read_optional_field(readCreatedT, x['created'], x),
-    modified: _atd_read_optional_field(readModifiedT, x['modified'], x),
   };
 }
 
@@ -708,24 +707,40 @@ export function readW3cAnnotationTargetT2(x: any, context: any = x): W3cAnnotati
   };
 }
 
-export function writeSeeAlsoT(x: SeeAlsoT, context: any = x): any {
+export function writeExternalT(x: ExternalT, context: any = x): any {
   return {
-    'id': _atd_write_required_field('SeeAlsoT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('SeeAlsoT', 'type', _atd_write_string, x.type, x),
+    'id': _atd_write_required_field('ExternalT', 'id', _atd_write_string, x.id, x),
+    'type': _atd_write_required_field('ExternalT', 'type', _atd_write_string, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
   };
 }
 
-export function readSeeAlsoT(x: any, context: any = x): SeeAlsoT {
+export function readExternalT(x: any, context: any = x): ExternalT {
   return {
-    id: _atd_read_required_field('SeeAlsoT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('SeeAlsoT', 'type', _atd_read_string, x['type'], x),
+    id: _atd_read_required_field('ExternalT', 'id', _atd_read_string, x['id'], x),
+    type: _atd_read_required_field('ExternalT', 'type', _atd_read_string, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
   };
+}
+
+export function writeSeeAlsoT(x: SeeAlsoT, context: any = x): any {
+  return writeExternalT(x, context);
+}
+
+export function readSeeAlsoT(x: any, context: any = x): SeeAlsoT {
+  return readExternalT(x, context);
+}
+
+export function writeRendingT(x: RendingT, context: any = x): any {
+  return writeExternalT(x, context);
+}
+
+export function readRendingT(x: any, context: any = x): RendingT {
+  return readExternalT(x, context);
 }
 
 export function writeHomepageT(x: HomepageT, context: any = x): any {
@@ -745,26 +760,6 @@ export function readHomepageT(x: any, context: any = x): HomepageT {
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     language: _atd_read_optional_field(_atd_read_array(readLanguageT), x['language'], x),
-  };
-}
-
-export function writeRendingT(x: RendingT, context: any = x): any {
-  return {
-    'id': _atd_write_required_field('RendingT', 'id', _atd_write_string, x.id, x),
-    'type': _atd_write_required_field('RendingT', 'type', _atd_write_string, x.type, x),
-    'label': _atd_write_optional_field(writeLabelT, x.label, x),
-    'format': _atd_write_optional_field(writeFormatT, x.format, x),
-    'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
-  };
-}
-
-export function readRendingT(x: any, context: any = x): RendingT {
-  return {
-    id: _atd_read_required_field('RendingT', 'id', _atd_read_string, x['id'], x),
-    type: _atd_read_required_field('RendingT', 'type', _atd_read_string, x['type'], x),
-    label: _atd_read_optional_field(readLabelT, x['label'], x),
-    format: _atd_read_optional_field(readFormatT, x['format'], x),
-    profile: _atd_read_optional_field(readProfileT, x['profile'], x),
   };
 }
 

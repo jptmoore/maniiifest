@@ -55,11 +55,12 @@ type annotation_page_t = {
 type annotation_t = {
   id : string;
   _type <json name="type"> : string;
-  ?motivation : string option; 
+  ?service : service_t list option;
+  ?thumbnail : thumbnail_t list option;
+  ?rendering : rending_t list option;
+  ?motivation : motivation_t option;
   ?body : annotation_body_t option;
   ?target : annotation_target_t option;
-  ?created : created_t option;
-  ?modified : modified_t option;
 }
 
 type annotation_body_t = {
@@ -168,13 +169,17 @@ type w3c_annotation_target_t2 = {
   source: source_t;
 } 
 
-type see_also_t = {
+type external_t = {
   id : string;
   _type <json name="type"> : string;
   ?label : label_t option;
   ?format : format_t option;
   ?profile : profile_t option;
 }
+
+type see_also_t = external_t
+
+type rending_t = external_t
 
 type homepage_t = {
   id : string;
@@ -182,14 +187,6 @@ type homepage_t = {
   ?label : label_t option;
   ?format : format_t option;
   ?language : language_t list option;
-}
-
-type rending_t = {
-  id : string;
-  _type <json name="type"> : string;
-  ?label : label_t option;
-  ?format : format_t option;
-  ?profile : profile_t option;
 }
 
 type provider_t = {
