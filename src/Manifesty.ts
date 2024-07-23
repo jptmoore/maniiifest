@@ -12,7 +12,7 @@ export class Manifesty {
         }
     }
 
-    *getCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
+    *iterateCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
@@ -24,7 +24,7 @@ export class Manifesty {
         }
     }
 
-    *getCanvasW3cAnnotationPage(): IterableIterator<T.W3cAnnotationPageT> {
+    *iterateCanvasW3cAnnotationPage(): IterableIterator<T.W3cAnnotationPageT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
@@ -34,7 +34,7 @@ export class Manifesty {
         }
     }
 
-    *getCanvasAnnotationPage(): IterableIterator<T.AnnotationPageT> {
+    *iterateCanvasAnnotationPage(): IterableIterator<T.AnnotationPageT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -44,7 +44,7 @@ export class Manifesty {
         }
     }
 
-    *getCanvasAnnotation(): IterableIterator<T.AnnotationT> {
+    *iterateCanvasAnnotation(): IterableIterator<T.AnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -56,7 +56,7 @@ export class Manifesty {
         }
     }
 
-    *getCanvasAnnotationBodyService(): IterableIterator<T.ServiceT> {
+    *iterateCanvasAnnotationBodyService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -70,7 +70,7 @@ export class Manifesty {
         }
     }
 
-    *getCanvasAnnotationBodyServiceService(): IterableIterator<T.ServiceT> {
+    *iterateCanvasAnnotationBodyServiceService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -86,7 +86,7 @@ export class Manifesty {
         }
     }
 
-    *getCanvas(): IterableIterator<T.CanvasT> {
+    *iterateCanvas(): IterableIterator<T.CanvasT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 yield F.writeCanvasT(canvas);
@@ -94,19 +94,19 @@ export class Manifesty {
         }
     }
 
-    *getThumbnail(): IterableIterator<T.ThumbnailT> {
+    *iterateThumbnail(): IterableIterator<T.ThumbnailT> {
         for (const thumbnail of this.specification.value.thumbnail ?? []) {
             yield F.writeThumbnailT(thumbnail);
         }
     }
 
-    *getMetadata(): IterableIterator<T.MetadataT> {
+    *iterateMetadata(): IterableIterator<T.MetadataT> {
         for (const metadata of this.specification.value.metadata ?? []) {
             yield F.writeMetadataT(metadata);
         }
     }
 
-    *getManifest(): IterableIterator<T.ManifestT> {
+    *iterateManifest(): IterableIterator<T.ManifestT> {
         if (this.specification.kind === 'Manifest') {
             yield F.writeManifestT(this.specification.value);
         } else if (this.specification.kind === 'Collection') {
@@ -123,7 +123,7 @@ export class Manifesty {
         }
     }
 
-    *getCollection(): IterableIterator<T.CollectionT> {
+    *iterateCollection(): IterableIterator<T.CollectionT> {
         if (this.specification.kind === 'Collection') {
             yield F.writeCollectionT(this.specification.value);
             const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.CollectionT> {
@@ -139,7 +139,7 @@ export class Manifesty {
     }
 
 
-    *getManifestService(): IterableIterator<T.ServiceT> {
+    *iterateManifestService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const service of this.specification.value.service ?? []) {
                 yield F.writeServiceT(service);
@@ -148,7 +148,7 @@ export class Manifesty {
     }
 
 
-    *getManifestThumbnailService(): IterableIterator<T.ServiceT> {
+    *iterateManifestThumbnailService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const thumbnail of this.specification.value.thumbnail ?? []) {
                 for (const service of thumbnail.service ?? []) {
@@ -158,7 +158,7 @@ export class Manifesty {
         }
     }
 
-    *getManifestThumbnailServiceService(): IterableIterator<T.ServiceT> {
+    *iterateManifestThumbnailServiceService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const thumbnail of this.specification.value.thumbnail ?? []) {
                 for (const service of thumbnail.service ?? []) {
@@ -170,7 +170,7 @@ export class Manifesty {
         }
     }
 
-    *getManifestServiceService(): IterableIterator<T.ServiceT> {
+    *iterateManifestServiceService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const service of this.specification.value.service ?? []) {
                 for (const serviceService of service.value.service ?? []) {
@@ -180,7 +180,7 @@ export class Manifesty {
         }
     }
 
-    *getManifestServices(): IterableIterator<T.ServiceT> {
+    *iterateManifestServices(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const services of this.specification.value.services ?? []) {
                 yield F.writeServiceT(services);
@@ -188,7 +188,7 @@ export class Manifesty {
         }
     }
 
-    *getManifestServicesService(): IterableIterator<T.ServiceT> {
+    *iterateManifestServicesService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const services of this.specification.value.services ?? []) {
                 for (const service of services.value.service ?? []) {
@@ -198,7 +198,7 @@ export class Manifesty {
         }
     }
 
-    *getManifestW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
+    *iterateManifestW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const annotationPage of this.specification.value.annotations ?? []) {
                 for (const annotation of annotationPage.items ?? []) {
