@@ -36,7 +36,7 @@ export type ManifestT = {
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
   thumbnail?: ThumbnailT[];
-  rendering?: RendingT[];
+  rendering?: RenderingT[];
   viewingDirection?: ViewingDirectionT;
   behavior?: BehaviorT[];
   navDate?: NavDateT;
@@ -77,7 +77,7 @@ export type AnnotationT = {
   type: TypeT;
   service?: ServiceT[];
   thumbnail?: ThumbnailT[];
-  rendering?: RendingT[];
+  rendering?: RenderingT[];
   motivation?: MotivationT;
   body?: AnnotationBodyT;
   target?: AnnotationTargetT;
@@ -93,7 +93,7 @@ export type AnnotationBodyT = {
   height?: HeightT;
   duration?: DurationT;
   language?: LanguageT;
-  rendering?: RendingT[];
+  rendering?: RenderingT[];
   thumbnail?: ThumbnailT[];
   service?: ServiceT[];
   annotations?: AnnotationPageT[];
@@ -115,7 +115,7 @@ export type W3cAnnotationPageT = {
   id: IdT;
   type: TypeT;
   service?: ServiceT[];
-  rendering?: RendingT[];
+  rendering?: RenderingT[];
   thumbnail?: ThumbnailT[];
   items?: W3cAnnotationT[];
 }
@@ -144,7 +144,7 @@ export type ResourceT = {
   height?: HeightT;
   duration?: DurationT;
   language?: LanguageT;
-  rendering?: RendingT[];
+  rendering?: RenderingT[];
   thumbnail?: ThumbnailT[];
   service?: ServiceT[];
   annotations?: AnnotationPageT[];
@@ -202,7 +202,7 @@ export type ExternalT = {
 
 export type SeeAlsoT = ExternalT
 
-export type RendingT = ExternalT
+export type RenderingT = ExternalT
 
 export type HomepageT = {
   id: IdT;
@@ -316,7 +316,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
-    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'viewingDirection': _atd_write_optional_field(writeViewingDirectionT, x.viewingDirection, x),
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
@@ -342,7 +342,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
-    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     viewingDirection: _atd_read_optional_field(readViewingDirectionT, x['viewingDirection'], x),
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
@@ -419,7 +419,7 @@ export function writeAnnotationT(x: AnnotationT, context: any = x): any {
     'type': _atd_write_required_field('AnnotationT', 'type', writeTypeT, x.type, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
-    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'motivation': _atd_write_optional_field(writeMotivationT, x.motivation, x),
     'body': _atd_write_optional_field(writeAnnotationBodyT, x.body, x),
     'target': _atd_write_optional_field(writeAnnotationTargetT, x.target, x),
@@ -432,7 +432,7 @@ export function readAnnotationT(x: any, context: any = x): AnnotationT {
     type: _atd_read_required_field('AnnotationT', 'type', readTypeT, x['type'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
-    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     motivation: _atd_read_optional_field(readMotivationT, x['motivation'], x),
     body: _atd_read_optional_field(readAnnotationBodyT, x['body'], x),
     target: _atd_read_optional_field(readAnnotationTargetT, x['target'], x),
@@ -450,7 +450,7 @@ export function writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any 
     'height': _atd_write_optional_field(writeHeightT, x.height, x),
     'duration': _atd_write_optional_field(writeDurationT, x.duration, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
-    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
@@ -468,7 +468,7 @@ export function readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
     height: _atd_read_optional_field(readHeightT, x['height'], x),
     duration: _atd_read_optional_field(readDurationT, x['duration'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
-    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
@@ -512,7 +512,7 @@ export function writeW3cAnnotationPageT(x: W3cAnnotationPageT, context: any = x)
     'id': _atd_write_required_field('W3cAnnotationPageT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('W3cAnnotationPageT', 'type', writeTypeT, x.type, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
-    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'items': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.items, x),
   };
@@ -523,7 +523,7 @@ export function readW3cAnnotationPageT(x: any, context: any = x): W3cAnnotationP
     id: _atd_read_required_field('W3cAnnotationPageT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('W3cAnnotationPageT', 'type', readTypeT, x['type'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
-    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     items: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['items'], x),
   };
@@ -584,7 +584,7 @@ export function writeResourceT(x: ResourceT, context: any = x): any {
     'height': _atd_write_optional_field(writeHeightT, x.height, x),
     'duration': _atd_write_optional_field(writeDurationT, x.duration, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
-    'rendering': _atd_write_optional_field(_atd_write_array(writeRendingT), x.rendering, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
@@ -602,7 +602,7 @@ export function readResourceT(x: any, context: any = x): ResourceT {
     height: _atd_read_optional_field(readHeightT, x['height'], x),
     duration: _atd_read_optional_field(readDurationT, x['duration'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
-    rendering: _atd_read_optional_field(_atd_read_array(readRendingT), x['rendering'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
@@ -781,11 +781,11 @@ export function readSeeAlsoT(x: any, context: any = x): SeeAlsoT {
   return readExternalT(x, context);
 }
 
-export function writeRendingT(x: RendingT, context: any = x): any {
+export function writeRenderingT(x: RenderingT, context: any = x): any {
   return writeExternalT(x, context);
 }
 
-export function readRendingT(x: any, context: any = x): RendingT {
+export function readRenderingT(x: any, context: any = x): RenderingT {
   return readExternalT(x, context);
 }
 

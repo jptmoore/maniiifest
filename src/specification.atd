@@ -21,7 +21,7 @@ type manifest_t = {
   ?requiredStatement : required_statement_t option;
   ?summary : summary_t option;
   ?thumbnail : thumbnail_t list option;
-  ?rendering : rending_t list option;
+  ?rendering : rendering_t list option;
   ?viewingDirection : viewing_direction_t option;
   ?behavior : behavior_t list option;
   ?navDate : nav_date_t option;
@@ -61,7 +61,7 @@ type annotation_t = {
   _type <json name="type"> : type_t;
   ?service : service_t list option;
   ?thumbnail : thumbnail_t list option;
-  ?rendering : rending_t list option;
+  ?rendering : rendering_t list option;
   ?motivation : motivation_t option;
   ?body : annotation_body_t option;
   ?target : annotation_target_t option;
@@ -87,7 +87,7 @@ type w3c_annotation_page_t = {
   id : id_t;
   _type <json name="type"> : type_t;
   ?service : service_t list option;
-  ?rendering : rending_t list option;
+  ?rendering : rendering_t list option;
   ?thumbnail : thumbnail_t list option;
   ?items : w3c_annotation_t list option;
 }
@@ -114,7 +114,7 @@ type resource_t = {
   ?height : height_t option;
   ?duration : duration_t option;
   ?language : language_t option;
-  ?rendering : rending_t list option;
+  ?rendering : rendering_t list option;
   ?thumbnail : thumbnail_t list option;
   ?service : service_t list option;
   ?annotations : annotation_page_t list option;
@@ -172,7 +172,7 @@ type external_t = {
 
 type see_also_t = external_t
 
-type rending_t = external_t
+type rendering_t = external_t
 
 type homepage_t = {
   inherit class_t;

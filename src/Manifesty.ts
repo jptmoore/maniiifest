@@ -152,6 +152,12 @@ export class Manifesty {
         }
     }
 
+    *iterateRendering(): IterableIterator<T.RenderingT> {
+        for (const rendering of this.specification.value.rendering ?? []) {
+            yield F.writeRenderingT(rendering);
+        }
+    }
+
     *iterateProviderHomepage(): IterableIterator<T.HomepageT> {
         for (const provider of this.specification.value.provider ?? []) {
             for (const homepage of provider.homepage ?? []) {
