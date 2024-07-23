@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # compile spec
-atdts specification.atd
+atdts ../src/specification.atd
 # rename functions to use adatper
 sed -i 's/export function writeSpecificationT(/export function _writeSpecificationT(/g' specification.ts
 sed -i 's/export function readSpecificationT(/export function _readSpecificationT(/g' specification.ts
@@ -19,3 +19,6 @@ sed -i 's/export function readMotivationT(/export function _readMotivationT(/g' 
 sed -i 's/_type/type/g' specification.ts
 # add adapter code
 cat use_adapter.ts >> specification.ts
+
+# move to src
+mv specification.ts ../src/specification.ts
