@@ -167,6 +167,18 @@ export class Manifesty {
         }
     }
 
+    *iterateSeeAlso(): IterableIterator<T.SeeAlsoT> {
+        for (const seeAlso of this.specification.value.seeAlso ?? []) {
+            yield F.writeSeeAlsoT(seeAlso);
+        }
+    }
+
+    *iteratePartOf(): IterableIterator<T.PartOfT> {
+        for (const partOf of this.specification.value.partOf ?? []) {
+            yield F.writePartOfT(partOf);
+        }
+    }
+
     *iterateManifest(): IterableIterator<T.ManifestT> {
         if (this.specification.kind === 'Manifest') {
             yield F.writeManifestT(this.specification.value);
