@@ -44,6 +44,13 @@ export class Manifesty {
         return this.specification.kind === 'Manifest' ? F.writeStartT(this.specification.value.start) : null;
     }
 
+    getManifest(): T.ManifestT | null {
+        return this.specification.kind === 'Manifest' ? F.writeManifestT(this.specification.value) : null;
+    }
+
+    getCollection(): T.CollectionT | null {
+        return this.specification.kind === 'Collection' ? F.writeCollectionT(this.specification.value) : null;
+    }
 
     *iterateCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
         if (this.specification.kind === 'Manifest') {
