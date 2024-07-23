@@ -133,6 +133,34 @@ export class Manifesty {
         }
     }
 
+    *iterateHomepage(): IterableIterator<T.HomepageT> {
+        for (const homepage of this.specification.value.homepage ?? []) {
+            yield F.writeHomepageT(homepage);
+        }
+    }
+
+    *iterateProvider(): IterableIterator<T.ProviderT> {
+        for (const provider of this.specification.value.provider ?? []) {
+            yield F.writeProviderT(provider);
+        }
+    }
+
+    *iterateProviderHomepage(): IterableIterator<T.HomepageT> {
+        for (const provider of this.specification.value.provider ?? []) {
+            for (const homepage of provider.homepage ?? []) {
+                yield F.writeHomepageT(homepage);
+            }
+        }
+    }
+
+    *iterateProviderSeeAlso(): IterableIterator<T.SeeAlsoT> {
+        for (const provider of this.specification.value.provider ?? []) {
+            for (const seeAlso of provider.seeAlso ?? []) {
+                yield F.writeSeeAlsoT(seeAlso);
+            }
+        }
+    }
+
     *iterateMetadata(): IterableIterator<T.MetadataT> {
         for (const metadata of this.specification.value.metadata ?? []) {
             yield F.writeMetadataT(metadata);
