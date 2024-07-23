@@ -13,9 +13,12 @@ const filename = 'test/detailed.json';
 
         const parser = new Manifesty(jsonData);
 
-        for (const item of parser.iterateManifest()) {
-            console.log(item)
-        }
+        // for (const item of parser.iterateCanvas()) {
+        //     console.log(item)
+        // }
+
+        const label = parser.getManifestLabel();
+        console.log(label);
 
 
     } catch (error) {

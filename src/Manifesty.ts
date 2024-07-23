@@ -12,6 +12,11 @@ export class Manifesty {
         }
     }
 
+    getManifestLabel(): T.LabelT | null {
+        return this.specification.kind === 'Manifest' ? F.writeLabelT(this.specification.value.label) : null;
+    }
+
+
     *iterateCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
