@@ -17,7 +17,7 @@ const filename = 'test/detailed.json';
         //     console.log(item)
         // }
 
-        const label = parser.getManifestLabel();
+        const label = parser.getManifestRequiredStatement()?.label;
         console.log(label);
 
 

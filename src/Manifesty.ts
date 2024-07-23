@@ -16,6 +16,34 @@ export class Manifesty {
         return this.specification.kind === 'Manifest' ? F.writeLabelT(this.specification.value.label) : null;
     }
 
+    getManifestSummary(): T.SummaryT | null {
+        return this.specification.kind === 'Manifest' ? F.writeSummaryT(this.specification.value.summary) : null;
+    }
+
+    getManifestViewingDirection(): T.ViewingDirectionT | null {
+        return this.specification.kind === 'Manifest' ? F.writeViewingDirectionT(this.specification.value.viewingDirection) : null;
+    }
+
+    getManifestBehavior(): T.BehaviorT | null {
+        return this.specification.kind === 'Manifest' ? F.writeBehaviorT(this.specification.value.behavior) : null;
+    }
+
+    getManifestNavDate(): T.NavDateT | null {
+        return this.specification.kind === 'Manifest' ? F.writeNavDateT(this.specification.value.navDate) : null;
+    }
+
+    getManifestRights(): T.RightsT | null {
+        return this.specification.kind === 'Manifest' ? F.writeRightsT(this.specification.value.rights) : null;
+    }
+
+    getManifestRequiredStatement(): T.RequiredStatementT | null {
+        return this.specification.kind === 'Manifest' ? F.writeRequiredStatementT(this.specification.value.requiredStatement) : null;
+    }
+
+    getManifestStart(): T.StartT | null {
+        return this.specification.kind === 'Manifest' ? F.writeStartT(this.specification.value.start) : null;
+    }
+
 
     *iterateCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
         if (this.specification.kind === 'Manifest') {
