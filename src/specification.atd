@@ -155,7 +155,69 @@ type annotation_target_t2 = {
   _type <json name="type"> : string;
   source : id_t;
   scope : id_t;
-} 
+}
+
+type specific_resource_t = {
+  ?id : id_t option;
+  ?_type <json name="type"> : type_t option;
+  ?format : format_t option;
+  ?accessibility : accessibility_t option;
+  source : source_t;
+  selector : selector_t;
+}
+
+type source_t = [
+  | T1 of source_t1
+  | T2 of source_t2
+]
+
+type source_t1 = id_t
+
+type source_t2 = class_t
+
+type selector_t = [
+  | T1 of selector_t1
+  | T2 of selector_t2
+  | T3 of selector_t3
+  | T4 of selector_t4
+  | T5 of selector_t5
+]
+
+type selector_t1 = string
+
+type selector_t2 = {
+  _type <json name="type"> : type_t;
+  ?t : duration_t option;
+  ?x : dimenson_t option;
+  ?y : dimenson_t option;
+}
+
+type selector_t3 = {
+  _type <json name="type"> : type_t;
+  ?conformsTo : conforms_to_t option;
+  value : value_t;
+}
+
+type conforms_to_t = {
+  _type <json name="type"> : type_t;
+  ?format : format_t option;
+  ?pattern : pattern_t option;
+  ?default : default_t option;
+  value : value_t;
+}
+
+type selector_t4 = {
+  _type <json name="type"> : type_t;
+  value : value_t;
+}
+type selector_t5 = {
+  _type <json name="type"> : type_t;
+  ?region : region_t option;
+  ?size : size_t option;
+  ?rotation : rotatation_t option;
+  ?quality : quality_t option;
+  ?format : format_t option;
+}
 
 type metadata_t = {
   label : lng_string_t;
@@ -262,4 +324,12 @@ type behavior_t = string
 type nav_date_t = string
 type rights_t = string
 type value_t = string
+type accessibility_t = string
+type dimenson_t = int
+type pattern_t = string
+type default_t = string
+type region_t = string
+type size_t = string
+type quality_t = string
+type rotatation_t = string
 

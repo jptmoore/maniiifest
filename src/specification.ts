@@ -243,6 +243,67 @@ export type AnnotationTargetT2 = {
   scope: IdT;
 }
 
+export type SpecificResourceT = {
+  id?: IdT;
+  type?: TypeT;
+  format?: FormatT;
+  accessibility?: AccessibilityT;
+  source: SourceT;
+  selector: SelectorT;
+}
+
+export type SourceT =
+| { kind: 'T1'; value: SourceT1 }
+| { kind: 'T2'; value: SourceT2 }
+
+export type SourceT1 = IdT
+
+export type SourceT2 = ClassT
+
+export type SelectorT =
+| { kind: 'T1'; value: SelectorT1 }
+| { kind: 'T2'; value: SelectorT2 }
+| { kind: 'T3'; value: SelectorT3 }
+| { kind: 'T4'; value: SelectorT4 }
+| { kind: 'T5'; value: SelectorT5 }
+
+export type SelectorT1 = string
+
+export type SelectorT2 = {
+  type: TypeT;
+  t?: DurationT;
+  x_?: DimensonT;
+  y?: DimensonT;
+}
+
+export type SelectorT3 = {
+  type: TypeT;
+  conformsTo?: ConformsToT;
+  value: ValueT;
+}
+
+export type ConformsToT = {
+  type: TypeT;
+  format?: FormatT;
+  pattern?: PatternT;
+  default_?: DefaultT;
+  value: ValueT;
+}
+
+export type SelectorT4 = {
+  type: TypeT;
+  value: ValueT;
+}
+
+export type SelectorT5 = {
+  type: TypeT;
+  region?: RegionT;
+  size?: SizeT;
+  rotation?: RotatationT;
+  quality?: QualityT;
+  format?: FormatT;
+}
+
 export type MetadataT = {
   label: LngStringT;
   value: LngStringT;
@@ -368,6 +429,22 @@ export type NavDateT = string
 export type RightsT = string
 
 export type ValueT = string
+
+export type AccessibilityT = string
+
+export type DimensonT = number /*int*/
+
+export type PatternT = string
+
+export type DefaultT = string
+
+export type RegionT = string
+
+export type SizeT = string
+
+export type QualityT = string
+
+export type RotatationT = string
 
 export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
   switch (x.kind) {
@@ -947,6 +1024,198 @@ export function readAnnotationTargetT2(x: any, context: any = x): AnnotationTarg
   };
 }
 
+export function writeSpecificResourceT(x: SpecificResourceT, context: any = x): any {
+  return {
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'format': _atd_write_optional_field(writeFormatT, x.format, x),
+    'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
+    'source': _atd_write_required_field('SpecificResourceT', 'source', writeSourceT, x.source, x),
+    'selector': _atd_write_required_field('SpecificResourceT', 'selector', writeSelectorT, x.selector, x),
+  };
+}
+
+export function readSpecificResourceT(x: any, context: any = x): SpecificResourceT {
+  return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    format: _atd_read_optional_field(readFormatT, x['format'], x),
+    accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
+    source: _atd_read_required_field('SpecificResourceT', 'source', readSourceT, x['source'], x),
+    selector: _atd_read_required_field('SpecificResourceT', 'selector', readSelectorT, x['selector'], x),
+  };
+}
+
+export function writeSourceT(x: SourceT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeSourceT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeSourceT2(x.value, x)]
+  }
+}
+
+export function readSourceT(x: any, context: any = x): SourceT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readSourceT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readSourceT2(x[1], x) }
+    default:
+      _atd_bad_json('SourceT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeSourceT1(x: SourceT1, context: any = x): any {
+  return writeIdT(x, context);
+}
+
+export function readSourceT1(x: any, context: any = x): SourceT1 {
+  return readIdT(x, context);
+}
+
+export function writeSourceT2(x: SourceT2, context: any = x): any {
+  return writeClassT(x, context);
+}
+
+export function readSourceT2(x: any, context: any = x): SourceT2 {
+  return readClassT(x, context);
+}
+
+export function writeSelectorT(x: SelectorT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeSelectorT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeSelectorT2(x.value, x)]
+    case 'T3':
+      return ['T3', writeSelectorT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeSelectorT4(x.value, x)]
+    case 'T5':
+      return ['T5', writeSelectorT5(x.value, x)]
+  }
+}
+
+export function readSelectorT(x: any, context: any = x): SelectorT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readSelectorT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readSelectorT2(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readSelectorT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readSelectorT4(x[1], x) }
+    case 'T5':
+      return { kind: 'T5', value: readSelectorT5(x[1], x) }
+    default:
+      _atd_bad_json('SelectorT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeSelectorT1(x: SelectorT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readSelectorT1(x: any, context: any = x): SelectorT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeSelectorT2(x: SelectorT2, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('SelectorT2', 'type', writeTypeT, x.type, x),
+    't': _atd_write_optional_field(writeDurationT, x.t, x),
+    'x': _atd_write_optional_field(writeDimensonT, x.x_, x),
+    'y': _atd_write_optional_field(writeDimensonT, x.y, x),
+  };
+}
+
+export function readSelectorT2(x: any, context: any = x): SelectorT2 {
+  return {
+    type: _atd_read_required_field('SelectorT2', 'type', readTypeT, x['type'], x),
+    t: _atd_read_optional_field(readDurationT, x['t'], x),
+    x_: _atd_read_optional_field(readDimensonT, x['x'], x),
+    y: _atd_read_optional_field(readDimensonT, x['y'], x),
+  };
+}
+
+export function writeSelectorT3(x: SelectorT3, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('SelectorT3', 'type', writeTypeT, x.type, x),
+    'conformsTo': _atd_write_optional_field(writeConformsToT, x.conformsTo, x),
+    'value': _atd_write_required_field('SelectorT3', 'value', writeValueT, x.value, x),
+  };
+}
+
+export function readSelectorT3(x: any, context: any = x): SelectorT3 {
+  return {
+    type: _atd_read_required_field('SelectorT3', 'type', readTypeT, x['type'], x),
+    conformsTo: _atd_read_optional_field(readConformsToT, x['conformsTo'], x),
+    value: _atd_read_required_field('SelectorT3', 'value', readValueT, x['value'], x),
+  };
+}
+
+export function writeConformsToT(x: ConformsToT, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('ConformsToT', 'type', writeTypeT, x.type, x),
+    'format': _atd_write_optional_field(writeFormatT, x.format, x),
+    'pattern': _atd_write_optional_field(writePatternT, x.pattern, x),
+    'default': _atd_write_optional_field(writeDefaultT, x.default_, x),
+    'value': _atd_write_required_field('ConformsToT', 'value', writeValueT, x.value, x),
+  };
+}
+
+export function readConformsToT(x: any, context: any = x): ConformsToT {
+  return {
+    type: _atd_read_required_field('ConformsToT', 'type', readTypeT, x['type'], x),
+    format: _atd_read_optional_field(readFormatT, x['format'], x),
+    pattern: _atd_read_optional_field(readPatternT, x['pattern'], x),
+    default_: _atd_read_optional_field(readDefaultT, x['default'], x),
+    value: _atd_read_required_field('ConformsToT', 'value', readValueT, x['value'], x),
+  };
+}
+
+export function writeSelectorT4(x: SelectorT4, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('SelectorT4', 'type', writeTypeT, x.type, x),
+    'value': _atd_write_required_field('SelectorT4', 'value', writeValueT, x.value, x),
+  };
+}
+
+export function readSelectorT4(x: any, context: any = x): SelectorT4 {
+  return {
+    type: _atd_read_required_field('SelectorT4', 'type', readTypeT, x['type'], x),
+    value: _atd_read_required_field('SelectorT4', 'value', readValueT, x['value'], x),
+  };
+}
+
+export function writeSelectorT5(x: SelectorT5, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('SelectorT5', 'type', writeTypeT, x.type, x),
+    'region': _atd_write_optional_field(writeRegionT, x.region, x),
+    'size': _atd_write_optional_field(writeSizeT, x.size, x),
+    'rotation': _atd_write_optional_field(writeRotatationT, x.rotation, x),
+    'quality': _atd_write_optional_field(writeQualityT, x.quality, x),
+    'format': _atd_write_optional_field(writeFormatT, x.format, x),
+  };
+}
+
+export function readSelectorT5(x: any, context: any = x): SelectorT5 {
+  return {
+    type: _atd_read_required_field('SelectorT5', 'type', readTypeT, x['type'], x),
+    region: _atd_read_optional_field(readRegionT, x['region'], x),
+    size: _atd_read_optional_field(readSizeT, x['size'], x),
+    rotation: _atd_read_optional_field(readRotatationT, x['rotation'], x),
+    quality: _atd_read_optional_field(readQualityT, x['quality'], x),
+    format: _atd_read_optional_field(readFormatT, x['format'], x),
+  };
+}
+
 export function writeMetadataT(x: MetadataT, context: any = x): any {
   return {
     'label': _atd_write_required_field('MetadataT', 'label', writeLngStringT, x.label, x),
@@ -1360,6 +1629,70 @@ export function writeValueT(x: ValueT, context: any = x): any {
 }
 
 export function readValueT(x: any, context: any = x): ValueT {
+  return _atd_read_string(x, context);
+}
+
+export function writeAccessibilityT(x: AccessibilityT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readAccessibilityT(x: any, context: any = x): AccessibilityT {
+  return _atd_read_string(x, context);
+}
+
+export function writeDimensonT(x: DimensonT, context: any = x): any {
+  return _atd_write_int(x, context);
+}
+
+export function readDimensonT(x: any, context: any = x): DimensonT {
+  return _atd_read_int(x, context);
+}
+
+export function writePatternT(x: PatternT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readPatternT(x: any, context: any = x): PatternT {
+  return _atd_read_string(x, context);
+}
+
+export function writeDefaultT(x: DefaultT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readDefaultT(x: any, context: any = x): DefaultT {
+  return _atd_read_string(x, context);
+}
+
+export function writeRegionT(x: RegionT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readRegionT(x: any, context: any = x): RegionT {
+  return _atd_read_string(x, context);
+}
+
+export function writeSizeT(x: SizeT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readSizeT(x: any, context: any = x): SizeT {
+  return _atd_read_string(x, context);
+}
+
+export function writeQualityT(x: QualityT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readQualityT(x: any, context: any = x): QualityT {
+  return _atd_read_string(x, context);
+}
+
+export function writeRotatationT(x: RotatationT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readRotatationT(x: any, context: any = x): RotatationT {
   return _atd_read_string(x, context);
 }
 
