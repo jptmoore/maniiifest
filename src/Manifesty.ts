@@ -52,7 +52,7 @@ export class Manifesty {
         return this.specification.kind === 'Collection' ? F.writeCollectionT(this.specification.value) : null;
     }
 
-    *iterateCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
+    *iterateManifestCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
@@ -64,7 +64,7 @@ export class Manifesty {
         }
     }
 
-    *iterateCanvasW3cAnnotationPage(): IterableIterator<T.W3cAnnotationPageT> {
+    *iterateManifestCanvasW3cAnnotationPage(): IterableIterator<T.W3cAnnotationPageT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
@@ -74,7 +74,7 @@ export class Manifesty {
         }
     }
 
-    *iterateCanvasAnnotationPage(): IterableIterator<T.AnnotationPageT> {
+    *iterateManifestCanvasAnnotationPage(): IterableIterator<T.AnnotationPageT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -84,7 +84,7 @@ export class Manifesty {
         }
     }
 
-    *iterateCanvasAnnotation(): IterableIterator<T.AnnotationT> {
+    *iterateManifestCanvasAnnotation(): IterableIterator<T.AnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -96,7 +96,7 @@ export class Manifesty {
         }
     }
 
-    *iterateCanvasAnnotationBodyService(): IterableIterator<T.ServiceT> {
+    *iterateManifestCanvasAnnotationBodyService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -110,7 +110,7 @@ export class Manifesty {
         }
     }
 
-    *iterateCanvasAnnotationBodyServiceService(): IterableIterator<T.ServiceT> {
+    *iterateManifestCanvasAnnotationBodyServiceService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.items ?? []) {
@@ -126,7 +126,7 @@ export class Manifesty {
         }
     }
 
-    *iterateCanvas(): IterableIterator<T.CanvasT> {
+    *iterateManifestCanvas(): IterableIterator<T.CanvasT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 yield F.writeCanvasT(canvas);
@@ -134,61 +134,79 @@ export class Manifesty {
         }
     }
 
-    *iterateThumbnail(): IterableIterator<T.ThumbnailT> {
-        for (const thumbnail of this.specification.value.thumbnail ?? []) {
-            yield F.writeThumbnailT(thumbnail);
+    *iterateManifestThumbnail(): IterableIterator<T.ThumbnailT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const thumbnail of this.specification.value.thumbnail ?? []) {
+                yield F.writeThumbnailT(thumbnail);
+            }
         }
     }
 
-    *iterateHomepage(): IterableIterator<T.HomepageT> {
-        for (const homepage of this.specification.value.homepage ?? []) {
-            yield F.writeHomepageT(homepage);
-        }
-    }
-
-    *iterateProvider(): IterableIterator<T.ProviderT> {
-        for (const provider of this.specification.value.provider ?? []) {
-            yield F.writeProviderT(provider);
-        }
-    }
-
-    *iterateRendering(): IterableIterator<T.RenderingT> {
-        for (const rendering of this.specification.value.rendering ?? []) {
-            yield F.writeRenderingT(rendering);
-        }
-    }
-
-    *iterateProviderHomepage(): IterableIterator<T.HomepageT> {
-        for (const provider of this.specification.value.provider ?? []) {
-            for (const homepage of provider.homepage ?? []) {
+    *iterateManifestHomepage(): IterableIterator<T.HomepageT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const homepage of this.specification.value.homepage ?? []) {
                 yield F.writeHomepageT(homepage);
             }
         }
     }
 
-    *iterateProviderSeeAlso(): IterableIterator<T.SeeAlsoT> {
-        for (const provider of this.specification.value.provider ?? []) {
-            for (const seeAlso of provider.seeAlso ?? []) {
+    *iterateManifestProvider(): IterableIterator<T.ProviderT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const provider of this.specification.value.provider ?? []) {
+                yield F.writeProviderT(provider);
+            }
+        }
+    }
+
+    *iterateManifestRendering(): IterableIterator<T.RenderingT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const rendering of this.specification.value.rendering ?? []) {
+                yield F.writeRenderingT(rendering);
+            }
+        }
+    }
+
+    *iterateManifestProviderHomepage(): IterableIterator<T.HomepageT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const provider of this.specification.value.provider ?? []) {
+                for (const homepage of provider.homepage ?? []) {
+                    yield F.writeHomepageT(homepage);
+                }
+            }
+        }
+    }
+
+    *iterateManifestProviderSeeAlso(): IterableIterator<T.SeeAlsoT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const provider of this.specification.value.provider ?? []) {
+                for (const seeAlso of provider.seeAlso ?? []) {
+                    yield F.writeSeeAlsoT(seeAlso);
+                }
+            }
+        }
+    }
+
+    *iterateManifestMetadata(): IterableIterator<T.MetadataT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const metadata of this.specification.value.metadata ?? []) {
+                yield F.writeMetadataT(metadata);
+            }
+        }
+    }
+
+    *iterateManifestSeeAlso(): IterableIterator<T.SeeAlsoT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const seeAlso of this.specification.value.seeAlso ?? []) {
                 yield F.writeSeeAlsoT(seeAlso);
             }
         }
     }
 
-    *iterateMetadata(): IterableIterator<T.MetadataT> {
-        for (const metadata of this.specification.value.metadata ?? []) {
-            yield F.writeMetadataT(metadata);
-        }
-    }
-
-    *iterateSeeAlso(): IterableIterator<T.SeeAlsoT> {
-        for (const seeAlso of this.specification.value.seeAlso ?? []) {
-            yield F.writeSeeAlsoT(seeAlso);
-        }
-    }
-
-    *iteratePartOf(): IterableIterator<T.PartOfT> {
-        for (const partOf of this.specification.value.partOf ?? []) {
-            yield F.writePartOfT(partOf);
+    *iterateManifestPartOf(): IterableIterator<T.PartOfT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const partOf of this.specification.value.partOf ?? []) {
+                yield F.writePartOfT(partOf);
+            }
         }
     }
 
