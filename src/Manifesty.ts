@@ -242,6 +242,41 @@ export class Manifesty {
         }
     }
 
+    *iterateCollectionLabel(): IterableIterator<T.LabelT> {
+        if (this.specification.kind === 'Collection') {
+            yield F.writeLabelT(this.specification.value.label);
+            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.LabelT> {
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        yield F.writeLabelT(item.value.label);
+                        yield* traverse(item.value.items);
+                    }
+                }
+            };
+            yield* traverse(this.specification.value.items);
+        }
+    }
+
+    *iterateCollectionMetadata(): IterableIterator<T.MetadataT> {
+        if (this.specification.kind === 'Collection') {
+            for (const metadata of this.specification.value.metadata ?? []) {
+                yield F.writeMetadataT(metadata);
+            }
+            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.MetadataT> {
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        for (const metadata of item.value.metadata ?? []) {
+                            yield F.writeMetadataT(metadata);
+                        }
+                        yield* traverse(item.value.items);
+                    }
+                }
+            };
+            yield* traverse(this.specification.value.items);
+        }
+
+    }
+
 
     *iterateManifestService(): IterableIterator<T.ServiceT> {
         if (this.specification.kind === 'Manifest') {
