@@ -65,8 +65,8 @@ type canvas_core_t = {
 
 type canvas_t = {
   inherit canvas_core_t;
-  ?placeholderCanvas : placeholder_canvas_t list option;
-  ?accompanyingCanvas : accompanying_canvas_t list option;
+  ?placeholderCanvas : placeholder_canvas_t option;
+  ?accompanyingCanvas : accompanying_canvas_t option;
 }
 
 type placeholder_canvas_t = {

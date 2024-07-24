@@ -102,8 +102,8 @@ export type CanvasT = {
   partOf?: PartOfT[];
   items?: AnnotationPageT[];
   annotations?: W3cAnnotationPageT[];
-  placeholderCanvas?: PlaceholderCanvasT[];
-  accompanyingCanvas?: AccompanyingCanvasT[];
+  placeholderCanvas?: PlaceholderCanvasT;
+  accompanyingCanvas?: AccompanyingCanvasT;
 }
 
 export type PlaceholderCanvasT = {
@@ -560,8 +560,8 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
-    'placeholderCanvas': _atd_write_optional_field(_atd_write_array(writePlaceholderCanvasT), x.placeholderCanvas, x),
-    'accompanyingCanvas': _atd_write_optional_field(_atd_write_array(writeAccompanyingCanvasT), x.accompanyingCanvas, x),
+    'placeholderCanvas': _atd_write_optional_field(writePlaceholderCanvasT, x.placeholderCanvas, x),
+    'accompanyingCanvas': _atd_write_optional_field(writeAccompanyingCanvasT, x.accompanyingCanvas, x),
   };
 }
 
@@ -588,8 +588,8 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
-    placeholderCanvas: _atd_read_optional_field(_atd_read_array(readPlaceholderCanvasT), x['placeholderCanvas'], x),
-    accompanyingCanvas: _atd_read_optional_field(_atd_read_array(readAccompanyingCanvasT), x['accompanyingCanvas'], x),
+    placeholderCanvas: _atd_read_optional_field(readPlaceholderCanvasT, x['placeholderCanvas'], x),
+    accompanyingCanvas: _atd_read_optional_field(readAccompanyingCanvasT, x['accompanyingCanvas'], x),
   };
 }
 
