@@ -41,7 +41,7 @@ type class_t = {
   ?label : label_t option;
 }
 
-type canvas_t = {
+type canvas_core_t = {
   inherit class_t;
   ?height : height_t option;
   ?width : width_t option;
@@ -61,6 +61,20 @@ type canvas_t = {
   ?partOf : part_of_t list option;
   ?items : annotation_page_t list option;
   ?annotations : w3c_annotation_page_t list option;
+}
+
+type canvas_t = {
+  inherit canvas_core_t;
+  ?placeholderCanvas : placeholder_canvas_t list option;
+  ?accompanyingCanvas : accompanying_canvas_t list option;
+}
+
+type placeholder_canvas_t = {
+  inherit canvas_core_t;
+}
+
+type accompanying_canvas_t = {
+  inherit canvas_core_t;
 }
 
 type nav_place_t = {

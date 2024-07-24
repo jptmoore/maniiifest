@@ -56,7 +56,81 @@ export type ClassT = {
   label?: LabelT;
 }
 
+export type CanvasCoreT = {
+  id: IdT;
+  type: TypeT;
+  label?: LabelT;
+  height?: HeightT;
+  width?: WidthT;
+  duration?: DurationT;
+  metadata?: MetadataT[];
+  summary?: SummaryT;
+  requiredStatement?: RequiredStatementT;
+  rendering?: RenderingT[];
+  rights?: RightsT;
+  navDate?: NavDateT;
+  provider?: ProviderT[];
+  seeAlso?: SeeAlsoT[];
+  service?: ServiceT[];
+  thumbnail?: ThumbnailT[];
+  homepage?: HomepageT[];
+  behavior?: BehaviorT[];
+  partOf?: PartOfT[];
+  items?: AnnotationPageT[];
+  annotations?: W3cAnnotationPageT[];
+}
+
 export type CanvasT = {
+  id: IdT;
+  type: TypeT;
+  label?: LabelT;
+  height?: HeightT;
+  width?: WidthT;
+  duration?: DurationT;
+  metadata?: MetadataT[];
+  summary?: SummaryT;
+  requiredStatement?: RequiredStatementT;
+  rendering?: RenderingT[];
+  rights?: RightsT;
+  navDate?: NavDateT;
+  provider?: ProviderT[];
+  seeAlso?: SeeAlsoT[];
+  service?: ServiceT[];
+  thumbnail?: ThumbnailT[];
+  homepage?: HomepageT[];
+  behavior?: BehaviorT[];
+  partOf?: PartOfT[];
+  items?: AnnotationPageT[];
+  annotations?: W3cAnnotationPageT[];
+  placeholderCanvas?: PlaceholderCanvasT[];
+  accompanyingCanvas?: AccompanyingCanvasT[];
+}
+
+export type PlaceholderCanvasT = {
+  id: IdT;
+  type: TypeT;
+  label?: LabelT;
+  height?: HeightT;
+  width?: WidthT;
+  duration?: DurationT;
+  metadata?: MetadataT[];
+  summary?: SummaryT;
+  requiredStatement?: RequiredStatementT;
+  rendering?: RenderingT[];
+  rights?: RightsT;
+  navDate?: NavDateT;
+  provider?: ProviderT[];
+  seeAlso?: SeeAlsoT[];
+  service?: ServiceT[];
+  thumbnail?: ThumbnailT[];
+  homepage?: HomepageT[];
+  behavior?: BehaviorT[];
+  partOf?: PartOfT[];
+  items?: AnnotationPageT[];
+  annotations?: W3cAnnotationPageT[];
+}
+
+export type AccompanyingCanvasT = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -411,6 +485,58 @@ export function readClassT(x: any, context: any = x): ClassT {
   };
 }
 
+export function writeCanvasCoreT(x: CanvasCoreT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('CanvasCoreT', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('CanvasCoreT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'height': _atd_write_optional_field(writeHeightT, x.height, x),
+    'width': _atd_write_optional_field(writeWidthT, x.width, x),
+    'duration': _atd_write_optional_field(writeDurationT, x.duration, x),
+    'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
+    'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
+    'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
+    'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
+    'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
+    'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
+    'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
+    'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+  };
+}
+
+export function readCanvasCoreT(x: any, context: any = x): CanvasCoreT {
+  return {
+    id: _atd_read_required_field('CanvasCoreT', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('CanvasCoreT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    height: _atd_read_optional_field(readHeightT, x['height'], x),
+    width: _atd_read_optional_field(readWidthT, x['width'], x),
+    duration: _atd_read_optional_field(readDurationT, x['duration'], x),
+    metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
+    summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
+    requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
+    rights: _atd_read_optional_field(readRightsT, x['rights'], x),
+    navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
+    seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
+    behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
+    partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
+    items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+  };
+}
+
 export function writeCanvasT(x: CanvasT, context: any = x): any {
   return {
     'id': _atd_write_required_field('CanvasT', 'id', writeIdT, x.id, x),
@@ -434,6 +560,8 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+    'placeholderCanvas': _atd_write_optional_field(_atd_write_array(writePlaceholderCanvasT), x.placeholderCanvas, x),
+    'accompanyingCanvas': _atd_write_optional_field(_atd_write_array(writeAccompanyingCanvasT), x.accompanyingCanvas, x),
   };
 }
 
@@ -441,6 +569,112 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
   return {
     id: _atd_read_required_field('CanvasT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('CanvasT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    height: _atd_read_optional_field(readHeightT, x['height'], x),
+    width: _atd_read_optional_field(readWidthT, x['width'], x),
+    duration: _atd_read_optional_field(readDurationT, x['duration'], x),
+    metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
+    summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
+    requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
+    rights: _atd_read_optional_field(readRightsT, x['rights'], x),
+    navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
+    seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
+    behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
+    partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
+    items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+    placeholderCanvas: _atd_read_optional_field(_atd_read_array(readPlaceholderCanvasT), x['placeholderCanvas'], x),
+    accompanyingCanvas: _atd_read_optional_field(_atd_read_array(readAccompanyingCanvasT), x['accompanyingCanvas'], x),
+  };
+}
+
+export function writePlaceholderCanvasT(x: PlaceholderCanvasT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('PlaceholderCanvasT', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('PlaceholderCanvasT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'height': _atd_write_optional_field(writeHeightT, x.height, x),
+    'width': _atd_write_optional_field(writeWidthT, x.width, x),
+    'duration': _atd_write_optional_field(writeDurationT, x.duration, x),
+    'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
+    'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
+    'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
+    'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
+    'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
+    'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
+    'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
+    'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+  };
+}
+
+export function readPlaceholderCanvasT(x: any, context: any = x): PlaceholderCanvasT {
+  return {
+    id: _atd_read_required_field('PlaceholderCanvasT', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('PlaceholderCanvasT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    height: _atd_read_optional_field(readHeightT, x['height'], x),
+    width: _atd_read_optional_field(readWidthT, x['width'], x),
+    duration: _atd_read_optional_field(readDurationT, x['duration'], x),
+    metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
+    summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
+    requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
+    rights: _atd_read_optional_field(readRightsT, x['rights'], x),
+    navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
+    seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
+    behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
+    partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
+    items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+  };
+}
+
+export function writeAccompanyingCanvasT(x: AccompanyingCanvasT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('AccompanyingCanvasT', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('AccompanyingCanvasT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'height': _atd_write_optional_field(writeHeightT, x.height, x),
+    'width': _atd_write_optional_field(writeWidthT, x.width, x),
+    'duration': _atd_write_optional_field(writeDurationT, x.duration, x),
+    'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
+    'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
+    'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
+    'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
+    'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
+    'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
+    'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
+    'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+  };
+}
+
+export function readAccompanyingCanvasT(x: any, context: any = x): AccompanyingCanvasT {
+  return {
+    id: _atd_read_required_field('AccompanyingCanvasT', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('AccompanyingCanvasT', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     height: _atd_read_optional_field(readHeightT, x['height'], x),
     width: _atd_read_optional_field(readWidthT, x['width'], x),
