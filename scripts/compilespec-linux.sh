@@ -15,6 +15,9 @@ sed -i 's/export function readServiceT(/export function _readServiceT(/g' specif
 sed -i 's/export function writeMotivationT(/export function _writeMotivationT(/g' specification.ts
 sed -i 's/export function readMotivationT(/export function _readMotivationT(/g' specification.ts
 
+sed -i 's/export function writeAnnotationBodyT(/export function _writeAnnotationBodyT(/g' specification.ts
+sed -i 's/export function readAnnotationBodyT(/export function _readAnnotationBodyT(/g' specification.ts
+
 # rename _type to use type
 sed -i 's/_type/type/g' specification.ts
 # add adapter code

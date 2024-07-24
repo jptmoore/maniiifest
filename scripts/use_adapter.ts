@@ -1,5 +1,7 @@
 ///// appended to specification.ts
 
+import { normalize_annotation_body, restore_annotation_body } from "../src/adapter";
+import { AnnotationBodyT } from "../src/specification";
 import { normalize_target,normalize_specification,restore_target, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
@@ -33,4 +35,12 @@ export function writeMotivationT(x: any, context: any = x): MotivationT {
 
 export function readMotivationT(x: any, context: any = x): MotivationT {
     return normalize_motivation(x, context, _readMotivationT);
+}
+
+export function writeAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
+    return restore_annotation_body(x, context, _writeAnnotationBodyT);
+}
+
+export function readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
+    return normalize_annotation_body(x, context, _readAnnotationBodyT);
 }
