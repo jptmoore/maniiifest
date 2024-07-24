@@ -153,7 +153,8 @@ type annotation_target_t1 = string
 
 type annotation_target_t2 = {
   _type <json name="type"> : string;
-  source: id_t;
+  source : id_t;
+  scope : id_t;
 } 
 
 type metadata_t = {

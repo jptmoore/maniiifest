@@ -240,6 +240,7 @@ export type AnnotationTargetT1 = string
 export type AnnotationTargetT2 = {
   type: string;
   source: IdT;
+  scope: IdT;
 }
 
 export type MetadataT = {
@@ -934,6 +935,7 @@ export function writeAnnotationTargetT2(x: AnnotationTargetT2, context: any = x)
   return {
     'type': _atd_write_required_field('AnnotationTargetT2', 'type', _atd_write_string, x.type, x),
     'source': _atd_write_required_field('AnnotationTargetT2', 'source', writeIdT, x.source, x),
+    'scope': _atd_write_required_field('AnnotationTargetT2', 'scope', writeIdT, x.scope, x),
   };
 }
 
@@ -941,6 +943,7 @@ export function readAnnotationTargetT2(x: any, context: any = x): AnnotationTarg
   return {
     type: _atd_read_required_field('AnnotationTargetT2', 'type', _atd_read_string, x['type'], x),
     source: _atd_read_required_field('AnnotationTargetT2', 'source', readIdT, x['source'], x),
+    scope: _atd_read_required_field('AnnotationTargetT2', 'scope', readIdT, x['scope'], x),
   };
 }
 
