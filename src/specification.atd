@@ -104,6 +104,10 @@ type coordinates_t = float list
 type annotation_page_t = {
   id : id_t;
   _type <json name="type"> : type_t;
+  ?label : label_t option;
+  ?rendering : rendering_t list option;
+  ?service : service_t list option;
+  ?thumbnail : thumbnail_t list option;
   ?items : annotation_t list option;
 }
 

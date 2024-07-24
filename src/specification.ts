@@ -181,6 +181,10 @@ export type CoordinatesT = number[]
 export type AnnotationPageT = {
   id: IdT;
   type: TypeT;
+  label?: LabelT;
+  rendering?: RenderingT[];
+  service?: ServiceT[];
+  thumbnail?: ThumbnailT[];
   items?: AnnotationT[];
 }
 
@@ -769,6 +773,10 @@ export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any 
   return {
     'id': _atd_write_required_field('AnnotationPageT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationPageT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationT), x.items, x),
   };
 }
@@ -777,6 +785,10 @@ export function readAnnotationPageT(x: any, context: any = x): AnnotationPageT {
   return {
     id: _atd_read_required_field('AnnotationPageT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationPageT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationT), x['items'], x),
   };
 }
