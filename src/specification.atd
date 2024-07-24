@@ -45,9 +45,47 @@ type canvas_t = {
   inherit class_t;
   ?height : height_t option;
   ?width : width_t option;
+  ?duration : duration_t option;
+  ?metadata : metadata_t list option;
+  ?summary : summary_t option;
+  ?requiredStatement : required_statement_t option;
+  ?rendering : rendering_t list option;
+  ?rights : rights_t option;
+  ?navDate : nav_date_t option;
+  ?provider : provider_t list option;
+  ?seeAlso : see_also_t list option;
+  ?service : service_t list option;
+  ?thumbnail : thumbnail_t list option;
+  ?homepage : homepage_t list option;
+  ?behavior : behavior_t list option;
+  ?partOf : part_of_t list option;
   ?items : annotation_page_t list option;
   ?annotations : w3c_annotation_page_t list option;
 }
+
+type nav_place_t = {
+  id : id_t;
+  _type <json name="type"> : type_t;
+  features_t : feature_t list option;
+}
+
+type feature_t = {
+  ?id : id_t option;
+  ?_type <json name="type"> : type_t option;
+  ?properties : properties_t option;
+  ?geometry : geometry_t option;
+}
+
+type properties_t = {
+  ?label : label_t option;
+}
+
+type geometry_t = {
+  ?_type : type_t option;
+  ?coordinates : coordinates_t option;
+}
+
+type coordinates_t = float list
 
 type annotation_page_t = {
   id : id_t;
