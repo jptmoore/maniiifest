@@ -52,23 +52,23 @@ export class Manifesty {
         return this.specification.kind === 'Collection' ? F.writeCollectionT(this.specification.value) : null;
     }
 
-    *iterateManifestCanvasW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
+    *iterateManifestCanvasW3cAnnotation(): IterableIterator<T.AnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
                     for (const annotation of annotationPage.items ?? []) {
-                        yield F.writeW3cAnnotationT(annotation);
+                        yield F.writeAnnotationT(annotation);
                     }
                 }
             }
         }
     }
 
-    *iterateManifestCanvasW3cAnnotationPage(): IterableIterator<T.W3cAnnotationPageT> {
+    *iterateManifestCanvasW3cAnnotationPage(): IterableIterator<T.AnnotationPageT> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
-                    yield F.writeW3cAnnotationPageT(annotationPage);
+                    yield F.writeAnnotationPageT(annotationPage);
                 }
             }
         }
@@ -337,11 +337,11 @@ export class Manifesty {
         }
     }
 
-    *iterateManifestW3cAnnotation(): IterableIterator<T.W3cAnnotationT> {
+    *iterateManifestW3cAnnotation(): IterableIterator<T.AnnotationT> {
         if (this.specification.kind === 'Manifest') {
             for (const annotationPage of this.specification.value.annotations ?? []) {
                 for (const annotation of annotationPage.items ?? []) {
-                    yield F.writeW3cAnnotationT(annotation);
+                    yield F.writeAnnotationT(annotation);
                 }
             }
         }

@@ -32,7 +32,7 @@ type manifest_t = {
   ?partOf : part_of_t list option;
   ?start : start_t option;
   ?items : canvas_t list option;
-  ?annotations : w3c_annotation_page_t list option;
+  ?annotations : annotation_page_t list option;
 }
 
 type class_t = {
@@ -60,7 +60,7 @@ type canvas_core_t = {
   ?behavior : behavior_t list option;
   ?partOf : part_of_t list option;
   ?items : annotation_page_t list option;
-  ?annotations : w3c_annotation_page_t list option;
+  ?annotations : annotation_page_t list option;
 }
 
 type canvas_t = {
@@ -125,38 +125,36 @@ type annotation_t = {
 
 type annotation_body_t = [
   | T1 of annotation_body_t1
-  | T2 of annotationa_body_t2
+  | T2 of annotation_body_t2
+  | T3 of annotation_body_t3
 ]
 
 type annotation_body_t1 = {
   inherit resource_t;
 }
 
-type annotationa_body_t2 = {
+type annotation_body_t2 = {
+  _type <json name="type"> : type_t;
+  language : language_t;
+  value : value_t;
+}
+
+type annotation_body_t3 = {
   ?_type <json name="type"> : type_t option;
   items : resource_t list;
 }
 
-type annotation_target_t = w3c_annotation_target_t
+type annotation_target_t = [
+  | T1 of annotation_target_t1
+  | T2 of annotation_target_t2
+]  
 
-type w3c_annotation_t = {
-  id : id_t;
-  _type <json name="type"> : type_t;
-  ?motivation : motivation_t option; 
-  ?body : w3c_annotation_body_t option;
-  ?target : w3c_annotation_target_t option;
-  ?created : created_t option;
-  ?modified : modified_t option
-}
+type annotation_target_t1 = string
 
-type w3c_annotation_page_t = {
-  id : id_t;
-  _type <json name="type"> : type_t;
-  ?service : service_t list option;
-  ?rendering : rendering_t list option;
-  ?thumbnail : thumbnail_t list option;
-  ?items : w3c_annotation_t list option;
-}
+type annotation_target_t2 = {
+  _type <json name="type"> : string;
+  source: id_t;
+} 
 
 type metadata_t = {
   label : lng_string_t;
@@ -211,24 +209,6 @@ type summary_t = lng_string_t
 
 type lng_string_t = (string * string list) list <json repr="object">
 
-
-type w3c_annotation_body_t = {
-  _type <json name="type"> : type_t;
-  language : language_t;
-  value : value_t;
-}
-
-type w3c_annotation_target_t = [
-  | T1 of w3c_annotation_target_t1
-  | T2 of w3c_annotation_target_t2
-]  
-
-type w3c_annotation_target_t1 = string
-
-type w3c_annotation_target_t2 = {
-  _type <json name="type"> : string;
-  source: id_t;
-} 
 
 type external_t = {
   inherit class_t;

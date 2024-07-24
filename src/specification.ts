@@ -47,7 +47,7 @@ export type ManifestT = {
   partOf?: PartOfT[];
   start?: StartT;
   items?: CanvasT[];
-  annotations?: W3cAnnotationPageT[];
+  annotations?: AnnotationPageT[];
 }
 
 export type ClassT = {
@@ -77,7 +77,7 @@ export type CanvasCoreT = {
   behavior?: BehaviorT[];
   partOf?: PartOfT[];
   items?: AnnotationPageT[];
-  annotations?: W3cAnnotationPageT[];
+  annotations?: AnnotationPageT[];
 }
 
 export type CanvasT = {
@@ -101,7 +101,7 @@ export type CanvasT = {
   behavior?: BehaviorT[];
   partOf?: PartOfT[];
   items?: AnnotationPageT[];
-  annotations?: W3cAnnotationPageT[];
+  annotations?: AnnotationPageT[];
   placeholderCanvas?: PlaceholderCanvasT;
   accompanyingCanvas?: AccompanyingCanvasT;
 }
@@ -127,7 +127,7 @@ export type PlaceholderCanvasT = {
   behavior?: BehaviorT[];
   partOf?: PartOfT[];
   items?: AnnotationPageT[];
-  annotations?: W3cAnnotationPageT[];
+  annotations?: AnnotationPageT[];
 }
 
 export type AccompanyingCanvasT = {
@@ -151,7 +151,7 @@ export type AccompanyingCanvasT = {
   behavior?: BehaviorT[];
   partOf?: PartOfT[];
   items?: AnnotationPageT[];
-  annotations?: W3cAnnotationPageT[];
+  annotations?: AnnotationPageT[];
 }
 
 export type NavPlaceT = {
@@ -201,7 +201,8 @@ export type AnnotationT = {
 
 export type AnnotationBodyT =
 | { kind: 'T1'; value: AnnotationBodyT1 }
-| { kind: 'T2'; value: AnnotationaBodyT2 }
+| { kind: 'T2'; value: AnnotationBodyT2 }
+| { kind: 'T3'; value: AnnotationBodyT3 }
 
 export type AnnotationBodyT1 = {
   id: IdT;
@@ -219,30 +220,26 @@ export type AnnotationBodyT1 = {
   annotations?: AnnotationPageT[];
 }
 
-export type AnnotationaBodyT2 = {
+export type AnnotationBodyT2 = {
+  type: TypeT;
+  language: LanguageT;
+  value: ValueT;
+}
+
+export type AnnotationBodyT3 = {
   type?: TypeT;
   items: ResourceT[];
 }
 
-export type AnnotationTargetT = W3cAnnotationTargetT
+export type AnnotationTargetT =
+| { kind: 'T1'; value: AnnotationTargetT1 }
+| { kind: 'T2'; value: AnnotationTargetT2 }
 
-export type W3cAnnotationT = {
-  id: IdT;
-  type: TypeT;
-  motivation?: MotivationT;
-  body?: W3cAnnotationBodyT;
-  target?: W3cAnnotationTargetT;
-  created?: CreatedT;
-  modified?: ModifiedT;
-}
+export type AnnotationTargetT1 = string
 
-export type W3cAnnotationPageT = {
-  id: IdT;
-  type: TypeT;
-  service?: ServiceT[];
-  rendering?: RenderingT[];
-  thumbnail?: ThumbnailT[];
-  items?: W3cAnnotationT[];
+export type AnnotationTargetT2 = {
+  type: string;
+  source: IdT;
 }
 
 export type MetadataT = {
@@ -299,23 +296,6 @@ export type LabelT = LngStringT
 export type SummaryT = LngStringT
 
 export type LngStringT = [string, string[]][]
-
-export type W3cAnnotationBodyT = {
-  type: TypeT;
-  language: LanguageT;
-  value: ValueT;
-}
-
-export type W3cAnnotationTargetT =
-| { kind: 'T1'; value: W3cAnnotationTargetT1 }
-| { kind: 'T2'; value: W3cAnnotationTargetT2 }
-
-export type W3cAnnotationTargetT1 = string
-
-export type W3cAnnotationTargetT2 = {
-  type: string;
-  source: IdT;
-}
 
 export type ExternalT = {
   id: IdT;
@@ -452,7 +432,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'start': _atd_write_optional_field(writeStartT, x.start, x),
     'items': _atd_write_optional_field(_atd_write_array(writeCanvasT), x.items, x),
-    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
 
@@ -478,7 +458,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
     start: _atd_read_optional_field(readStartT, x['start'], x),
     items: _atd_read_optional_field(_atd_read_array(readCanvasT), x['items'], x),
-    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
 
@@ -520,7 +500,7 @@ export function writeCanvasCoreT(x: CanvasCoreT, context: any = x): any {
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
-    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
 
@@ -546,7 +526,7 @@ export function readCanvasCoreT(x: any, context: any = x): CanvasCoreT {
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
-    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
 
@@ -572,7 +552,7 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
-    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
     'placeholderCanvas': _atd_write_optional_field(writePlaceholderCanvasT, x.placeholderCanvas, x),
     'accompanyingCanvas': _atd_write_optional_field(writeAccompanyingCanvasT, x.accompanyingCanvas, x),
   };
@@ -600,7 +580,7 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
-    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
     placeholderCanvas: _atd_read_optional_field(readPlaceholderCanvasT, x['placeholderCanvas'], x),
     accompanyingCanvas: _atd_read_optional_field(readAccompanyingCanvasT, x['accompanyingCanvas'], x),
   };
@@ -628,7 +608,7 @@ export function writePlaceholderCanvasT(x: PlaceholderCanvasT, context: any = x)
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
-    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
 
@@ -654,7 +634,7 @@ export function readPlaceholderCanvasT(x: any, context: any = x): PlaceholderCan
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
-    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
 
@@ -680,7 +660,7 @@ export function writeAccompanyingCanvasT(x: AccompanyingCanvasT, context: any = 
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.items, x),
-    'annotations': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationPageT), x.annotations, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
 
@@ -706,7 +686,7 @@ export function readAccompanyingCanvasT(x: any, context: any = x): AccompanyingC
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['items'], x),
-    annotations: _atd_read_optional_field(_atd_read_array(readW3cAnnotationPageT), x['annotations'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
 
@@ -833,7 +813,9 @@ export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any
     case 'T1':
       return ['T1', writeAnnotationBodyT1(x.value, x)]
     case 'T2':
-      return ['T2', writeAnnotationaBodyT2(x.value, x)]
+      return ['T2', writeAnnotationBodyT2(x.value, x)]
+    case 'T3':
+      return ['T3', writeAnnotationBodyT3(x.value, x)]
   }
 }
 
@@ -843,7 +825,9 @@ export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
     case 'T1':
       return { kind: 'T1', value: readAnnotationBodyT1(x[1], x) }
     case 'T2':
-      return { kind: 'T2', value: readAnnotationaBodyT2(x[1], x) }
+      return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyT', x, context)
       throw new Error('impossible')
@@ -886,71 +870,77 @@ export function readAnnotationBodyT1(x: any, context: any = x): AnnotationBodyT1
   };
 }
 
-export function writeAnnotationaBodyT2(x: AnnotationaBodyT2, context: any = x): any {
+export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('AnnotationBodyT2', 'type', writeTypeT, x.type, x),
+    'language': _atd_write_required_field('AnnotationBodyT2', 'language', writeLanguageT, x.language, x),
+    'value': _atd_write_required_field('AnnotationBodyT2', 'value', writeValueT, x.value, x),
+  };
+}
+
+export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2 {
+  return {
+    type: _atd_read_required_field('AnnotationBodyT2', 'type', readTypeT, x['type'], x),
+    language: _atd_read_required_field('AnnotationBodyT2', 'language', readLanguageT, x['language'], x),
+    value: _atd_read_required_field('AnnotationBodyT2', 'value', readValueT, x['value'], x),
+  };
+}
+
+export function writeAnnotationBodyT3(x: AnnotationBodyT3, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'items': _atd_write_required_field('AnnotationaBodyT2', 'items', _atd_write_array(writeResourceT), x.items, x),
+    'items': _atd_write_required_field('AnnotationBodyT3', 'items', _atd_write_array(writeResourceT), x.items, x),
   };
 }
 
-export function readAnnotationaBodyT2(x: any, context: any = x): AnnotationaBodyT2 {
+export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3 {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    items: _atd_read_required_field('AnnotationaBodyT2', 'items', _atd_read_array(readResourceT), x['items'], x),
+    items: _atd_read_required_field('AnnotationBodyT3', 'items', _atd_read_array(readResourceT), x['items'], x),
   };
 }
 
-export function writeAnnotationTargetT(x: AnnotationTargetT, context: any = x): any {
-  return writeW3cAnnotationTargetT(x, context);
+export function _writeAnnotationTargetT(x: AnnotationTargetT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeAnnotationTargetT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeAnnotationTargetT2(x.value, x)]
+  }
 }
 
-export function readAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
-  return readW3cAnnotationTargetT(x, context);
+export function _readAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readAnnotationTargetT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readAnnotationTargetT2(x[1], x) }
+    default:
+      _atd_bad_json('AnnotationTargetT', x, context)
+      throw new Error('impossible')
+  }
 }
 
-export function writeW3cAnnotationT(x: W3cAnnotationT, context: any = x): any {
+export function writeAnnotationTargetT1(x: AnnotationTargetT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readAnnotationTargetT1(x: any, context: any = x): AnnotationTargetT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeAnnotationTargetT2(x: AnnotationTargetT2, context: any = x): any {
   return {
-    'id': _atd_write_required_field('W3cAnnotationT', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('W3cAnnotationT', 'type', writeTypeT, x.type, x),
-    'motivation': _atd_write_optional_field(writeMotivationT, x.motivation, x),
-    'body': _atd_write_optional_field(writeW3cAnnotationBodyT, x.body, x),
-    'target': _atd_write_optional_field(writeW3cAnnotationTargetT, x.target, x),
-    'created': _atd_write_optional_field(writeCreatedT, x.created, x),
-    'modified': _atd_write_optional_field(writeModifiedT, x.modified, x),
+    'type': _atd_write_required_field('AnnotationTargetT2', 'type', _atd_write_string, x.type, x),
+    'source': _atd_write_required_field('AnnotationTargetT2', 'source', writeIdT, x.source, x),
   };
 }
 
-export function readW3cAnnotationT(x: any, context: any = x): W3cAnnotationT {
+export function readAnnotationTargetT2(x: any, context: any = x): AnnotationTargetT2 {
   return {
-    id: _atd_read_required_field('W3cAnnotationT', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('W3cAnnotationT', 'type', readTypeT, x['type'], x),
-    motivation: _atd_read_optional_field(readMotivationT, x['motivation'], x),
-    body: _atd_read_optional_field(readW3cAnnotationBodyT, x['body'], x),
-    target: _atd_read_optional_field(readW3cAnnotationTargetT, x['target'], x),
-    created: _atd_read_optional_field(readCreatedT, x['created'], x),
-    modified: _atd_read_optional_field(readModifiedT, x['modified'], x),
-  };
-}
-
-export function writeW3cAnnotationPageT(x: W3cAnnotationPageT, context: any = x): any {
-  return {
-    'id': _atd_write_required_field('W3cAnnotationPageT', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('W3cAnnotationPageT', 'type', writeTypeT, x.type, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
-    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
-    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
-    'items': _atd_write_optional_field(_atd_write_array(writeW3cAnnotationT), x.items, x),
-  };
-}
-
-export function readW3cAnnotationPageT(x: any, context: any = x): W3cAnnotationPageT {
-  return {
-    id: _atd_read_required_field('W3cAnnotationPageT', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('W3cAnnotationPageT', 'type', readTypeT, x['type'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
-    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
-    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
-    items: _atd_read_optional_field(_atd_read_array(readW3cAnnotationT), x['items'], x),
+    type: _atd_read_required_field('AnnotationTargetT2', 'type', _atd_read_string, x['type'], x),
+    source: _atd_read_required_field('AnnotationTargetT2', 'source', readIdT, x['source'], x),
   };
 }
 
@@ -1116,66 +1106,6 @@ export function writeLngStringT(x: LngStringT, context: any = x): any {
 
 export function readLngStringT(x: any, context: any = x): LngStringT {
   return _atd_read_assoc_object_into_array(_atd_read_array(_atd_read_string))(x, context);
-}
-
-export function writeW3cAnnotationBodyT(x: W3cAnnotationBodyT, context: any = x): any {
-  return {
-    'type': _atd_write_required_field('W3cAnnotationBodyT', 'type', writeTypeT, x.type, x),
-    'language': _atd_write_required_field('W3cAnnotationBodyT', 'language', writeLanguageT, x.language, x),
-    'value': _atd_write_required_field('W3cAnnotationBodyT', 'value', writeValueT, x.value, x),
-  };
-}
-
-export function readW3cAnnotationBodyT(x: any, context: any = x): W3cAnnotationBodyT {
-  return {
-    type: _atd_read_required_field('W3cAnnotationBodyT', 'type', readTypeT, x['type'], x),
-    language: _atd_read_required_field('W3cAnnotationBodyT', 'language', readLanguageT, x['language'], x),
-    value: _atd_read_required_field('W3cAnnotationBodyT', 'value', readValueT, x['value'], x),
-  };
-}
-
-export function _writeW3cAnnotationTargetT(x: W3cAnnotationTargetT, context: any = x): any {
-  switch (x.kind) {
-    case 'T1':
-      return ['T1', writeW3cAnnotationTargetT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeW3cAnnotationTargetT2(x.value, x)]
-  }
-}
-
-export function _readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
-  _atd_check_json_tuple(2, x, context)
-  switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readW3cAnnotationTargetT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readW3cAnnotationTargetT2(x[1], x) }
-    default:
-      _atd_bad_json('W3cAnnotationTargetT', x, context)
-      throw new Error('impossible')
-  }
-}
-
-export function writeW3cAnnotationTargetT1(x: W3cAnnotationTargetT1, context: any = x): any {
-  return _atd_write_string(x, context);
-}
-
-export function readW3cAnnotationTargetT1(x: any, context: any = x): W3cAnnotationTargetT1 {
-  return _atd_read_string(x, context);
-}
-
-export function writeW3cAnnotationTargetT2(x: W3cAnnotationTargetT2, context: any = x): any {
-  return {
-    'type': _atd_write_required_field('W3cAnnotationTargetT2', 'type', _atd_write_string, x.type, x),
-    'source': _atd_write_required_field('W3cAnnotationTargetT2', 'source', writeIdT, x.source, x),
-  };
-}
-
-export function readW3cAnnotationTargetT2(x: any, context: any = x): W3cAnnotationTargetT2 {
-  return {
-    type: _atd_read_required_field('W3cAnnotationTargetT2', 'type', _atd_read_string, x['type'], x),
-    source: _atd_read_required_field('W3cAnnotationTargetT2', 'source', readIdT, x['source'], x),
-  };
 }
 
 export function writeExternalT(x: ExternalT, context: any = x): any {
@@ -1800,9 +1730,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_annotation_body, restore_annotation_body } from "../src/adapter";
-import { AnnotationBodyT } from "../src/specification";
-import { normalize_target,normalize_specification,restore_target, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -1812,14 +1740,6 @@ export function readSpecificationT(x: any, context: any = x): SpecificationT {
     return normalize_specification(x, context, _readSpecificationT);
 }
 
-
-export function writeW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
-    return restore_target(x, context, _writeW3cAnnotationTargetT);
-}
-
-export function readW3cAnnotationTargetT(x: any, context: any = x): W3cAnnotationTargetT {
-    return normalize_target(x, context, _readW3cAnnotationTargetT);
-}
 
 export function writeServiceT(x: any, context: any = x): ServiceT {
     return restore_service(x, context, _writeServiceT);
@@ -1843,4 +1763,12 @@ export function writeAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
 
 export function readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
     return normalize_annotation_body(x, context, _readAnnotationBodyT);
+}
+
+export function writeAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
+    return restore_annotation_target(x, context, _writeAnnotationTargetT);
+}
+
+export function readAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
+    return normalize_annotation_target(x, context, _readAnnotationTargetT);
 }
