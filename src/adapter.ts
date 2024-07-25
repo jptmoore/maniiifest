@@ -139,3 +139,39 @@ export function normalize_source<T, R>(x: T, context: any = x, fn: (input: [stri
         throw new Error(`${x}: Input type did not match expected types.`);
     }
 }
+
+export function restore_body<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${x}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_body<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (typeof (x) === 'object') {
+        return fn(['T1', x], context);
+    } else if (Array.isArray(x)) {
+        return fn(['T2', x], context);
+    } else {
+        throw new Error(`${x}: Input type did not match expected types.`);
+    }
+}
+
+export function restore_target<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${x}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_target<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if ((typeof (x) === 'string') || (typeof (x) === 'object')) {
+        return fn(['T1', x], context);
+    } else if (Array.isArray(x)) {
+        return fn(['T2', x], context);
+    } else {
+        throw new Error(`${x}: Input type did not match expected types.`);
+    }
+}

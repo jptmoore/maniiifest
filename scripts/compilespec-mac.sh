@@ -21,8 +21,14 @@ sed -i '' 's/export function readAnnotationTargetT(/export function _readAnnotat
 sed -i '' 's/export function writeSelectorT(/export function _writeSelectorT(/g' specification.ts
 sed -i '' 's/export function readSelectorT(/export function _readSelectorT(/g' specification.ts
 
-sed -i 's/export function writeSourceT(/export function _writeSourceT(/g' specification.ts
-sed -i 's/export function readSourceT(/export function _readSourceT(/g' specification.ts
+sed -i '' 's/export function writeSourceT(/export function _writeSourceT(/g' specification.ts
+sed -i '' 's/export function readSourceT(/export function _readSourceT(/g' specification.ts
+
+sed -i '' 's/export function writeBodyT(/export function _writeBodyT(/g' specification.ts
+sed -i '' 's/export function readBodyT(/export function _readBodyT(/g' specification.ts
+
+sed -i '' 's/export function writeTargetT(/export function _writeTargetT(/g' specification.ts
+sed -i '' 's/export function readTargetT(/export function _readTargetT(/g' specification.ts
 
 # rename _type to use type
 sed -i '' 's/_type/type/g' specification.ts

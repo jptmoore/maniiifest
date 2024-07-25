@@ -119,9 +119,14 @@ type annotation_t = {
   ?thumbnail : thumbnail_t list option;
   ?rendering : rendering_t list option;
   ?motivation : motivation_t option;
-  ?body : annotation_body_t option;
-  ?target : annotation_target_t option;
+  ?body : body_t option;
+  ?target : target_t option;
 }
+
+type body_t = [
+  | T1 of annotation_body_t
+  | T2 of annotation_body_t list
+]
 
 type annotation_body_t = [
   | T1 of annotation_body_t1
@@ -143,6 +148,11 @@ type annotation_body_t3 = {
   ?_type <json name="type"> : type_t option;
   items : resource_t list;
 }
+
+type target_t = [
+  | T1 of annotation_target_t
+  | T2 of annotation_target_t list
+]
 
 type annotation_target_t = [
   | T1 of annotation_target_t1
