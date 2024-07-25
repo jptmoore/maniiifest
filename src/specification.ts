@@ -1084,7 +1084,7 @@ export function readSourceT2(x: any, context: any = x): SourceT2 {
   return readClassT(x, context);
 }
 
-export function writeSelectorT(x: SelectorT, context: any = x): any {
+export function _writeSelectorT(x: SelectorT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
       return ['T1', writeSelectorT1(x.value, x)]
@@ -1099,7 +1099,7 @@ export function writeSelectorT(x: SelectorT, context: any = x): any {
   }
 }
 
-export function readSelectorT(x: any, context: any = x): SelectorT {
+export function _readSelectorT(x: any, context: any = x): SelectorT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
     case 'T1':
@@ -2066,7 +2066,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2107,4 +2107,12 @@ export function writeAnnotationTargetT(x: any, context: any = x): AnnotationTarg
 
 export function readAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
     return normalize_annotation_target(x, context, _readAnnotationTargetT);
+}
+
+export function writeSelectorT(x: any, context: any = x): SelectorT {
+    return restore_selector(x, context, _writeSelectorT);
+}
+
+export function readSelectorT(x: any, context: any = x): SelectorT {
+    return normalize_selector(x, context, _readSelectorT);
 }
