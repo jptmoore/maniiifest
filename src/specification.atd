@@ -140,8 +140,8 @@ type annotation_body_t1 = {
 
 type annotation_body_t2 = {
   _type <json name="type"> : type_t;
-  language : language_t;
-  value : value_t;
+  ?language : language_t option;
+  ?value : value_t option;
 }
 
 type annotation_body_t3 = {
@@ -165,7 +165,6 @@ type annotation_target_t1 = string
 type annotation_target_t2 = specific_resource_t
 
 type annotation_target_t3 = {
-  _type <json name="type"> : string;
   source : id_t;
   scope : id_t;
 }

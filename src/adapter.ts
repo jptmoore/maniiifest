@@ -73,7 +73,7 @@ export function normalize_annotation_body<T extends { type: string }, R>(x: T, c
     } else if (x.type === 'Choice') {
         return fn(['T3', x], context)    
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
 
@@ -88,12 +88,12 @@ export function restore_annotation_target<T, R>(x: T, context: any = x, fn: (inp
 export function normalize_annotation_target<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
         return fn(['T1', x], context);
-    } else if (typeof x === 'object' && x.type === 'SpecificResource') {
+    } else if (('source' in x) && ('selector' in x)) {
         return fn(['T2', x], context);
-    } else if (typeof x === 'object' && ('source' in x) && ('scope' in x)) {
+    } else if (('source' in x) && ('scope' in x)) {
         return fn(['T3', x], context);        
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
 
@@ -149,12 +149,10 @@ export function restore_body<T, R>(x: T, context: any = x, fn: (input: T, contex
 }
 
 export function normalize_body<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
-    if (typeof (x) === 'object') {
-        return fn(['T1', x], context);
-    } else if (Array.isArray(x)) {
+    if (Array.isArray(x)) {
         return fn(['T2', x], context);
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        return fn(['T1', x], context);
     }
 }
 
@@ -167,11 +165,9 @@ export function restore_target<T, R>(x: T, context: any = x, fn: (input: T, cont
 }
 
 export function normalize_target<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
-    if ((typeof (x) === 'string') || (typeof (x) === 'object')) {
-        return fn(['T1', x], context);
-    } else if (Array.isArray(x)) {
+    if (Array.isArray(x)) {
         return fn(['T2', x], context);
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        return fn(['T1', x], context);
     }
 }
