@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -49,4 +49,12 @@ export function writeSelectorT(x: any, context: any = x): SelectorT {
 
 export function readSelectorT(x: any, context: any = x): SelectorT {
     return normalize_selector(x, context, _readSelectorT);
+}
+
+export function writeSourceT(x: any, context: any = x): SourceT {
+    return restore_source(x, context, _writeSourceT);
+}
+
+export function readSourceT(x: any, context: any = x): SourceT {
+    return normalize_source(x, context, _readSourceT);
 }
