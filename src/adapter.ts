@@ -85,11 +85,13 @@ export function restore_annotation_target<T, R>(x: T, context: any = x, fn: (inp
     return resultList[1];
 }
 
-export function normalize_annotation_target<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+export function normalize_annotation_target<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
         return fn(['T1', x], context);
-    } else if (typeof (x) === 'object') {
+    } else if (typeof x === 'object' && x.type === 'SpecificResource') {
         return fn(['T2', x], context);
+    } else if (typeof x === 'object' && ('source' in x) && ('scope' in x)) {
+        return fn(['T3', x], context);        
     } else {
         throw new Error(`${x}: Input type did not match expected types.`);
     }
