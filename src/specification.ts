@@ -47,6 +47,7 @@ export type ManifestT = {
   partOf?: PartOfT[];
   start?: StartT;
   items?: CanvasT[];
+  structures?: RangeT[];
   annotations?: AnnotationPageT[];
 }
 
@@ -452,6 +453,25 @@ export type FirstT2 = {
   items?: AnnotationT[];
 }
 
+export type RangeT = {
+  id: IdT;
+  type: TypeT;
+  label?: LabelT;
+  rendering?: RenderingT;
+  supplementary?: AnnotationCollectionT;
+  service?: ServiceT[];
+  placeholderCanvas?: PlaceholderCanvasT;
+  accompanyingCanvas?: AccompanyingCanvasT;
+  annotations?: AnnotationPageT[];
+  thumbnail?: ThumbnailT[];
+  items: RangeItemsT[];
+}
+
+export type RangeItemsT =
+| { kind: 'T1'; value: SpecificResourceT }
+| { kind: 'T2'; value: CanvasT }
+| { kind: 'T3'; value: RangeT }
+
 export type IdT = string
 
 export type TypeT = string
@@ -570,6 +590,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
     'start': _atd_write_optional_field(writeStartT, x.start, x),
     'items': _atd_write_optional_field(_atd_write_array(writeCanvasT), x.items, x),
+    'structures': _atd_write_optional_field(_atd_write_array(writeRangeT), x.structures, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
@@ -596,6 +617,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
     start: _atd_read_optional_field(readStartT, x['start'], x),
     items: _atd_read_optional_field(_atd_read_array(readCanvasT), x['items'], x),
+    structures: _atd_read_optional_field(_atd_read_array(readRangeT), x['structures'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
@@ -1768,6 +1790,64 @@ export function readFirstT2(x: any, context: any = x): FirstT2 {
   };
 }
 
+export function writeRangeT(x: RangeT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('RangeT', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('RangeT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'rendering': _atd_write_optional_field(writeRenderingT, x.rendering, x),
+    'supplementary': _atd_write_optional_field(writeAnnotationCollectionT, x.supplementary, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'placeholderCanvas': _atd_write_optional_field(writePlaceholderCanvasT, x.placeholderCanvas, x),
+    'accompanyingCanvas': _atd_write_optional_field(writeAccompanyingCanvasT, x.accompanyingCanvas, x),
+    'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'items': _atd_write_required_field('RangeT', 'items', _atd_write_array(writeRangeItemsT), x.items, x),
+  };
+}
+
+export function readRangeT(x: any, context: any = x): RangeT {
+  return {
+    id: _atd_read_required_field('RangeT', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('RangeT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    rendering: _atd_read_optional_field(readRenderingT, x['rendering'], x),
+    supplementary: _atd_read_optional_field(readAnnotationCollectionT, x['supplementary'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    placeholderCanvas: _atd_read_optional_field(readPlaceholderCanvasT, x['placeholderCanvas'], x),
+    accompanyingCanvas: _atd_read_optional_field(readAccompanyingCanvasT, x['accompanyingCanvas'], x),
+    annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    items: _atd_read_required_field('RangeT', 'items', _atd_read_array(readRangeItemsT), x['items'], x),
+  };
+}
+
+export function _writeRangeItemsT(x: RangeItemsT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeSpecificResourceT(x.value, x)]
+    case 'T2':
+      return ['T2', writeCanvasT(x.value, x)]
+    case 'T3':
+      return ['T3', writeRangeT(x.value, x)]
+  }
+}
+
+export function _readRangeItemsT(x: any, context: any = x): RangeItemsT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readSpecificResourceT(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readCanvasT(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readRangeT(x[1], x) }
+    default:
+      _atd_bad_json('RangeItemsT', x, context)
+      throw new Error('impossible')
+  }
+}
+
 export function writeIdT(x: IdT, context: any = x): any {
   return _atd_write_string(x, context);
 }
@@ -2354,7 +2434,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2451,4 +2531,12 @@ export function writeResourceSelectorT(x: any, context: any = x): ResourceSelect
 
 export function readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
     return normalize_resource_selector(x, context, _readResourceSelectorT);
+}
+
+export function writeRangeItemsT(x: any, context: any = x): RangeItemsT {
+    return restore_range_items(x, context, _writeRangeItemsT);
+}
+
+export function readRangeItemsT(x: any, context: any = x): RangeItemsT {
+    return normalize_range_items(x, context, _readRangeItemsT);
 }

@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -97,4 +97,12 @@ export function writeResourceSelectorT(x: any, context: any = x): ResourceSelect
 
 export function readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
     return normalize_resource_selector(x, context, _readResourceSelectorT);
+}
+
+export function writeRangeItemsT(x: any, context: any = x): RangeItemsT {
+    return restore_range_items(x, context, _writeRangeItemsT);
+}
+
+export function readRangeItemsT(x: any, context: any = x): RangeItemsT {
+    return normalize_range_items(x, context, _readRangeItemsT);
 }

@@ -32,6 +32,7 @@ type manifest_t = {
   ?partOf : part_of_t list option;
   ?start : start_t option;
   ?items : canvas_t list option;
+  ?structures : range_t list option;
   ?annotations : annotation_page_t list option;
 }
 
@@ -363,6 +364,24 @@ type first_t2 = {
   ?thumbnail : thumbnail_t list option;
   ?items : annotation_t list option;
 }
+
+type range_t = {
+  inherit class_t;
+  ?rendering : rendering_t option;
+  ?supplementary : annotation_collection_t option;
+  ?service : service_t list option;
+  ?placeholderCanvas : placeholder_canvas_t option;
+  ?accompanyingCanvas : accompanying_canvas_t option;
+  ?annotations : annotation_page_t list option;
+  ?thumbnail : thumbnail_t list option;
+  items : range_items_t list;
+}
+
+type range_items_t = [
+  | T1 of specific_resource_t
+  | T2 of canvas_t
+  | T3 of range_t
+]
 
 type id_t = string
 type type_t = string
