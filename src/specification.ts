@@ -262,7 +262,7 @@ export type SpecificResourceT = {
   format?: FormatT;
   accessibility?: AccessibilityT;
   source: SourceT;
-  selector: ResourceSelectorT;
+  selector: SelectorT;
 }
 
 export type SourceT =
@@ -273,27 +273,27 @@ export type SourceT1 = IdT
 
 export type SourceT2 = ClassT
 
-export type ResourceSelectorT =
-| { kind: 'T1'; value: SelectorT }
-| { kind: 'T2'; value: SelectorT[] }
-
 export type SelectorT =
-| { kind: 'T1'; value: SelectorT1 }
-| { kind: 'T2'; value: SelectorT2 }
-| { kind: 'T3'; value: SelectorT3 }
-| { kind: 'T4'; value: SelectorT4 }
-| { kind: 'T5'; value: SelectorT5 }
+| { kind: 'T1'; value: ResourceSelectorT }
+| { kind: 'T2'; value: ResourceSelectorT[] }
 
-export type SelectorT1 = string
+export type ResourceSelectorT =
+| { kind: 'T1'; value: ResourceSelectorT1 }
+| { kind: 'T2'; value: ResourceSelectorT2 }
+| { kind: 'T3'; value: ResourceSelectorT3 }
+| { kind: 'T4'; value: ResourceSelectorT4 }
+| { kind: 'T5'; value: ResourceSelectorT5 }
 
-export type SelectorT2 = {
+export type ResourceSelectorT1 = string
+
+export type ResourceSelectorT2 = {
   type: TypeT;
   t?: DurationT;
   x_?: DimensonT;
   y?: DimensonT;
 }
 
-export type SelectorT3 = {
+export type ResourceSelectorT3 = {
   type: TypeT;
   conformsTo?: ConformsToT;
   value: ValueT;
@@ -307,12 +307,12 @@ export type ConformsToT = {
   value: ValueT;
 }
 
-export type SelectorT4 = {
+export type ResourceSelectorT4 = {
   type: TypeT;
   value: ValueT;
 }
 
-export type SelectorT5 = {
+export type ResourceSelectorT5 = {
   type: TypeT;
   region?: RegionT;
   size?: SizeT;
@@ -1151,7 +1151,7 @@ export function writeSpecificResourceT(x: SpecificResourceT, context: any = x): 
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
     'source': _atd_write_required_field('SpecificResourceT', 'source', writeSourceT, x.source, x),
-    'selector': _atd_write_required_field('SpecificResourceT', 'selector', writeResourceSelectorT, x.selector, x),
+    'selector': _atd_write_required_field('SpecificResourceT', 'selector', writeSelectorT, x.selector, x),
   };
 }
 
@@ -1162,7 +1162,7 @@ export function readSpecificResourceT(x: any, context: any = x): SpecificResourc
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
     source: _atd_read_required_field('SpecificResourceT', 'source', readSourceT, x['source'], x),
-    selector: _atd_read_required_field('SpecificResourceT', 'selector', readResourceSelectorT, x['selector'], x),
+    selector: _atd_read_required_field('SpecificResourceT', 'selector', readSelectorT, x['selector'], x),
   };
 }
 
@@ -1204,40 +1204,12 @@ export function readSourceT2(x: any, context: any = x): SourceT2 {
   return readClassT(x, context);
 }
 
-export function _writeResourceSelectorT(x: ResourceSelectorT, context: any = x): any {
-  switch (x.kind) {
-    case 'T1':
-      return ['T1', writeSelectorT(x.value, x)]
-    case 'T2':
-      return ['T2', _atd_write_array(writeSelectorT)(x.value, x)]
-  }
-}
-
-export function _readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
-  _atd_check_json_tuple(2, x, context)
-  switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readSelectorT(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: _atd_read_array(readSelectorT)(x[1], x) }
-    default:
-      _atd_bad_json('ResourceSelectorT', x, context)
-      throw new Error('impossible')
-  }
-}
-
 export function _writeSelectorT(x: SelectorT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
-      return ['T1', writeSelectorT1(x.value, x)]
+      return ['T1', writeResourceSelectorT(x.value, x)]
     case 'T2':
-      return ['T2', writeSelectorT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeSelectorT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeSelectorT4(x.value, x)]
-    case 'T5':
-      return ['T5', writeSelectorT5(x.value, x)]
+      return ['T2', _atd_write_array(writeResourceSelectorT)(x.value, x)]
   }
 }
 
@@ -1245,60 +1217,88 @@ export function _readSelectorT(x: any, context: any = x): SelectorT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
     case 'T1':
-      return { kind: 'T1', value: readSelectorT1(x[1], x) }
+      return { kind: 'T1', value: readResourceSelectorT(x[1], x) }
     case 'T2':
-      return { kind: 'T2', value: readSelectorT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readSelectorT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readSelectorT4(x[1], x) }
-    case 'T5':
-      return { kind: 'T5', value: readSelectorT5(x[1], x) }
+      return { kind: 'T2', value: _atd_read_array(readResourceSelectorT)(x[1], x) }
     default:
       _atd_bad_json('SelectorT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeSelectorT1(x: SelectorT1, context: any = x): any {
+export function _writeResourceSelectorT(x: ResourceSelectorT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeResourceSelectorT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeResourceSelectorT2(x.value, x)]
+    case 'T3':
+      return ['T3', writeResourceSelectorT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeResourceSelectorT4(x.value, x)]
+    case 'T5':
+      return ['T5', writeResourceSelectorT5(x.value, x)]
+  }
+}
+
+export function _readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readResourceSelectorT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readResourceSelectorT2(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readResourceSelectorT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readResourceSelectorT4(x[1], x) }
+    case 'T5':
+      return { kind: 'T5', value: readResourceSelectorT5(x[1], x) }
+    default:
+      _atd_bad_json('ResourceSelectorT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeResourceSelectorT1(x: ResourceSelectorT1, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readSelectorT1(x: any, context: any = x): SelectorT1 {
+export function readResourceSelectorT1(x: any, context: any = x): ResourceSelectorT1 {
   return _atd_read_string(x, context);
 }
 
-export function writeSelectorT2(x: SelectorT2, context: any = x): any {
+export function writeResourceSelectorT2(x: ResourceSelectorT2, context: any = x): any {
   return {
-    'type': _atd_write_required_field('SelectorT2', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('ResourceSelectorT2', 'type', writeTypeT, x.type, x),
     't': _atd_write_optional_field(writeDurationT, x.t, x),
     'x': _atd_write_optional_field(writeDimensonT, x.x_, x),
     'y': _atd_write_optional_field(writeDimensonT, x.y, x),
   };
 }
 
-export function readSelectorT2(x: any, context: any = x): SelectorT2 {
+export function readResourceSelectorT2(x: any, context: any = x): ResourceSelectorT2 {
   return {
-    type: _atd_read_required_field('SelectorT2', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('ResourceSelectorT2', 'type', readTypeT, x['type'], x),
     t: _atd_read_optional_field(readDurationT, x['t'], x),
     x_: _atd_read_optional_field(readDimensonT, x['x'], x),
     y: _atd_read_optional_field(readDimensonT, x['y'], x),
   };
 }
 
-export function writeSelectorT3(x: SelectorT3, context: any = x): any {
+export function writeResourceSelectorT3(x: ResourceSelectorT3, context: any = x): any {
   return {
-    'type': _atd_write_required_field('SelectorT3', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('ResourceSelectorT3', 'type', writeTypeT, x.type, x),
     'conformsTo': _atd_write_optional_field(writeConformsToT, x.conformsTo, x),
-    'value': _atd_write_required_field('SelectorT3', 'value', writeValueT, x.value, x),
+    'value': _atd_write_required_field('ResourceSelectorT3', 'value', writeValueT, x.value, x),
   };
 }
 
-export function readSelectorT3(x: any, context: any = x): SelectorT3 {
+export function readResourceSelectorT3(x: any, context: any = x): ResourceSelectorT3 {
   return {
-    type: _atd_read_required_field('SelectorT3', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('ResourceSelectorT3', 'type', readTypeT, x['type'], x),
     conformsTo: _atd_read_optional_field(readConformsToT, x['conformsTo'], x),
-    value: _atd_read_required_field('SelectorT3', 'value', readValueT, x['value'], x),
+    value: _atd_read_required_field('ResourceSelectorT3', 'value', readValueT, x['value'], x),
   };
 }
 
@@ -1322,23 +1322,23 @@ export function readConformsToT(x: any, context: any = x): ConformsToT {
   };
 }
 
-export function writeSelectorT4(x: SelectorT4, context: any = x): any {
+export function writeResourceSelectorT4(x: ResourceSelectorT4, context: any = x): any {
   return {
-    'type': _atd_write_required_field('SelectorT4', 'type', writeTypeT, x.type, x),
-    'value': _atd_write_required_field('SelectorT4', 'value', writeValueT, x.value, x),
+    'type': _atd_write_required_field('ResourceSelectorT4', 'type', writeTypeT, x.type, x),
+    'value': _atd_write_required_field('ResourceSelectorT4', 'value', writeValueT, x.value, x),
   };
 }
 
-export function readSelectorT4(x: any, context: any = x): SelectorT4 {
+export function readResourceSelectorT4(x: any, context: any = x): ResourceSelectorT4 {
   return {
-    type: _atd_read_required_field('SelectorT4', 'type', readTypeT, x['type'], x),
-    value: _atd_read_required_field('SelectorT4', 'value', readValueT, x['value'], x),
+    type: _atd_read_required_field('ResourceSelectorT4', 'type', readTypeT, x['type'], x),
+    value: _atd_read_required_field('ResourceSelectorT4', 'value', readValueT, x['value'], x),
   };
 }
 
-export function writeSelectorT5(x: SelectorT5, context: any = x): any {
+export function writeResourceSelectorT5(x: ResourceSelectorT5, context: any = x): any {
   return {
-    'type': _atd_write_required_field('SelectorT5', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('ResourceSelectorT5', 'type', writeTypeT, x.type, x),
     'region': _atd_write_optional_field(writeRegionT, x.region, x),
     'size': _atd_write_optional_field(writeSizeT, x.size, x),
     'rotation': _atd_write_optional_field(writeRotatationT, x.rotation, x),
@@ -1347,9 +1347,9 @@ export function writeSelectorT5(x: SelectorT5, context: any = x): any {
   };
 }
 
-export function readSelectorT5(x: any, context: any = x): SelectorT5 {
+export function readResourceSelectorT5(x: any, context: any = x): ResourceSelectorT5 {
   return {
-    type: _atd_read_required_field('SelectorT5', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('ResourceSelectorT5', 'type', readTypeT, x['type'], x),
     region: _atd_read_optional_field(readRegionT, x['region'], x),
     size: _atd_read_optional_field(readSizeT, x['size'], x),
     rotation: _atd_read_optional_field(readRotatationT, x['rotation'], x),
