@@ -199,6 +199,8 @@ export type AnnotationT = {
   thumbnail?: ThumbnailT[];
   rendering?: RenderingT[];
   motivation?: MotivationT;
+  created?: CreatedT;
+  modified?: ModifiedT;
   body?: BodyT;
   target?: TargetT;
 }
@@ -956,6 +958,8 @@ export function writeAnnotationT(x: AnnotationT, context: any = x): any {
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'motivation': _atd_write_optional_field(writeMotivationT, x.motivation, x),
+    'created': _atd_write_optional_field(writeCreatedT, x.created, x),
+    'modified': _atd_write_optional_field(writeModifiedT, x.modified, x),
     'body': _atd_write_optional_field(writeBodyT, x.body, x),
     'target': _atd_write_optional_field(writeTargetT, x.target, x),
   };
@@ -969,6 +973,8 @@ export function readAnnotationT(x: any, context: any = x): AnnotationT {
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     motivation: _atd_read_optional_field(readMotivationT, x['motivation'], x),
+    created: _atd_read_optional_field(readCreatedT, x['created'], x),
+    modified: _atd_read_optional_field(readModifiedT, x['modified'], x),
     body: _atd_read_optional_field(readBodyT, x['body'], x),
     target: _atd_read_optional_field(readTargetT, x['target'], x),
   };

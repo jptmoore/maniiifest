@@ -13,7 +13,7 @@ const filename = 'test/buddha.json';
 
         const parser = new Manifesty(jsonData);
 
-        for (const item of parser.iterateCollectionManifest()) {
+        for (const item of parser.iterateManifestCanvasW3cAnnotation()) {
             console.log(item)
         }
 

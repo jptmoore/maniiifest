@@ -123,6 +123,8 @@ type annotation_t = {
   ?thumbnail : thumbnail_t list option;
   ?rendering : rendering_t list option;
   ?motivation : motivation_t option;
+  ?created : created_t option;
+  ?modified : modified_t option;
   ?body : body_t option;
   ?target : target_t option;
 }
