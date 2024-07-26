@@ -210,6 +210,24 @@ export class Manifesty {
         }
     }
 
+    *iterateManifestStructures(): IterableIterator<T.RangeT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const range of this.specification.value.structures ?? []) {
+                yield F.writeRangeT(range);
+            }
+        }
+    }
+
+    *iterateManifestStructuresItems(): IterableIterator<T.RangeItemsT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const range of this.specification.value.structures ?? []) {
+                for (const item of range.items ?? []) {
+                    yield F.writeRangeItemsT(item);
+                }
+            }
+        }
+    }
+
     *iterateManifest(): IterableIterator<T.ManifestT> {
         if (this.specification.kind === 'Manifest') {
             yield F.writeManifestT(this.specification.value);
