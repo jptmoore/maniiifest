@@ -207,3 +207,19 @@ export function normalize_label<T, R>(x: T, context: any = x, fn: (input: [strin
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
+
+export function restore_resource_selector<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_resource_selector<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (Array.isArray(x)) {
+        return fn(['T2', x], context);
+    } else {
+        return fn(['T1', x], context);
+    }
+}

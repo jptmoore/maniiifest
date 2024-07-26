@@ -262,7 +262,7 @@ export type SpecificResourceT = {
   format?: FormatT;
   accessibility?: AccessibilityT;
   source: SourceT;
-  selector: SelectorT;
+  selector: ResourceSelectorT;
 }
 
 export type SourceT =
@@ -272,6 +272,10 @@ export type SourceT =
 export type SourceT1 = IdT
 
 export type SourceT2 = ClassT
+
+export type ResourceSelectorT =
+| { kind: 'T1'; value: SelectorT }
+| { kind: 'T2'; value: SelectorT[] }
 
 export type SelectorT =
 | { kind: 'T1'; value: SelectorT1 }
@@ -1147,7 +1151,7 @@ export function writeSpecificResourceT(x: SpecificResourceT, context: any = x): 
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
     'source': _atd_write_required_field('SpecificResourceT', 'source', writeSourceT, x.source, x),
-    'selector': _atd_write_required_field('SpecificResourceT', 'selector', writeSelectorT, x.selector, x),
+    'selector': _atd_write_required_field('SpecificResourceT', 'selector', writeResourceSelectorT, x.selector, x),
   };
 }
 
@@ -1158,7 +1162,7 @@ export function readSpecificResourceT(x: any, context: any = x): SpecificResourc
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
     source: _atd_read_required_field('SpecificResourceT', 'source', readSourceT, x['source'], x),
-    selector: _atd_read_required_field('SpecificResourceT', 'selector', readSelectorT, x['selector'], x),
+    selector: _atd_read_required_field('SpecificResourceT', 'selector', readResourceSelectorT, x['selector'], x),
   };
 }
 
@@ -1198,6 +1202,28 @@ export function writeSourceT2(x: SourceT2, context: any = x): any {
 
 export function readSourceT2(x: any, context: any = x): SourceT2 {
   return readClassT(x, context);
+}
+
+export function _writeResourceSelectorT(x: ResourceSelectorT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeSelectorT(x.value, x)]
+    case 'T2':
+      return ['T2', _atd_write_array(writeSelectorT)(x.value, x)]
+  }
+}
+
+export function _readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readSelectorT(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: _atd_read_array(readSelectorT)(x[1], x) }
+    default:
+      _atd_bad_json('ResourceSelectorT', x, context)
+      throw new Error('impossible')
+  }
 }
 
 export function _writeSelectorT(x: SelectorT, context: any = x): any {
@@ -2328,7 +2354,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2417,4 +2443,12 @@ export function writeLabelT(x: any, context: any = x): LabelT {
 
 export function readLabelT(x: any, context: any = x): LabelT {
     return normalize_label(x, context, _readLabelT);
+}
+
+export function writeResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
+    return restore_resource_selector(x, context, _writeResourceSelectorT);
+}
+
+export function readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
+    return normalize_resource_selector(x, context, _readResourceSelectorT);
 }

@@ -178,7 +178,7 @@ type specific_resource_t = {
   ?format : format_t option;
   ?accessibility : accessibility_t option;
   source : source_t;
-  selector : selector_t;
+  selector : resource_selector_t;
 }
 
 type source_t = [
@@ -189,6 +189,11 @@ type source_t = [
 type source_t1 = id_t
 
 type source_t2 = class_t
+
+type resource_selector_t = [
+  | T1 of selector_t
+  | T2 of selector_t list
+]
 
 type selector_t = [
   | T1 of selector_t1
