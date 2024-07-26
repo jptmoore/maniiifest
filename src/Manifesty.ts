@@ -228,15 +228,13 @@ export class Manifesty {
         }
     }
 
-    *iterateManifest(): IterableIterator<T.ManifestT> {
-        if (this.specification.kind === 'Manifest') {
-            yield F.writeManifestT(this.specification.value);
-        } else if (this.specification.kind === 'Collection') {
-            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.ManifestT> {
+    *iterateCollection(): IterableIterator<T.CollectionT> {
+        if (this.specification.kind === 'Collection') {
+            yield F.writeCollectionT(this.specification.value);
+            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.CollectionT> {
                 for (const item of items) {
-                    if (item.kind === 'Manifest') {
-                        yield F.writeManifestT(item.value);
-                    } else if (item.kind === 'Collection') {
+                    if (item.kind === 'Collection') {
+                        yield F.writeCollectionT(item.value);
                         yield* traverse(item.value.items);
                     }
                 }
@@ -245,13 +243,15 @@ export class Manifesty {
         }
     }
 
-    *iterateCollection(): IterableIterator<T.CollectionT> {
-        if (this.specification.kind === 'Collection') {
-            yield F.writeCollectionT(this.specification.value);
-            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.CollectionT> {
+    *iterateCollectionManifest(): IterableIterator<T.ManifestT> {
+        if (this.specification.kind === 'Manifest') {
+            yield F.writeManifestT(this.specification.value);
+        } else if (this.specification.kind === 'Collection') {
+            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.ManifestT> {
                 for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        yield F.writeCollectionT(item.value);
+                    if (item.kind === 'Manifest') {
+                        yield F.writeManifestT(item.value);
+                    } else if (item.kind === 'Collection') {
                         yield* traverse(item.value.items);
                     }
                 }
