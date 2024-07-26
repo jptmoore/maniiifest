@@ -105,6 +105,9 @@ type annotation_page_t = {
   id : id_t;
   _type <json name="type"> : type_t;
   ?label : label_t option;
+  ?partOf : part_of_t option;
+  ?next : next_t option;
+  ?startIndex : start__index_t option;
   ?rendering : rendering_t list option;
   ?service : service_t list option;
   ?thumbnail : thumbnail_t list option;
@@ -321,6 +324,27 @@ type motivation_t1 = string
 
 type motivation_t2 = string list
 
+type annotation_collection_t = {
+  inherit class_t;
+  ?rendering : rendering_t option;
+  ?partOf : part_of_t option;
+  ?total : total_t option;
+  ?first : first_t option;
+  ?last : last_t option;
+  ?service : service_t list option;
+  ?thumbnail : thumbnail_t list option;
+  ?items : annotation_t list option;
+}
+
+type first_t = {
+  id : id_t;
+  _type <json name="type"> : type_t;
+  ?label : label_t option;
+  ?startIndex : start__index_t option;
+  ?thumbnail : thumbnail_t list option;
+  ?items : annotation_t list option;
+}
+
 type id_t = string
 type type_t = string
 type height_t = int
@@ -344,4 +368,7 @@ type region_t = string
 type size_t = string
 type quality_t = string
 type rotatation_t = string
-
+type total_t = int
+type last_t = string
+type next_t = string
+type start__index_t = int

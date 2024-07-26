@@ -182,6 +182,9 @@ export type AnnotationPageT = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
+  partOf?: PartOfT;
+  next?: NextT;
+  startIndex?: StartIndexT;
   rendering?: RenderingT[];
   service?: ServiceT[];
   thumbnail?: ThumbnailT[];
@@ -410,6 +413,29 @@ export type MotivationT1 = string
 
 export type MotivationT2 = string[]
 
+export type AnnotationCollectionT = {
+  id: IdT;
+  type: TypeT;
+  label?: LabelT;
+  rendering?: RenderingT;
+  partOf?: PartOfT;
+  total?: TotalT;
+  first?: FirstT;
+  last?: LastT;
+  service?: ServiceT[];
+  thumbnail?: ThumbnailT[];
+  items?: AnnotationT[];
+}
+
+export type FirstT = {
+  id: IdT;
+  type: TypeT;
+  label?: LabelT;
+  startIndex?: StartIndexT;
+  thumbnail?: ThumbnailT[];
+  items?: AnnotationT[];
+}
+
 export type IdT = string
 
 export type TypeT = string
@@ -455,6 +481,14 @@ export type SizeT = string
 export type QualityT = string
 
 export type RotatationT = string
+
+export type TotalT = number /*int*/
+
+export type LastT = string
+
+export type NextT = string
+
+export type StartIndexT = number /*int*/
 
 export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
   switch (x.kind) {
@@ -851,6 +885,9 @@ export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any 
     'id': _atd_write_required_field('AnnotationPageT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationPageT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
+    'next': _atd_write_optional_field(writeNextT, x.next, x),
+    'startIndex': _atd_write_optional_field(writeStartIndexT, x.startIndex, x),
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
@@ -863,6 +900,9 @@ export function readAnnotationPageT(x: any, context: any = x): AnnotationPageT {
     id: _atd_read_required_field('AnnotationPageT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationPageT', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
+    partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
+    next: _atd_read_optional_field(readNextT, x['next'], x),
+    startIndex: _atd_read_optional_field(readStartIndexT, x['startIndex'], x),
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
@@ -1576,6 +1616,60 @@ export function readMotivationT2(x: any, context: any = x): MotivationT2 {
   return _atd_read_array(_atd_read_string)(x, context);
 }
 
+export function writeAnnotationCollectionT(x: AnnotationCollectionT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('AnnotationCollectionT', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('AnnotationCollectionT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'rendering': _atd_write_optional_field(writeRenderingT, x.rendering, x),
+    'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
+    'total': _atd_write_optional_field(writeTotalT, x.total, x),
+    'first': _atd_write_optional_field(writeFirstT, x.first, x),
+    'last': _atd_write_optional_field(writeLastT, x.last, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeAnnotationT), x.items, x),
+  };
+}
+
+export function readAnnotationCollectionT(x: any, context: any = x): AnnotationCollectionT {
+  return {
+    id: _atd_read_required_field('AnnotationCollectionT', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('AnnotationCollectionT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    rendering: _atd_read_optional_field(readRenderingT, x['rendering'], x),
+    partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
+    total: _atd_read_optional_field(readTotalT, x['total'], x),
+    first: _atd_read_optional_field(readFirstT, x['first'], x),
+    last: _atd_read_optional_field(readLastT, x['last'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    items: _atd_read_optional_field(_atd_read_array(readAnnotationT), x['items'], x),
+  };
+}
+
+export function writeFirstT(x: FirstT, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('FirstT', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('FirstT', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'startIndex': _atd_write_optional_field(writeStartIndexT, x.startIndex, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'items': _atd_write_optional_field(_atd_write_array(writeAnnotationT), x.items, x),
+  };
+}
+
+export function readFirstT(x: any, context: any = x): FirstT {
+  return {
+    id: _atd_read_required_field('FirstT', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('FirstT', 'type', readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    startIndex: _atd_read_optional_field(readStartIndexT, x['startIndex'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    items: _atd_read_optional_field(_atd_read_array(readAnnotationT), x['items'], x),
+  };
+}
+
 export function writeIdT(x: IdT, context: any = x): any {
   return _atd_write_string(x, context);
 }
@@ -1758,6 +1852,38 @@ export function writeRotatationT(x: RotatationT, context: any = x): any {
 
 export function readRotatationT(x: any, context: any = x): RotatationT {
   return _atd_read_string(x, context);
+}
+
+export function writeTotalT(x: TotalT, context: any = x): any {
+  return _atd_write_int(x, context);
+}
+
+export function readTotalT(x: any, context: any = x): TotalT {
+  return _atd_read_int(x, context);
+}
+
+export function writeLastT(x: LastT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readLastT(x: any, context: any = x): LastT {
+  return _atd_read_string(x, context);
+}
+
+export function writeNextT(x: NextT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readNextT(x: any, context: any = x): NextT {
+  return _atd_read_string(x, context);
+}
+
+export function writeStartIndexT(x: StartIndexT, context: any = x): any {
+  return _atd_write_int(x, context);
+}
+
+export function readStartIndexT(x: any, context: any = x): StartIndexT {
+  return _atd_read_int(x, context);
 }
 
 
