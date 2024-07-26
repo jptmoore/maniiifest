@@ -13,7 +13,7 @@ sed -i '' 's/export function writeMotivationT(/export function _writeMotivationT
 sed -i '' 's/export function readMotivationT(/export function _readMotivationT(/g' specification.ts
 
 sed -i '' 's/export function writeAnnotationBodyT(/export function _writeAnnotationBodyT(/g' specification.ts
-sed -i '' 's/export function readAnnotationBodyT(/export function _readAnnnotationBodyT(/g' specification.ts
+sed -i '' 's/export function readAnnotationBodyT(/export function _readAnnotationBodyT(/g' specification.ts
 
 sed -i '' 's/export function writeAnnotationTargetT(/export function _writeAnnotationTargetT(/g' specification.ts
 sed -i '' 's/export function readAnnotationTargetT(/export function _readAnnotationTargetT(/g' specification.ts
