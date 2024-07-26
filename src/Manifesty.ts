@@ -210,7 +210,7 @@ export class Manifesty {
         }
     }
 
-    *iterateManifestStructures(): IterableIterator<T.RangeT> {
+    *iterateManifestRange(): IterableIterator<T.RangeT> {
         if (this.specification.kind === 'Manifest') {
             for (const range of this.specification.value.structures ?? []) {
                 yield F.writeRangeT(range);
@@ -218,7 +218,7 @@ export class Manifesty {
         }
     }
 
-    *iterateManifestStructuresItems(): IterableIterator<T.RangeItemsT> {
+    *iterateManifestRangeItem(): IterableIterator<T.RangeItemsT> {
         if (this.specification.kind === 'Manifest') {
             for (const range of this.specification.value.structures ?? []) {
                 for (const item of range.items ?? []) {
