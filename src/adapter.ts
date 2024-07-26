@@ -2,7 +2,7 @@
 export function restore_specification<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -13,14 +13,14 @@ export function normalize_specification<T extends { type: string }, R>(x: T, con
     } else if (x.type === 'Collection') {
         return fn(['Collection', x], context);
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
 
 export function restore_service<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -32,17 +32,17 @@ export function normalize_service<T, R>(x: T, context: any = {}, fn: (input: [st
         } else if ('@id' in x) {
             return fn(['T2', x], context);
         } else {
-            throw new Error(`${x}: Input type did not match expected types.`);
+            throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
         }
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
 
 export function restore_motivation<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -53,14 +53,14 @@ export function normalize_motivation<T, R>(x: T, context: any = x, fn: (input: [
     } else if (Array.isArray(x)) {
         return fn(['T2', x], context);
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
 
 export function restore_annotation_body<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -80,7 +80,7 @@ export function normalize_annotation_body<T extends { type: string }, R>(x: T, c
 export function restore_annotation_target<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -100,7 +100,7 @@ export function normalize_annotation_target<T extends { type: string }, R>(x: T,
 export function restore_selector<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -117,7 +117,7 @@ export function normalize_selector<T extends { type: string }, R>(x: T, context:
     } else if (typeof x === 'object' && x.type === 'ImageApiSelector') {
         return fn(['T5', x], context);
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
 
@@ -125,7 +125,7 @@ export function normalize_selector<T extends { type: string }, R>(x: T, context:
 export function restore_source<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -136,14 +136,14 @@ export function normalize_source<T, R>(x: T, context: any = x, fn: (input: [stri
     } else if (typeof (x) === 'object') {
         return fn(['T2', x], context);
     } else {
-        throw new Error(`${x}: Input type did not match expected types.`);
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
 
 export function restore_body<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
@@ -159,7 +159,7 @@ export function normalize_body<T, R>(x: T, context: any = x, fn: (input: [string
 export function restore_target<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {
-        throw new Error(`${x}: Result array must contain at least two items.`);
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
     }
     return resultList[1];
 }
