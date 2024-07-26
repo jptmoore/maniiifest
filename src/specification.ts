@@ -366,7 +366,13 @@ export type ServiceT2 = {
   service?: ServiceT[];
 }
 
-export type LabelT = LngStringT
+export type LabelT =
+| { kind: 'T1'; value: LabelT1 }
+| { kind: 'T2'; value: LabelT2 }
+
+export type LabelT1 = string
+
+export type LabelT2 = LngStringT
 
 export type SummaryT = LngStringT
 
@@ -1466,11 +1472,41 @@ export function readServiceT2(x: any, context: any = x): ServiceT2 {
   };
 }
 
-export function writeLabelT(x: LabelT, context: any = x): any {
+export function _writeLabelT(x: LabelT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeLabelT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeLabelT2(x.value, x)]
+  }
+}
+
+export function _readLabelT(x: any, context: any = x): LabelT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readLabelT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readLabelT2(x[1], x) }
+    default:
+      _atd_bad_json('LabelT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeLabelT1(x: LabelT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readLabelT1(x: any, context: any = x): LabelT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeLabelT2(x: LabelT2, context: any = x): any {
   return writeLngStringT(x, context);
 }
 
-export function readLabelT(x: any, context: any = x): LabelT {
+export function readLabelT2(x: any, context: any = x): LabelT2 {
   return readLngStringT(x, context);
 }
 
@@ -2292,7 +2328,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2373,4 +2409,12 @@ export function writeFirstT(x: any, context: any = x): FirstT {
 
 export function readFirstT(x: any, context: any = x): FirstT {
     return normalize_first(x, context, _readFirstT);
+}
+
+export function writeLabelT(x: any, context: any = x): LabelT {
+    return restore_label(x, context, _writeLabelT);
+}
+
+export function readLabelT(x: any, context: any = x): LabelT {
+    return normalize_label(x, context, _readLabelT);
 }
