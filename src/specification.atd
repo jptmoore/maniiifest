@@ -336,7 +336,14 @@ type annotation_collection_t = {
   ?items : annotation_t list option;
 }
 
-type first_t = {
+type first_t = [
+  | T1 of first_t1
+  | T2 of first_t2
+]
+
+type first_t1 = string
+
+type first_t2 = {
   id : id_t;
   _type <json name="type"> : type_t;
   ?label : label_t option;

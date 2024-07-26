@@ -427,7 +427,13 @@ export type AnnotationCollectionT = {
   items?: AnnotationT[];
 }
 
-export type FirstT = {
+export type FirstT =
+| { kind: 'T1'; value: FirstT1 }
+| { kind: 'T2'; value: FirstT2 }
+
+export type FirstT1 = string
+
+export type FirstT2 = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -1648,10 +1654,40 @@ export function readAnnotationCollectionT(x: any, context: any = x): AnnotationC
   };
 }
 
-export function writeFirstT(x: FirstT, context: any = x): any {
+export function _writeFirstT(x: FirstT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeFirstT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeFirstT2(x.value, x)]
+  }
+}
+
+export function _readFirstT(x: any, context: any = x): FirstT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readFirstT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readFirstT2(x[1], x) }
+    default:
+      _atd_bad_json('FirstT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeFirstT1(x: FirstT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readFirstT1(x: any, context: any = x): FirstT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeFirstT2(x: FirstT2, context: any = x): any {
   return {
-    'id': _atd_write_required_field('FirstT', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('FirstT', 'type', writeTypeT, x.type, x),
+    'id': _atd_write_required_field('FirstT2', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('FirstT2', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'startIndex': _atd_write_optional_field(writeStartIndexT, x.startIndex, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
@@ -1659,10 +1695,10 @@ export function writeFirstT(x: FirstT, context: any = x): any {
   };
 }
 
-export function readFirstT(x: any, context: any = x): FirstT {
+export function readFirstT2(x: any, context: any = x): FirstT2 {
   return {
-    id: _atd_read_required_field('FirstT', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('FirstT', 'type', readTypeT, x['type'], x),
+    id: _atd_read_required_field('FirstT2', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('FirstT2', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     startIndex: _atd_read_optional_field(readStartIndexT, x['startIndex'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
@@ -2256,7 +2292,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2329,4 +2365,12 @@ export function writeTargetT(x: any, context: any = x): TargetT {
 
 export function readTargetT(x: any, context: any = x): TargetT {
     return normalize_target(x, context, _readTargetT);
+}
+
+export function writeFirstT(x: any, context: any = x): FirstT {
+    return restore_first(x, context, _writeFirstT);
+}
+
+export function readFirstT(x: any, context: any = x): FirstT {
+    return normalize_first(x, context, _readFirstT);
 }

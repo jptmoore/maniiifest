@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -73,4 +73,12 @@ export function writeTargetT(x: any, context: any = x): TargetT {
 
 export function readTargetT(x: any, context: any = x): TargetT {
     return normalize_target(x, context, _readTargetT);
+}
+
+export function writeFirstT(x: any, context: any = x): FirstT {
+    return restore_first(x, context, _writeFirstT);
+}
+
+export function readFirstT(x: any, context: any = x): FirstT {
+    return normalize_first(x, context, _readFirstT);
 }

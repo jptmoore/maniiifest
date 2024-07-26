@@ -30,6 +30,9 @@ sed -i 's/export function readBodyT(/export function _readBodyT(/g' specificatio
 sed -i 's/export function writeTargetT(/export function _writeTargetT(/g' specification.ts
 sed -i 's/export function readTargetT(/export function _readTargetT(/g' specification.ts
 
+sed -i 's/export function writeFirstT(/export function _writeFirstT(/g' specification.ts
+sed -i 's/export function readFirstT(/export function _readFirstT(/g' specification.ts
+
 # rename _type to use type
 sed -i 's/_type/type/g' specification.ts
 # add adapter code
