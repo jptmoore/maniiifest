@@ -156,9 +156,9 @@ export type AccompanyingCanvasT = {
 }
 
 export type NavPlaceT = {
-  id: IdT;
+  id?: IdT;
   type: TypeT;
-  features_t: Option<FeatureT[]>;
+  features_t?: FeatureT[];
 }
 
 export type FeatureT = {
@@ -172,12 +172,69 @@ export type PropertiesT = {
   label?: LabelT;
 }
 
-export type GeometryT = {
+export type GeometriesT =
+| { kind: 'T1'; value: GeometryT1 }
+| { kind: 'T2'; value: GeometryT2 }
+| { kind: 'T3'; value: GeometryT3 }
+| { kind: 'T4'; value: GeometryT4 }
+| { kind: 'T5'; value: GeometryT5 }
+| { kind: 'T6'; value: GeometryT6 }
+
+export type GeometryT =
+| { kind: 'T1'; value: GeometryT1 }
+| { kind: 'T2'; value: GeometryT2 }
+| { kind: 'T3'; value: GeometryT3 }
+| { kind: 'T4'; value: GeometryT4 }
+| { kind: 'T5'; value: GeometryT5 }
+| { kind: 'T6'; value: GeometryT6 }
+| { kind: 'T7'; value: GeometryT7 }
+
+export type GeometryT1 = {
   type?: TypeT;
-  coordinates?: CoordinatesT;
+  coordinates?: PointCoordinatesT[];
 }
 
-export type CoordinatesT = number[]
+export type GeometryT2 = {
+  type?: TypeT;
+  coordinates?: MultiPointCoordinatesT[];
+}
+
+export type GeometryT3 = {
+  type?: TypeT;
+  coordinates?: LinestringCoordinatesT[];
+}
+
+export type GeometryT4 = {
+  type?: TypeT;
+  coordinates?: MultiLinestringCoordinatesT[];
+}
+
+export type GeometryT5 = {
+  type?: TypeT;
+  coordinates?: PolygonT[];
+}
+
+export type GeometryT6 = {
+  type?: TypeT;
+  coordinates?: MultiPolygonT[];
+}
+
+export type GeometryT7 = {
+  type?: TypeT;
+  geometries: GeometriesT[];
+}
+
+export type PointCoordinatesT = number
+
+export type MultiPointCoordinatesT = [number, number]
+
+export type LinestringCoordinatesT = number[]
+
+export type MultiLinestringCoordinatesT = number[][]
+
+export type PolygonT = [number, number][]
+
+export type MultiPolygonT = [number, number][][]
 
 export type AnnotationPageT = {
   id: IdT;
@@ -854,17 +911,17 @@ export function readAccompanyingCanvasT(x: any, context: any = x): AccompanyingC
 
 export function writeNavPlaceT(x: NavPlaceT, context: any = x): any {
   return {
-    'id': _atd_write_required_field('NavPlaceT', 'id', writeIdT, x.id, x),
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_required_field('NavPlaceT', 'type', writeTypeT, x.type, x),
-    'features_t': _atd_write_required_field('NavPlaceT', 'features_t', _atd_write_option(_atd_write_array(writeFeatureT)), x.features_t, x),
+    'features_t': _atd_write_optional_field(_atd_write_array(writeFeatureT), x.features_t, x),
   };
 }
 
 export function readNavPlaceT(x: any, context: any = x): NavPlaceT {
   return {
-    id: _atd_read_required_field('NavPlaceT', 'id', readIdT, x['id'], x),
+    id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_required_field('NavPlaceT', 'type', readTypeT, x['type'], x),
-    features_t: _atd_read_required_field('NavPlaceT', 'features_t', _atd_read_option(_atd_read_array(readFeatureT)), x['features_t'], x),
+    features_t: _atd_read_optional_field(_atd_read_array(readFeatureT), x['features_t'], x),
   };
 }
 
@@ -898,26 +955,230 @@ export function readPropertiesT(x: any, context: any = x): PropertiesT {
   };
 }
 
-export function writeGeometryT(x: GeometryT, context: any = x): any {
+export function writeGeometriesT(x: GeometriesT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeGeometryT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeGeometryT2(x.value, x)]
+    case 'T3':
+      return ['T3', writeGeometryT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeGeometryT4(x.value, x)]
+    case 'T5':
+      return ['T5', writeGeometryT5(x.value, x)]
+    case 'T6':
+      return ['T6', writeGeometryT6(x.value, x)]
+  }
+}
+
+export function readGeometriesT(x: any, context: any = x): GeometriesT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readGeometryT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readGeometryT2(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readGeometryT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readGeometryT4(x[1], x) }
+    case 'T5':
+      return { kind: 'T5', value: readGeometryT5(x[1], x) }
+    case 'T6':
+      return { kind: 'T6', value: readGeometryT6(x[1], x) }
+    default:
+      _atd_bad_json('GeometriesT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function _writeGeometryT(x: GeometryT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeGeometryT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeGeometryT2(x.value, x)]
+    case 'T3':
+      return ['T3', writeGeometryT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeGeometryT4(x.value, x)]
+    case 'T5':
+      return ['T5', writeGeometryT5(x.value, x)]
+    case 'T6':
+      return ['T6', writeGeometryT6(x.value, x)]
+    case 'T7':
+      return ['T7', writeGeometryT7(x.value, x)]
+  }
+}
+
+export function _readGeometryT(x: any, context: any = x): GeometryT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readGeometryT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readGeometryT2(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readGeometryT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readGeometryT4(x[1], x) }
+    case 'T5':
+      return { kind: 'T5', value: readGeometryT5(x[1], x) }
+    case 'T6':
+      return { kind: 'T6', value: readGeometryT6(x[1], x) }
+    case 'T7':
+      return { kind: 'T7', value: readGeometryT7(x[1], x) }
+    default:
+      _atd_bad_json('GeometryT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeGeometryT1(x: GeometryT1, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'coordinates': _atd_write_optional_field(writeCoordinatesT, x.coordinates, x),
+    'coordinates': _atd_write_optional_field(_atd_write_array(writePointCoordinatesT), x.coordinates, x),
   };
 }
 
-export function readGeometryT(x: any, context: any = x): GeometryT {
+export function readGeometryT1(x: any, context: any = x): GeometryT1 {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    coordinates: _atd_read_optional_field(readCoordinatesT, x['coordinates'], x),
+    coordinates: _atd_read_optional_field(_atd_read_array(readPointCoordinatesT), x['coordinates'], x),
   };
 }
 
-export function writeCoordinatesT(x: CoordinatesT, context: any = x): any {
+export function writeGeometryT2(x: GeometryT2, context: any = x): any {
+  return {
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'coordinates': _atd_write_optional_field(_atd_write_array(writeMultiPointCoordinatesT), x.coordinates, x),
+  };
+}
+
+export function readGeometryT2(x: any, context: any = x): GeometryT2 {
+  return {
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    coordinates: _atd_read_optional_field(_atd_read_array(readMultiPointCoordinatesT), x['coordinates'], x),
+  };
+}
+
+export function writeGeometryT3(x: GeometryT3, context: any = x): any {
+  return {
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'coordinates': _atd_write_optional_field(_atd_write_array(writeLinestringCoordinatesT), x.coordinates, x),
+  };
+}
+
+export function readGeometryT3(x: any, context: any = x): GeometryT3 {
+  return {
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    coordinates: _atd_read_optional_field(_atd_read_array(readLinestringCoordinatesT), x['coordinates'], x),
+  };
+}
+
+export function writeGeometryT4(x: GeometryT4, context: any = x): any {
+  return {
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'coordinates': _atd_write_optional_field(_atd_write_array(writeMultiLinestringCoordinatesT), x.coordinates, x),
+  };
+}
+
+export function readGeometryT4(x: any, context: any = x): GeometryT4 {
+  return {
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    coordinates: _atd_read_optional_field(_atd_read_array(readMultiLinestringCoordinatesT), x['coordinates'], x),
+  };
+}
+
+export function writeGeometryT5(x: GeometryT5, context: any = x): any {
+  return {
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'coordinates': _atd_write_optional_field(_atd_write_array(writePolygonT), x.coordinates, x),
+  };
+}
+
+export function readGeometryT5(x: any, context: any = x): GeometryT5 {
+  return {
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    coordinates: _atd_read_optional_field(_atd_read_array(readPolygonT), x['coordinates'], x),
+  };
+}
+
+export function writeGeometryT6(x: GeometryT6, context: any = x): any {
+  return {
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'coordinates': _atd_write_optional_field(_atd_write_array(writeMultiPolygonT), x.coordinates, x),
+  };
+}
+
+export function readGeometryT6(x: any, context: any = x): GeometryT6 {
+  return {
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    coordinates: _atd_read_optional_field(_atd_read_array(readMultiPolygonT), x['coordinates'], x),
+  };
+}
+
+export function writeGeometryT7(x: GeometryT7, context: any = x): any {
+  return {
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'geometries': _atd_write_required_field('GeometryT7', 'geometries', _atd_write_array(writeGeometriesT), x.geometries, x),
+  };
+}
+
+export function readGeometryT7(x: any, context: any = x): GeometryT7 {
+  return {
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    geometries: _atd_read_required_field('GeometryT7', 'geometries', _atd_read_array(readGeometriesT), x['geometries'], x),
+  };
+}
+
+export function writePointCoordinatesT(x: PointCoordinatesT, context: any = x): any {
+  return _atd_write_float(x, context);
+}
+
+export function readPointCoordinatesT(x: any, context: any = x): PointCoordinatesT {
+  return _atd_read_float(x, context);
+}
+
+export function writeMultiPointCoordinatesT(x: MultiPointCoordinatesT, context: any = x): any {
+  return ((x, context) => [_atd_write_float(x[0], x), _atd_write_float(x[1], x)])(x, context);
+}
+
+export function readMultiPointCoordinatesT(x: any, context: any = x): MultiPointCoordinatesT {
+  return ((x, context): [number, number] => { _atd_check_json_tuple(2, x, context); return [_atd_read_float(x[0], x), _atd_read_float(x[1], x)] })(x, context);
+}
+
+export function writeLinestringCoordinatesT(x: LinestringCoordinatesT, context: any = x): any {
   return _atd_write_array(_atd_write_float)(x, context);
 }
 
-export function readCoordinatesT(x: any, context: any = x): CoordinatesT {
+export function readLinestringCoordinatesT(x: any, context: any = x): LinestringCoordinatesT {
   return _atd_read_array(_atd_read_float)(x, context);
+}
+
+export function writeMultiLinestringCoordinatesT(x: MultiLinestringCoordinatesT, context: any = x): any {
+  return _atd_write_array(_atd_write_array(_atd_write_float))(x, context);
+}
+
+export function readMultiLinestringCoordinatesT(x: any, context: any = x): MultiLinestringCoordinatesT {
+  return _atd_read_array(_atd_read_array(_atd_read_float))(x, context);
+}
+
+export function writePolygonT(x: PolygonT, context: any = x): any {
+  return _atd_write_array(((x, context) => [_atd_write_float(x[0], x), _atd_write_float(x[1], x)]))(x, context);
+}
+
+export function readPolygonT(x: any, context: any = x): PolygonT {
+  return _atd_read_array(((x, context): [number, number] => { _atd_check_json_tuple(2, x, context); return [_atd_read_float(x[0], x), _atd_read_float(x[1], x)] }))(x, context);
+}
+
+export function writeMultiPolygonT(x: MultiPolygonT, context: any = x): any {
+  return _atd_write_array(_atd_write_array(((x, context) => [_atd_write_float(x[0], x), _atd_write_float(x[1], x)])))(x, context);
+}
+
+export function readMultiPolygonT(x: any, context: any = x): MultiPolygonT {
+  return _atd_read_array(_atd_read_array(((x, context): [number, number] => { _atd_check_json_tuple(2, x, context); return [_atd_read_float(x[0], x), _atd_read_float(x[1], x)] })))(x, context);
 }
 
 export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any {
@@ -2440,7 +2701,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2545,4 +2806,12 @@ export function writeRangeItemsT(x: any, context: any = x): RangeItemsT {
 
 export function readRangeItemsT(x: any, context: any = x): RangeItemsT {
     return normalize_range_items(x, context, _readRangeItemsT);
+}
+
+export function writeGeometryT(x: any, context: any = x): GeometryT {
+    return restore_geometry(x, context, _writeGeometryT);
+}
+
+export function readGeometryT(x: any, context: any = x): GeometryT {
+    return normalize_geometry(x, context, _readGeometryT);
 }

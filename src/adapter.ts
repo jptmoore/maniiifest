@@ -243,3 +243,31 @@ export function normalize_range_items<T extends { type: string }, R>(x: T, conte
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
+
+export function restore_geometry<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_geometry<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (typeof x === 'object' && x.type === 'Point') {
+        return fn(['T1', x], context);
+    } else if (typeof x === 'object' && x.type === 'MultiPoint') {
+        return fn(['T2', x], context);
+    } else if (typeof x === 'object' && x.type === 'LineString') {
+        return fn(['T3', x], context);
+    } else if (typeof x === 'object' && x.type === 'MultiLineString') {
+        return fn(['T4', x], context);
+    } else if (typeof x === 'object' && x.type === 'Polygon') {
+        return fn(['T5', x], context);
+    } else if (typeof x === 'object' && x.type === 'MultiPolygon') {
+        return fn(['T6', x], context);
+    } else if (typeof x === 'object' && x.type === 'GeometryCollection') {
+        return fn(['T7', x], context);
+    } else {
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
+    }
+}

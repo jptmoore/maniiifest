@@ -42,6 +42,9 @@ sed -i 's/export function readResourceSelectorT(/export function _readResourceSe
 sed -i 's/export function writeRangeItemsT(/export function _writeRangeItemsT(/g' specification.ts
 sed -i 's/export function readRangeItemsT(/export function _readRangeItemsT(/g' specification.ts
 
+sed -i 's/export function writeGeometryT(/export function _writeGeometryT(/g' specification.ts
+sed -i 's/export function readGeometryT(/export function _readGeometryT(/g' specification.ts
+
 # rename _type to use type
 sed -i 's/_type/type/g' specification.ts
 # add adapter code

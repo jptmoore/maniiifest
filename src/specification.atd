@@ -79,9 +79,9 @@ type accompanying_canvas_t = {
 }
 
 type nav_place_t = {
-  id : id_t;
+  ?id : id_t option;
   _type <json name="type"> : type_t;
-  features_t : feature_t list option;
+  ?features_t : feature_t list option;
 }
 
 type feature_t = {
@@ -95,12 +95,66 @@ type properties_t = {
   ?label : label_t option;
 }
 
-type geometry_t = {
+type geometries_t = [
+  | T1 of geometry_t1
+  | T2 of geometry_t2
+  | T3 of geometry_t3
+  | T4 of geometry_t4
+  | T5 of geometry_t5
+  | T6 of geometry_t6
+]
+type geometry_t = [
+ | inherit geometries_t
+ | T7 of geometry_t7
+]
+
+type geometry_t1 = {
   ?_type : type_t option;
-  ?coordinates : coordinates_t option;
+  ?coordinates : point_coordinates_t list option;
 }
 
-type coordinates_t = float list
+type geometry_t2 = {
+  ?_type : type_t option;
+  ?coordinates : multi_point_coordinates_t list option;
+}
+
+type geometry_t3 = {
+  ?_type : type_t option;
+  ?coordinates : linestring_coordinates_t list option;
+}
+
+type geometry_t4 = {
+  ?_type : type_t option;
+  ?coordinates : multi_linestring_coordinates_t list option;
+}
+
+type geometry_t5 = {
+  ?_type : type_t option;
+  ?coordinates : polygon_t list option;
+}
+
+type geometry_t6 = {
+  ?_type : type_t option;
+  ?coordinates : multi_polygon_t list option;
+}
+
+type geometry_t7 = {
+  ?_type : type_t option;
+  geometries : geometries_t list;
+}
+
+
+type point_coordinates_t = float
+
+type multi_point_coordinates_t = (float * float)
+
+type linestring_coordinates_t = float list
+
+type multi_linestring_coordinates_t = float list list
+
+type polygon_t = (float * float) list
+
+type multi_polygon_t = (float * float) list list
 
 type annotation_page_t = {
   id : id_t;

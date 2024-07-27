@@ -1,7 +1,7 @@
 import { readJsonFromFile } from '../src/utils'
 import { Manifesty } from '../src/Manifesty';
 
-const filename = 'test/buddha.json';
+const filename = 'test/detailed.json';
 
 (function () {
     try {
@@ -13,12 +13,12 @@ const filename = 'test/buddha.json';
 
         const parser = new Manifesty(jsonData);
 
-        for (const item of parser.iterateManifestCanvasW3cAnnotation()) {
-            console.log(item)
-        }
+        // for (const item of parser.iterateManifestCanvas()) {
+        //     console.log(item)
+        // }
 
-        // const result = parser.getManifest();
-        // console.log(result);
+        const result = parser.getManifest();
+        console.log(result);
 
 
     } catch (error) {
