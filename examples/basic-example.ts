@@ -1,7 +1,7 @@
 import { readJsonFromFile } from '../src/utils'
 import { Manifesty } from '../src/Manifesty';
 
-const filename = 'test/detailed.json';
+const filename = 'test/navplace.json';
 
 (function () {
     try {
@@ -13,12 +13,12 @@ const filename = 'test/detailed.json';
 
         const parser = new Manifesty(jsonData);
 
-        // for (const item of parser.iterateManifestCanvas()) {
-        //     console.log(item)
-        // }
+        for (const item of parser.iterateCollectionManifest()) {
+            console.log(item)
+        }
 
-        const result = parser.getManifest();
-        console.log(result);
+        // const result = parser.getManifestNavPlace();
+        // console.log(result)
 
 
     } catch (error) {

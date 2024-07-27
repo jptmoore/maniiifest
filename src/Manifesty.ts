@@ -32,6 +32,10 @@ export class Manifesty {
         return this.specification.kind === 'Manifest' ? F.writeNavDateT(this.specification.value.navDate) : null;
     }
 
+    getManifestNavPlace(): T.NavPlaceT | null {
+        return this.specification.kind === 'Manifest' ? F.writeNavPlaceT(this.specification.value.navPlace) : null;
+    }
+
     getManifestRights(): T.RightsT | null {
         return this.specification.kind === 'Manifest' ? F.writeRightsT(this.specification.value.rights) : null;
     }
@@ -214,6 +218,25 @@ export class Manifesty {
         if (this.specification.kind === 'Manifest') {
             for (const range of this.specification.value.structures ?? []) {
                 yield F.writeRangeT(range);
+            }
+        }
+    }
+
+    *iterateManifestNavPlaceFeature(): IterableIterator<T.FeatureT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const feature of this.specification.value.navPlace?.features ?? []) {
+                yield F.writeFeatureT(feature);
+            }
+
+        }
+    }
+
+    *iterateManifestCanvasNavPlaceFeature(): IterableIterator<T.FeatureT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const feature of canvas.navPlace?.features ?? []) {
+                    yield F.writeFeatureT(feature);
+                }
             }
         }
     }

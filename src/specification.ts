@@ -23,6 +23,7 @@ export type CollectionT = {
   type: TypeT;
   label: LabelT;
   metadata?: MetadataT[];
+  navPlace?: NavPlaceT;
   items?: SpecificationT[];
 }
 
@@ -40,6 +41,7 @@ export type ManifestT = {
   viewingDirection?: ViewingDirectionT;
   behavior?: BehaviorT[];
   navDate?: NavDateT;
+  navPlace?: NavPlaceT;
   rights?: RightsT;
   seeAlso?: SeeAlsoT[];
   homepage?: HomepageT[];
@@ -70,6 +72,7 @@ export type CanvasCoreT = {
   rendering?: RenderingT[];
   rights?: RightsT;
   navDate?: NavDateT;
+  navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
   service?: ServiceT[];
@@ -94,6 +97,7 @@ export type CanvasT = {
   rendering?: RenderingT[];
   rights?: RightsT;
   navDate?: NavDateT;
+  navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
   service?: ServiceT[];
@@ -120,6 +124,7 @@ export type PlaceholderCanvasT = {
   rendering?: RenderingT[];
   rights?: RightsT;
   navDate?: NavDateT;
+  navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
   service?: ServiceT[];
@@ -144,6 +149,7 @@ export type AccompanyingCanvasT = {
   rendering?: RenderingT[];
   rights?: RightsT;
   navDate?: NavDateT;
+  navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
   service?: ServiceT[];
@@ -158,7 +164,7 @@ export type AccompanyingCanvasT = {
 export type NavPlaceT = {
   id?: IdT;
   type: TypeT;
-  features_t?: FeatureT[];
+  features?: FeatureT[];
 }
 
 export type FeatureT = {
@@ -523,6 +529,7 @@ export type RangeT = {
   accompanyingCanvas?: AccompanyingCanvasT;
   annotations?: AnnotationPageT[];
   thumbnail?: ThumbnailT[];
+  navPlace?: NavPlaceT;
   items: RangeItemsT[];
 }
 
@@ -613,6 +620,7 @@ export function writeCollectionT(x: CollectionT, context: any = x): any {
     'type': _atd_write_required_field('CollectionT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_required_field('CollectionT', 'label', writeLabelT, x.label, x),
     'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
+    'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'items': _atd_write_optional_field(_atd_write_array(writeSpecificationT), x.items, x),
   };
 }
@@ -623,6 +631,7 @@ export function readCollectionT(x: any, context: any = x): CollectionT {
     type: _atd_read_required_field('CollectionT', 'type', readTypeT, x['type'], x),
     label: _atd_read_required_field('CollectionT', 'label', readLabelT, x['label'], x),
     metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
+    navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     items: _atd_read_optional_field(_atd_read_array(readSpecificationT), x['items'], x),
   };
 }
@@ -642,6 +651,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'viewingDirection': _atd_write_optional_field(writeViewingDirectionT, x.viewingDirection, x),
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
     'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
@@ -669,6 +679,7 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     viewingDirection: _atd_read_optional_field(readViewingDirectionT, x['viewingDirection'], x),
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     rights: _atd_read_optional_field(readRightsT, x['rights'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
     homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
@@ -711,6 +722,7 @@ export function writeCanvasCoreT(x: CanvasCoreT, context: any = x): any {
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
     'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
@@ -737,6 +749,7 @@ export function readCanvasCoreT(x: any, context: any = x): CanvasCoreT {
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     rights: _atd_read_optional_field(readRightsT, x['rights'], x),
     navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
@@ -763,6 +776,7 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
     'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
@@ -791,6 +805,7 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     rights: _atd_read_optional_field(readRightsT, x['rights'], x),
     navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
@@ -819,6 +834,7 @@ export function writePlaceholderCanvasT(x: PlaceholderCanvasT, context: any = x)
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
     'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
@@ -845,6 +861,7 @@ export function readPlaceholderCanvasT(x: any, context: any = x): PlaceholderCan
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     rights: _atd_read_optional_field(readRightsT, x['rights'], x),
     navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
@@ -871,6 +888,7 @@ export function writeAccompanyingCanvasT(x: AccompanyingCanvasT, context: any = 
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
     'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
@@ -897,6 +915,7 @@ export function readAccompanyingCanvasT(x: any, context: any = x): AccompanyingC
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     rights: _atd_read_optional_field(readRightsT, x['rights'], x),
     navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
@@ -913,7 +932,7 @@ export function writeNavPlaceT(x: NavPlaceT, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_required_field('NavPlaceT', 'type', writeTypeT, x.type, x),
-    'features_t': _atd_write_optional_field(_atd_write_array(writeFeatureT), x.features_t, x),
+    'features': _atd_write_optional_field(_atd_write_array(writeFeatureT), x.features, x),
   };
 }
 
@@ -921,7 +940,7 @@ export function readNavPlaceT(x: any, context: any = x): NavPlaceT {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_required_field('NavPlaceT', 'type', readTypeT, x['type'], x),
-    features_t: _atd_read_optional_field(_atd_read_array(readFeatureT), x['features_t'], x),
+    features: _atd_read_optional_field(_atd_read_array(readFeatureT), x['features'], x),
   };
 }
 
@@ -2069,6 +2088,7 @@ export function writeRangeT(x: RangeT, context: any = x): any {
     'accompanyingCanvas': _atd_write_optional_field(writeAccompanyingCanvasT, x.accompanyingCanvas, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'items': _atd_write_required_field('RangeT', 'items', _atd_write_array(writeRangeItemsT), x.items, x),
   };
 }
@@ -2085,6 +2105,7 @@ export function readRangeT(x: any, context: any = x): RangeT {
     accompanyingCanvas: _atd_read_optional_field(readAccompanyingCanvasT, x['accompanyingCanvas'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     items: _atd_read_required_field('RangeT', 'items', _atd_read_array(readRangeItemsT), x['items'], x),
   };
 }

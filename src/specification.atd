@@ -8,6 +8,7 @@ type collection_t = {
   _type <json name="type"> : type_t;
   label : label_t;
   ?metadata : metadata_t list option;
+  ?navPlace : nav_place_t option;
   ?items : specification_t list option;
 }
 
@@ -25,6 +26,7 @@ type manifest_t = {
   ?viewingDirection : viewing_direction_t option;
   ?behavior : behavior_t list option;
   ?navDate : nav_date_t option;
+  ?navPlace : nav_place_t option;
   ?rights : rights_t option;
   ?seeAlso : see_also_t list option;
   ?homepage : homepage_t list option;
@@ -53,6 +55,7 @@ type canvas_core_t = {
   ?rendering : rendering_t list option;
   ?rights : rights_t option;
   ?navDate : nav_date_t option;
+  ?navPlace : nav_place_t option;
   ?provider : provider_t list option;
   ?seeAlso : see_also_t list option;
   ?service : service_t list option;
@@ -81,7 +84,7 @@ type accompanying_canvas_t = {
 type nav_place_t = {
   ?id : id_t option;
   _type <json name="type"> : type_t;
-  ?features_t : feature_t list option;
+  ?features : feature_t list option;
 }
 
 type feature_t = {
@@ -430,6 +433,7 @@ type range_t = {
   ?accompanyingCanvas : accompanying_canvas_t option;
   ?annotations : annotation_page_t list option;
   ?thumbnail : thumbnail_t list option;
+  ?navPlace : nav_place_t option;
   items : range_items_t list;
 }
 
