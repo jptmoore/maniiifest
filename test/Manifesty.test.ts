@@ -1,13 +1,13 @@
 import { Manifesty } from '../src/Manifesty';
 import { readJsonFromFile } from '../src/utils';
 
-describe('test Manifest', () => {
-  let filename = 'test/detailed.json';
+describe('Manifesty functionality', () => {
   let manifesty: Manifesty;
   let jsonData: any;
+  const filename = 'test/detailed.json';
 
-  beforeAll(() => {
-    jsonData = readJsonFromFile(filename);
+  beforeAll(async () => {
+    jsonData = await readJsonFromFile(filename);
   });
 
   beforeEach(() => {
@@ -15,16 +15,16 @@ describe('test Manifest', () => {
     manifesty = new Manifesty(jsonData);
   });
 
-  it('should return the correct manifest label', () => {
-    const expectedResult = { "en": ["Book 1"] };
+  it('should return the correct manifest label', async () => {
+    const expectedResult = { en: ["Book 1"] };
     const result = manifesty.getManifestLabel();
-    expect(JSON.stringify(result)).toEqual(JSON.stringify(expectedResult));
+    expect(result).toEqual(expectedResult);
   });
 
-  it('should return the correct manifest summary', () => {
-    const expectedResult = { "en": ["Book 1, written be Anne Author, published in Paris around 1400."] };
+  it('should return the correct manifest summary', async () => {
+    const expectedResult = { en: ["Book 1, written be Anne Author, published in Paris around 1400."] };
     const result = manifesty.getManifestSummary();
-    expect(JSON.stringify(result)).toEqual(JSON.stringify(expectedResult));
+    expect(result).toEqual(expectedResult);
   });
 });
 
