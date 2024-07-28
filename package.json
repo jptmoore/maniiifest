@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "ts-node examples/basic-example.ts"
+    "start": "ts-node examples/basic-example.ts",
+    "generate-docs": "typedoc --out docs src"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,7 @@
   "description": "",
   "devDependencies": {
     "ts-node": "^10.9.2",
+    "typedoc": "^0.26.5",
     "typescript": "^5.5.2"
   }
 }
