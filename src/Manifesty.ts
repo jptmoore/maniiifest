@@ -1,3 +1,13 @@
+/**
+ * This module (`Manifesty.ts`) is responsible for handling manifest data structures
+ * within the application. It leverages types and functions from the `specification`
+ * module to ensure that the manifest data adheres to the defined specification.
+ * 
+ * - `F` contains all exported members from `specification`, used for implementing
+ *   specification logic.
+ * - `T` is used to import types from `specification` for type-checking and defining
+ *   interfaces within `Manifesty.ts`.
+ */
 import * as F from "./specification";
 import type * as T from "./specification";
 
