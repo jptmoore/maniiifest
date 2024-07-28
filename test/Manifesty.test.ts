@@ -1,71 +1,30 @@
+import { Manifesty } from '../src/Manifesty';
+import { readJsonFromFile } from '../src/utils';
 
-import { Manifesty } from '../src/Manifesty'; 
-import * as F from '../src/specification';
-
-jest.mock('../src/specification', () => ({
-  readSpecificationT: jest.fn(),
-  writeLabelT: jest.fn(),
-  writeSummaryT: jest.fn(),
-}));
-
-describe('Manifesty.getManifestLabel', () => {
+describe('test Manifest', () => {
+  let filename = 'test/detailed.json';
   let manifesty: Manifesty;
-  const mockLabel = { "label": "Example Label" };
+  let jsonData: any;
+
+  beforeAll(() => {
+    jsonData = readJsonFromFile(filename);
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
-    manifesty = new Manifesty({});
-    manifesty.specification = {
-      kind: '',
-      value: { label: mockLabel },
-    };
+    manifesty = new Manifesty(jsonData);
   });
 
-  test('returns processed label when kind is "Manifest"', () => {
-    manifesty.specification.kind = 'Manifest';
-    const mockLabel = { "label": "Example Label" }; // Define the mock label to be used in the test
-    const expectedLabel = { "label": mockLabel };
-    (F.writeLabelT as jest.Mock).mockReturnValue(expectedLabel);
+  it('should return the correct manifest label', () => {
+    const expectedResult = { "en": ["Book 1"] };
     const result = manifesty.getManifestLabel();
-    expect(F.writeLabelT).toHaveBeenCalledWith(mockLabel); 
-    expect(result).toEqual(expectedLabel);
+    expect(JSON.stringify(result)).toEqual(JSON.stringify(expectedResult));
   });
 
-  test('returns null when kind is not "Manifest"', () => {
-    manifesty.specification.kind = 'NotManifest';
-    const result = manifesty.getManifestLabel();
-    expect(F.writeLabelT).not.toHaveBeenCalled();
-    expect(result).toBeNull();
-  });
-});
-
-describe('Manifesty.getManifestSummary', () => {
-  let manifesty: Manifesty;
-  const mockSummary = { "summary": "Example Summary" };
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-    manifesty = new Manifesty({});
-    manifesty.specification = {
-      kind: '',
-      value: { summary: mockSummary },
-    };
-  });
-
-  test('returns processed summary when kind is "Manifest"', () => {
-    manifesty.specification.kind = 'Manifest';
-    const expectedSummary = { "summary": mockSummary };
-    (F.writeSummaryT as jest.Mock).mockReturnValue(expectedSummary);
+  it('should return the correct manifest summary', () => {
+    const expectedResult = { "en": ["Book 1, written be Anne Author, published in Paris around 1400."] };
     const result = manifesty.getManifestSummary();
-    expect(F.writeSummaryT).toHaveBeenCalledWith(mockSummary); 
-    expect(result).toEqual(expectedSummary);
-  });
-
-  test('returns null when kind is not "Manifest"', () => {
-    manifesty.specification.kind = 'NotManifest';
-    const result = manifesty.getManifestSummary();
-    expect(F.writeSummaryT).not.toHaveBeenCalled();
-    expect(result).toBeNull();
+    expect(JSON.stringify(result)).toEqual(JSON.stringify(expectedResult));
   });
 });
 
