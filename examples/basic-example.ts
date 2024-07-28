@@ -1,7 +1,7 @@
 import { readJsonFromFile } from '../src/utils'
 import { Manifesty } from '../src/Manifesty';
 
-const filename = 'test/navplace.json';
+const filename = 'test/wellcome.json';
 
 (function () {
     try {

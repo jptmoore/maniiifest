@@ -8,6 +8,21 @@ type collection_t = {
   _type <json name="type"> : type_t;
   label : label_t;
   ?metadata : metadata_t list option;
+  ?summary : summary_t option;
+  ?requiredStatement : required_statement_t option;
+  ?thumbnail : thumbnail_t list option;
+  ?rendering : rendering_t list option;
+  ?rights : rights_t option;
+  ?seeAlso : see_also_t list option;
+  ?homepage : homepage_t list option;
+  ?provider : provider_t list option;
+  ?navDate : nav_date_t option;
+  ?behavior : behavior_t list option;
+  ?partOf : part_of_t list option;
+  ?service : service_t list option;
+  ?services : service_t list option; 
+  ?placeholderCanvas : placeholder_canvas_t option;
+  ?accompanyingCanvas : accompanying_canvas_t option;
   ?navPlace : nav_place_t option;
   ?items : specification_t list option;
 }

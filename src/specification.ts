@@ -23,6 +23,21 @@ export type CollectionT = {
   type: TypeT;
   label: LabelT;
   metadata?: MetadataT[];
+  summary?: SummaryT;
+  requiredStatement?: RequiredStatementT;
+  thumbnail?: ThumbnailT[];
+  rendering?: RenderingT[];
+  rights?: RightsT;
+  seeAlso?: SeeAlsoT[];
+  homepage?: HomepageT[];
+  provider?: ProviderT[];
+  navDate?: NavDateT;
+  behavior?: BehaviorT[];
+  partOf?: PartOfT[];
+  service?: ServiceT[];
+  services?: ServiceT[];
+  placeholderCanvas?: PlaceholderCanvasT;
+  accompanyingCanvas?: AccompanyingCanvasT;
   navPlace?: NavPlaceT;
   items?: SpecificationT[];
 }
@@ -620,6 +635,21 @@ export function writeCollectionT(x: CollectionT, context: any = x): any {
     'type': _atd_write_required_field('CollectionT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_required_field('CollectionT', 'label', writeLabelT, x.label, x),
     'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
+    'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
+    'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
+    'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
+    'rights': _atd_write_optional_field(writeRightsT, x.rights, x),
+    'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
+    'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
+    'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
+    'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
+    'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
+    'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
+    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'services': _atd_write_optional_field(_atd_write_array(writeServiceT), x.services, x),
+    'placeholderCanvas': _atd_write_optional_field(writePlaceholderCanvasT, x.placeholderCanvas, x),
+    'accompanyingCanvas': _atd_write_optional_field(writeAccompanyingCanvasT, x.accompanyingCanvas, x),
     'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'items': _atd_write_optional_field(_atd_write_array(writeSpecificationT), x.items, x),
   };
@@ -631,6 +661,21 @@ export function readCollectionT(x: any, context: any = x): CollectionT {
     type: _atd_read_required_field('CollectionT', 'type', readTypeT, x['type'], x),
     label: _atd_read_required_field('CollectionT', 'label', readLabelT, x['label'], x),
     metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
+    summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
+    requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
+    thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
+    rights: _atd_read_optional_field(readRightsT, x['rights'], x),
+    seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
+    homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
+    provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
+    navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
+    behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
+    partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
+    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    services: _atd_read_optional_field(_atd_read_array(readServiceT), x['services'], x),
+    placeholderCanvas: _atd_read_optional_field(readPlaceholderCanvasT, x['placeholderCanvas'], x),
+    accompanyingCanvas: _atd_read_optional_field(readAccompanyingCanvasT, x['accompanyingCanvas'], x),
     navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     items: _atd_read_optional_field(_atd_read_array(readSpecificationT), x['items'], x),
   };
