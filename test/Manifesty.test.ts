@@ -4,7 +4,7 @@ import { readJsonFromFile } from '../src/utils';
 describe('Manifesty functionality', () => {
   let manifesty: Manifesty;
   let jsonData: any;
-  const filename = 'test/detailed.json';
+  const filename = 'test/example.json';
 
   beforeAll(async () => {
     jsonData = await readJsonFromFile(filename);
@@ -26,5 +26,12 @@ describe('Manifesty functionality', () => {
     const result = manifesty.getManifestSummary();
     expect(result).toEqual(expectedResult);
   });
+
+  it('should return the correct manifest viewing direction', async () => {
+    const expectedResult = "right-to-left";
+    const result = manifesty.getManifestViewingDirection();
+    expect(result).toEqual(expectedResult);
+  });
+
 });
 
