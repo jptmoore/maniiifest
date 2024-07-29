@@ -71,7 +71,9 @@ export class Manifesty {
      * @returns The viewing direction of the manifest as a `T.ViewingDirectionT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifestViewingDirection(): T.ViewingDirectionT | null {
-        return this.specification.kind === 'Manifest' ? F.writeViewingDirectionT(this.specification.value.viewingDirection) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value.viewingDirection !== undefined 
+            ? F.writeViewingDirectionT(this.specification.value.viewingDirection) 
+            : null;
     }
 
     /**
@@ -85,7 +87,9 @@ export class Manifesty {
      * @returns The navigation date of the manifest as a `T.NavDateT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifestNavDate(): T.NavDateT | null {
-        return this.specification.kind === 'Manifest' ? F.writeNavDateT(this.specification.value.navDate) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value.navDate !== undefined 
+            ? F.writeNavDateT(this.specification.value.navDate) 
+            : null;
     }
 
     /**
