@@ -33,5 +33,11 @@ describe('Manifesty functionality', () => {
     expect(result).toEqual(expectedResult);
   });
 
+  it('should return the correct manifest behavior through iteration', async () => {
+    const expectedResult = [ "paged" ];
+    const result = Array.from(manifesty.iterateManifestBehavior());
+    expect(result).toEqual(expectedResult);
+  });
+
 });
 

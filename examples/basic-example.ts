@@ -13,11 +13,11 @@ const filename = 'test/example.json';
 
         const parser = new Manifesty(jsonData);
 
-        for (const item of parser.iterateCollectionManifest()) {
+        for (const item of parser.iterateManifestBehavior()) {
             console.log(item)
         }
 
-        // const result = parser.getManifestNavPlace();
+        // const result = parser.getManifest();
         // console.log(result)
 
 

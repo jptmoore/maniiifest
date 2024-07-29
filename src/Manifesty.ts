@@ -73,19 +73,6 @@ export class Manifesty {
     }
 
     /**
-     * Retrieves the behavior of the manifest if the specification kind is 'Manifest'.
-     * 
-     * This method checks if the current specification's `kind` property equals 'Manifest'. If so, it attempts to retrieve the behavior
-     * by invoking the `F.writeBehaviorT` function, passing the behavior value from the specification. If the `kind` is not 'Manifest',
-     * it returns null, indicating that the behavior is not applicable or available for the current specification.
-     * 
-     * @returns The behavior of the manifest as a `T.BehaviorT` type if the specification kind is 'Manifest'; otherwise, null.
-     */    
-    getManifestBehavior(): T.BehaviorT | null {
-        return this.specification.kind === 'Manifest' ? F.writeBehaviorT(this.specification.value.behavior) : null;
-    }
-
-    /**
      * Retrieves the navigation date of the manifest if the specification kind is 'Manifest'.
      * 
      * This method evaluates whether the current specification's `kind` property matches 'Manifest'. If it does, the method attempts to
@@ -394,6 +381,27 @@ export class Manifesty {
         if (this.specification.kind === 'Manifest') {
             for (const homepage of this.specification.value.homepage ?? []) {
                 yield F.writeHomepageT(homepage);
+            }
+        }
+    }
+
+    /**
+     * Iterates over behavior specifications in the manifest.
+     * 
+     * This generator function is specifically designed to iterate through behavior specifications within a manifest, provided the specification kind
+     * is 'Manifest'. It navigates through the `behavior` array of the manifest's `value` property, if present. Each behavior specification
+     * encountered is processed through the `F.writeBehaviorT` function, which adapts the behavior data to conform to a specific
+     * type `T.BehaviorT`.
+     * 
+     * The function yields each processed behavior specification, enabling lazy evaluation and efficient processing of potentially large sets
+     * of behavior specifications without requiring their complete loading into memory simultaneously.
+     * 
+     * @yields {IterableIterator<T.BehaviorT>} An iterator that yields behavior specifications as `T.BehaviorT` objects.
+     */    
+    *iterateManifestBehavior(): IterableIterator<T.BehaviorT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const behavior of this.specification.value.behavior ?? []) {
+                yield F.writeBehaviorT(behavior);
             }
         }
     }
