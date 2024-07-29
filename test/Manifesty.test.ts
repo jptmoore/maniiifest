@@ -1,12 +1,35 @@
 import { Manifesty } from '../src/Manifesty';
 
-describe('Manifesty functionality', () => {
+describe('Collection functionality', () => {
+
+  const collection = {
+    "id": "https://example.org/iiif/book1/manifest",
+    "type": "Collection",
+    "label": { "en": ["Book 1"] }
+  }
+
+  it('should return the collection', () => {
+    const manifesty = new Manifesty(collection);
+    const result = manifesty.getCollection();
+    expect(result).toEqual(collection);
+  });
+
+});
+
+
+describe('Manifest functionality', () => {
 
   const manifest = {
     "id": "https://example.org/iiif/book1/manifest",
     "type": "Manifest",
     "label": { "en": ["Book 1"] }
   }
+
+  it('should return the manifest', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = manifesty.getManifest();
+    expect(result).toEqual(manifest);
+  });
 
   it('should return the correct manifest label', () => {
     const manifesty = new Manifesty(manifest);
@@ -96,6 +119,54 @@ describe('Manifesty functionality', () => {
     const result = manifesty.getManifestNavPlace();
     expect(result).toBeNull();
   });
+
+  it('should return the correct manifest rights', () => {
+    const rights = "http://rightsstatements.org/vocab/NoC-NC/1.0/";
+    const manifesty = new Manifesty({ rights, ...manifest });
+    const result = manifesty.getManifestRights();
+    expect(result).toEqual(rights);
+  });
+
+  it('should return null if rights is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = manifesty.getManifestRights();
+    expect(result).toBeNull();
+  });
+
+  it('should return the correct required statement', () => {
+    const requiredStatement = {
+      "label": { "en": ["Attribution"] },
+      "value": { "en": ["Provided by Example Organization"] }
+    }
+    const manifesty = new Manifesty({ requiredStatement, ...manifest });
+    const result = manifesty.getManifestRequiredStatement();
+    expect(result).toEqual(requiredStatement);
+  });
+
+  it('should return null if required statement is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = manifesty.getManifestRequiredStatement();
+    expect(result).toBeNull();
+  });
+
+  it('should return the correct manifest start', () => {
+    const start = {
+      "id": "https://example.org/iiif/book1/canvas/p1",
+      "type": "Canvas",
+      "label": { "en": ["p. 1"] }
+    }
+    const manifesty = new Manifesty({ start, ...manifest });
+    const result = manifesty.getManifestStart();
+    expect(result).toEqual(start);
+  });
+
+  it('should return null if start is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = manifesty.getManifestStart();
+    expect(result).toBeNull();
+  });
+
+
 
 });
 

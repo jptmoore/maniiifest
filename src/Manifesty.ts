@@ -118,7 +118,9 @@ export class Manifesty {
      * @returns The rights information of the manifest as a `T.RightsT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifestRights(): T.RightsT | null {
-        return this.specification.kind === 'Manifest' ? F.writeRightsT(this.specification.value.rights) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value.rights !== undefined 
+            ? F.writeRightsT(this.specification.value.rights) 
+            : null;
     }
 
     /**
@@ -132,7 +134,9 @@ export class Manifesty {
      * @returns The required statement of the manifest as a `T.RequiredStatementT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifestRequiredStatement(): T.RequiredStatementT | null {
-        return this.specification.kind === 'Manifest' ? F.writeRequiredStatementT(this.specification.value.requiredStatement) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value.requiredStatement !== undefined 
+            ? F.writeRequiredStatementT(this.specification.value.requiredStatement) 
+            : null;
     }
 
     /**
@@ -146,7 +150,9 @@ export class Manifesty {
      * @returns The start property of the manifest as a `T.StartT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifestStart(): T.StartT | null {
-        return this.specification.kind === 'Manifest' ? F.writeStartT(this.specification.value.start) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value.start !== undefined 
+            ? F.writeStartT(this.specification.value.start) 
+            : null;
     }
 
     /**
@@ -160,7 +166,9 @@ export class Manifesty {
      * @returns The constructed manifest object as a `T.ManifestT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifest(): T.ManifestT | null {
-        return this.specification.kind === 'Manifest' ? F.writeManifestT(this.specification.value) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value !== undefined 
+            ? F.writeManifestT(this.specification.value) 
+            : null;
     }
 
     /**
@@ -174,7 +182,9 @@ export class Manifesty {
      * @returns The constructed collection object as a `T.CollectionT` type if the specification kind is 'Collection'; otherwise, null.
      */    
     getCollection(): T.CollectionT | null {
-        return this.specification.kind === 'Collection' ? F.writeCollectionT(this.specification.value) : null;
+        return this.specification.kind === 'Collection' && this.specification.value !== undefined 
+            ? F.writeCollectionT(this.specification.value) 
+            : null;
     }
 
     /**
