@@ -55,7 +55,9 @@ export class Manifesty {
      * @returns The summary of the manifest as a `T.SummaryT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifestSummary(): T.SummaryT | null {
-        return this.specification.kind === 'Manifest' ? F.writeSummaryT(this.specification.value.summary) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value?.summary !== undefined 
+            ? F.writeSummaryT(this.specification.value.summary) 
+            : null;
     }
 
     /**
