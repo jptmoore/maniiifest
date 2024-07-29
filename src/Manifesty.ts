@@ -103,7 +103,9 @@ export class Manifesty {
      * @returns The navigation place of the manifest as a `T.NavPlaceT` type if the specification kind is 'Manifest'; otherwise, null.
      */    
     getManifestNavPlace(): T.NavPlaceT | null {
-        return this.specification.kind === 'Manifest' ? F.writeNavPlaceT(this.specification.value.navPlace) : null;
+        return this.specification.kind === 'Manifest' && this.specification.value.navPlace !== undefined 
+            ? F.writeNavPlaceT(this.specification.value.navPlace) 
+            : null;
     }
 
     /**

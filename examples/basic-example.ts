@@ -17,7 +17,7 @@ const filename = 'test/example.json';
         //     console.log(item)
         // }
 
-        const result = parser.getManifestSummary();
+        const result = parser.getManifestNavPlace();
         console.log(result)
 
 
