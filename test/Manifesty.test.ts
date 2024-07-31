@@ -439,6 +439,12 @@ describe('Manifest functionality', () => {
       expect(result).toEqual(annotations);
     });
 
+    it('should return empty list if annotations is not set', () => {
+      const manifesty = new Manifesty(manifest);
+      const result = Array.from(manifesty.iterateManifestW3cAnnotationPage());
+      expect(result).toEqual([]);
+    });
+
   });
 
 });
