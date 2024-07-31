@@ -1,5 +1,6 @@
 import { Manifesty } from '../src/Manifesty';
 
+
 describe('Collection functionality', () => {
 
   const collection = {
@@ -333,6 +334,58 @@ describe('Manifest functionality', () => {
     const manifesty = new Manifesty(manifest);
     const result = Array.from(manifesty.iterateManifestProvider());
     expect(result).toEqual([]);
+  });
+
+  describe('Manifest canvas annotation functionality', () => {
+    const items = [
+      {
+        "id": "https://example.org/iiif/book1/canvas/p1",
+        "type": "Canvas",
+        "label": { "none": ["p. 1"] },
+        "height": 1000,
+        "width": 750,
+        "items": [
+          {
+            "id": "https://example.org/iiif/book1/page/p1/1",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://example.org/iiif/book1/annotation/p0001-image",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "https://example.org/iiif/book1/page1/full/max/0/default.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "service": [
+                    {
+                      "id": "https://example.org/iiif/book1/page1",
+                      "type": "ImageService3",
+                      "profile": "level2",
+                      "service": [
+                        {
+                          "@id": "https://example.org/iiif/auth/login",
+                          "@type": "AuthCookieService1"
+                        }
+                      ]
+                    }
+                  ],
+                  "height": 2000,
+                  "width": 1500
+                },
+                "target": "https://example.org/iiif/book1/canvas/p1"
+              }
+            ]
+          }
+        ]
+      }]
+
+    it('should return the correct manifest canvas through iteration', () => {
+      const manifesty = new Manifesty({ items, ...manifest });
+      const result = Array.from(manifesty.iterateManifestCanvas());
+      expect(result).toEqual(items);
+    });
+
   });
 
   describe('Manifest annotation functionality', () => {
