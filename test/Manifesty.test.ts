@@ -220,7 +220,7 @@ describe('Manifest functionality', () => {
   });
 
   it('should return empty list if seeAlso is not set', () => {
-    const manifesty  = new Manifesty(manifest);
+    const manifesty = new Manifesty(manifest);
     const result = Array.from(manifesty.iterateManifestSeeAlso());
     expect(result).toEqual([]);
   });
@@ -255,7 +255,7 @@ describe('Manifest functionality', () => {
           {
             "@id": "https://example.org/iiif/auth/token",
             "@type": "AuthTokenService1",
-            "profile": "http://iiif.io/api/auth/1/token"          
+            "profile": "http://iiif.io/api/auth/1/token"
           }
         ]
       }
@@ -271,7 +271,7 @@ describe('Manifest functionality', () => {
     expect(result).toEqual([]);
   });
 
-it('should return the correct manifest thumbnail through iteration', () => {
+  it('should return the correct manifest thumbnail through iteration', () => {
     const thumbnail = [
       {
         "id": "https://example.org/iiif/book1/page1/full/80,100/0/default.jpg",
@@ -294,6 +294,86 @@ it('should return the correct manifest thumbnail through iteration', () => {
   it('should return empty list if thumbnail is not set', () => {
     const manifesty = new Manifesty(manifest);
     const result = Array.from(manifesty.iterateManifestThumbnail());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest homepage through iteration', () => {
+    const homepage = [
+      {
+        "id": "http://example.org",
+        "type": "Text",
+        "label": { "en": ["Example Organization Homepage"] }
+      }
+    ]
+    const manifesty = new Manifesty({ homepage, ...manifest });
+    const result = Array.from(manifesty.iterateManifestHomepage());
+    expect(result).toEqual(homepage);
+  });
+
+  it('should return empty list if homepage is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestHomepage());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest provider through iteration', () => {
+    const provider = [
+      {
+        "id": "http://example.org",
+        "type": "Text",
+        "label": { "en": ["Example Organization"] }
+      }
+    ]
+    const manifesty = new Manifesty({ provider, ...manifest });
+    const result = Array.from(manifesty.iterateManifestProvider());
+    expect(result).toEqual(provider);
+  });
+
+  it('should return empty list if provider is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestProvider());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest W3c annotations through iteration', () => {
+    const annotations = [
+      {
+        "id": "https://example.org/iiif/book1/page/manifest/1",
+        "type": "AnnotationPage",
+        "items": [
+          {
+            "id": "https://example.org/iiif/book1/page/manifest/a1",
+            "type": "Annotation",
+            "motivation": "commenting",
+            "body": {
+              "type": "TextualBody",
+              "language": "en",
+              "value": "I love this manifest!"
+            },
+            "target": "https://example.org/iiif/book1/manifest"
+          }
+        ]
+      }
+    ]
+    const expected = [{
+      "id": "https://example.org/iiif/book1/page/manifest/a1",
+      "type": "Annotation",
+      "motivation": "commenting",
+      "body": {
+        "type": "TextualBody",
+        "language": "en",
+        "value": "I love this manifest!"
+      },
+      "target": "https://example.org/iiif/book1/manifest"
+    }]
+    const manifesty = new Manifesty({ annotations, ...manifest });
+    const result = Array.from(manifesty.iterateManifestW3cAnnotation());
+    expect(result).toEqual(expected);
+  });
+
+  it('should return empty list if annotations is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestW3cAnnotation());
     expect(result).toEqual([]);
   });
 
