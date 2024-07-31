@@ -986,6 +986,14 @@ export class Manifesty {
         }
     }
 
+    /**
+     * Iterates over W3C Annotation Pages in a Manifest.
+     * 
+     * This generator function iterates through each annotation page present in the manifest's annotations.
+     * It yields each annotation page transformed by `F.writeAnnotationPageT` for further processing.
+     * 
+     * @yields {IterableIterator<T.AnnotationPageT>} An iterator that yields annotation pages as `T.AnnotationPageT` objects.
+     */    
     *iterateManifestW3cAnnotationPage(): IterableIterator<T.AnnotationPageT> {
         if (this.specification.kind === 'Manifest') {
             for (const annotationPage of this.specification.value.annotations ?? []) {
