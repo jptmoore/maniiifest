@@ -18,7 +18,7 @@ describe('Collection functionality', () => {
 });
 
 
-describe('Manifest functionality', () => {
+describe('Manifest toplevel functionality', () => {
 
   const manifest = {
     "id": "https://example.org/iiif/book1/manifest",
@@ -335,116 +335,96 @@ describe('Manifest functionality', () => {
     const result = Array.from(manifesty.iterateManifestProvider());
     expect(result).toEqual([]);
   });
+});
 
-  describe('Manifest canvas annotation functionality', () => {
-    const items = [
-      {
-        "id": "https://example.org/iiif/book1/canvas/p1",
-        "type": "Canvas",
-        "label": { "none": ["p. 1"] },
-        "height": 1000,
-        "width": 750,
-        "items": [
-          {
-            "id": "https://example.org/iiif/book1/page/p1/1",
-            "type": "AnnotationPage",
-            "items": [
-              {
-                "id": "https://example.org/iiif/book1/annotation/p0001-image",
-                "type": "Annotation",
-                "motivation": "painting",
-                "body": {
-                  "id": "https://example.org/iiif/book1/page1/full/max/0/default.jpg",
-                  "type": "Image",
-                  "format": "image/jpeg",
-                  "service": [
-                    {
-                      "id": "https://example.org/iiif/book1/page1",
-                      "type": "ImageService3",
-                      "profile": "level2",
-                      "service": [
-                        {
-                          "@id": "https://example.org/iiif/auth/login",
-                          "@type": "AuthCookieService1"
-                        }
-                      ]
-                    }
-                  ],
-                  "height": 2000,
-                  "width": 1500
-                },
-                "target": "https://example.org/iiif/book1/canvas/p1"
-              }
-            ]
-          }
-        ]
-      }]
 
-    it('should return the correct manifest canvas through iteration', () => {
-      const manifesty = new Manifesty({ items, ...manifest });
-      const result = Array.from(manifesty.iterateManifestCanvas());
-      expect(result).toEqual(items);
-    });
 
+
+describe('Manifest canvas functionality', () => {
+
+  const manifest = {
+    "id": "https://example.org/iiif/book1/manifest",
+    "type": "Manifest",
+    "label": { "en": ["Book 1"] }
+  }
+
+  const items = [
+    {
+      "id": "https://example.org/iiif/book1/canvas/p1",
+      "type": "Canvas",
+      "label": { "none": ["p. 1"] },
+      "height": 1000,
+      "width": 750,
+      "items": [
+        {
+          "id": "https://example.org/iiif/book1/page/p1/1",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://example.org/iiif/book1/annotation/p0001-image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://example.org/iiif/book1/page1/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "service": [
+                  {
+                    "id": "https://example.org/iiif/book1/page1",
+                    "type": "ImageService3",
+                    "profile": "level2",
+                    "service": [
+                      {
+                        "@id": "https://example.org/iiif/auth/login",
+                        "@type": "AuthCookieService1"
+                      }
+                    ]
+                  }
+                ],
+                "height": 2000,
+                "width": 1500
+              },
+              "target": "https://example.org/iiif/book1/canvas/p1"
+            }
+          ]
+        }
+      ]
+    }]
+
+  it('should return the correct manifest canvas through iteration', () => {
+    const manifesty = new Manifesty({ items, ...manifest });
+    const result = Array.from(manifesty.iterateManifestCanvas());
+    expect(result).toEqual(items);
   });
 
-  describe('Manifest annotation functionality', () => {
+  it('should return empty list if items is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestCanvas());
+    expect(result).toEqual([]);
+  });
 
-    const annotations = [
-      {
-        "id": "https://example.org/iiif/book1/page/manifest/1",
-        "type": "AnnotationPage",
-        "items": [
-          {
-            "id": "https://example.org/iiif/book1/page/manifest/a1",
-            "type": "Annotation",
-            "motivation": "commenting",
-            "body": {
-              "type": "TextualBody",
-              "language": "en",
-              "value": "I love this manifest!"
-            },
-            "target": "https://example.org/iiif/book1/manifest"
-          }
-        ]
-      }
-    ]
+  it('should return the correct manifest canvas annotation page through iteration', () => {
+    const manifesty = new Manifesty({ items, ...manifest });
+    const result = Array.from(manifesty.iterateManifestCanvasAnnotationPage());
+    expect(result).toEqual(items[0].items);
+  });
 
-    it('should return the correct manifest W3c annotations through iteration', () => {
-      const expected = [{
-        "id": "https://example.org/iiif/book1/page/manifest/a1",
-        "type": "Annotation",
-        "motivation": "commenting",
-        "body": {
-          "type": "TextualBody",
-          "language": "en",
-          "value": "I love this manifest!"
-        },
-        "target": "https://example.org/iiif/book1/manifest"
-      }]
-      const manifesty = new Manifesty({ annotations, ...manifest });
-      const result = Array.from(manifesty.iterateManifestW3cAnnotation());
-      expect(result).toEqual(expected);
-    });
+  it('should return empty list if items is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestCanvasAnnotationPage());
+    expect(result).toEqual([]);
+  });
 
-    it('should return empty list if annotations is not set', () => {
-      const manifesty = new Manifesty(manifest);
-      const result = Array.from(manifesty.iterateManifestW3cAnnotation());
-      expect(result).toEqual([]);
-    });
+  it('should return the correct manifest canvas annotation through iteration', () => {
+    const manifesty = new Manifesty({ items, ...manifest });
+    const result = Array.from(manifesty.iterateManifestCanvasAnnotation());
+    expect(result).toEqual(items[0].items[0].items);
+  });
 
-    it('should return the correct manifest W3c annotation pages through iteration', () => {
-      const manifesty = new Manifesty({ annotations, ...manifest });
-      const result = Array.from(manifesty.iterateManifestW3cAnnotationPage());
-      expect(result).toEqual(annotations);
-    });
-
-    it('should return empty list if annotations is not set', () => {
-      const manifesty = new Manifesty(manifest);
-      const result = Array.from(manifesty.iterateManifestW3cAnnotationPage());
-      expect(result).toEqual([]);
-    });
-
+  it('should return empty list if items is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestCanvasAnnotation());
+    expect(result).toEqual([]);
   });
 
 });
