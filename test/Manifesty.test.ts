@@ -4,15 +4,71 @@ import { Manifesty } from '../src/Manifesty';
 describe('Collection functionality', () => {
 
   const collection = {
-    "id": "https://example.org/iiif/book1/manifest",
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://iiif.io/api/cookbook/recipe/0032-collection/collection.json",
     "type": "Collection",
-    "label": { "en": ["Book 1"] }
+    "label": {
+      "en": [
+        "Simple Collection Example"
+      ]
+    }
   }
 
-  it('should return the collection', () => {
+  const items = [
+    {
+      "id": "https://iiif.io/api/cookbook/recipe/0032-collection/manifest-01.json",
+      "type": "Manifest",
+      "label": {
+        "en": [
+          "The Gulf Stream"
+        ]
+      }
+    },
+    {
+      "id": "https://iiif.io/api/cookbook/recipe/0032-collection/manifest-02.json",
+      "type": "Manifest",
+      "label": {
+        "en": [
+          "Northeaster"
+        ]
+      }
+    }
+  ]
+
+  it('should return the correct collection label through iteration', () => {
+    const manifesty = new Manifesty({ items, ...collection });
+    const result = Array.from(manifesty.iterateCollectionLabel());
+    expect(result).toEqual([{ en: ["Simple Collection Example"] }]);
+  });
+
+  it('should return the correct collection metadata through iteration', () => {
+    const metadata = [
+      {
+        "label": { "en": ["Author"] },
+        "value": { "en": ["Anne Author"] }
+      }
+    ]
+    const manifesty = new Manifesty({ metadata, items, ...collection });
+    const result = Array.from(manifesty.iterateCollectionMetadata());
+    expect(result).toEqual(metadata);
+  });
+
+  it('should return empty list if metadata is not set', () => {
+    const manifesty = new Manifesty({ items, ...collection });
+    const result = Array.from(manifesty.iterateCollectionMetadata());
+    expect(result).toEqual([]);
+  });
+
+  it('should return correct collection manifest through iteration', () => {
+    const manifesty = new Manifesty({ items, ...collection });
+    const result = Array.from(manifesty.iterateCollectionManifest());
+    expect(result).toEqual(items);
+  });
+
+  it('should return empty list if collection items is not set', () => {
     const manifesty = new Manifesty(collection);
-    const result = manifesty.getCollection();
-    expect(result).toEqual(collection);
+    const result = Array.from(manifesty.iterateCollectionManifest());
+    expect(result).toEqual([]);
   });
 
 });
@@ -25,12 +81,6 @@ describe('Manifest toplevel functionality', () => {
     "type": "Manifest",
     "label": { "en": ["Book 1"] }
   }
-
-  it('should return the manifest', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifest();
-    expect(result).toEqual(manifest);
-  });
 
   it('should return the correct manifest label', () => {
     const manifesty = new Manifesty(manifest);

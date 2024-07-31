@@ -688,15 +688,20 @@ export class Manifesty {
     *iterateCollection(): IterableIterator<T.CollectionT> {
         if (this.specification.kind === 'Collection') {
             yield F.writeCollectionT(this.specification.value);
-            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.CollectionT> {
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.CollectionT> {
+                if (!items) return; // Handle case where items might not exist
                 for (const item of items) {
                     if (item.kind === 'Collection') {
                         yield F.writeCollectionT(item.value);
-                        yield* traverse(item.value.items);
+                        if (item.value.items) { // Check if items exist before recursion
+                            yield* traverse(item.value.items);
+                        }
                     }
                 }
             };
-            yield* traverse(this.specification.value.items);
+            if (this.specification.value.items) { // Check if items exist before starting traversal
+                yield* traverse(this.specification.value.items);
+            }
         }
     }
 
@@ -720,12 +725,13 @@ export class Manifesty {
     *iterateCollectionManifest(): IterableIterator<T.ManifestT> {
         if (this.specification.kind === 'Manifest') {
             yield F.writeManifestT(this.specification.value);
-        } else if (this.specification.kind === 'Collection') {
-            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.ManifestT> {
+        } else if (this.specification.kind === 'Collection' && this.specification.value.items) {
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.ManifestT> {
+                if (!items) return; // Handle case where items might not exist
                 for (const item of items) {
                     if (item.kind === 'Manifest') {
                         yield F.writeManifestT(item.value);
-                    } else if (item.kind === 'Collection') {
+                    } else if (item.kind === 'Collection' && item.value.items) {
                         yield* traverse(item.value.items);
                     }
                 }
@@ -752,15 +758,20 @@ export class Manifesty {
     *iterateCollectionLabel(): IterableIterator<T.LabelT> {
         if (this.specification.kind === 'Collection') {
             yield F.writeLabelT(this.specification.value.label);
-            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.LabelT> {
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.LabelT> {
+                if (!items) return; // Handle case where items might not exist
                 for (const item of items) {
                     if (item.kind === 'Collection') {
                         yield F.writeLabelT(item.value.label);
-                        yield* traverse(item.value.items);
+                        if (item.value.items) { // Check if items exist before recursion
+                            yield* traverse(item.value.items);
+                        }
                     }
                 }
             };
-            yield* traverse(this.specification.value.items);
+            if (this.specification.value.items) { // Check if items exist before starting traversal
+                yield* traverse(this.specification.value.items);
+            }
         }
     }
 
@@ -786,17 +797,22 @@ export class Manifesty {
             for (const metadata of this.specification.value.metadata ?? []) {
                 yield F.writeMetadataT(metadata);
             }
-            const traverse = function* (items: Array<{ kind: string; value: any }>): IterableIterator<T.MetadataT> {
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.MetadataT> {
+                if (!items) return; // Handle case where items might not exist
                 for (const item of items) {
                     if (item.kind === 'Collection') {
                         for (const metadata of item.value.metadata ?? []) {
                             yield F.writeMetadataT(metadata);
                         }
-                        yield* traverse(item.value.items);
+                        if (item.value.items) { // Check if items exist before recursion
+                            yield* traverse(item.value.items);
+                        }
                     }
                 }
             };
-            yield* traverse(this.specification.value.items);
+            if (this.specification.value.items) { // Check if items exist before starting traversal
+                yield* traverse(this.specification.value.items);
+            }
         }
     }
 
