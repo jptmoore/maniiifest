@@ -249,6 +249,7 @@ describe('Manifest functionality', () => {
       {
         "@id": "https://example.org/iiif/auth/login",
         "@type": "AuthCookieService1",
+        "label": "Login to Example Institution",
         "profile": "http://iiif.io/api/auth/1/login",
         "service": [
           {

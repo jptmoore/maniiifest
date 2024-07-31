@@ -356,7 +356,8 @@ type service_t1 = {
 
 type service_t2 = {
   id <json name="@id"> : id_t;
-  _type <json name="@type"> : type_t;  
+  _type <json name="@type"> : type_t;
+  ?label : label_t option;  
   ?profile : profile_t option;
   ?service : service_t list option;
 }

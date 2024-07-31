@@ -447,6 +447,7 @@ export type ServiceT1 = {
 export type ServiceT2 = {
   id: IdT;
   type: TypeT;
+  label?: LabelT;
   profile?: ProfileT;
   service?: ServiceT[];
 }
@@ -1837,6 +1838,7 @@ export function writeServiceT2(x: ServiceT2, context: any = x): any {
   return {
     '@id': _atd_write_required_field('ServiceT2', 'id', writeIdT, x.id, x),
     '@type': _atd_write_required_field('ServiceT2', 'type', writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
   };
@@ -1846,6 +1848,7 @@ export function readServiceT2(x: any, context: any = x): ServiceT2 {
   return {
     id: _atd_read_required_field('ServiceT2', '@id', readIdT, x['@id'], x),
     type: _atd_read_required_field('ServiceT2', '@type', readTypeT, x['@type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
   };
