@@ -64,19 +64,6 @@ describe('Manifest functionality', () => {
     expect(result).toBeNull();
   });
 
-  it('should return the correct manifest behavior through iteration', () => {
-    const behavior = ["paged"];
-    const manifesty = new Manifesty({ behavior, ...manifest });
-    const result = Array.from(manifesty.iterateManifestBehavior());
-    expect(result).toEqual(behavior);
-  });
-
-  it('should return empty list if behavior is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestBehavior());
-    expect(result).toEqual([]);
-  });
-
   it('should return the correct manifest navDate', () => {
     const navDate = "1856-01-01T00:00:00Z";
     const manifesty = new Manifesty({ navDate, ...manifest });
@@ -166,7 +153,147 @@ describe('Manifest functionality', () => {
     expect(result).toBeNull();
   });
 
+  it('should return the correct manifest behavior through iteration', () => {
+    const behavior = ["paged"];
+    const manifesty = new Manifesty({ behavior, ...manifest });
+    const result = Array.from(manifesty.iterateManifestBehavior());
+    expect(result).toEqual(behavior);
+  });
 
+  it('should return empty list if behavior is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestBehavior());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest rending through iteration', () => {
+    const rendering = [
+      {
+        "id": "https://example.org/iiif/book1.pdf",
+        "type": "Text",
+        "label": { "en": ["Download as PDF"] },
+        "format": "application/pdf"
+      }
+    ]
+    const manifesty = new Manifesty({ rendering, ...manifest });
+    const result = Array.from(manifesty.iterateManifestRendering());
+    expect(result).toEqual(rendering);
+  });
+
+  it('should return empty list if rendering is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestRendering());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest partOf through iteration', () => {
+    const partOf = [
+      {
+        "id": "https://example.org/iiif/book1/collection",
+        "type": "Collection",
+        "label": { "en": ["Book 1"] }
+      }
+    ]
+    const manifesty = new Manifesty({ partOf, ...manifest });
+    const result = Array.from(manifesty.iterateManifestPartOf());
+    expect(result).toEqual(partOf);
+  });
+
+  it('should return empty list if partOf is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestPartOf());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest seeAlso through iteration', () => {
+    const seeAlso = [
+      {
+        "id": "https://example.org/iiif/book1.xml",
+        "type": "Dataset",
+        "label": { "en": ["Metadata as XML"] },
+        "format": "application/xml"
+      }
+    ]
+    const manifesty = new Manifesty({ seeAlso, ...manifest });
+    const result = Array.from(manifesty.iterateManifestSeeAlso());
+    expect(result).toEqual(seeAlso);
+  });
+
+  it('should return empty list if seeAlso is not set', () => {
+    const manifesty  = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestSeeAlso());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest service through iteration', () => {
+    const service = [
+      {
+        "id": "https://example.org/iiif/book1/access-control",
+        "type": "AuthCookieService1",
+        "profile": "http://iiif.io/api/auth/1"
+      }
+    ]
+    const manifesty = new Manifesty({ service, ...manifest });
+    const result = Array.from(manifesty.iterateManifestService());
+    expect(result).toEqual(service);
+  });
+
+  it('should return empty list if service is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestService());
+    expect(result).toEqual([]);
+  });
+
+  it('should return the correct manifest services through iteration', () => {
+    const services = [
+      {
+        "@id": "https://example.org/iiif/auth/login",
+        "@type": "AuthCookieService1",
+        "profile": "http://iiif.io/api/auth/1/login",
+        "service": [
+          {
+            "@id": "https://example.org/iiif/auth/token",
+            "@type": "AuthTokenService1",
+            "profile": "http://iiif.io/api/auth/1/token"          
+          }
+        ]
+      }
+    ]
+    const manifesty = new Manifesty({ services, ...manifest });
+    const result = Array.from(manifesty.iterateManifestServices());
+    expect(result).toEqual(services);
+  });
+
+  it('should return empty list if services is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestServicesService());
+    expect(result).toEqual([]);
+  });
+
+it('should return the correct manifest thumbnail through iteration', () => {
+    const thumbnail = [
+      {
+        "id": "https://example.org/iiif/book1/page1/full/80,100/0/default.jpg",
+        "type": "Image",
+        "format": "image/jpeg",
+        "service": [
+          {
+            "id": "https://example.org/iiif/book1/page1",
+            "type": "ImageService3",
+            "profile": "level1"
+          }
+        ]
+      }
+    ]
+    const manifesty = new Manifesty({ thumbnail, ...manifest });
+    const result = Array.from(manifesty.iterateManifestThumbnail());
+    expect(result).toEqual(thumbnail);
+  });
+
+  it('should return empty list if thumbnail is not set', () => {
+    const manifesty = new Manifesty(manifest);
+    const result = Array.from(manifesty.iterateManifestThumbnail());
+    expect(result).toEqual([]);
+  });
 
 });
-
