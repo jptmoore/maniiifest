@@ -335,7 +335,8 @@ describe('Manifest functionality', () => {
     expect(result).toEqual([]);
   });
 
-  it('should return the correct manifest W3c annotations through iteration', () => {
+  describe('Manifest annotation functionality', () => {
+
     const annotations = [
       {
         "id": "https://example.org/iiif/book1/page/manifest/1",
@@ -355,26 +356,36 @@ describe('Manifest functionality', () => {
         ]
       }
     ]
-    const expected = [{
-      "id": "https://example.org/iiif/book1/page/manifest/a1",
-      "type": "Annotation",
-      "motivation": "commenting",
-      "body": {
-        "type": "TextualBody",
-        "language": "en",
-        "value": "I love this manifest!"
-      },
-      "target": "https://example.org/iiif/book1/manifest"
-    }]
-    const manifesty = new Manifesty({ annotations, ...manifest });
-    const result = Array.from(manifesty.iterateManifestW3cAnnotation());
-    expect(result).toEqual(expected);
-  });
 
-  it('should return empty list if annotations is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestW3cAnnotation());
-    expect(result).toEqual([]);
+    it('should return the correct manifest W3c annotations through iteration', () => {
+      const expected = [{
+        "id": "https://example.org/iiif/book1/page/manifest/a1",
+        "type": "Annotation",
+        "motivation": "commenting",
+        "body": {
+          "type": "TextualBody",
+          "language": "en",
+          "value": "I love this manifest!"
+        },
+        "target": "https://example.org/iiif/book1/manifest"
+      }]
+      const manifesty = new Manifesty({ annotations, ...manifest });
+      const result = Array.from(manifesty.iterateManifestW3cAnnotation());
+      expect(result).toEqual(expected);
+    });
+
+    it('should return empty list if annotations is not set', () => {
+      const manifesty = new Manifesty(manifest);
+      const result = Array.from(manifesty.iterateManifestW3cAnnotation());
+      expect(result).toEqual([]);
+    });
+
+    it('should return the correct manifest W3c annotation pages through iteration', () => {
+      const manifesty = new Manifesty({ annotations, ...manifest });
+      const result = Array.from(manifesty.iterateManifestW3cAnnotationPage());
+      expect(result).toEqual(annotations);
+    });
+
   });
 
 });

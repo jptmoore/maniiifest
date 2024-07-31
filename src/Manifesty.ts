@@ -986,4 +986,16 @@ export class Manifesty {
         }
     }
 
+    *iterateManifestW3cAnnotationPage(): IterableIterator<T.AnnotationPageT> {
+        if (this.specification.kind === 'Manifest') {
+            for (const annotationPage of this.specification.value.annotations ?? []) {
+                yield F.writeAnnotationPageT(annotationPage);
+            }
+        }
+    }
+
+
+
+    
+
 }
