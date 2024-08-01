@@ -1,4 +1,4 @@
-import { Manifesty } from '../src/Manifesty';
+import { Maniiifest } from '../src/Maniiifest';
 
 
 describe('Collection functionality', () => {
@@ -36,8 +36,8 @@ describe('Collection functionality', () => {
   ]
 
   it('should return the correct collection label through iteration', () => {
-    const manifesty = new Manifesty({ items, ...collection });
-    const result = Array.from(manifesty.iterateCollectionLabel());
+    const maniiifest = new Maniiifest({ items, ...collection });
+    const result = Array.from(maniiifest.iterateCollectionLabel());
     expect(result).toEqual([{ en: ["Simple Collection Example"] }]);
   });
 
@@ -48,26 +48,26 @@ describe('Collection functionality', () => {
         "value": { "en": ["Anne Author"] }
       }
     ]
-    const manifesty = new Manifesty({ metadata, items, ...collection });
-    const result = Array.from(manifesty.iterateCollectionMetadata());
+    const maniiifest = new Maniiifest({ metadata, items, ...collection });
+    const result = Array.from(maniiifest.iterateCollectionMetadata());
     expect(result).toEqual(metadata);
   });
 
   it('should return empty list if metadata is not set', () => {
-    const manifesty = new Manifesty({ items, ...collection });
-    const result = Array.from(manifesty.iterateCollectionMetadata());
+    const maniiifest = new Maniiifest({ items, ...collection });
+    const result = Array.from(maniiifest.iterateCollectionMetadata());
     expect(result).toEqual([]);
   });
 
   it('should return correct collection manifest through iteration', () => {
-    const manifesty = new Manifesty({ items, ...collection });
-    const result = Array.from(manifesty.iterateCollectionManifest());
+    const maniiifest = new Maniiifest({ items, ...collection });
+    const result = Array.from(maniiifest.iterateCollectionManifest());
     expect(result).toEqual(items);
   });
 
   it('should return empty list if collection items is not set', () => {
-    const manifesty = new Manifesty(collection);
-    const result = Array.from(manifesty.iterateCollectionManifest());
+    const maniiifest = new Maniiifest(collection);
+    const result = Array.from(maniiifest.iterateCollectionManifest());
     expect(result).toEqual([]);
   });
 
@@ -83,48 +83,48 @@ describe('Manifest toplevel functionality', () => {
   }
 
   it('should return the correct manifest label', () => {
-    const manifesty = new Manifesty(manifest);
+    const maniiifest = new Maniiifest(manifest);
     const label = { en: ["Book 1"] };
-    const result = manifesty.getManifestLabel();
+    const result = maniiifest.getManifestLabel();
     expect(result).toEqual(label);
   });
 
   it('should return the correct manifest summary', () => {
     const summary = { "en": ["Book 1, written be Anne Author, published in Paris around 1400."] }
-    const manifesty = new Manifesty({ summary, ...manifest });
-    const result = manifesty.getManifestSummary();
+    const maniiifest = new Maniiifest({ summary, ...manifest });
+    const result = maniiifest.getManifestSummary();
     expect(result).toEqual(summary);
   });
 
   it('should return null if summary is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifestSummary();
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestSummary();
     expect(result).toBeNull();
   });
 
   it('should return the correct manifest viewing direction', () => {
     const viewingDirection = "right-to-left";
-    const manifesty = new Manifesty({ viewingDirection, ...manifest });
-    const result = manifesty.getManifestViewingDirection();
+    const maniiifest = new Maniiifest({ viewingDirection, ...manifest });
+    const result = maniiifest.getManifestViewingDirection();
     expect(result).toEqual(viewingDirection);
   });
 
   it('should return null if viewing direction is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifestViewingDirection();
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestViewingDirection();
     expect(result).toBeNull();
   });
 
   it('should return the correct manifest navDate', () => {
     const navDate = "1856-01-01T00:00:00Z";
-    const manifesty = new Manifesty({ navDate, ...manifest });
-    const result = manifesty.getManifestNavDate();
+    const maniiifest = new Maniiifest({ navDate, ...manifest });
+    const result = maniiifest.getManifestNavDate();
     expect(result).toEqual(navDate);
   });
 
   it('should return null if navDate is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifestNavDate();
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestNavDate();
     expect(result).toBeNull();
   });
 
@@ -147,27 +147,27 @@ describe('Manifest toplevel functionality', () => {
         }
       ]
     }
-    const manifesty = new Manifesty({ navPlace, ...manifest });
-    const result = manifesty.getManifestNavPlace();
+    const maniiifest = new Maniiifest({ navPlace, ...manifest });
+    const result = maniiifest.getManifestNavPlace();
     expect(result).toEqual(navPlace);
   });
 
   it('should return null if navPlace is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifestNavPlace();
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestNavPlace();
     expect(result).toBeNull();
   });
 
   it('should return the correct manifest rights', () => {
     const rights = "http://rightsstatements.org/vocab/NoC-NC/1.0/";
-    const manifesty = new Manifesty({ rights, ...manifest });
-    const result = manifesty.getManifestRights();
+    const maniiifest = new Maniiifest({ rights, ...manifest });
+    const result = maniiifest.getManifestRights();
     expect(result).toEqual(rights);
   });
 
   it('should return null if rights is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifestRights();
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestRights();
     expect(result).toBeNull();
   });
 
@@ -176,14 +176,14 @@ describe('Manifest toplevel functionality', () => {
       "label": { "en": ["Attribution"] },
       "value": { "en": ["Provided by Example Organization"] }
     }
-    const manifesty = new Manifesty({ requiredStatement, ...manifest });
-    const result = manifesty.getManifestRequiredStatement();
+    const maniiifest = new Maniiifest({ requiredStatement, ...manifest });
+    const result = maniiifest.getManifestRequiredStatement();
     expect(result).toEqual(requiredStatement);
   });
 
   it('should return null if required statement is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifestRequiredStatement();
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestRequiredStatement();
     expect(result).toBeNull();
   });
 
@@ -193,27 +193,27 @@ describe('Manifest toplevel functionality', () => {
       "type": "Canvas",
       "label": { "en": ["p. 1"] }
     }
-    const manifesty = new Manifesty({ start, ...manifest });
-    const result = manifesty.getManifestStart();
+    const maniiifest = new Maniiifest({ start, ...manifest });
+    const result = maniiifest.getManifestStart();
     expect(result).toEqual(start);
   });
 
   it('should return null if start is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = manifesty.getManifestStart();
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestStart();
     expect(result).toBeNull();
   });
 
   it('should return the correct manifest behavior through iteration', () => {
     const behavior = ["paged"];
-    const manifesty = new Manifesty({ behavior, ...manifest });
-    const result = Array.from(manifesty.iterateManifestBehavior());
+    const maniiifest = new Maniiifest({ behavior, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestBehavior());
     expect(result).toEqual(behavior);
   });
 
   it('should return empty list if behavior is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestBehavior());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestBehavior());
     expect(result).toEqual([]);
   });
 
@@ -226,14 +226,14 @@ describe('Manifest toplevel functionality', () => {
         "format": "application/pdf"
       }
     ]
-    const manifesty = new Manifesty({ rendering, ...manifest });
-    const result = Array.from(manifesty.iterateManifestRendering());
+    const maniiifest = new Maniiifest({ rendering, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestRendering());
     expect(result).toEqual(rendering);
   });
 
   it('should return empty list if rendering is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestRendering());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestRendering());
     expect(result).toEqual([]);
   });
 
@@ -245,14 +245,14 @@ describe('Manifest toplevel functionality', () => {
         "label": { "en": ["Book 1"] }
       }
     ]
-    const manifesty = new Manifesty({ partOf, ...manifest });
-    const result = Array.from(manifesty.iterateManifestPartOf());
+    const maniiifest = new Maniiifest({ partOf, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestPartOf());
     expect(result).toEqual(partOf);
   });
 
   it('should return empty list if partOf is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestPartOf());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestPartOf());
     expect(result).toEqual([]);
   });
 
@@ -265,14 +265,14 @@ describe('Manifest toplevel functionality', () => {
         "format": "application/xml"
       }
     ]
-    const manifesty = new Manifesty({ seeAlso, ...manifest });
-    const result = Array.from(manifesty.iterateManifestSeeAlso());
+    const maniiifest = new Maniiifest({ seeAlso, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestSeeAlso());
     expect(result).toEqual(seeAlso);
   });
 
   it('should return empty list if seeAlso is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestSeeAlso());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestSeeAlso());
     expect(result).toEqual([]);
   });
 
@@ -284,14 +284,14 @@ describe('Manifest toplevel functionality', () => {
         "profile": "http://iiif.io/api/auth/1"
       }
     ]
-    const manifesty = new Manifesty({ service, ...manifest });
-    const result = Array.from(manifesty.iterateManifestService());
+    const maniiifest = new Maniiifest({ service, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestService());
     expect(result).toEqual(service);
   });
 
   it('should return empty list if service is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestService());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestService());
     expect(result).toEqual([]);
   });
 
@@ -311,14 +311,14 @@ describe('Manifest toplevel functionality', () => {
         ]
       }
     ]
-    const manifesty = new Manifesty({ services, ...manifest });
-    const result = Array.from(manifesty.iterateManifestServices());
+    const maniiifest = new Maniiifest({ services, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestServices());
     expect(result).toEqual(services);
   });
 
   it('should return empty list if services is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestServicesService());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestServicesService());
     expect(result).toEqual([]);
   });
 
@@ -337,14 +337,14 @@ describe('Manifest toplevel functionality', () => {
         ]
       }
     ]
-    const manifesty = new Manifesty({ thumbnail, ...manifest });
-    const result = Array.from(manifesty.iterateManifestThumbnail());
+    const maniiifest = new Maniiifest({ thumbnail, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestThumbnail());
     expect(result).toEqual(thumbnail);
   });
 
   it('should return empty list if thumbnail is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestThumbnail());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestThumbnail());
     expect(result).toEqual([]);
   });
 
@@ -356,14 +356,14 @@ describe('Manifest toplevel functionality', () => {
         "label": { "en": ["Example Organization Homepage"] }
       }
     ]
-    const manifesty = new Manifesty({ homepage, ...manifest });
-    const result = Array.from(manifesty.iterateManifestHomepage());
+    const maniiifest = new Maniiifest({ homepage, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestHomepage());
     expect(result).toEqual(homepage);
   });
 
   it('should return empty list if homepage is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestHomepage());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestHomepage());
     expect(result).toEqual([]);
   });
 
@@ -375,14 +375,14 @@ describe('Manifest toplevel functionality', () => {
         "label": { "en": ["Example Organization"] }
       }
     ]
-    const manifesty = new Manifesty({ provider, ...manifest });
-    const result = Array.from(manifesty.iterateManifestProvider());
+    const maniiifest = new Maniiifest({ provider, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestProvider());
     expect(result).toEqual(provider);
   });
 
   it('should return empty list if provider is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestProvider());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestProvider());
     expect(result).toEqual([]);
   });
 });
@@ -442,38 +442,38 @@ describe('Manifest canvas functionality', () => {
     }]
 
   it('should return the correct manifest canvas through iteration', () => {
-    const manifesty = new Manifesty({ items, ...manifest });
-    const result = Array.from(manifesty.iterateManifestCanvas());
+    const maniiifest = new Maniiifest({ items, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestCanvas());
     expect(result).toEqual(items);
   });
 
   it('should return empty list if items is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestCanvas());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestCanvas());
     expect(result).toEqual([]);
   });
 
   it('should return the correct manifest canvas annotation page through iteration', () => {
-    const manifesty = new Manifesty({ items, ...manifest });
-    const result = Array.from(manifesty.iterateManifestCanvasAnnotationPage());
+    const maniiifest = new Maniiifest({ items, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestCanvasAnnotationPage());
     expect(result).toEqual(items[0].items);
   });
 
   it('should return empty list if items is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestCanvasAnnotationPage());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestCanvasAnnotationPage());
     expect(result).toEqual([]);
   });
 
   it('should return the correct manifest canvas annotation through iteration', () => {
-    const manifesty = new Manifesty({ items, ...manifest });
-    const result = Array.from(manifesty.iterateManifestCanvasAnnotation());
+    const maniiifest = new Maniiifest({ items, ...manifest });
+    const result = Array.from(maniiifest.iterateManifestCanvasAnnotation());
     expect(result).toEqual(items[0].items[0].items);
   });
 
   it('should return empty list if items is not set', () => {
-    const manifesty = new Manifesty(manifest);
-    const result = Array.from(manifesty.iterateManifestCanvasAnnotation());
+    const maniiifest = new Maniiifest(manifest);
+    const result = Array.from(maniiifest.iterateManifestCanvasAnnotation());
     expect(result).toEqual([]);
   });
 

@@ -1,5 +1,5 @@
 import { readJsonFromFile } from '../src/utils'
-import { Manifesty } from '../src/Manifesty';
+import { Maniiifest } from '../src/Maniiifest';
 
 const filename = 'test/example.json';
 
@@ -11,7 +11,7 @@ const filename = 'test/example.json';
             return;
         }
 
-        const parser = new Manifesty(jsonData);
+        const parser = new Maniiifest(jsonData);
 
         for (const item of parser.iterateCollectionManifest()) {
             console.log(item)

@@ -1,4 +1,4 @@
-import { Manifesty } from './Manifesty';
+import { Maniiifest } from './Maniiifest';
 
-export { Manifesty };
+export { Maniiifest };
 
