@@ -8,6 +8,18 @@
 import * as F from "./specification";
 import type * as T from "./specification";
 
+/**
+ * The `Manifesty` class provides methods to parse and manipulate IIIF JSON manifests and collections.
+ * It ensures type safety and offers utility functions for working with IIIF data.
+ *
+ * Example usage:
+ * ```typescript
+ * import { Manifesty } from './Manifesty';
+ * 
+ * const manifest = new Manifesty();
+ * const parsedData = manifest.parse(jsonData);
+ * ```
+ */
 export class Manifesty {
     specification: any;
 
