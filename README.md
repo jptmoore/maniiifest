@@ -17,10 +17,12 @@ npm install maniiifest
 Import and use the functions in your TypeScript project:
 
   ```typescript
-  import { Maniiifest } from './Maniiifest';
+import { Maniiifest } from './Maniiifest';
   
-  const maniiifest = new Maniiifest();
-  const parsedData = maniiifest.parse(jsonData);
+const parser = new Maniiifest(jsonData);
+for (const item of parser.iterateCollectionManifest()) {
+    console.log(item)
+}
   ```
 
 ## Scripts

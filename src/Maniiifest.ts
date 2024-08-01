@@ -11,14 +11,6 @@ import type * as T from "./specification";
 /**
  * The `Maniiifest` class provides methods to parse and manipulate IIIF JSON manifests and collections.
  * It ensures type safety and offers utility functions for working with IIIF data.
- *
- * Example usage:
- * ```typescript
- * import { Maniiifest } from './Maniiifest';
- * 
- * const maniiifest = new Maniiifest();
- * const parsedData = maniiifest.parse(jsonData);
- * ```
  */
 export class Maniiifest {
     specification: any;
