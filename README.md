@@ -16,13 +16,12 @@ npm install maniiifest
 
 Import and use the functions in your TypeScript project:
 
-```ts
-import { readSpecificationT, writeSpecificationT } from 'maniiifest';
-
-// Example usage
-const spec = readSpecificationT(jsonData);
-const json = writeSpecificationT(spec);
-```
+  ```typescript
+  import { Maniiifest } from './Maniiifest';
+  
+  const maniiifest = new Maniiifest();
+  const parsedData = maniiifest.parse(jsonData);
+  ```
 
 ## Scripts
 
