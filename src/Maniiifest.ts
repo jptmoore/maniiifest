@@ -17,7 +17,7 @@ import type * as T from "./specification";
  * import { Maniiifest } from './Maniiifest';
  * 
  * const maniiifest = new Maniiifest();
- * const parsedData = manifest.parse(jsonData);
+ * const parsedData = maniiifest.parse(jsonData);
  * ```
  */
 export class Maniiifest {
