@@ -1,29 +1,36 @@
-# Project Name
+# Maniiifest
 
 ## Description
 
-This project is aimed at...
+Maniiifest provides methods to parse and manipulate IIIF JSON manifests and collections. It ensures type safety and offers utility functions for working with IIIF data.
 
 ## Installation
 
-To install this project, follow these steps:
+Install the package using npm:
 
-1. Clone the repository.
-2. Run `npm install` to install the dependencies.
-3. ...
+```sh
+npm install maniiifest
+```
 
 ## Usage
 
-To use this project, follow these steps:
+Import and use the functions in your TypeScript project:
 
-1. ...
-2. ...
-3. ...
+```ts
+import { readSpecificationT, writeSpecificationT } from 'maniiifest';
 
-## Contributing
+// Example usage
+const spec = readSpecificationT(jsonData);
+const json = writeSpecificationT(spec);
+```
 
-Contributions are welcome! Please follow the guidelines outlined in CONTRIBUTING.md.
+## Scripts
+
+- `npm run build`: Compile the TypeScript code.
+- `npm run test`: Run the tests using Jest.
+- `npm start`: Run the example script.
+- `npm run generate-docs`: Generate documentation using TypeDoc.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License.
