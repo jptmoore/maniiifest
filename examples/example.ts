@@ -13,12 +13,9 @@ const filename = 'test/example.json';
 
         const parser = new Maniiifest(jsonData);
 
-        for (const item of parser.iterateCollectionManifest()) {
+        for (const item of parser.iterateManifestCanvasAnnotation()) {
             console.log(item)
         }
-
-        // const result = parser.getManifestNavPlace();
-        // console.log(result)
 
 
     } catch (error) {
