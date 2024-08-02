@@ -17,12 +17,17 @@ npm install maniiifest
 Import and use the functions in your TypeScript project:
 
   ```typescript
-import { Maniiifest } from './Maniiifest';
-  
-const parser = new Maniiifest(jsonData);
-for (const item of parser.iterateCollectionManifest()) {
-    console.log(item)
+import { Maniiifest } from 'maniiifest';
+
+const manifest = {
+    "id": "https://iiif.io/api/cookbook/recipe/0032-collection/manifest-02.json",
+    "type": "Manifest",
+    "label": { "en": ["Northeaster"] }
 }
+
+const parser = new Maniiifest(manifest);
+const label = parser.getManifestLabel()
+console.log(label);
   ```
 
 ## Scripts
