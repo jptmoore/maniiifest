@@ -32,6 +32,15 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the manifest ID if the specification kind is 'Manifest'.
+     *
+     * @returns {T.IdT | null} The manifest ID if the specification kind is 'Manifest', otherwise `null`.
+     */    
+    getManifestId(): T.IdT | null {
+        return this.specification.kind === 'Manifest' ? F.writeIdT(this.specification.value.id) : null;
+    }
+    
+    /**
      * Retrieves the label from the manifest specification if it is of kind 'Manifest'.
      *
      * @returns {T.LabelT | null} The label if the specification is of kind 'Manifest' and has a label value, otherwise null.

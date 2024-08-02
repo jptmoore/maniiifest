@@ -82,6 +82,12 @@ describe('Manifest toplevel functionality', () => {
     "label": { "en": ["Book 1"] }
   }
 
+  it('should return the correct manifest id', () => {
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getManifestId();
+    expect(result).toEqual("https://example.org/iiif/book1/manifest");
+  });
+
   it('should return the correct manifest label', () => {
     const maniiifest = new Maniiifest(manifest);
     const label = { en: ["Book 1"] };
