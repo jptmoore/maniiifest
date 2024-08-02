@@ -1,7 +1,11 @@
 {
   "name": "maniiifest",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "test": "jest",
     "build": "tsc",
@@ -12,7 +16,11 @@
     "type": "git",
     "url": "https://github.com/jptmoore/maniiifest.git"
   },
-  "keywords": ["IIIF", "Manifest", "IIIF Presentation API"],
+  "keywords": [
+    "IIIF",
+    "Manifest",
+    "IIIF Presentation API"
+  ],
   "author": "John P. T. Moore",
   "license": "MIT",
   "description": "Typesafe IIIF presentation v3 manifest and collection parsing without external dependencies",
@@ -20,9 +28,11 @@
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.4",
-    "ts-node": "^10.9.2",
-    "typedoc": "^0.26.5",
-    "typedoc-plugin-markdown": "^4.2.3",
-    "typescript": "^5.5.2"
+    "ts-node": "^10.0.0",
+    "typedoc": "^0.22.0",
+    "typescript": "^4.0.0"
+  },
+  "dependencies": {
+    "maniiifest": "file:maniiifest-1.0.0.tgz"
   }
 }

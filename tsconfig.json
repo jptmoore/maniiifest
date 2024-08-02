@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "rootDir": "./src",
     "outDir": "./dist",
-    "experimentalDecorators": true
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "target": "es2015", // Updated from "es5" to "es2015"
+    "module": "commonjs"
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
