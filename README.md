@@ -32,7 +32,7 @@ console.log(label);
 
 ## Documentation
 
-Documentation for the current supported get methods and generators available [here](https://jptmoore.github.io/maniiifest/). If you would like to see other methods added please raise an issue.
+Documentation for the current supported get methods and generators available [here](https://jptmoore.github.io/maniiifest/classes/Maniiifest.html). If you would like to see other methods added please raise an issue.
 
 
 ## Scripts
