@@ -2,7 +2,7 @@
 
 ## Description
 
-Maniiifest provides methods to parse and manipulate IIIF JSON manifests and collections. It ensures type safety and offers utility functions for working with IIIF data.
+Maniiifest provides methods to parse and manipulate IIIF v3 manifests and collections. It ensures type safety and offers utility functions for working with IIIF data. Maniiifest takes a parser generator approach to generating TypeScript type definitions using a domain-specific language (DSL). The current specification is available [here](https://raw.githubusercontent.com/jptmoore/maniiifest/main/src/specification.atd).
 
 ## Installation
 
