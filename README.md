@@ -35,6 +35,50 @@ console.log(label);
 Documentation for the current supported get methods and generators available [here](https://jptmoore.github.io/maniiifest/classes/Maniiifest.html). If you would like to see other methods added please raise an issue.
 
 
+## Tutorial
+
+In this example we will use generators to work with a complex collection that nests manifests within it.
+
+```typescript
+import { Maniiifest } from 'maniiifest';
+
+async function main() {
+    const response = await fetch('https://iiif.wellcomecollection.org/presentation/b19974760');
+    const jsonData = await response.json();
+    const parser = new Maniiifest(jsonData);
+    const manifests = parser.iterateCollectionManifest();
+    let count = 0;
+    for (const item of manifests) {
+        if (count >= 25) break;
+        const manifestRef = new Maniiifest(item);
+        const metadata = manifestRef.iterateManifestMetadata();
+        for (const item of metadata) {
+            console.log(item);
+        }
+        count++;
+    }
+}
+
+main()
+```
+The output will be the metadata from the first 25 manifests:
+
+```sh
+❯ ts-node tutorial.ts
+{ label: { en: [ 'Volume' ] }, value: { none: [ '1' ] } }
+{ label: { en: [ 'Year' ] }, value: { none: [ '1859' ] } }
+{ label: { en: [ 'Month' ] }, value: { en: [ 'September' ] } }
+{
+  label: { en: [ 'DisplayDate' ] },
+  value: { en: [ '15. September 1859' ] }
+}
+{ label: { en: [ 'Volume' ] }, value: { none: [ '1' ] } }
+{ label: { en: [ 'Year' ] }, value: { none: [ '1859' ] } }
+{ label: { en: [ 'Month' ] }, value: { en: [ 'October' ] } }
+.....
+```
+
+
 ## Scripts
 
 - `npm run build`: Compile the TypeScript code.
