@@ -30,6 +30,11 @@ const label = parser.getManifestLabel()
 console.log(label);
   ```
 
+## Documentation
+
+Documentation for the current supported get methods and generators available [here](https://jptmoore.github.io/maniiifest/). If you would like to see other methods added please raise an issue.
+
+
 ## Scripts
 
 - `npm run build`: Compile the TypeScript code.
