@@ -311,6 +311,7 @@ export type AnnotationBodyT1 = {
 export type AnnotationBodyT2 = {
   type: TypeT;
   language?: LanguageT;
+  format?: FormatT;
   value?: ValueT;
 }
 
@@ -562,7 +563,7 @@ export type HeightT = number /*int*/
 
 export type WidthT = number /*int*/
 
-export type DurationT = number /*int*/
+export type DurationT = number
 
 export type CreatedT = string
 
@@ -1394,6 +1395,7 @@ export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): an
   return {
     'type': _atd_write_required_field('AnnotationBodyT2', 'type', writeTypeT, x.type, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
+    'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'value': _atd_write_optional_field(writeValueT, x.value, x),
   };
 }
@@ -1402,6 +1404,7 @@ export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2
   return {
     type: _atd_read_required_field('AnnotationBodyT2', 'type', readTypeT, x['type'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
+    format: _atd_read_optional_field(readFormatT, x['format'], x),
     value: _atd_read_optional_field(readValueT, x['value'], x),
   };
 }
@@ -2217,11 +2220,11 @@ export function readWidthT(x: any, context: any = x): WidthT {
 }
 
 export function writeDurationT(x: DurationT, context: any = x): any {
-  return _atd_write_int(x, context);
+  return _atd_write_float(x, context);
 }
 
 export function readDurationT(x: any, context: any = x): DurationT {
-  return _atd_read_int(x, context);
+  return _atd_read_float(x, context);
 }
 
 export function writeCreatedT(x: CreatedT, context: any = x): any {

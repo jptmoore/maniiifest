@@ -219,6 +219,7 @@ type annotation_body_t1 = {
 type annotation_body_t2 = {
   _type <json name="type"> : type_t;
   ?language : language_t option;
+  ?format : format_t option;
   ?value : value_t option;
 }
 
@@ -463,7 +464,7 @@ type id_t = string
 type type_t = string
 type height_t = int
 type width_t = int
-type duration_t = int
+type duration_t = float
 type created_t = string
 type modified_t = string
 type format_t = string
