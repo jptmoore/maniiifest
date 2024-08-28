@@ -9,7 +9,7 @@ Maniiifest provides methods to parse and manipulate IIIF v3 manifests and collec
 Install the package using npm:
 
 ```sh
-npm install maniiifest
+npm install maniiifest --save-dev
 ```
 
 ## Usage
