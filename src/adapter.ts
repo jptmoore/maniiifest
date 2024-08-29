@@ -66,7 +66,7 @@ export function restore_annotation_body<T, R>(x: T, context: any = x, fn: (input
 }
 
 export function normalize_annotation_body<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
-    if (x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' ) {
+    if (x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' || x.type == 'Sound') {
         return fn(['T1', x], context);
     } else if (x.type === 'TextualBody') {
         return fn(['T2', x], context);
