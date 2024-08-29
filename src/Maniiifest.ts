@@ -149,6 +149,25 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the collection ID from the manifest specification if it is of kind 'Collection'.
+     *
+     * @returns {T.IdT | null} The collection ID if the specification is of kind 'Collection', otherwise null.
+     */
+    getCollectionId(): T.IdT | null {
+        return this.specification.kind === 'Collection' ? F.writeIdT(this.specification.value.id) : null;
+    }
+
+    /**
+     * Retrieves the collection label from the manifest specification if it is of kind 'Collection'.
+     *
+     * @returns {T.LabelT | null} The collection label if the specification is of kind 'Collection', otherwise null.
+     */
+    getCollectionLabel(): T.LabelT | null {
+        return this.specification.kind === 'Collection' ? F.writeLabelT(this.specification.value.label) : null;
+    }
+
+
+    /**
      * Iterates over the W3C annotation elements on the canvases in the manifest.
      *
      * This generator function yields W3C annotation elements from the canvases in the manifest.

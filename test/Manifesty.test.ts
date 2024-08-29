@@ -35,6 +35,19 @@ describe('Collection functionality', () => {
     }
   ]
 
+  it('should return the correct collection id', () => {
+    const maniiifest = new Maniiifest(collection);
+    const result = maniiifest.getCollectionId();
+    expect(result).toEqual("https://iiif.io/api/cookbook/recipe/0032-collection/collection.json");
+  });
+
+  it('should return the correct collection label', () => {
+    const maniiifest = new Maniiifest(collection);
+    const label = { en: ["Simple Collection Example"] };
+    const result = maniiifest.getCollectionLabel();
+    expect(result).toEqual(label);
+  });
+
   it('should return the correct collection label through iteration', () => {
     const maniiifest = new Maniiifest({ items, ...collection });
     const result = Array.from(maniiifest.iterateCollectionLabel());
