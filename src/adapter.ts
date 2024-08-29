@@ -114,7 +114,7 @@ export function normalize_resource_selector<T extends { type: string }, R>(x: T,
         return fn(['T3', x], context);
     } else if (typeof x === 'object' && x.type === 'SvgSelector') {
         return fn(['T4', x], context);
-    } else if (typeof x === 'object' && x.type === 'ImageApiSelector') {
+    } else if (typeof x === 'object' && x.type === 'ImageApiSelector' || x.type === 'iiif:ImageApiSelector') {
         return fn(['T5', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
