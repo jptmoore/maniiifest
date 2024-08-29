@@ -35,6 +35,12 @@ describe('Collection functionality', () => {
     }
   ]
 
+  it('should return the correct specificaton type', () => {
+    const maniiifest = new Maniiifest(collection);
+    const result = maniiifest.getSpecificationType();
+    expect(result).toEqual("Collection");
+  });
+
   it('should return the correct collection id', () => {
     const maniiifest = new Maniiifest(collection);
     const result = maniiifest.getCollectionId();
@@ -94,6 +100,12 @@ describe('Manifest toplevel functionality', () => {
     "type": "Manifest",
     "label": { "en": ["Book 1"] }
   }
+
+  it('should return the correct specificaton type', () => {
+    const maniiifest = new Maniiifest(manifest);
+    const result = maniiifest.getSpecificationType();
+    expect(result).toEqual("Manifest");
+  });
 
   it('should return the correct manifest id', () => {
     const maniiifest = new Maniiifest(manifest);

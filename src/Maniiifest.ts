@@ -32,6 +32,15 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the type of the manifest specification.
+     *
+     * @returns {string} The type of the manifest specification.
+     */    
+    getSpecificationType(): string {
+        return this.specification.kind;
+    }
+
+    /**
      * Retrieves the manifest ID if the specification kind is 'Manifest'.
      *
      * @returns {T.IdT | null} The manifest ID if the specification kind is 'Manifest', otherwise `null`.
