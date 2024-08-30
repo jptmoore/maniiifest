@@ -291,6 +291,7 @@ export type AnnotationBodyT =
 | { kind: 'T1'; value: AnnotationBodyT1 }
 | { kind: 'T2'; value: AnnotationBodyT2 }
 | { kind: 'T3'; value: AnnotationBodyT3 }
+| { kind: 'T4'; value: AnnotationBodyT4 }
 
 export type AnnotationBodyT1 = {
   id: IdT;
@@ -309,13 +310,22 @@ export type AnnotationBodyT1 = {
 }
 
 export type AnnotationBodyT2 = {
+  id?: IdT;
+  type?: TypeT;
+  format?: FormatT;
+  accessibility?: AccessibilityT;
+  source: SourceT;
+  selector: SelectorT;
+}
+
+export type AnnotationBodyT3 = {
   type: TypeT;
   language?: LanguageT;
   format?: FormatT;
   value?: ValueT;
 }
 
-export type AnnotationBodyT3 = {
+export type AnnotationBodyT4 = {
   type?: TypeT;
   items: ResourceT[];
 }
@@ -1337,6 +1347,8 @@ export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any
       return ['T2', writeAnnotationBodyT2(x.value, x)]
     case 'T3':
       return ['T3', writeAnnotationBodyT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeAnnotationBodyT4(x.value, x)]
   }
 }
 
@@ -1349,6 +1361,8 @@ export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
       return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
     case 'T3':
       return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyT', x, context)
       throw new Error('impossible')
@@ -1393,33 +1407,55 @@ export function readAnnotationBodyT1(x: any, context: any = x): AnnotationBodyT1
 
 export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): any {
   return {
-    'type': _atd_write_required_field('AnnotationBodyT2', 'type', writeTypeT, x.type, x),
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'format': _atd_write_optional_field(writeFormatT, x.format, x),
+    'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
+    'source': _atd_write_required_field('AnnotationBodyT2', 'source', writeSourceT, x.source, x),
+    'selector': _atd_write_required_field('AnnotationBodyT2', 'selector', writeSelectorT, x.selector, x),
+  };
+}
+
+export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2 {
+  return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    format: _atd_read_optional_field(readFormatT, x['format'], x),
+    accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
+    source: _atd_read_required_field('AnnotationBodyT2', 'source', readSourceT, x['source'], x),
+    selector: _atd_read_required_field('AnnotationBodyT2', 'selector', readSelectorT, x['selector'], x),
+  };
+}
+
+export function writeAnnotationBodyT3(x: AnnotationBodyT3, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('AnnotationBodyT3', 'type', writeTypeT, x.type, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'value': _atd_write_optional_field(writeValueT, x.value, x),
   };
 }
 
-export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2 {
+export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3 {
   return {
-    type: _atd_read_required_field('AnnotationBodyT2', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('AnnotationBodyT3', 'type', readTypeT, x['type'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     value: _atd_read_optional_field(readValueT, x['value'], x),
   };
 }
 
-export function writeAnnotationBodyT3(x: AnnotationBodyT3, context: any = x): any {
+export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'items': _atd_write_required_field('AnnotationBodyT3', 'items', _atd_write_array(writeResourceT), x.items, x),
+    'items': _atd_write_required_field('AnnotationBodyT4', 'items', _atd_write_array(writeResourceT), x.items, x),
   };
 }
 
-export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3 {
+export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4 {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    items: _atd_read_required_field('AnnotationBodyT3', 'items', _atd_read_array(readResourceT), x['items'], x),
+    items: _atd_read_required_field('AnnotationBodyT4', 'items', _atd_read_array(readResourceT), x['items'], x),
   };
 }
 
