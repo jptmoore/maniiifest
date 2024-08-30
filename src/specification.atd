@@ -259,7 +259,7 @@ type specific_resource_t = {
   ?format : format_t option;
   ?accessibility : accessibility_t option;
   source : source_t;
-  selector : selector_t;
+  ?selector : selector_t option;
 }
 
 type source_t = [

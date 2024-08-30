@@ -315,7 +315,7 @@ export type AnnotationBodyT2 = {
   format?: FormatT;
   accessibility?: AccessibilityT;
   source: SourceT;
-  selector: SelectorT;
+  selector?: SelectorT;
 }
 
 export type AnnotationBodyT3 = {
@@ -354,7 +354,7 @@ export type SpecificResourceT = {
   format?: FormatT;
   accessibility?: AccessibilityT;
   source: SourceT;
-  selector: SelectorT;
+  selector?: SelectorT;
 }
 
 export type SourceT =
@@ -1412,7 +1412,7 @@ export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): an
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
     'source': _atd_write_required_field('AnnotationBodyT2', 'source', writeSourceT, x.source, x),
-    'selector': _atd_write_required_field('AnnotationBodyT2', 'selector', writeSelectorT, x.selector, x),
+    'selector': _atd_write_optional_field(writeSelectorT, x.selector, x),
   };
 }
 
@@ -1423,7 +1423,7 @@ export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
     source: _atd_read_required_field('AnnotationBodyT2', 'source', readSourceT, x['source'], x),
-    selector: _atd_read_required_field('AnnotationBodyT2', 'selector', readSelectorT, x['selector'], x),
+    selector: _atd_read_optional_field(readSelectorT, x['selector'], x),
   };
 }
 
@@ -1544,7 +1544,7 @@ export function writeSpecificResourceT(x: SpecificResourceT, context: any = x): 
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
     'source': _atd_write_required_field('SpecificResourceT', 'source', writeSourceT, x.source, x),
-    'selector': _atd_write_required_field('SpecificResourceT', 'selector', writeSelectorT, x.selector, x),
+    'selector': _atd_write_optional_field(writeSelectorT, x.selector, x),
   };
 }
 
@@ -1555,7 +1555,7 @@ export function readSpecificResourceT(x: any, context: any = x): SpecificResourc
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
     source: _atd_read_required_field('SpecificResourceT', 'source', readSourceT, x['source'], x),
-    selector: _atd_read_required_field('SpecificResourceT', 'selector', readSelectorT, x['selector'], x),
+    selector: _atd_read_optional_field(readSelectorT, x['selector'], x),
   };
 }
 
