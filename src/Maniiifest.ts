@@ -41,6 +41,15 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the context from the manifest specification if it is of kind 'Manifest'.
+     *
+     * @returns {T.ContextT | null} The context if the specification is of kind 'Manifest', otherwise null.
+     */
+    getManifestContext(): T.ContextT | null {
+        return this.specification.kind === 'Manifest' ? F.writeContextT(this.specification.value.context) : null;
+    }
+
+    /**
      * Retrieves the manifest ID if the specification kind is 'Manifest'.
      *
      * @returns {T.IdT | null} The manifest ID if the specification kind is 'Manifest', otherwise `null`.
@@ -155,6 +164,15 @@ export class Maniiifest {
         return this.specification.kind === 'Collection' && this.specification.value !== undefined
             ? F.writeCollectionT(this.specification.value)
             : null;
+    }
+
+    /**
+     * Retrieves the context from the manifest specification if it is of kind 'Collection'.
+     *
+     * @returns {T.ContextT | null} The context if the specification is of kind 'Collection', otherwise null.
+     */
+    getCollectionContext(): T.ContextT | null {
+        return this.specification.kind === 'Collection' ? F.writeContextT(this.specification.value.context) : null;
     }
 
     /**

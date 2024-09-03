@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -129,4 +129,12 @@ export function writeLanguageT(x: any, context: any = x): LanguageT {
 
 export function readLanguageT(x: any, context: any = x): LanguageT {
     return normalize_language(x, context, _readLanguageT);
+}
+
+export function writeContextT(x: any, context: any = x): ContextT {
+    return restore_context(x, context, _writeContextT);
+}
+
+export function readContextT(x: any, context: any = x): ContextT {
+    return normalize_context(x, context, _readContextT);
 }

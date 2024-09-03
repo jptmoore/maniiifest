@@ -35,6 +35,12 @@ describe('Collection functionality', () => {
     }
   ]
 
+  it('should return the correct collection context', () => {
+    const maniiifest = new Maniiifest(collection);
+    const result = maniiifest.getCollectionContext();
+    expect(result).toEqual("http://iiif.io/api/presentation/3/context.json");
+  });
+
   it('should return the correct specificaton type', () => {
     const maniiifest = new Maniiifest(collection);
     const result = maniiifest.getSpecificationType();

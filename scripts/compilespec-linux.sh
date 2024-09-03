@@ -51,6 +51,9 @@ sed -i 's/export function readGeometryT(/export function _readGeometryT(/g' spec
 sed -i 's/export function writeLanguageT(/export function _writeLanguageT(/g' specification.ts
 sed -i 's/export function readLanguageT(/export function _readLanguageT(/g' specification.ts
 
+sed -i 's/export function writeContextT(/export function _writeContextT(/g' specification.ts
+sed -i 's/export function readContextT(/export function _readContextT(/g' specification.ts
+
 # rename _type to use type
 sed -i 's/_type/type/g' specification.ts
 # add adapter code

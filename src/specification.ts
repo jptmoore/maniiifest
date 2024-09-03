@@ -19,6 +19,7 @@ export type SpecificationT =
 | { kind: 'Collection'; value: CollectionT }
 
 export type CollectionT = {
+  context?: ContextT;
   id: IdT;
   type: TypeT;
   label: LabelT;
@@ -43,6 +44,7 @@ export type CollectionT = {
 }
 
 export type ManifestT = {
+  context?: ContextT;
   id: IdT;
   type: TypeT;
   label: LabelT;
@@ -67,6 +69,14 @@ export type ManifestT = {
   structures?: RangeT[];
   annotations?: AnnotationPageT[];
 }
+
+export type ContextT =
+| { kind: 'T1'; value: ContextT1 }
+| { kind: 'T2'; value: ContextT2 }
+
+export type ContextT1 = string
+
+export type ContextT2 = string[]
 
 export type ClassT = {
   id: IdT;
@@ -258,6 +268,7 @@ export type PolygonT = [number, number][]
 export type MultiPolygonT = [number, number][][]
 
 export type AnnotationPageT = {
+  context?: ContextT;
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -663,6 +674,7 @@ export function _readSpecificationT(x: any, context: any = x): SpecificationT {
 
 export function writeCollectionT(x: CollectionT, context: any = x): any {
   return {
+    '@context': _atd_write_optional_field(writeContextT, x.context, x),
     'id': _atd_write_required_field('CollectionT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('CollectionT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_required_field('CollectionT', 'label', writeLabelT, x.label, x),
@@ -689,6 +701,7 @@ export function writeCollectionT(x: CollectionT, context: any = x): any {
 
 export function readCollectionT(x: any, context: any = x): CollectionT {
   return {
+    context: _atd_read_optional_field(readContextT, x['@context'], x),
     id: _atd_read_required_field('CollectionT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('CollectionT', 'type', readTypeT, x['type'], x),
     label: _atd_read_required_field('CollectionT', 'label', readLabelT, x['label'], x),
@@ -715,6 +728,7 @@ export function readCollectionT(x: any, context: any = x): CollectionT {
 
 export function writeManifestT(x: ManifestT, context: any = x): any {
   return {
+    '@context': _atd_write_optional_field(writeContextT, x.context, x),
     'id': _atd_write_required_field('ManifestT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('ManifestT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_required_field('ManifestT', 'label', writeLabelT, x.label, x),
@@ -743,6 +757,7 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
 
 export function readManifestT(x: any, context: any = x): ManifestT {
   return {
+    context: _atd_read_optional_field(readContextT, x['@context'], x),
     id: _atd_read_required_field('ManifestT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('ManifestT', 'type', readTypeT, x['type'], x),
     label: _atd_read_required_field('ManifestT', 'label', readLabelT, x['label'], x),
@@ -767,6 +782,44 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     structures: _atd_read_optional_field(_atd_read_array(readRangeT), x['structures'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
+}
+
+export function _writeContextT(x: ContextT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeContextT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeContextT2(x.value, x)]
+  }
+}
+
+export function _readContextT(x: any, context: any = x): ContextT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readContextT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readContextT2(x[1], x) }
+    default:
+      _atd_bad_json('ContextT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeContextT1(x: ContextT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readContextT1(x: any, context: any = x): ContextT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeContextT2(x: ContextT2, context: any = x): any {
+  return _atd_write_array(_atd_write_string)(x, context);
+}
+
+export function readContextT2(x: any, context: any = x): ContextT2 {
+  return _atd_read_array(_atd_read_string)(x, context);
 }
 
 export function writeClassT(x: ClassT, context: any = x): any {
@@ -1279,6 +1332,7 @@ export function readMultiPolygonT(x: any, context: any = x): MultiPolygonT {
 
 export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any {
   return {
+    '@context': _atd_write_optional_field(writeContextT, x.context, x),
     'id': _atd_write_required_field('AnnotationPageT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationPageT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
@@ -1294,6 +1348,7 @@ export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any 
 
 export function readAnnotationPageT(x: any, context: any = x): AnnotationPageT {
   return {
+    context: _atd_read_optional_field(readContextT, x['@context'], x),
     id: _atd_read_required_field('AnnotationPageT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationPageT', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
@@ -2911,7 +2966,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -3040,4 +3095,12 @@ export function writeLanguageT(x: any, context: any = x): LanguageT {
 
 export function readLanguageT(x: any, context: any = x): LanguageT {
     return normalize_language(x, context, _readLanguageT);
+}
+
+export function writeContextT(x: any, context: any = x): ContextT {
+    return restore_context(x, context, _writeContextT);
+}
+
+export function readContextT(x: any, context: any = x): ContextT {
+    return normalize_context(x, context, _readContextT);
 }

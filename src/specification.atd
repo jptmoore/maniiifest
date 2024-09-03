@@ -4,6 +4,7 @@ type specification_t = [
 ]
 
 type collection_t = {
+  ?context <json name="@context"> : context_t option;
   id : id_t;
   _type <json name="type"> : type_t;
   label : label_t;
@@ -28,6 +29,7 @@ type collection_t = {
 }
 
 type manifest_t = {
+  ?context <json name="@context"> : context_t option;
   id : id_t;
   _type <json name="type"> : type_t;
   label : label_t;
@@ -52,6 +54,14 @@ type manifest_t = {
   ?structures : range_t list option;
   ?annotations : annotation_page_t list option;
 }
+
+type context_t = [
+  | T1 of context_t1
+  | T2 of context_t2
+]
+
+type context_t1 = string
+type context_t2 = string list
 
 type class_t = {
   id : id_t;
@@ -175,6 +185,7 @@ type polygon_t = (float * float) list
 type multi_polygon_t = (float * float) list list
 
 type annotation_page_t = {
+  ?context <json name="@context"> : context_t option;
   id : id_t;
   _type <json name="type"> : type_t;
   ?label : label_t option;
