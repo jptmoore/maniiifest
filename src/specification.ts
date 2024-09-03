@@ -291,12 +291,14 @@ export type AnnotationBodyItemsT =
 | { kind: 'T1'; value: AnnotationBodyT1 }
 | { kind: 'T2'; value: AnnotationBodyT2 }
 | { kind: 'T3'; value: AnnotationBodyT3 }
+| { kind: 'T4'; value: AnnotationBodyT4 }
 
 export type AnnotationBodyT =
 | { kind: 'T1'; value: AnnotationBodyT1 }
 | { kind: 'T2'; value: AnnotationBodyT2 }
 | { kind: 'T3'; value: AnnotationBodyT3 }
 | { kind: 'T4'; value: AnnotationBodyT4 }
+| { kind: 'T5'; value: AnnotationBodyT5 }
 
 export type AnnotationBodyT1 = {
   id: IdT;
@@ -331,6 +333,13 @@ export type AnnotationBodyT3 = {
 }
 
 export type AnnotationBodyT4 = {
+  id?: IdT;
+  type?: TypeT;
+  properties?: PropertiesT;
+  geometry?: GeometryT;
+}
+
+export type AnnotationBodyT5 = {
   type?: TypeT;
   items: AnnotationBodyItemsT[];
 }
@@ -1358,6 +1367,8 @@ export function _writeAnnotationBodyItemsT(x: AnnotationBodyItemsT, context: any
       return ['T2', writeAnnotationBodyT2(x.value, x)]
     case 'T3':
       return ['T3', writeAnnotationBodyT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeAnnotationBodyT4(x.value, x)]
   }
 }
 
@@ -1370,6 +1381,8 @@ export function _readAnnotationBodyItemsT(x: any, context: any = x): AnnotationB
       return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
     case 'T3':
       return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyItemsT', x, context)
       throw new Error('impossible')
@@ -1386,6 +1399,8 @@ export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any
       return ['T3', writeAnnotationBodyT3(x.value, x)]
     case 'T4':
       return ['T4', writeAnnotationBodyT4(x.value, x)]
+    case 'T5':
+      return ['T5', writeAnnotationBodyT5(x.value, x)]
   }
 }
 
@@ -1400,6 +1415,8 @@ export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
       return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
     case 'T4':
       return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
+    case 'T5':
+      return { kind: 'T5', value: readAnnotationBodyT5(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyT', x, context)
       throw new Error('impossible')
@@ -1484,15 +1501,33 @@ export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3
 
 export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): any {
   return {
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'items': _atd_write_required_field('AnnotationBodyT4', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
+    'properties': _atd_write_optional_field(writePropertiesT, x.properties, x),
+    'geometry': _atd_write_optional_field(writeGeometryT, x.geometry, x),
   };
 }
 
 export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4 {
   return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    items: _atd_read_required_field('AnnotationBodyT4', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
+    properties: _atd_read_optional_field(readPropertiesT, x['properties'], x),
+    geometry: _atd_read_optional_field(readGeometryT, x['geometry'], x),
+  };
+}
+
+export function writeAnnotationBodyT5(x: AnnotationBodyT5, context: any = x): any {
+  return {
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'items': _atd_write_required_field('AnnotationBodyT5', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
+  };
+}
+
+export function readAnnotationBodyT5(x: any, context: any = x): AnnotationBodyT5 {
+  return {
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    items: _atd_read_required_field('AnnotationBodyT5', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
   };
 }
 

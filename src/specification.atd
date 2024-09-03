@@ -210,11 +210,12 @@ type annotation_body_items_t = [
   | T1 of annotation_body_t1
   | T2 of annotation_body_t2
   | T3 of annotation_body_t3
+  | T4 of annotation_body_t4
 ]
 
 type annotation_body_t = [
   inherit annotation_body_items_t
-  | T4 of annotation_body_t4
+  | T5 of annotation_body_t5
 ]
 
 type annotation_body_t1 = {
@@ -233,6 +234,10 @@ type annotation_body_t3 = {
 }
 
 type annotation_body_t4 = {
+  inherit feature_t;
+}
+
+type annotation_body_t5 = {
   ?_type <json name="type"> : type_t option;
   items : annotation_body_items_t list;
 }

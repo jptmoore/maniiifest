@@ -72,8 +72,10 @@ export function normalize_annotation_body<T extends { type: string }, R>(x: T, c
         return fn(['T2', x], context);    
     } else if (x.type === 'TextualBody') {
         return fn(['T3', x], context);
+    } else if (x.type === 'Feature') {
+        return fn(['T4', x], context);    
     } else if (x.type === 'Choice') {
-        return fn(['T4', x], context)    
+        return fn(['T5', x], context)    
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -93,7 +95,9 @@ export function normalize_annotation_body_items<T extends { type: string }, R>(x
     } else if (x.type === 'SpecificResource') {
         return fn(['T2', x], context);    
     } else if (x.type === 'TextualBody') {
-        return fn(['T3', x], context);   
+        return fn(['T3', x], context);
+    } else if (x.type === 'Feature') {
+        return fn(['T4', x], context);        
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
