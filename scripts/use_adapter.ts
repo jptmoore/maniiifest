@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -33,6 +33,14 @@ export function writeAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
 
 export function readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
     return normalize_annotation_body(x, context, _readAnnotationBodyT);
+}
+
+export function writeAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
+    return restore_annotation_body_items(x, context, _writeAnnotationBodyItemsT);
+}
+
+export function readAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
+    return normalize_annotation_body_items(x, context, _readAnnotationBodyItemsT);
 }
 
 export function writeAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {

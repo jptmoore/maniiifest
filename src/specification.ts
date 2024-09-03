@@ -287,6 +287,11 @@ export type BodyT =
 | { kind: 'T1'; value: AnnotationBodyT }
 | { kind: 'T2'; value: AnnotationBodyT[] }
 
+export type AnnotationBodyItemsT =
+| { kind: 'T1'; value: AnnotationBodyT1 }
+| { kind: 'T2'; value: AnnotationBodyT2 }
+| { kind: 'T3'; value: AnnotationBodyT3 }
+
 export type AnnotationBodyT =
 | { kind: 'T1'; value: AnnotationBodyT1 }
 | { kind: 'T2'; value: AnnotationBodyT2 }
@@ -327,7 +332,7 @@ export type AnnotationBodyT3 = {
 
 export type AnnotationBodyT4 = {
   type?: TypeT;
-  items: ResourceT[];
+  items: AnnotationBodyItemsT[];
 }
 
 export type TargetT =
@@ -1345,6 +1350,32 @@ export function _readBodyT(x: any, context: any = x): BodyT {
   }
 }
 
+export function _writeAnnotationBodyItemsT(x: AnnotationBodyItemsT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeAnnotationBodyT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeAnnotationBodyT2(x.value, x)]
+    case 'T3':
+      return ['T3', writeAnnotationBodyT3(x.value, x)]
+  }
+}
+
+export function _readAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readAnnotationBodyT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
+    default:
+      _atd_bad_json('AnnotationBodyItemsT', x, context)
+      throw new Error('impossible')
+  }
+}
+
 export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
@@ -1454,14 +1485,14 @@ export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3
 export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'items': _atd_write_required_field('AnnotationBodyT4', 'items', _atd_write_array(writeResourceT), x.items, x),
+    'items': _atd_write_required_field('AnnotationBodyT4', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
   };
 }
 
 export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4 {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    items: _atd_read_required_field('AnnotationBodyT4', 'items', _atd_read_array(readResourceT), x['items'], x),
+    items: _atd_read_required_field('AnnotationBodyT4', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
   };
 }
 
@@ -2845,7 +2876,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2878,6 +2909,14 @@ export function writeAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
 
 export function readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
     return normalize_annotation_body(x, context, _readAnnotationBodyT);
+}
+
+export function writeAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
+    return restore_annotation_body_items(x, context, _writeAnnotationBodyItemsT);
+}
+
+export function readAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
+    return normalize_annotation_body_items(x, context, _readAnnotationBodyItemsT);
 }
 
 export function writeAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
