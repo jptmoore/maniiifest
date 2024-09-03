@@ -77,7 +77,7 @@ The output will be the metadata from the first 25 manifests:
 { label: { en: [ 'Month' ] }, value: { en: [ 'October' ] } }
 .....
 ```
-
+More examples of parsing complex manifests and collections can be found [here](https://github.com/jptmoore/maniiitest).
 
 ## Scripts
 
