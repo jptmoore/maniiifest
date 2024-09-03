@@ -381,6 +381,14 @@ type summary_t = lng_string_t
 
 type lng_string_t = (string * string list) list <json repr="object">
 
+type language_t = [
+  | T1 of language_t1
+  | T2 of language_t2
+]
+
+type language_t1 = string
+
+type language_t2 = string list
 
 type external_t = {
   inherit class_t;
@@ -474,7 +482,6 @@ type created_t = string
 type modified_t = string
 type format_t = string
 type profile_t = string
-type language_t = string
 type viewing_direction_t = string
 type behavior_t = string
 type nav_date_t = string

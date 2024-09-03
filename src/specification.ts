@@ -475,6 +475,14 @@ export type SummaryT = LngStringT
 
 export type LngStringT = [string, string[]][]
 
+export type LanguageT =
+| { kind: 'T1'; value: LanguageT1 }
+| { kind: 'T2'; value: LanguageT2 }
+
+export type LanguageT1 = string
+
+export type LanguageT2 = string[]
+
 export type ExternalT = {
   id: IdT;
   type: TypeT;
@@ -582,8 +590,6 @@ export type ModifiedT = string
 export type FormatT = string
 
 export type ProfileT = string
-
-export type LanguageT = string
 
 export type ViewingDirectionT = string
 
@@ -1947,6 +1953,44 @@ export function readLngStringT(x: any, context: any = x): LngStringT {
   return _atd_read_assoc_object_into_array(_atd_read_array(_atd_read_string))(x, context);
 }
 
+export function _writeLanguageT(x: LanguageT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeLanguageT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeLanguageT2(x.value, x)]
+  }
+}
+
+export function _readLanguageT(x: any, context: any = x): LanguageT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readLanguageT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readLanguageT2(x[1], x) }
+    default:
+      _atd_bad_json('LanguageT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeLanguageT1(x: LanguageT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readLanguageT1(x: any, context: any = x): LanguageT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeLanguageT2(x: LanguageT2, context: any = x): any {
+  return _atd_write_array(_atd_write_string)(x, context);
+}
+
+export function readLanguageT2(x: any, context: any = x): LanguageT2 {
+  return _atd_read_array(_atd_read_string)(x, context);
+}
+
 export function writeExternalT(x: ExternalT, context: any = x): any {
   return {
     'id': _atd_write_required_field('ExternalT', 'id', writeIdT, x.id, x),
@@ -2292,14 +2336,6 @@ export function writeProfileT(x: ProfileT, context: any = x): any {
 }
 
 export function readProfileT(x: any, context: any = x): ProfileT {
-  return _atd_read_string(x, context);
-}
-
-export function writeLanguageT(x: LanguageT, context: any = x): any {
-  return _atd_write_string(x, context);
-}
-
-export function readLanguageT(x: any, context: any = x): LanguageT {
   return _atd_read_string(x, context);
 }
 
@@ -2809,7 +2845,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -2922,4 +2958,12 @@ export function writeGeometryT(x: any, context: any = x): GeometryT {
 
 export function readGeometryT(x: any, context: any = x): GeometryT {
     return normalize_geometry(x, context, _readGeometryT);
+}
+
+export function writeLanguageT(x: any, context: any = x): LanguageT {
+    return restore_language(x, context, _writeLanguageT);
+}
+
+export function readLanguageT(x: any, context: any = x): LanguageT {
+    return normalize_language(x, context, _readLanguageT);
 }
