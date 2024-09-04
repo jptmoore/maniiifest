@@ -553,7 +553,7 @@ export type AnnotationCollectionT = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
-  rendering?: RenderingT;
+  rendering?: RenderingT[];
   partOf?: PartOfT;
   total?: TotalT;
   first?: FirstT;
@@ -582,7 +582,7 @@ export type RangeT = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
-  rendering?: RenderingT;
+  rendering?: RenderingT[];
   supplementary?: AnnotationCollectionT;
   service?: ServiceT[];
   placeholderCanvas?: PlaceholderCanvasT;
@@ -2249,7 +2249,7 @@ export function writeAnnotationCollectionT(x: AnnotationCollectionT, context: an
     'id': _atd_write_required_field('AnnotationCollectionT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationCollectionT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
-    'rendering': _atd_write_optional_field(writeRenderingT, x.rendering, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
     'total': _atd_write_optional_field(writeTotalT, x.total, x),
     'first': _atd_write_optional_field(writeFirstT, x.first, x),
@@ -2265,7 +2265,7 @@ export function readAnnotationCollectionT(x: any, context: any = x): AnnotationC
     id: _atd_read_required_field('AnnotationCollectionT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationCollectionT', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
-    rendering: _atd_read_optional_field(readRenderingT, x['rendering'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
     total: _atd_read_optional_field(readTotalT, x['total'], x),
     first: _atd_read_optional_field(readFirstT, x['first'], x),
@@ -2333,7 +2333,7 @@ export function writeRangeT(x: RangeT, context: any = x): any {
     'id': _atd_write_required_field('RangeT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('RangeT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
-    'rendering': _atd_write_optional_field(writeRenderingT, x.rendering, x),
+    'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'supplementary': _atd_write_optional_field(writeAnnotationCollectionT, x.supplementary, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
     'placeholderCanvas': _atd_write_optional_field(writePlaceholderCanvasT, x.placeholderCanvas, x),
@@ -2350,7 +2350,7 @@ export function readRangeT(x: any, context: any = x): RangeT {
     id: _atd_read_required_field('RangeT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('RangeT', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
-    rendering: _atd_read_optional_field(readRenderingT, x['rendering'], x),
+    rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     supplementary: _atd_read_optional_field(readAnnotationCollectionT, x['supplementary'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
     placeholderCanvas: _atd_read_optional_field(readPlaceholderCanvasT, x['placeholderCanvas'], x),

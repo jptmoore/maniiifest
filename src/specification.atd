@@ -448,7 +448,7 @@ type motivation_t2 = string list
 
 type annotation_collection_t = {
   inherit class_t;
-  ?rendering : rendering_t option;
+  ?rendering : rendering_t list option;
   ?partOf : part_of_t option;
   ?total : total_t option;
   ?first : first_t option;
@@ -476,7 +476,7 @@ type first_t2 = {
 
 type range_t = {
   inherit class_t;
-  ?rendering : rendering_t option;
+  ?rendering : rendering_t list option;
   ?supplementary : annotation_collection_t option;
   ?service : service_t list option;
   ?placeholderCanvas : placeholder_canvas_t option;
