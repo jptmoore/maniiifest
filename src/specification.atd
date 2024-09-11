@@ -448,6 +448,7 @@ type motivation_t1 = string
 type motivation_t2 = string list
 
 type annotation_collection_t = {
+  ?context <json name="@context"> : context_t option;
   inherit class_t;
   ?rendering : rendering_t list option;
   ?partOf : part_of_t option;

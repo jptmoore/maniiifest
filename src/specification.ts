@@ -551,6 +551,7 @@ export type MotivationT1 = string
 export type MotivationT2 = string[]
 
 export type AnnotationCollectionT = {
+  context?: ContextT;
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -2249,6 +2250,7 @@ export function readMotivationT2(x: any, context: any = x): MotivationT2 {
 
 export function writeAnnotationCollectionT(x: AnnotationCollectionT, context: any = x): any {
   return {
+    '@context': _atd_write_optional_field(writeContextT, x.context, x),
     'id': _atd_write_required_field('AnnotationCollectionT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationCollectionT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
@@ -2265,6 +2267,7 @@ export function writeAnnotationCollectionT(x: AnnotationCollectionT, context: an
 
 export function readAnnotationCollectionT(x: any, context: any = x): AnnotationCollectionT {
   return {
+    context: _atd_read_optional_field(readContextT, x['@context'], x),
     id: _atd_read_required_field('AnnotationCollectionT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationCollectionT', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
