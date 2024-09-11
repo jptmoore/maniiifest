@@ -15,8 +15,8 @@ sed -i '' 's/export function readMotivationT(/export function _readMotivationT(/
 sed -i '' 's/export function writeAnnotationBodyT(/export function _writeAnnotationBodyT(/g' specification.ts
 sed -i '' 's/export function readAnnotationBodyT(/export function _readAnnotationBodyT(/g' specification.ts
 
-sed -i 's/export function writeAnnotationBodyItemsT(/export function _writeAnnotationBodyItemsT(/g' specification.ts
-sed -i 's/export function readAnnotationBodyItemsT(/export function _readAnnotationBodyItemsT(/g' specification.ts
+sed -i '' 's/export function writeAnnotationBodyItemsT(/export function _writeAnnotationBodyItemsT(/g' specification.ts
+sed -i '' 's/export function readAnnotationBodyItemsT(/export function _readAnnotationBodyItemsT(/g' specification.ts
 
 sed -i '' 's/export function writeAnnotationTargetT(/export function _writeAnnotationTargetT(/g' specification.ts
 sed -i '' 's/export function readAnnotationTargetT(/export function _readAnnotationTargetT(/g' specification.ts
