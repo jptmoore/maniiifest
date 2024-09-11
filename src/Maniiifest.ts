@@ -929,7 +929,7 @@ export class Maniiifest {
      *
      * @yields {T.AnnotationT} The annotations from the specification.
      */
-    *iterateAnnotationPageW3cAnnotation(): IterableIterator<T.AnnotationT> {
+    *iterateAnnotationPageAnnotation(): IterableIterator<T.AnnotationT> {
         if (this.specification.type === 'AnnotationPage') {
             for (const annotation of this.specification.items ?? []) {
                 yield F.writeAnnotationT(annotation);
