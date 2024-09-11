@@ -23,9 +23,13 @@ export class Maniiifest {
      *
      * @param {any} data - The data from which to read the specification.
      */
-    constructor(data: any) {
+    constructor(data: any, type?: string) {
         try {
-            this.specification = F.readSpecificationT(data);
+            if (type === "AnnotationPage") {
+                this.specification = F.readAnnotationPageT(data);
+            } else {
+                this.specification = F.readSpecificationT(data);
+            }
         } catch (error) {
             console.error("Failed to read specification:", error);
         }
@@ -793,5 +797,32 @@ export class Maniiifest {
             }
         }
     }
+
+
+    getAnnotationPage(): T.AnnotationPageT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writeAnnotationPageT(this.specification) : null;
+    }
+
+    getAnnotationPageId(): T.IdT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writeIdT(this.specification.id) : null;
+    }
+
+    getAnnotationPageContext(): T.ContextT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writeContextT(this.specification.context) : null;
+    }
+
+    /**
+     * Iterates over the annotations in the specification if the type is 'AnnotationPage'.
+     *
+     * @yields {T.AnnotationT} The annotations from the specification.
+     */
+    *iterateAnnotationPageW3cAnnotation(): IterableIterator<T.AnnotationT> {
+        if (this.specification.type === 'AnnotationPage') {
+            for (const annotation of this.specification.items ?? []) {
+                yield F.writeAnnotationT(annotation);
+            }
+        }
+    }
+
 
 }
