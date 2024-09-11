@@ -515,3 +515,64 @@ describe('Manifest canvas functionality', () => {
   });
 
 });
+
+describe('Annotation functionality', () => {
+
+  const annotation =
+  {
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "id": "http://example.org/anno7",
+    "type": "Annotation",
+    "body": {
+      "type": "TextualBody",
+      "value": "Comment text",
+      "format": "text/plain"
+    },
+    "target": "http://example.org/target1"
+  }
+
+
+  it('should return the correct annotation id', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationId();
+    expect(result).toEqual("http://example.org/anno7");
+  })
+
+  it('should return the correct annotation type', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationType();
+    expect(result).toEqual("Annotation");
+  })
+
+  it('should return the correct annotation context', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationContext();
+    expect(result).toEqual("http://www.w3.org/ns/anno.jsonld");
+  })
+
+  it('should return the correct annotation body', () => {
+    const body = {
+      "type": "TextualBody",
+      "value": "Comment text",
+      "format": "text/plain"
+    }
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationBody();
+    expect(result).toEqual(body);
+  })
+
+  it('should return the correct annotation target', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationTarget();
+    expect(result).toEqual("http://example.org/target1");
+  })
+
+  it('should return the correct annotation motivation', () => {
+    const motivation = "painting";
+    const maniiifest = new Maniiifest({ motivation, ...annotation }, "Annotation");
+    const result = maniiifest.getAnnotationMotivation();
+    expect(result).toEqual(motivation);
+  })
+
+
+});

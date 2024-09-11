@@ -282,6 +282,7 @@ export type AnnotationPageT = {
 }
 
 export type AnnotationT = {
+  context?: ContextT;
   id: IdT;
   type: TypeT;
   service?: ServiceT[];
@@ -1364,6 +1365,7 @@ export function readAnnotationPageT(x: any, context: any = x): AnnotationPageT {
 
 export function writeAnnotationT(x: AnnotationT, context: any = x): any {
   return {
+    '@context': _atd_write_optional_field(writeContextT, x.context, x),
     'id': _atd_write_required_field('AnnotationT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationT', 'type', writeTypeT, x.type, x),
     'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
@@ -1379,6 +1381,7 @@ export function writeAnnotationT(x: AnnotationT, context: any = x): any {
 
 export function readAnnotationT(x: any, context: any = x): AnnotationT {
   return {
+    context: _atd_read_optional_field(readContextT, x['@context'], x),
     id: _atd_read_required_field('AnnotationT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationT', 'type', readTypeT, x['type'], x),
     service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),

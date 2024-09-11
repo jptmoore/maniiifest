@@ -200,6 +200,7 @@ type annotation_page_t = {
 
 
 type annotation_t = {
+  ?context <json name="@context"> : context_t option;
   id : id_t;
   _type <json name="type"> : type_t;
   ?service : service_t list option;
