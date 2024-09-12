@@ -92,14 +92,16 @@ export function restore_annotation_body_items<T, R>(x: T, context: any = x, fn: 
 }
 
 export function normalize_annotation_body_items<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
-    if (x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' || x.type == 'Sound' || x.type == 'Text') {
+    if (typeof x === 'string') {
         return fn(['T1', x], context);
-    } else if (x.type === 'SpecificResource') {
-        return fn(['T2', x], context);    
-    } else if (x.type === 'TextualBody') {
-        return fn(['T3', x], context);
-    } else if (x.type === 'Feature') {
-        return fn(['T4', x], context);        
+    } else if (typeof x === 'object' && x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' || x.type == 'Sound' || x.type == 'Text') {
+        return fn(['T2', x], context);
+    } else if (typeof x === 'object' && x.type === 'SpecificResource') {
+        return fn(['T3', x], context);    
+    } else if (typeof x === 'object' && x.type === 'TextualBody') {
+        return fn(['T4', x], context);
+    } else if (typeof x === 'object' && x.type === 'Feature') {
+        return fn(['T5', x], context); 
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
