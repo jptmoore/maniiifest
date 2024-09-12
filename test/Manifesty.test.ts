@@ -682,4 +682,35 @@ describe('AnnotationPage functionality', () => {
     expect(result).toEqual("http://www.w3.org/ns/anno.jsonld");
   })
 
+  it('should return the correct annotation page partOf', () => {
+    const partOf = {
+      "id": "http://example.org/collection1",
+      "label": "Steampunk Annotations",
+      "total": 42023
+    }
+    const maniiifest = new Maniiifest(annotationPage, "AnnotationPage");
+    const result = maniiifest.getAnnotationPagePartOf();
+    expect(result).toEqual(partOf);
+  })
+
+  it('should return the correct annotation page annotations through iteration', () => {
+    const annotations = [
+      {
+        "id": "http://example.org/anno1",
+        "type": "Annotation",
+        "body": "http://example.net/comment1",
+        "target": "http://example.com/book/chapter1"
+      },
+      {
+        "id": "http://example.org/anno2",
+        "type": "Annotation",
+        "body": "http://example.net/comment2",
+        "target": "http://example.com/book/chapter2"
+      }
+    ]
+    const maniiifest = new Maniiifest(annotationPage, "AnnotationPage");
+    const result = Array.from(maniiifest.iterateAnnotationPageAnnotation());
+    expect(result).toEqual(annotations);
+  })
+
 })

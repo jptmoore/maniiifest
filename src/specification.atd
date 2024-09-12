@@ -191,7 +191,7 @@ type annotation_page_t = {
   ?label : label_t option;
   ?partOf : part_of_t option;
   ?next : next_t option;
-  ?startIndex : start__index_t option;
+  ?startIndex : start_index_t option;
   ?rendering : rendering_t list option;
   ?service : service_t list option;
   ?thumbnail : thumbnail_t list option;
@@ -223,33 +223,36 @@ type annotation_body_items_t = [
   | T2 of annotation_body_t2
   | T3 of annotation_body_t3
   | T4 of annotation_body_t4
+  | T5 of annotation_body_t5
 ]
 
 type annotation_body_t = [
   inherit annotation_body_items_t
-  | T5 of annotation_body_t5
+  | T6 of annotation_body_t6
 ]
 
-type annotation_body_t1 = {
+type annotation_body_t1 = string
+
+type annotation_body_t2 = {
   inherit resource_t;
 }
 
-type annotation_body_t2 = {
+type annotation_body_t3 = {
   inherit specific_resource_t;
 }
 
-type annotation_body_t3 = {
+type annotation_body_t4 = {
   _type <json name="type"> : type_t;
   ?language : language_t option;
   ?format : format_t option;
   ?value : value_t option;
 }
 
-type annotation_body_t4 = {
+type annotation_body_t5 = {
   inherit feature_t;
 }
 
-type annotation_body_t5 = {
+type annotation_body_t6 = {
   ?_type <json name="type"> : type_t option;
   items : annotation_body_items_t list;
 }
@@ -434,7 +437,19 @@ type provider_t = {
   ?seeAlso : see_also_t list option;
 }
 
-type part_of_t = class_t
+type part_of_t = [
+  | T1 of part_of_t1
+  | T2 of part_of_t2
+]
+
+type part_of_t1 = string
+
+type part_of_t2 = {
+  id : id_t;
+  ?_type <json name="type"> : type_t option;
+  ?label : label_t option;
+  ?total : total_t option;
+}
 
 type start_t = class_t
 
@@ -471,7 +486,7 @@ type first_t2 = {
   id : id_t;
   _type <json name="type"> : type_t;
   ?label : label_t option;
-  ?startIndex : start__index_t option;
+  ?startIndex : start_index_t option;
   ?thumbnail : thumbnail_t list option;
   ?items : annotation_t list option;
 }
@@ -520,4 +535,4 @@ type rotatation_t = string
 type total_t = int
 type last_t = string
 type next_t = string
-type start__index_t = int
+type start_index_t = int

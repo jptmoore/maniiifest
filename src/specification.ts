@@ -304,6 +304,7 @@ export type AnnotationBodyItemsT =
 | { kind: 'T2'; value: AnnotationBodyT2 }
 | { kind: 'T3'; value: AnnotationBodyT3 }
 | { kind: 'T4'; value: AnnotationBodyT4 }
+| { kind: 'T5'; value: AnnotationBodyT5 }
 
 export type AnnotationBodyT =
 | { kind: 'T1'; value: AnnotationBodyT1 }
@@ -311,8 +312,11 @@ export type AnnotationBodyT =
 | { kind: 'T3'; value: AnnotationBodyT3 }
 | { kind: 'T4'; value: AnnotationBodyT4 }
 | { kind: 'T5'; value: AnnotationBodyT5 }
+| { kind: 'T6'; value: AnnotationBodyT6 }
 
-export type AnnotationBodyT1 = {
+export type AnnotationBodyT1 = string
+
+export type AnnotationBodyT2 = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -328,7 +332,7 @@ export type AnnotationBodyT1 = {
   annotations?: AnnotationPageT[];
 }
 
-export type AnnotationBodyT2 = {
+export type AnnotationBodyT3 = {
   id?: IdT;
   type?: TypeT;
   format?: FormatT;
@@ -337,21 +341,21 @@ export type AnnotationBodyT2 = {
   selector?: SelectorT;
 }
 
-export type AnnotationBodyT3 = {
+export type AnnotationBodyT4 = {
   type: TypeT;
   language?: LanguageT;
   format?: FormatT;
   value?: ValueT;
 }
 
-export type AnnotationBodyT4 = {
+export type AnnotationBodyT5 = {
   id?: IdT;
   type?: TypeT;
   properties?: PropertiesT;
   geometry?: GeometryT;
 }
 
-export type AnnotationBodyT5 = {
+export type AnnotationBodyT6 = {
   type?: TypeT;
   items: AnnotationBodyItemsT[];
 }
@@ -538,7 +542,18 @@ export type ProviderT = {
   seeAlso?: SeeAlsoT[];
 }
 
-export type PartOfT = ClassT
+export type PartOfT =
+| { kind: 'T1'; value: PartOfT1 }
+| { kind: 'T2'; value: PartOfT2 }
+
+export type PartOfT1 = string
+
+export type PartOfT2 = {
+  id: IdT;
+  type?: TypeT;
+  label?: LabelT;
+  total?: TotalT;
+}
 
 export type StartT = ClassT
 
@@ -1428,6 +1443,8 @@ export function _writeAnnotationBodyItemsT(x: AnnotationBodyItemsT, context: any
       return ['T3', writeAnnotationBodyT3(x.value, x)]
     case 'T4':
       return ['T4', writeAnnotationBodyT4(x.value, x)]
+    case 'T5':
+      return ['T5', writeAnnotationBodyT5(x.value, x)]
   }
 }
 
@@ -1442,6 +1459,8 @@ export function _readAnnotationBodyItemsT(x: any, context: any = x): AnnotationB
       return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
     case 'T4':
       return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
+    case 'T5':
+      return { kind: 'T5', value: readAnnotationBodyT5(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyItemsT', x, context)
       throw new Error('impossible')
@@ -1460,6 +1479,8 @@ export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any
       return ['T4', writeAnnotationBodyT4(x.value, x)]
     case 'T5':
       return ['T5', writeAnnotationBodyT5(x.value, x)]
+    case 'T6':
+      return ['T6', writeAnnotationBodyT6(x.value, x)]
   }
 }
 
@@ -1476,6 +1497,8 @@ export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
       return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
     case 'T5':
       return { kind: 'T5', value: readAnnotationBodyT5(x[1], x) }
+    case 'T6':
+      return { kind: 'T6', value: readAnnotationBodyT6(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyT', x, context)
       throw new Error('impossible')
@@ -1483,9 +1506,17 @@ export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
 }
 
 export function writeAnnotationBodyT1(x: AnnotationBodyT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readAnnotationBodyT1(x: any, context: any = x): AnnotationBodyT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): any {
   return {
-    'id': _atd_write_required_field('AnnotationBodyT1', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('AnnotationBodyT1', 'type', writeTypeT, x.type, x),
+    'id': _atd_write_required_field('AnnotationBodyT2', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('AnnotationBodyT2', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
@@ -1500,10 +1531,10 @@ export function writeAnnotationBodyT1(x: AnnotationBodyT1, context: any = x): an
   };
 }
 
-export function readAnnotationBodyT1(x: any, context: any = x): AnnotationBodyT1 {
+export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2 {
   return {
-    id: _atd_read_required_field('AnnotationBodyT1', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('AnnotationBodyT1', 'type', readTypeT, x['type'], x),
+    id: _atd_read_required_field('AnnotationBodyT2', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('AnnotationBodyT2', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
@@ -1518,47 +1549,47 @@ export function readAnnotationBodyT1(x: any, context: any = x): AnnotationBodyT1
   };
 }
 
-export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): any {
+export function writeAnnotationBodyT3(x: AnnotationBodyT3, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
-    'source': _atd_write_required_field('AnnotationBodyT2', 'source', writeSourceT, x.source, x),
+    'source': _atd_write_required_field('AnnotationBodyT3', 'source', writeSourceT, x.source, x),
     'selector': _atd_write_optional_field(writeSelectorT, x.selector, x),
   };
 }
 
-export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2 {
+export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3 {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
-    source: _atd_read_required_field('AnnotationBodyT2', 'source', readSourceT, x['source'], x),
+    source: _atd_read_required_field('AnnotationBodyT3', 'source', readSourceT, x['source'], x),
     selector: _atd_read_optional_field(readSelectorT, x['selector'], x),
   };
 }
 
-export function writeAnnotationBodyT3(x: AnnotationBodyT3, context: any = x): any {
+export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): any {
   return {
-    'type': _atd_write_required_field('AnnotationBodyT3', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('AnnotationBodyT4', 'type', writeTypeT, x.type, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'value': _atd_write_optional_field(writeValueT, x.value, x),
   };
 }
 
-export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3 {
+export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4 {
   return {
-    type: _atd_read_required_field('AnnotationBodyT3', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('AnnotationBodyT4', 'type', readTypeT, x['type'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     value: _atd_read_optional_field(readValueT, x['value'], x),
   };
 }
 
-export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): any {
+export function writeAnnotationBodyT5(x: AnnotationBodyT5, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
@@ -1567,7 +1598,7 @@ export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): an
   };
 }
 
-export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4 {
+export function readAnnotationBodyT5(x: any, context: any = x): AnnotationBodyT5 {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
@@ -1576,17 +1607,17 @@ export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4
   };
 }
 
-export function writeAnnotationBodyT5(x: AnnotationBodyT5, context: any = x): any {
+export function writeAnnotationBodyT6(x: AnnotationBodyT6, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'items': _atd_write_required_field('AnnotationBodyT5', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
+    'items': _atd_write_required_field('AnnotationBodyT6', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
   };
 }
 
-export function readAnnotationBodyT5(x: any, context: any = x): AnnotationBodyT5 {
+export function readAnnotationBodyT6(x: any, context: any = x): AnnotationBodyT6 {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    items: _atd_read_required_field('AnnotationBodyT5', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
+    items: _atd_read_required_field('AnnotationBodyT6', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
   };
 }
 
@@ -2194,12 +2225,52 @@ export function readProviderT(x: any, context: any = x): ProviderT {
   };
 }
 
-export function writePartOfT(x: PartOfT, context: any = x): any {
-  return writeClassT(x, context);
+export function _writePartOfT(x: PartOfT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writePartOfT1(x.value, x)]
+    case 'T2':
+      return ['T2', writePartOfT2(x.value, x)]
+  }
 }
 
-export function readPartOfT(x: any, context: any = x): PartOfT {
-  return readClassT(x, context);
+export function _readPartOfT(x: any, context: any = x): PartOfT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readPartOfT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readPartOfT2(x[1], x) }
+    default:
+      _atd_bad_json('PartOfT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writePartOfT1(x: PartOfT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readPartOfT1(x: any, context: any = x): PartOfT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writePartOfT2(x: PartOfT2, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('PartOfT2', 'id', writeIdT, x.id, x),
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
+    'total': _atd_write_optional_field(writeTotalT, x.total, x),
+  };
+}
+
+export function readPartOfT2(x: any, context: any = x): PartOfT2 {
+  return {
+    id: _atd_read_required_field('PartOfT2', 'id', readIdT, x['id'], x),
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
+    total: _atd_read_optional_field(readTotalT, x['total'], x),
+  };
 }
 
 export function writeStartT(x: StartT, context: any = x): any {
@@ -2972,7 +3043,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_part_of, restore_part_of,  normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -3109,4 +3180,12 @@ export function writeContextT(x: any, context: any = x): ContextT {
 
 export function readContextT(x: any, context: any = x): ContextT {
     return normalize_context(x, context, _readContextT);
+}
+
+export function writePartOfT(x: any, context: any = x): PartOfT {
+    return restore_part_of(x, context, _writePartOfT);
+}
+
+export function readPartOfT(x: any, context: any = x): PartOfT {
+    return normalize_part_of(x, context, _readPartOfT);
 }

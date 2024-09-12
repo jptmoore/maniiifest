@@ -925,6 +925,15 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the 'partOf' property from the specification if the type is 'AnnotationPage'.
+     *
+     * @returns {T.PartOfT | null} The 'partOf' property if the specification type is 'AnnotationPage', otherwise null.
+     */
+    getAnnotationPagePartOf(): T.PartOfT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writePartOfT(this.specification.partOf) : null;
+    }
+
+    /**
      * Iterates over the annotations in the specification if the type is 'AnnotationPage'.
      *
      * @yields {T.AnnotationT} The annotations from the specification.

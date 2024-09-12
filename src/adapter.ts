@@ -66,16 +66,18 @@ export function restore_annotation_body<T, R>(x: T, context: any = x, fn: (input
 }
 
 export function normalize_annotation_body<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
-    if (x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' || x.type == 'Sound' || x.type == 'Text') {
+    if (typeof x === 'string') {
         return fn(['T1', x], context);
-    } else if (x.type === 'SpecificResource') {
-        return fn(['T2', x], context);    
-    } else if (x.type === 'TextualBody') {
-        return fn(['T3', x], context);
-    } else if (x.type === 'Feature') {
-        return fn(['T4', x], context);    
-    } else if (x.type === 'Choice') {
-        return fn(['T5', x], context)    
+    } else if (typeof x === 'object' && x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' || x.type == 'Sound' || x.type == 'Text') {
+        return fn(['T2', x], context);
+    } else if (typeof x === 'object' && x.type === 'SpecificResource') {
+        return fn(['T3', x], context);    
+    } else if (typeof x === 'object' && x.type === 'TextualBody') {
+        return fn(['T4', x], context);
+    } else if (typeof x === 'object' && x.type === 'Feature') {
+        return fn(['T5', x], context);    
+    } else if (typeof x === 'object' && x.type === 'Choice') {
+        return fn(['T6', x], context)    
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -328,5 +330,23 @@ export function normalize_context<T, R>(x: T, context: any = x, fn: (input: [str
         return fn(['T2', x], context);
     } else {
         return fn(['T1', x], context);
+    }
+}
+
+export function restore_part_of<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_part_of<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (typeof (x) === 'string') {
+        return fn(['T1', x], context);
+    } else if (typeof (x) === 'object') {
+        return fn(['T2', x], context);
+    } else {
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
 }
