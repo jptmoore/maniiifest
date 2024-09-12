@@ -2,7 +2,7 @@
 
 ## Description
 
-Maniiifest provides methods to parse and manipulate IIIF v3 manifests and collections. It ensures type safety and offers utility functions for working with IIIF data. Maniiifest takes a parser generator approach to generating TypeScript type definitions using a domain-specific language (DSL). The current specification is available [here](https://raw.githubusercontent.com/jptmoore/maniiifest/main/src/specification.atd).
+Maniiifest provides methods to parse and manipulate [IIIF Presentation API 3.0](https://iiif.io/api/presentation/3.0/) specification and [W3C web annotations](https://www.w3.org/TR/annotation-model/). It ensures type safety and offers utility functions for working with IIIF data. Maniiifest takes a parser generator approach to generating TypeScript type definitions using a domain-specific language (DSL). The current specification is available [here](https://raw.githubusercontent.com/jptmoore/maniiifest/main/src/specification.atd).
 
 ## Installation
 
@@ -29,6 +29,15 @@ const parser = new Maniiifest(manifest);
 const label = parser.getManifestLabel()
 console.log(label);
   ```
+
+To parse web annotations you need to provide the type of annotation to the constructor. For example:
+
+```typescript
+const annotationParser = new Maniiifest(annotation, "Annotation");
+const annotationPageParser = new Maniiifest(annotation_page, "AnnotationPage");
+const annotationCollectionParser = new Maniiifest(annotation_collection, "AnnotationCollection");
+```
+The aim is to support the most relevant subset of the W3C standard as used within IIIF manifests. 
 
 ## Documentation
 

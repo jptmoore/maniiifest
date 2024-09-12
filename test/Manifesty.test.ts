@@ -515,3 +515,202 @@ describe('Manifest canvas functionality', () => {
   });
 
 });
+
+describe('Annotation functionality', () => {
+
+  const annotation =
+  {
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "id": "http://example.org/anno7",
+    "type": "Annotation",
+    "body": {
+      "type": "TextualBody",
+      "value": "Comment text",
+      "format": "text/plain"
+    },
+    "target": "http://example.org/target1"
+  }
+
+
+  it('should return the correct annotation id', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationId();
+    expect(result).toEqual("http://example.org/anno7");
+  })
+
+  it('should return the correct annotation type', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationType();
+    expect(result).toEqual("Annotation");
+  })
+
+  it('should return the correct annotation context', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationContext();
+    expect(result).toEqual("http://www.w3.org/ns/anno.jsonld");
+  })
+
+  it('should return the correct annotation body', () => {
+    const body = {
+      "type": "TextualBody",
+      "value": "Comment text",
+      "format": "text/plain"
+    }
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationBody();
+    expect(result).toEqual(body);
+  })
+
+  it('should return the correct annotation target', () => {
+    const maniiifest = new Maniiifest(annotation, "Annotation");
+    const result = maniiifest.getAnnotationTarget();
+    expect(result).toEqual("http://example.org/target1");
+  })
+
+  it('should return the correct annotation motivation', () => {
+    const motivation = "painting";
+    const maniiifest = new Maniiifest({ motivation, ...annotation }, "Annotation");
+    const result = maniiifest.getAnnotationMotivation();
+    expect(result).toEqual(motivation);
+  })
+});
+
+describe('AnnotationCollection functionality', () => {
+  const annotationCollection =
+  {
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "id": "http://example.org/collection1",
+    "type": "AnnotationCollection",
+    "label": "Steampunk Annotations",
+    "creator": "http://example.com/publisher",
+    "total": 42023,
+    "first": "http://example.org/page1",
+    "last": "http://example.org/page42"
+  }
+
+  it('should return the correct annotation collection id', () => {
+    const maniiifest = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const result = maniiifest.getAnnotationCollectionId();
+    expect(result).toEqual("http://example.org/collection1");
+  })
+
+  it('should return the correct annotation collection type', () => {
+    const maniiifest = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const result = maniiifest.getAnnotationCollectionType();
+    expect(result).toEqual("AnnotationCollection");
+  })
+
+  it('should return the correct annotation collection context', () => {
+    const maniiifest = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const result = maniiifest.getAnnotationCollectionContext();
+    expect(result).toEqual("http://www.w3.org/ns/anno.jsonld");
+  })
+
+  it('should return the correct annotation collection label', () => {
+    const label = "Steampunk Annotations";
+    const maniiifest = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const result = maniiifest.getAnnotationCollectionLabel();
+    expect(result).toEqual(label);
+  })
+
+  it('should return the correct annotation total', () => {
+    const total = 42023;
+    const maniiifest = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const result = maniiifest.getAnnotationCollectionTotal();
+    expect(result).toEqual(total);
+  })
+
+  it('should return the correct annotation first', () => {
+    const first = "http://example.org/page1";
+    const maniiifest = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const result = maniiifest.getAnnotationCollectionFirst();
+    expect(result).toEqual(first);
+  })
+
+  it('should return the correct annotation last', () => {
+    const last = "http://example.org/page42";
+    const maniiifest = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const result = maniiifest.getAnnotationCollectionLast();
+    expect(result).toEqual(last);
+  })
+})
+
+describe('AnnotationPage functionality', () => {
+  const annotationPage =
+  {
+    "@context": "http://www.w3.org/ns/anno.jsonld",
+    "id": "http://example.org/page1",
+    "type": "AnnotationPage",
+    "partOf": {
+      "id": "http://example.org/collection1",
+      "label": "Steampunk Annotations",
+      "total": 42023
+    },
+    "next": "http://example.org/page2",
+    "startIndex": 0,
+    "items": [
+      {
+        "id": "http://example.org/anno1",
+        "type": "Annotation",
+        "body": "http://example.net/comment1",
+        "target": "http://example.com/book/chapter1"
+      },
+      {
+        "id": "http://example.org/anno2",
+        "type": "Annotation",
+        "body": "http://example.net/comment2",
+        "target": "http://example.com/book/chapter2"
+      }
+    ]
+  }
+
+  it('should return the correct annotation page id', () => {
+    const maniiifest = new Maniiifest(annotationPage, "AnnotationPage");
+    const result = maniiifest.getAnnotationPageId();
+    expect(result).toEqual("http://example.org/page1");
+  })
+
+  it('should return the correct annotation page type', () => {
+    const maniiifest = new Maniiifest(annotationPage, "AnnotationPage");
+    const result = maniiifest.getAnnotationPageType();
+    expect(result).toEqual("AnnotationPage");
+  })
+
+  it('should return the correct annotation page context', () => {
+    const maniiifest = new Maniiifest(annotationPage, "AnnotationPage");
+    const result = maniiifest.getAnnotationPageContext();
+    expect(result).toEqual("http://www.w3.org/ns/anno.jsonld");
+  })
+
+  it('should return the correct annotation page partOf', () => {
+    const partOf = {
+      "id": "http://example.org/collection1",
+      "label": "Steampunk Annotations",
+      "total": 42023
+    }
+    const maniiifest = new Maniiifest(annotationPage, "AnnotationPage");
+    const result = maniiifest.getAnnotationPagePartOf();
+    expect(result).toEqual(partOf);
+  })
+
+  it('should return the correct annotation page annotations through iteration', () => {
+    const annotations = [
+      {
+        "id": "http://example.org/anno1",
+        "type": "Annotation",
+        "body": "http://example.net/comment1",
+        "target": "http://example.com/book/chapter1"
+      },
+      {
+        "id": "http://example.org/anno2",
+        "type": "Annotation",
+        "body": "http://example.net/comment2",
+        "target": "http://example.com/book/chapter2"
+      }
+    ]
+    const maniiifest = new Maniiifest(annotationPage, "AnnotationPage");
+    const result = Array.from(maniiifest.iterateAnnotationPageAnnotation());
+    expect(result).toEqual(annotations);
+  })
+
+})

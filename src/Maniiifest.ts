@@ -16,16 +16,37 @@ export class Maniiifest {
     specification: any;
 
     /**
-     * Constructs a new instance of the class and initializes the specification.
+     * Constructs a new instance of the Maniiifest class.
      *
-     * This constructor attempts to read the specification from the provided data.
-     * If reading the specification fails, an error is logged to the console.
+     * This constructor initializes the specification based on the provided data and type.
+     * It supports the following types:
+     * - "AnnotationCollection": Reads the data as an AnnotationCollection specification.
+     * - "AnnotationPage": Reads the data as an AnnotationPage specification.
+     * - "Annotation": Reads the data as an Annotation specification.
+     * - undefined: Reads the data as a general specification.
      *
-     * @param {any} data - The data from which to read the specification.
+     * @param data - The data to be parsed into a specification.
+     * @param type - The type of the specification. Can be "AnnotationCollection", "AnnotationPage", "Annotation", or undefined.
+     * @throws {Error} Throws an error if an unsupported type is provided.
      */
-    constructor(data: any) {
+    constructor(data: any, type?: string) {
         try {
-            this.specification = F.readSpecificationT(data);
+            switch (type) {
+                case "AnnotationCollection":
+                    this.specification = F.readAnnotationCollectionT(data);
+                    break;
+                case "AnnotationPage":
+                    this.specification = F.readAnnotationPageT(data);
+                    break;
+                case "Annotation":
+                    this.specification = F.readAnnotationT(data);
+                    break;
+                case undefined:
+                    this.specification = F.readSpecificationT(data);
+                    break;
+                default:
+                    throw new Error(`Unsupported type: ${type}`);
+            }
         } catch (error) {
             console.error("Failed to read specification:", error);
         }
@@ -793,5 +814,201 @@ export class Maniiifest {
             }
         }
     }
+
+
+    /**
+     * Retrieves the annotation collection if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.AnnotationCollectionT | null} The annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollection(): T.AnnotationCollectionT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeAnnotationCollectionT(this.specification) : null;
+    }
+    
+    /**
+     * Retrieves the annotation collection ID if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.IdT | null} The annotation collection ID if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollectionId(): T.IdT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeIdT(this.specification.id) : null;
+    }
+
+    /**
+     * Retrieves the type of the annotation collection if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.TypeT | null} The type of the annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollectionType(): T.TypeT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeTypeT(this.specification.type) : null;
+    }
+    
+    /**
+     * Retrieves the annotation collection context if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.ContextT | null} The annotation collection context if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollectionContext(): T.ContextT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeContextT(this.specification.context) : null;
+    }
+    
+    /**
+     * Retrieves the annotation collection label if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.LabelT | null} The annotation collection label if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollectionLabel(): T.LabelT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeLabelT(this.specification.label) : null;
+    }
+    
+    /**
+     * Retrieves the first annotation in the collection if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.FirstT | null} The first annotation in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollectionFirst(): T.FirstT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeFirstT(this.specification.first) : null;
+    }
+    
+    /**
+     * Retrieves the last annotation in the collection if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.LastT | null} The last annotation in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollectionLast(): T.LastT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeLastT(this.specification.last) : null;
+    }
+    
+    /**
+     * Retrieves the total number of annotations in the collection if the specification type is 'AnnotationCollection'.
+     *
+     * @returns {T.TotalT | null} The total number of annotations in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
+     */
+    getAnnotationCollectionTotal(): T.TotalT | null {
+        return this.specification.type === 'AnnotationCollection' ? F.writeTotalT(this.specification.total) : null;
+    }
+
+    /**
+     * Retrieves the annotation page if the specification type is 'AnnotationPage'.
+     *
+     * @returns {T.AnnotationPageT | null} The annotation page if the specification type is 'AnnotationPage', otherwise `null`.
+     */
+    getAnnotationPage(): T.AnnotationPageT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writeAnnotationPageT(this.specification) : null;
+    }
+
+    /**
+     * Retrieves the type of the annotation page if the specification type is 'AnnotationPage'.
+     *
+     * @returns {T.TypeT | null} The type of the annotation page if the specification type is 'AnnotationPage', otherwise `null`.
+     */    
+    getAnnotationPageType(): T.TypeT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writeTypeT(this.specification.type) : null;
+    }
+    
+    /**
+     * Retrieves the annotation page ID if the specification type is 'AnnotationPage'.
+     *
+     * @returns {T.IdT | null} The annotation page ID if the specification type is 'AnnotationPage', otherwise `null`.
+     */
+    getAnnotationPageId(): T.IdT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writeIdT(this.specification.id) : null;
+    }
+    
+    /**
+     * Retrieves the annotation page context if the specification type is 'AnnotationPage'.
+     *
+     * @returns {T.ContextT | null} The annotation page context if the specification type is 'AnnotationPage', otherwise `null`.
+     */
+    getAnnotationPageContext(): T.ContextT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writeContextT(this.specification.context) : null;
+    }
+
+    /**
+     * Retrieves the 'partOf' property from the specification if the type is 'AnnotationPage'.
+     *
+     * @returns {T.PartOfT | null} The 'partOf' property if the specification type is 'AnnotationPage', otherwise null.
+     */
+    getAnnotationPagePartOf(): T.PartOfT | null {
+        return this.specification.type === 'AnnotationPage' ? F.writePartOfT(this.specification.partOf) : null;
+    }
+
+    /**
+     * Iterates over the annotations in the specification if the type is 'AnnotationPage'.
+     *
+     * @yields {T.AnnotationT} The annotations from the specification.
+     */
+    *iterateAnnotationPageAnnotation(): IterableIterator<T.AnnotationT> {
+        if (this.specification.type === 'AnnotationPage') {
+            for (const annotation of this.specification.items ?? []) {
+                yield F.writeAnnotationT(annotation);
+            }
+        }
+    }
+
+    /**
+     * Retrieves the annotation if the specification type is 'Annotation'.
+     *
+     * @returns {T.AnnotationT | null} The annotation if the specification type is 'Annotation', otherwise `null`.
+     */
+    getAnnotation(): T.AnnotationT | null {
+        return this.specification.type === 'Annotation' ? F.writeAnnotationT(this.specification) : null;
+    }
+    
+    /**
+     * Retrieves the annotation ID if the specification type is 'Annotation'.
+     *
+     * @returns {T.IdT | null} The annotation ID if the specification type is 'Annotation', otherwise `null`.
+     */
+    getAnnotationId(): T.IdT | null {
+        return this.specification.type === 'Annotation' ? F.writeIdT(this.specification.id) : null;
+    }
+
+    /**
+     * Retrieves the annotation type if the specification type is 'Annotation'.
+     *
+     * @returns {T.TypeT | null} The annotation type if the specification type is 'Annotation', otherwise `null`.
+     */
+    getAnnotationType(): T.TypeT | null {
+        return this.specification.type === 'Annotation' ? F.writeTypeT(this.specification.type) : null;
+    }
+    
+    /**
+     * Retrieves the annotation context if the specification type is 'Annotation'.
+     *
+     * @returns {T.ContextT | null} The annotation context if the specification type is 'Annotation', otherwise `null`.
+     */
+    getAnnotationContext(): T.ContextT | null {
+        return this.specification.type === 'Annotation' ? F.writeContextT(this.specification.context) : null;
+    }
+    
+    /**
+     * Retrieves the annotation body if the specification type is 'Annotation'.
+     *
+     * @returns {T.BodyT | null} The annotation body if the specification type is 'Annotation', otherwise `null`.
+     */
+    getAnnotationBody(): T.BodyT | null {
+        return this.specification.type === 'Annotation' ? F.writeBodyT(this.specification.body) : null;
+    }
+    
+    /**
+     * Retrieves the annotation target if the specification type is 'Annotation'.
+     *
+     * @returns {T.TargetT | null} The annotation target if the specification type is 'Annotation', otherwise `null`.
+     */
+    getAnnotationTarget(): T.TargetT | null {
+        return this.specification.type === 'Annotation' ? F.writeTargetT(this.specification.target) : null;
+    }
+    
+    /**
+     * Retrieves the annotation motivation if the specification type is 'Annotation'.
+     *
+     * @returns {T.MotivationT | null} The annotation motivation if the specification type is 'Annotation', otherwise `null`.
+     */
+    getAnnotationMotivation(): T.MotivationT | null {
+        return this.specification.type === 'Annotation' ? F.writeMotivationT(this.specification.motivation) : null;
+    }
+    
+
 
 }
