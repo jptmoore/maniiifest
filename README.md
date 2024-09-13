@@ -86,6 +86,34 @@ The output will be the metadata from the first 25 manifests:
 { label: { en: [ 'Month' ] }, value: { en: [ 'October' ] } }
 .....
 ```
+
+In this example we will work with externally referenced W3C annotations. 
+```typescript
+import { Maniiifest } from 'maniiifest';
+
+async function main() {
+    const response = await fetch('https://iiif.io/api/cookbook/recipe/0269-embedded-or-referenced-annotations/manifest.json');
+    const jsonData = await response.json();
+    const parser = new Maniiifest(jsonData);
+    const annotationPages = parser.iterateManifestCanvasW3cAnnotationPage();
+    for (const annotationPage of annotationPages) {
+        const response = await fetch(annotationPage.id);
+        const jsonData = await response.json();
+        const parser = new Maniiifest(jsonData, "AnnotationPage");
+        const annotations = parser.iterateAnnotationPageAnnotation();
+        for (const annotation of annotations) {
+            console.log(annotation.body?.value);
+        }
+    }
+}
+
+main()
+```
+The output will the commenting value from the single annotation:
+```
+Göttinger Marktplatz mit Gänseliesel Brunnen
+```
+
 More examples of parsing complex manifests and collections can be found [here](https://github.com/jptmoore/maniiitest).
 
 ## Scripts
