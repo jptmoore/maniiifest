@@ -75,9 +75,11 @@ export function normalize_annotation_body<T extends { type: string }, R>(x: T, c
     } else if (typeof x === 'object' && x.type === 'TextualBody') {
         return fn(['T4', x], context);
     } else if (typeof x === 'object' && x.type === 'Feature') {
-        return fn(['T5', x], context);    
+        return fn(['T5', x], context);
+    } else if (typeof x === 'object' && x.type === 'FeatureCollection') {
+        return fn(['T6', x], context);    
     } else if (typeof x === 'object' && x.type === 'Choice') {
-        return fn(['T6', x], context)    
+        return fn(['T7', x], context)    
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
