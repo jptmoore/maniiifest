@@ -112,6 +112,22 @@ type nav_place_t = {
   ?features : feature_t list option;
 }
 
+type feature_collection_t = {
+  inherit nav_place_t;
+  ?transformation : transformation_t option;
+}
+
+type transformation_t = {
+  ?_type <json name="type"> : type_t option;
+  ?options : options_t option;
+}
+
+type options_t = {
+  ?order : order_t option;
+}
+
+type order_t = int
+
 type feature_t = {
   ?id : id_t option;
   ?_type <json name="type"> : type_t option;
@@ -224,11 +240,12 @@ type annotation_body_items_t = [
   | T3 of annotation_body_t3
   | T4 of annotation_body_t4
   | T5 of annotation_body_t5
+  | T6 of annotation_body_t6
 ]
 
 type annotation_body_t = [
   inherit annotation_body_items_t
-  | T6 of annotation_body_t6
+  | T7 of annotation_body_t7
 ]
 
 type annotation_body_t1 = string
@@ -253,6 +270,10 @@ type annotation_body_t5 = {
 }
 
 type annotation_body_t6 = {
+  inherit feature_collection_t;
+}
+
+type annotation_body_t7 = {
   ?_type <json name="type"> : type_t option;
   items : annotation_body_items_t list;
 }
