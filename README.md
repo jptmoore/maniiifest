@@ -114,6 +114,39 @@ The output will the commenting value from the single annotation:
 Göttinger Marktplatz mit Gänseliesel Brunnen
 ```
 
+In this example we will work with an annotation that uses the [georeference](https://iiif.io/api/extension/georef/) extension.
+
+```typescript
+import { Maniiifest } from 'maniiifest';
+
+async function main() {
+    const response = await fetch('https://annotations.allmaps.org/maps/cde9210870a2652a');
+    const jsonData = await response.json();
+    const annotation = new Maniiifest(jsonData, "Annotation");
+    const points = Array.from(annotation.iterateAnnotationGeometryPointCoordinates());
+    for (let i = 0; i < points.length; i += 2) {
+        console.log(`x: ${points[i]}, y: ${points[i + 1]}`);
+    } 
+}
+
+main()
+```
+The output will be all the point coordinates:
+```
+x: -70.9375518, y: 42.4811769
+x: -70.9398138, y: 42.4825027
+x: -70.9403993, y: 42.4821228
+x: -70.9434097, y: 42.480079
+x: -70.9373183, y: 42.4793787
+x: -70.9454651, y: 42.4765122
+x: -70.9364491, y: 42.4804618
+x: -70.9377961, y: 42.4788144
+x: -70.935966, y: 42.4809988
+x: -70.9390062, y: 42.4772977
+x: -70.9398389, y: 42.4815905
+x: -70.9369067, y: 42.4798999
+```
+
 More examples of parsing complex manifests and collections can be found [here](https://github.com/jptmoore/maniiitest).
 
 ## Scripts
