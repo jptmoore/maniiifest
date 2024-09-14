@@ -1009,6 +1009,38 @@ export class Maniiifest {
         return this.specification.type === 'Annotation' ? F.writeMotivationT(this.specification.motivation) : null;
     }
     
-
+    /**
+     * Returns the feature collection if the specification kind is 'T6', otherwise returns null.
+     */
+    getAnnotationFeatureCollection(): T.FeatureCollectionT | null {
+        return this.specification.body.value.kind === 'T6' ? F.writeFeatureCollectionT(this.specification.body.value.value) : null;
+    }
+    
+    /**
+     * Generator function that yields each feature if the specification kind is 'T6'.
+     */
+    *iterateAnnotationFeature(): IterableIterator<T.FeatureT> {
+        if (this.specification.body.value.kind === 'T6') {
+            for (const feature of this.specification.body.value.value.features ?? []) {
+                yield F.writeFeatureT(feature);
+            }
+        }
+    }
+    
+    /**
+     * Generator function that yields point coordinates for each feature with geometry kind 'T1' 
+     * if the specification kind is 'T6'.
+     */
+    *iterateAnnotationGeometryPointCoordinates(): IterableIterator<T.PointCoordinatesT> {
+        if (this.specification.body.value.kind === 'T6') {
+            for (const feature of this.specification.body.value.value.features ?? []) {
+                if (feature.geometry.kind === 'T1') {
+                    for (const coordinates of feature.geometry.value.coordinates ?? []) {
+                        yield F.writePointCoordinatesT(coordinates);
+                    }
+                }
+            }
+        }
+    }
 
 }
