@@ -30,25 +30,21 @@ export class Maniiifest {
      * @throws {Error} Throws an error if an unsupported type is provided.
      */
     constructor(data: any, type?: string) {
-        try {
-            switch (type) {
-                case "AnnotationCollection":
-                    this.specification = F.readAnnotationCollectionT(data);
-                    break;
-                case "AnnotationPage":
-                    this.specification = F.readAnnotationPageT(data);
-                    break;
-                case "Annotation":
-                    this.specification = F.readAnnotationT(data);
-                    break;
-                case undefined:
-                    this.specification = F.readSpecificationT(data);
-                    break;
-                default:
-                    throw new Error(`Unsupported type: ${type}`);
-            }
-        } catch (error) {
-            console.error("Failed to read specification:", error);
+        switch (type) {
+            case "AnnotationCollection":
+                this.specification = F.readAnnotationCollectionT(data);
+                break;
+            case "AnnotationPage":
+                this.specification = F.readAnnotationPageT(data);
+                break;
+            case "Annotation":
+                this.specification = F.readAnnotationT(data);
+                break;
+            case undefined:
+                this.specification = F.readSpecificationT(data);
+                break;
+            default:
+                throw new Error(`Unsupported type: ${type}`);
         }
     }
 
