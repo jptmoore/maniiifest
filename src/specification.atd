@@ -20,8 +20,8 @@ type collection_t = {
   ?navDate : nav_date_t option;
   ?behavior : behavior_t list option;
   ?partOf : part_of_t list option;
-  ?service : service_t list option;
-  ?services : service_t list option; 
+  ?service : service_t option;
+  ?services : service_t option; 
   ?placeholderCanvas : placeholder_canvas_t option;
   ?accompanyingCanvas : accompanying_canvas_t option;
   ?navPlace : nav_place_t option;
@@ -34,8 +34,8 @@ type manifest_t = {
   _type <json name="type"> : type_t;
   label : label_t;
   ?metadata : metadata_t list option;
-  ?service : service_t list option;
-  ?services : service_t list option;
+  ?service : service_t option;
+  ?services : service_t option;
   ?requiredStatement : required_statement_t option;
   ?summary : summary_t option;
   ?thumbnail : thumbnail_t list option;
@@ -83,7 +83,7 @@ type canvas_core_t = {
   ?navPlace : nav_place_t option;
   ?provider : provider_t list option;
   ?seeAlso : see_also_t list option;
-  ?service : service_t list option;
+  ?service : service_t option;
   ?thumbnail : thumbnail_t list option;
   ?homepage : homepage_t list option;
   ?behavior : behavior_t list option;
@@ -209,7 +209,7 @@ type annotation_page_t = {
   ?next : next_t option;
   ?startIndex : start_index_t option;
   ?rendering : rendering_t list option;
-  ?service : service_t list option;
+  ?service : service_t option;
   ?thumbnail : thumbnail_t list option;
   ?items : annotation_t list option;
 }
@@ -219,7 +219,7 @@ type annotation_t = {
   ?context <json name="@context"> : context_t option;
   id : id_t;
   _type <json name="type"> : type_t;
-  ?service : service_t list option;
+  ?service : service_t option;
   ?thumbnail : thumbnail_t list option;
   ?rendering : rendering_t list option;
   ?motivation : motivation_t option;
@@ -389,28 +389,32 @@ type resource_t = {
   ?language : language_t option;
   ?rendering : rendering_t list option;
   ?thumbnail : thumbnail_t list option;
-  ?service : service_t list option;
+  ?service : service_t option;
   ?annotations : annotation_page_t list option;
 }
 
-
 type service_t = [
-  | T1 of service_t1
-  | T2 of service_t2
+  | T1 of service_item_t
+  | T2 of service_item_t list
 ]
 
-type service_t1 = {
+type service_item_t = [
+  | T1 of service_item_t1
+  | T2 of service_item_t2
+]
+
+type service_item_t1 = {
   inherit class_t;
   ?profile : profile_t option;
-  ?service : service_t list option;
+  ?service : service_t option;
 }
 
-type service_t2 = {
+type service_item_t2 = {
   id <json name="@id"> : id_t;
   _type <json name="@type"> : type_t;
   ?label : label_t option;  
   ?profile : profile_t option;
-  ?service : service_t list option;
+  ?service : service_t option;
 }
 
 type label_t = [
@@ -491,7 +495,7 @@ type annotation_collection_t = {
   ?total : total_t option;
   ?first : first_t option;
   ?last : last_t option;
-  ?service : service_t list option;
+  ?service : service_t option;
   ?thumbnail : thumbnail_t list option;
   ?items : annotation_t list option;
 }
@@ -516,7 +520,7 @@ type range_t = {
   inherit class_t;
   ?rendering : rendering_t list option;
   ?supplementary : annotation_collection_t option;
-  ?service : service_t list option;
+  ?service : service_t option;
   ?placeholderCanvas : placeholder_canvas_t option;
   ?accompanyingCanvas : accompanying_canvas_t option;
   ?annotations : annotation_page_t list option;

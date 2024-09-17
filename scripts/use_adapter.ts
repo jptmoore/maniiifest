@@ -1,6 +1,6 @@
 ///// appended to specification.ts
 
-import { normalize_part_of, restore_part_of,  normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_service, restore_service, normalize_part_of, restore_part_of,  normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service_item, restore_service_item, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -10,13 +10,20 @@ export function readSpecificationT(x: any, context: any = x): SpecificationT {
     return normalize_specification(x, context, _readSpecificationT);
 }
 
-
 export function writeServiceT(x: any, context: any = x): ServiceT {
     return restore_service(x, context, _writeServiceT);
 }
 
 export function readServiceT(x: any, context: any = x): ServiceT {
     return normalize_service(x, context, _readServiceT);
+}
+
+export function readServiceItemT(x: any, context: any = x): ServiceItemT {
+    return normalize_service_item(x, context, _readServiceItemT);
+}
+
+export function writeServiceItemT(x: any, context: any = x): ServiceItemT {
+    return restore_service_item(x, context, _writeServiceItemT);
 }
 
 export function writeMotivationT(x: any, context: any = x): MotivationT {

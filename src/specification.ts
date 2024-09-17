@@ -35,8 +35,8 @@ export type CollectionT = {
   navDate?: NavDateT;
   behavior?: BehaviorT[];
   partOf?: PartOfT[];
-  service?: ServiceT[];
-  services?: ServiceT[];
+  service?: ServiceT;
+  services?: ServiceT;
   placeholderCanvas?: PlaceholderCanvasT;
   accompanyingCanvas?: AccompanyingCanvasT;
   navPlace?: NavPlaceT;
@@ -49,8 +49,8 @@ export type ManifestT = {
   type: TypeT;
   label: LabelT;
   metadata?: MetadataT[];
-  service?: ServiceT[];
-  services?: ServiceT[];
+  service?: ServiceT;
+  services?: ServiceT;
   requiredStatement?: RequiredStatementT;
   summary?: SummaryT;
   thumbnail?: ThumbnailT[];
@@ -100,7 +100,7 @@ export type CanvasCoreT = {
   navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
-  service?: ServiceT[];
+  service?: ServiceT;
   thumbnail?: ThumbnailT[];
   homepage?: HomepageT[];
   behavior?: BehaviorT[];
@@ -125,7 +125,7 @@ export type CanvasT = {
   navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
-  service?: ServiceT[];
+  service?: ServiceT;
   thumbnail?: ThumbnailT[];
   homepage?: HomepageT[];
   behavior?: BehaviorT[];
@@ -152,7 +152,7 @@ export type PlaceholderCanvasT = {
   navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
-  service?: ServiceT[];
+  service?: ServiceT;
   thumbnail?: ThumbnailT[];
   homepage?: HomepageT[];
   behavior?: BehaviorT[];
@@ -177,7 +177,7 @@ export type AccompanyingCanvasT = {
   navPlace?: NavPlaceT;
   provider?: ProviderT[];
   seeAlso?: SeeAlsoT[];
-  service?: ServiceT[];
+  service?: ServiceT;
   thumbnail?: ThumbnailT[];
   homepage?: HomepageT[];
   behavior?: BehaviorT[];
@@ -294,7 +294,7 @@ export type AnnotationPageT = {
   next?: NextT;
   startIndex?: StartIndexT;
   rendering?: RenderingT[];
-  service?: ServiceT[];
+  service?: ServiceT;
   thumbnail?: ThumbnailT[];
   items?: AnnotationT[];
 }
@@ -303,7 +303,7 @@ export type AnnotationT = {
   context?: ContextT;
   id: IdT;
   type: TypeT;
-  service?: ServiceT[];
+  service?: ServiceT;
   thumbnail?: ThumbnailT[];
   rendering?: RenderingT[];
   motivation?: MotivationT;
@@ -348,7 +348,7 @@ export type AnnotationBodyT2 = {
   language?: LanguageT;
   rendering?: RenderingT[];
   thumbnail?: ThumbnailT[];
-  service?: ServiceT[];
+  service?: ServiceT;
   annotations?: AnnotationPageT[];
 }
 
@@ -496,28 +496,32 @@ export type ResourceT = {
   language?: LanguageT;
   rendering?: RenderingT[];
   thumbnail?: ThumbnailT[];
-  service?: ServiceT[];
+  service?: ServiceT;
   annotations?: AnnotationPageT[];
 }
 
 export type ServiceT =
-| { kind: 'T1'; value: ServiceT1 }
-| { kind: 'T2'; value: ServiceT2 }
+| { kind: 'T1'; value: ServiceItemT }
+| { kind: 'T2'; value: ServiceItemT[] }
 
-export type ServiceT1 = {
+export type ServiceItemT =
+| { kind: 'T1'; value: ServiceItemT1 }
+| { kind: 'T2'; value: ServiceItemT2 }
+
+export type ServiceItemT1 = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
   profile?: ProfileT;
-  service?: ServiceT[];
+  service?: ServiceT;
 }
 
-export type ServiceT2 = {
+export type ServiceItemT2 = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
   profile?: ProfileT;
-  service?: ServiceT[];
+  service?: ServiceT;
 }
 
 export type LabelT =
@@ -602,7 +606,7 @@ export type AnnotationCollectionT = {
   total?: TotalT;
   first?: FirstT;
   last?: LastT;
-  service?: ServiceT[];
+  service?: ServiceT;
   thumbnail?: ThumbnailT[];
   items?: AnnotationT[];
 }
@@ -628,7 +632,7 @@ export type RangeT = {
   label?: LabelT;
   rendering?: RenderingT[];
   supplementary?: AnnotationCollectionT;
-  service?: ServiceT[];
+  service?: ServiceT;
   placeholderCanvas?: PlaceholderCanvasT;
   accompanyingCanvas?: AccompanyingCanvasT;
   annotations?: AnnotationPageT[];
@@ -734,8 +738,8 @@ export function writeCollectionT(x: CollectionT, context: any = x): any {
     'navDate': _atd_write_optional_field(writeNavDateT, x.navDate, x),
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'partOf': _atd_write_optional_field(_atd_write_array(writePartOfT), x.partOf, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
-    'services': _atd_write_optional_field(_atd_write_array(writeServiceT), x.services, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
+    'services': _atd_write_optional_field(writeServiceT, x.services, x),
     'placeholderCanvas': _atd_write_optional_field(writePlaceholderCanvasT, x.placeholderCanvas, x),
     'accompanyingCanvas': _atd_write_optional_field(writeAccompanyingCanvasT, x.accompanyingCanvas, x),
     'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
@@ -761,8 +765,8 @@ export function readCollectionT(x: any, context: any = x): CollectionT {
     navDate: _atd_read_optional_field(readNavDateT, x['navDate'], x),
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     partOf: _atd_read_optional_field(_atd_read_array(readPartOfT), x['partOf'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
-    services: _atd_read_optional_field(_atd_read_array(readServiceT), x['services'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
+    services: _atd_read_optional_field(readServiceT, x['services'], x),
     placeholderCanvas: _atd_read_optional_field(readPlaceholderCanvasT, x['placeholderCanvas'], x),
     accompanyingCanvas: _atd_read_optional_field(readAccompanyingCanvasT, x['accompanyingCanvas'], x),
     navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
@@ -777,8 +781,8 @@ export function writeManifestT(x: ManifestT, context: any = x): any {
     'type': _atd_write_required_field('ManifestT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_required_field('ManifestT', 'label', writeLabelT, x.label, x),
     'metadata': _atd_write_optional_field(_atd_write_array(writeMetadataT), x.metadata, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
-    'services': _atd_write_optional_field(_atd_write_array(writeServiceT), x.services, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
+    'services': _atd_write_optional_field(writeServiceT, x.services, x),
     'requiredStatement': _atd_write_optional_field(writeRequiredStatementT, x.requiredStatement, x),
     'summary': _atd_write_optional_field(writeSummaryT, x.summary, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
@@ -806,8 +810,8 @@ export function readManifestT(x: any, context: any = x): ManifestT {
     type: _atd_read_required_field('ManifestT', 'type', readTypeT, x['type'], x),
     label: _atd_read_required_field('ManifestT', 'label', readLabelT, x['label'], x),
     metadata: _atd_read_optional_field(_atd_read_array(readMetadataT), x['metadata'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
-    services: _atd_read_optional_field(_atd_read_array(readServiceT), x['services'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
+    services: _atd_read_optional_field(readServiceT, x['services'], x),
     requiredStatement: _atd_read_optional_field(readRequiredStatementT, x['requiredStatement'], x),
     summary: _atd_read_optional_field(readSummaryT, x['summary'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
@@ -899,7 +903,7 @@ export function writeCanvasCoreT(x: CanvasCoreT, context: any = x): any {
     'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
@@ -926,7 +930,7 @@ export function readCanvasCoreT(x: any, context: any = x): CanvasCoreT {
     navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
@@ -953,7 +957,7 @@ export function writeCanvasT(x: CanvasT, context: any = x): any {
     'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
@@ -982,7 +986,7 @@ export function readCanvasT(x: any, context: any = x): CanvasT {
     navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
@@ -1011,7 +1015,7 @@ export function writePlaceholderCanvasT(x: PlaceholderCanvasT, context: any = x)
     'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
@@ -1038,7 +1042,7 @@ export function readPlaceholderCanvasT(x: any, context: any = x): PlaceholderCan
     navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
@@ -1065,7 +1069,7 @@ export function writeAccompanyingCanvasT(x: AccompanyingCanvasT, context: any = 
     'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
     'provider': _atd_write_optional_field(_atd_write_array(writeProviderT), x.provider, x),
     'seeAlso': _atd_write_optional_field(_atd_write_array(writeSeeAlsoT), x.seeAlso, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'homepage': _atd_write_optional_field(_atd_write_array(writeHomepageT), x.homepage, x),
     'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
@@ -1092,7 +1096,7 @@ export function readAccompanyingCanvasT(x: any, context: any = x): AccompanyingC
     navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
     provider: _atd_read_optional_field(_atd_read_array(readProviderT), x['provider'], x),
     seeAlso: _atd_read_optional_field(_atd_read_array(readSeeAlsoT), x['seeAlso'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     homepage: _atd_read_optional_field(_atd_read_array(readHomepageT), x['homepage'], x),
     behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
@@ -1436,7 +1440,7 @@ export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any 
     'next': _atd_write_optional_field(writeNextT, x.next, x),
     'startIndex': _atd_write_optional_field(writeStartIndexT, x.startIndex, x),
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationT), x.items, x),
   };
@@ -1452,7 +1456,7 @@ export function readAnnotationPageT(x: any, context: any = x): AnnotationPageT {
     next: _atd_read_optional_field(readNextT, x['next'], x),
     startIndex: _atd_read_optional_field(readStartIndexT, x['startIndex'], x),
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationT), x['items'], x),
   };
@@ -1463,7 +1467,7 @@ export function writeAnnotationT(x: AnnotationT, context: any = x): any {
     '@context': _atd_write_optional_field(writeContextT, x.context, x),
     'id': _atd_write_required_field('AnnotationT', 'id', writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationT', 'type', writeTypeT, x.type, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'motivation': _atd_write_optional_field(writeMotivationT, x.motivation, x),
@@ -1479,7 +1483,7 @@ export function readAnnotationT(x: any, context: any = x): AnnotationT {
     context: _atd_read_optional_field(readContextT, x['@context'], x),
     id: _atd_read_required_field('AnnotationT', 'id', readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationT', 'type', readTypeT, x['type'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     motivation: _atd_read_optional_field(readMotivationT, x['motivation'], x),
@@ -1613,7 +1617,7 @@ export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): an
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
@@ -1631,7 +1635,7 @@ export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
@@ -2075,7 +2079,7 @@ export function writeResourceT(x: ResourceT, context: any = x): any {
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
   };
 }
@@ -2093,7 +2097,7 @@ export function readResourceT(x: any, context: any = x): ResourceT {
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
   };
 }
@@ -2101,9 +2105,9 @@ export function readResourceT(x: any, context: any = x): ResourceT {
 export function _writeServiceT(x: ServiceT, context: any = x): any {
   switch (x.kind) {
     case 'T1':
-      return ['T1', writeServiceT1(x.value, x)]
+      return ['T1', writeServiceItemT(x.value, x)]
     case 'T2':
-      return ['T2', writeServiceT2(x.value, x)]
+      return ['T2', _atd_write_array(writeServiceItemT)(x.value, x)]
   }
 }
 
@@ -2111,52 +2115,74 @@ export function _readServiceT(x: any, context: any = x): ServiceT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
     case 'T1':
-      return { kind: 'T1', value: readServiceT1(x[1], x) }
+      return { kind: 'T1', value: readServiceItemT(x[1], x) }
     case 'T2':
-      return { kind: 'T2', value: readServiceT2(x[1], x) }
+      return { kind: 'T2', value: _atd_read_array(readServiceItemT)(x[1], x) }
     default:
       _atd_bad_json('ServiceT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeServiceT1(x: ServiceT1, context: any = x): any {
+export function _writeServiceItemT(x: ServiceItemT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeServiceItemT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeServiceItemT2(x.value, x)]
+  }
+}
+
+export function _readServiceItemT(x: any, context: any = x): ServiceItemT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readServiceItemT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readServiceItemT2(x[1], x) }
+    default:
+      _atd_bad_json('ServiceItemT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeServiceItemT1(x: ServiceItemT1, context: any = x): any {
   return {
-    'id': _atd_write_required_field('ServiceT1', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('ServiceT1', 'type', writeTypeT, x.type, x),
+    'id': _atd_write_required_field('ServiceItemT1', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('ServiceItemT1', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
   };
 }
 
-export function readServiceT1(x: any, context: any = x): ServiceT1 {
+export function readServiceItemT1(x: any, context: any = x): ServiceItemT1 {
   return {
-    id: _atd_read_required_field('ServiceT1', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('ServiceT1', 'type', readTypeT, x['type'], x),
+    id: _atd_read_required_field('ServiceItemT1', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('ServiceItemT1', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
   };
 }
 
-export function writeServiceT2(x: ServiceT2, context: any = x): any {
+export function writeServiceItemT2(x: ServiceItemT2, context: any = x): any {
   return {
-    '@id': _atd_write_required_field('ServiceT2', 'id', writeIdT, x.id, x),
-    '@type': _atd_write_required_field('ServiceT2', 'type', writeTypeT, x.type, x),
+    '@id': _atd_write_required_field('ServiceItemT2', 'id', writeIdT, x.id, x),
+    '@type': _atd_write_required_field('ServiceItemT2', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
   };
 }
 
-export function readServiceT2(x: any, context: any = x): ServiceT2 {
+export function readServiceItemT2(x: any, context: any = x): ServiceItemT2 {
   return {
-    id: _atd_read_required_field('ServiceT2', '@id', readIdT, x['@id'], x),
-    type: _atd_read_required_field('ServiceT2', '@type', readTypeT, x['@type'], x),
+    id: _atd_read_required_field('ServiceItemT2', '@id', readIdT, x['@id'], x),
+    type: _atd_read_required_field('ServiceItemT2', '@type', readTypeT, x['@type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
   };
 }
 
@@ -2435,7 +2461,7 @@ export function writeAnnotationCollectionT(x: AnnotationCollectionT, context: an
     'total': _atd_write_optional_field(writeTotalT, x.total, x),
     'first': _atd_write_optional_field(writeFirstT, x.first, x),
     'last': _atd_write_optional_field(writeLastT, x.last, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationT), x.items, x),
   };
@@ -2452,7 +2478,7 @@ export function readAnnotationCollectionT(x: any, context: any = x): AnnotationC
     total: _atd_read_optional_field(readTotalT, x['total'], x),
     first: _atd_read_optional_field(readFirstT, x['first'], x),
     last: _atd_read_optional_field(readLastT, x['last'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationT), x['items'], x),
   };
@@ -2517,7 +2543,7 @@ export function writeRangeT(x: RangeT, context: any = x): any {
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'supplementary': _atd_write_optional_field(writeAnnotationCollectionT, x.supplementary, x),
-    'service': _atd_write_optional_field(_atd_write_array(writeServiceT), x.service, x),
+    'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'placeholderCanvas': _atd_write_optional_field(writePlaceholderCanvasT, x.placeholderCanvas, x),
     'accompanyingCanvas': _atd_write_optional_field(writeAccompanyingCanvasT, x.accompanyingCanvas, x),
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
@@ -2534,7 +2560,7 @@ export function readRangeT(x: any, context: any = x): RangeT {
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     supplementary: _atd_read_optional_field(readAnnotationCollectionT, x['supplementary'], x),
-    service: _atd_read_optional_field(_atd_read_array(readServiceT), x['service'], x),
+    service: _atd_read_optional_field(readServiceT, x['service'], x),
     placeholderCanvas: _atd_read_optional_field(readPlaceholderCanvasT, x['placeholderCanvas'], x),
     accompanyingCanvas: _atd_read_optional_field(readAccompanyingCanvasT, x['accompanyingCanvas'], x),
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
@@ -3148,7 +3174,7 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_part_of, restore_part_of,  normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service, restore_service, normalize_motivation, restore_motivation } from "./adapter";
+import { normalize_service, restore_service, normalize_part_of, restore_part_of,  normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service_item, restore_service_item, normalize_motivation, restore_motivation } from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -3158,13 +3184,20 @@ export function readSpecificationT(x: any, context: any = x): SpecificationT {
     return normalize_specification(x, context, _readSpecificationT);
 }
 
-
 export function writeServiceT(x: any, context: any = x): ServiceT {
     return restore_service(x, context, _writeServiceT);
 }
 
 export function readServiceT(x: any, context: any = x): ServiceT {
     return normalize_service(x, context, _readServiceT);
+}
+
+export function readServiceItemT(x: any, context: any = x): ServiceItemT {
+    return normalize_service_item(x, context, _readServiceItemT);
+}
+
+export function writeServiceItemT(x: any, context: any = x): ServiceItemT {
+    return restore_service_item(x, context, _writeServiceItemT);
 }
 
 export function writeMotivationT(x: any, context: any = x): MotivationT {
