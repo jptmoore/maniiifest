@@ -9,6 +9,9 @@ sed -i 's/export function readSpecificationT(/export function _readSpecification
 sed -i 's/export function writeServiceT(/export function _writeServiceT(/g' specification.ts
 sed -i 's/export function readServiceT(/export function _readServiceT(/g' specification.ts
 
+sed -i 's/export function writeServiceItemT(/export function _writeServiceItemT(/g' specification.ts
+sed -i 's/export function readServiceItemT(/export function _readServiceItemT(/g' specification.ts
+
 sed -i 's/export function writeMotivationT(/export function _writeMotivationT(/g' specification.ts
 sed -i 's/export function readMotivationT(/export function _readMotivationT(/g' specification.ts
 

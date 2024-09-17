@@ -284,50 +284,6 @@ export class Maniiifest {
     }
 
     /**
-     * Iterates over the service elements within the annotation bodies on the canvases in the manifest.
-     *
-     * This generator function yields service elements from the annotation bodies on the canvases in the manifest.
-     *
-     * @yields {T.ServiceT} The next service element within the annotation bodies on the canvases in the manifest.
-     */
-    *iterateManifestCanvasAnnotationBodyService(): IterableIterator<T.ServiceT> {
-        if (this.specification.kind === 'Manifest') {
-            for (const canvas of this.specification.value.items ?? []) {
-                for (const annotationPage of canvas.items ?? []) {
-                    for (const annotation of annotationPage.items ?? []) {
-                        for (const service of annotation.body.service ?? []) {
-                            yield F.writeServiceT(service);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Iterates over the service elements within the services of the annotation bodies on the canvases in the manifest.
-     *
-     * This generator function yields service elements from the services within the annotation bodies on the canvases in the manifest.
-     *
-     * @yields {T.ServiceT} The next service element within the services of the annotation bodies on the canvases in the manifest.
-     */
-    *iterateManifestCanvasAnnotationBodyServiceService(): IterableIterator<T.ServiceT> {
-        if (this.specification.kind === 'Manifest') {
-            for (const canvas of this.specification.value.items ?? []) {
-                for (const annotationPage of canvas.items ?? []) {
-                    for (const annotation of annotationPage.items ?? []) {
-                        for (const service of annotation.body.service ?? []) {
-                            for (const serviceService of service.value.service ?? []) {
-                                yield F.writeServiceT(serviceService);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Iterates over the canvas elements in the manifest.
      *
      * This generator function yields canvas elements from the manifest.
@@ -682,11 +638,14 @@ export class Maniiifest {
      *
      * @yields {T.ServiceT} The next service in the manifest.
      */
-    *iterateManifestService(): IterableIterator<T.ServiceT> {
+    *iterateManifestService(): IterableIterator<T.ServiceItemT> {
         if (this.specification.kind === 'Manifest') {
-            for (const service of this.specification.value.service ?? []) {
-                yield F.writeServiceT(service);
+            if (this.specification.value.service?.kind === 'T2') {
+                for (const serviceItem of this.specification.value.service.value ?? []) {
+                    yield F.writeServiceItemT(serviceItem);
+                }
             }
+
         }
     }
 
@@ -698,29 +657,12 @@ export class Maniiifest {
      *
      * @yields {T.ServiceT} The next service within the thumbnail services in the manifest.
      */
-    *iterateManifestThumbnailService(): IterableIterator<T.ServiceT> {
+    *iterateManifestThumbnailService(): IterableIterator<T.ServiceItemT> {
         if (this.specification.kind === 'Manifest') {
             for (const thumbnail of this.specification.value.thumbnail ?? []) {
-                for (const service of thumbnail.service ?? []) {
-                    yield F.writeServiceT(service);
-                }
-            }
-        }
-    }
-
-    /**
-     * Iterates over the nested services within the thumbnail services in the manifest.
-     *
-     * This generator function yields services from the nested service pages within the thumbnail services of the manifest.
-     *
-     * @yields {T.ServiceT} The next nested service within the thumbnail services in the manifest.
-     */
-    *iterateManifestThumbnailServiceService(): IterableIterator<T.ServiceT> {
-        if (this.specification.kind === 'Manifest') {
-            for (const thumbnail of this.specification.value.thumbnail ?? []) {
-                for (const service of thumbnail.service ?? []) {
-                    for (const serviceService of service.value.service ?? []) {
-                        yield F.writeServiceT(serviceService);
+                if (this.specification.value.service?.kind === 'T2') {
+                    for (const serviceItem of thumbnail.service.value ?? []) {
+                        yield F.writeServiceItemT(serviceItem);
                     }
                 }
             }
@@ -728,55 +670,21 @@ export class Maniiifest {
     }
 
     /**
-     * Iterates over the nested services in the manifest.
-     *
-     * This generator function yields services from the nested service pages within the manifest.
-     *
-     * @yields {T.ServiceT} The next nested service in the manifest.
-     */
-    *iterateManifestServiceService(): IterableIterator<T.ServiceT> {
-        if (this.specification.kind === 'Manifest') {
-            for (const service of this.specification.value.service ?? []) {
-                for (const serviceService of service.value.service ?? []) {
-                    yield F.writeServiceT(serviceService);
-                }
-            }
-        }
-    }
-
-    /**
      * Iterates over the services in the manifest.
      *
      * This generator function yields services from the manifest's service pages.
      *
      * @yields {T.ServiceT} The next service in the manifest.
      */
-    *iterateManifestServices(): IterableIterator<T.ServiceT> {
+    *iterateManifestServices(): IterableIterator<T.ServiceItemT> {
         if (this.specification.kind === 'Manifest') {
-            for (const services of this.specification.value.services ?? []) {
-                yield F.writeServiceT(services);
-            }
-        }
-    }
-
-    /**
-     * Iterates over the services in the manifest.
-     *
-     * This generator function yields services from the manifest's service pages.
-     *
-     * @yields {T.ServiceT} The next service in the manifest.
-     */
-    *iterateManifestServicesService(): IterableIterator<T.ServiceT> {
-        if (this.specification.kind === 'Manifest') {
-            for (const services of this.specification.value.services ?? []) {
-                for (const service of services.value.service ?? []) {
-                    yield F.writeServiceT(service);
+            if (this.specification.value.services?.kind === 'T2') {
+                for (const servicesItem of this.specification.value.services.value ?? []) {
+                    yield F.writeServiceItemT(servicesItem);
                 }
             }
         }
     }
-
-
 
     /**
      * Iterates over the W3C annotations in the manifest.

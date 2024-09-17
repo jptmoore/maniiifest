@@ -25,7 +25,23 @@ export function restore_service<T, R>(x: T, context: any = x, fn: (input: T, con
     return resultList[1];
 }
 
-export function normalize_service<T, R>(x: T, context: any = {}, fn: (input: [string, T], context: any) => R): R {
+export function normalize_service<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (Array.isArray(x)) {
+        return fn(['T2', x], context);
+    } else {
+        return fn(['T1', x], context);
+    }
+}
+
+export function restore_service_item<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_service_item<T, R>(x: T, context: any = {}, fn: (input: [string, T], context: any) => R): R {
     if (x !== null && typeof x === 'object') {
         if ('id' in x) {
             return fn(['T1', x], context);

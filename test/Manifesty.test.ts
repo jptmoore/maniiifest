@@ -353,12 +353,6 @@ describe('Manifest toplevel functionality', () => {
     expect(result).toEqual(services);
   });
 
-  it('should return empty list if services is not set', () => {
-    const maniiifest = new Maniiifest(manifest);
-    const result = Array.from(maniiifest.iterateManifestServicesService());
-    expect(result).toEqual([]);
-  });
-
   it('should return the correct manifest thumbnail through iteration', () => {
     const thumbnail = [
       {
