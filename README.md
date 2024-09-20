@@ -4,6 +4,8 @@
 
 Maniiifest provides methods to parse and manipulate [IIIF Presentation API 3.0](https://iiif.io/api/presentation/3.0/) specification and [W3C web annotations](https://www.w3.org/TR/annotation-model/). It ensures type safety and offers utility functions for working with IIIF data. Maniiifest takes a parser generator approach to generating TypeScript type definitions using a domain-specific language (DSL). The current specification is available [here](https://raw.githubusercontent.com/jptmoore/maniiifest/main/src/specification.atd).
 
+A typechecker/validator built using maniiifest is available online [here](https://maniiifest.onrender.com/).
+
 ## Installation
 
 Install the package using npm:
