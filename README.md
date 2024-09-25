@@ -28,8 +28,8 @@ const manifest = {
 }
 
 const parser = new Maniiifest(manifest);
-const label = parser.getManifestLabel()
-console.log(label);
+const label = parser.getManifestLabelByLanguage('en');
+console.log(label?.['en']);
   ```
 
 To parse web annotations you need to provide the type of annotation to the constructor. For example:
@@ -39,7 +39,7 @@ const annotationParser = new Maniiifest(annotation, "Annotation");
 const annotationPageParser = new Maniiifest(annotation_page, "AnnotationPage");
 const annotationCollectionParser = new Maniiifest(annotation_collection, "AnnotationCollection");
 ```
-The aim is to support the most relevant subset of the W3C standard as used within IIIF manifests. 
+The aim is to support the most relevant subset of the W3C standard as used within IIIF manifests.
 
 ## Documentation
 

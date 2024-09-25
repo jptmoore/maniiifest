@@ -60,6 +60,13 @@ describe('Collection functionality', () => {
     expect(result).toEqual(label);
   });
 
+  it('should return the correct collection label by language', () => {
+    const maniiifest = new Maniiifest(collection);
+    const label = { en: ["Simple Collection Example"] };
+    const result = maniiifest.getCollectionLabelByLanguage("en");
+    expect(result).toEqual(label);
+  });
+
   it('should return the correct collection label through iteration', () => {
     const maniiifest = new Maniiifest({ items, ...collection });
     const result = Array.from(maniiifest.iterateCollectionLabel());
@@ -123,6 +130,13 @@ describe('Manifest toplevel functionality', () => {
     const maniiifest = new Maniiifest(manifest);
     const label = { en: ["Book 1"] };
     const result = maniiifest.getManifestLabel();
+    expect(result).toEqual(label);
+  });
+
+  it('should return the correct manifest label by language', () => {
+    const maniiifest = new Maniiifest(manifest);
+    const label = { en: ["Book 1"] };
+    const result = maniiifest.getManifestLabelByLanguage("en");
     expect(result).toEqual(label);
   });
 

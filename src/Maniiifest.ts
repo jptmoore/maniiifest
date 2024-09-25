@@ -85,6 +85,24 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the label from the manifest specification by language if it is of kind 'Manifest'.
+     *
+     * @param {string} language - The language code to retrieve the label for.
+     * @returns {T.LabelT2 | null} The label for the specified language if it exists, otherwise null.
+     */    
+    getManifestLabelByLanguage(language: string): T.LngStringT | null {
+        if (this.specification.kind === 'Manifest' && this.specification.value.label.kind === 'T2') {
+            const labels = this.specification.value.label.value;    
+            for (const [lang, _] of labels) {
+                if (lang === language) {
+                    return F.writeLngStringT(this.specification.value.label.value);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Retrieves the summary from the manifest specification if it is of kind 'Manifest'.
      *
      * @returns {T.SummaryT | null} The summary if the specification is of kind 'Manifest' and has a summary value, otherwise null.
@@ -210,6 +228,23 @@ export class Maniiifest {
         return this.specification.kind === 'Collection' ? F.writeLabelT(this.specification.value.label) : null;
     }
 
+    /**
+     * Retrieves the label from the collection specification by language if it is of kind 'Collection'.
+     *
+     * @param {string} language - The language code to retrieve the label for.
+     * @returns {T.LabelT2 | null} The label for the specified language if it exists, otherwise null.
+     */
+    getCollectionLabelByLanguage(language: string): T.LngStringT | null {
+        if (this.specification.kind === 'Collection' && this.specification.value.label.kind === 'T2') {
+            const labels = this.specification.value.label.value;    
+            for (const [lang, _] of labels) {
+                if (lang === language) {
+                    return F.writeLngStringT(this.specification.value.label.value);
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * Iterates over the W3C annotation elements on the canvases in the manifest.
