@@ -266,6 +266,25 @@ export class Maniiifest {
     }
 
     /**
+     * Iterates over the textual bodies of annotations in the manifest's canvases.
+     *
+     * @returns {IterableIterator<T.AnnotationBodyT4>} An iterator over the textual bodies of annotations.
+     */    
+    *iterateManifestCanvasW3cAnnotationTextualBody(): IterableIterator<T.AnnotationBodyT4> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const annotationPage of canvas.annotations ?? []) {
+                    for (const annotation of annotationPage.items ?? []) {
+                        if (annotation.body.value.kind === 'T4') {
+                            yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Iterates over the W3C annotation page elements on the canvases in the manifest.
      *
      * This generator function yields W3C annotation page elements from the canvases in the manifest.
@@ -739,6 +758,24 @@ export class Maniiifest {
     }
 
     /**
+     * Iterates over the textual bodies of annotations in the manifest.
+     *
+     * @returns {IterableIterator<T.AnnotationBodyT4>} An iterator over the textual bodies of annotations.
+     */    
+    *iterateManifestW3cAnnotationTextualBody(): IterableIterator<T.AnnotationBodyT4> {
+        if (this.specification.kind === 'Manifest') {
+            for (const annotationPage of this.specification.value.annotations ?? []) {
+                for (const annotation of annotationPage.items ?? []) {
+                    if (annotation.body.value.kind === 'T4') {
+                        yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                    }
+                }
+            }
+        }
+    }    
+
+
+    /**
      * Iterates over W3C Annotation Pages in a Manifest.
      * 
      * This generator function iterates through each annotation page present in the manifest's annotations.
@@ -884,6 +921,21 @@ export class Maniiifest {
             }
         }
     }
+
+    /**
+     * Iterates over the textual bodies of annotations in the annotation page.
+     *
+     * @returns {IterableIterator<T.AnnotationBodyT4>} An iterator over the textual bodies of annotations.
+     */    
+    *iterateAnnotationPageAnnotationTextualBody(): IterableIterator<T.AnnotationBodyT4> {
+        if (this.specification.type === 'AnnotationPage') {
+            for (const annotation of this.specification.items ?? []) {
+                if (annotation.body.value.kind === 'T4') {
+                    yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                }
+            }
+        }
+    }    
 
     /**
      * Retrieves the annotation if the specification type is 'Annotation'.
