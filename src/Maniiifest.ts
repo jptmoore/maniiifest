@@ -654,6 +654,37 @@ export class Maniiifest {
     }
 
     /**
+     * Iterates over the thumbnails in the collection.
+     *
+     * This generator function yields thumbnails from the collection's thumbnail and recursively from nested collections.
+     *
+     * @yields {T.ThumbnailT} The next thumbnail item in the collection.
+     */    
+    *iterateCollectionThumbnail(): IterableIterator<T.ThumbnailT> {
+        if (this.specification.kind === 'Collection') {
+            for (const thumbnail of this.specification.value.thumbnail ?? []) {
+                yield F.writeThumbnailT(thumbnail);
+            }
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.ThumbnailT> {
+                if (!items) return; // Handle case where items might not exist
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        for (const thumbnail of item.value.thumbnail ?? []) {
+                            yield F.writeThumbnailT(thumbnail);
+                        }
+                        if (item.value.items) { // Check if items exist before recursion
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            if (this.specification.value.items) { // Check if items exist before starting traversal
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }
+
+    /**
      * Iterates over the metadata in the collection.
      *
      * This generator function yields metadata from the collection's metadata and recursively from nested collections.

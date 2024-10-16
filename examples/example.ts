@@ -1,7 +1,7 @@
 import { readJsonFromFile } from '../src/utils'
 import { Maniiifest } from '../src/Maniiifest';
 
-const filename = 'test/samples/annopage1.json';
+const filename = 'test/example.json';
 
 (function () {
     try {
@@ -11,9 +11,9 @@ const filename = 'test/samples/annopage1.json';
             return;
         }
 
-        const parser = new Maniiifest(jsonData, "AnnotationPage");
+        const parser = new Maniiifest(jsonData);
 
-        for (const item of parser.iterateAnnotationPageAnnotationTextualBody()) {
+        for (const item of parser.iterateManifestCanvasAnnotation()) {
             console.log(item)
         }
 
