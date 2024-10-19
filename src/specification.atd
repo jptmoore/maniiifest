@@ -235,6 +235,7 @@ type body_t = [
 ]
 
 type annotation_body_items_t = [
+  | T0 of annotation_body_t0
   | T1 of annotation_body_t1
   | T2 of annotation_body_t2
   | T3 of annotation_body_t3
@@ -247,6 +248,15 @@ type annotation_body_t = [
   inherit annotation_body_items_t
   | T7 of annotation_body_t7
 ]
+
+type annotation_body_t0 = {
+  ?id : id_t option;
+  ?label : label_t option;
+  ?format : format_t option;
+  ?profile : profile_t option;
+  ?language : language_t option;
+  ?value : value_t option;    
+}
 
 type annotation_body_t1 = string
 

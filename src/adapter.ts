@@ -96,6 +96,9 @@ export function normalize_annotation_body<T extends { type: string }, R>(x: T, c
         return fn(['T6', x], context);    
     } else if (typeof x === 'object' && x.type === 'Choice') {
         return fn(['T7', x], context)    
+    } else if (typeof x === 'object') { 
+        // handle special case where type is not defined within body object
+        return fn(['T0', x], context);        
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
