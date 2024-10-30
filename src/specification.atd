@@ -354,13 +354,7 @@ type resource_selector_t3 = {
   value : value_t;
 }
 
-type conforms_to_t = {
-  _type <json name="type"> : type_t;
-  ?format : format_t option;
-  ?pattern : pattern_t option;
-  ?default : default_t option;
-  value : value_t;
-}
+type conforms_to_t = string
 
 type resource_selector_t4 = {
   _type <json name="type"> : type_t;

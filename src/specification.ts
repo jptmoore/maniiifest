@@ -338,6 +338,7 @@ export type AnnotationBodyT =
 
 export type AnnotationBodyT0 = {
   id?: IdT;
+  label?: LabelT;
   format?: FormatT;
   profile?: ProfileT;
   language?: LanguageT;
@@ -458,13 +459,7 @@ export type ResourceSelectorT3 = {
   value: ValueT;
 }
 
-export type ConformsToT = {
-  type: TypeT;
-  format?: FormatT;
-  pattern?: PatternT;
-  default_?: DefaultT;
-  value: ValueT;
-}
+export type ConformsToT = string
 
 export type ResourceSelectorT4 = {
   type: TypeT;
@@ -1617,6 +1612,7 @@ export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
 export function writeAnnotationBodyT0(x: AnnotationBodyT0, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
@@ -1627,6 +1623,7 @@ export function writeAnnotationBodyT0(x: AnnotationBodyT0, context: any = x): an
 export function readAnnotationBodyT0(x: any, context: any = x): AnnotationBodyT0 {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
+    label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
@@ -2005,23 +2002,11 @@ export function readResourceSelectorT3(x: any, context: any = x): ResourceSelect
 }
 
 export function writeConformsToT(x: ConformsToT, context: any = x): any {
-  return {
-    'type': _atd_write_required_field('ConformsToT', 'type', writeTypeT, x.type, x),
-    'format': _atd_write_optional_field(writeFormatT, x.format, x),
-    'pattern': _atd_write_optional_field(writePatternT, x.pattern, x),
-    'default': _atd_write_optional_field(writeDefaultT, x.default_, x),
-    'value': _atd_write_required_field('ConformsToT', 'value', writeValueT, x.value, x),
-  };
+  return _atd_write_string(x, context);
 }
 
 export function readConformsToT(x: any, context: any = x): ConformsToT {
-  return {
-    type: _atd_read_required_field('ConformsToT', 'type', readTypeT, x['type'], x),
-    format: _atd_read_optional_field(readFormatT, x['format'], x),
-    pattern: _atd_read_optional_field(readPatternT, x['pattern'], x),
-    default_: _atd_read_optional_field(readDefaultT, x['default'], x),
-    value: _atd_read_required_field('ConformsToT', 'value', readValueT, x['value'], x),
-  };
+  return _atd_read_string(x, context);
 }
 
 export function writeResourceSelectorT4(x: ResourceSelectorT4, context: any = x): any {
