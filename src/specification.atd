@@ -517,6 +517,7 @@ type first_t2 = {
   ?label : label_t option;
   ?startIndex : start_index_t option;
   ?thumbnail : thumbnail_t list option;
+  ?next : next_t option;
   ?items : annotation_t list option;
 }
 

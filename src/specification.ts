@@ -628,6 +628,7 @@ export type FirstT2 = {
   label?: LabelT;
   startIndex?: StartIndexT;
   thumbnail?: ThumbnailT[];
+  next?: NextT;
   items?: AnnotationT[];
 }
 
@@ -2544,6 +2545,7 @@ export function writeFirstT2(x: FirstT2, context: any = x): any {
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'startIndex': _atd_write_optional_field(writeStartIndexT, x.startIndex, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
+    'next': _atd_write_optional_field(writeNextT, x.next, x),
     'items': _atd_write_optional_field(_atd_write_array(writeAnnotationT), x.items, x),
   };
 }
@@ -2555,6 +2557,7 @@ export function readFirstT2(x: any, context: any = x): FirstT2 {
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     startIndex: _atd_read_optional_field(readStartIndexT, x['startIndex'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
+    next: _atd_read_optional_field(readNextT, x['next'], x),
     items: _atd_read_optional_field(_atd_read_array(readAnnotationT), x['items'], x),
   };
 }
