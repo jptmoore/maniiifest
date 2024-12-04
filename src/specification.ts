@@ -308,10 +308,37 @@ export type AnnotationT = {
   rendering?: RenderingT[];
   motivation?: MotivationT;
   created?: CreatedT;
+  creator?: CreatorT;
   modified?: ModifiedT;
   body?: BodyT;
   target?: TargetT;
 }
+
+export type CreatorT =
+| { kind: 'T1'; value: CreatorItemT }
+| { kind: 'T2'; value: CreatorItemT[] }
+
+export type CreatorItemT =
+| { kind: 'T1'; value: CreatorItemT1 }
+| { kind: 'T2'; value: CreatorItemT2 }
+
+export type CreatorItemT1 = string
+
+export type CreatorItemT2 = {
+  id?: IdT;
+  type?: TypeT;
+  name?: NameT;
+  nickname?: NicknameT;
+  email?: EmailStringsT;
+  email_sha1?: EmailSha1StringsT;
+  homepage?: HomepageStringsT;
+}
+
+export type EmailStringsT = StringsT
+
+export type EmailSha1StringsT = StringsT
+
+export type HomepageStringsT = StringsT
 
 export type BodyT =
 | { kind: 'T1'; value: AnnotationBodyT }
@@ -377,6 +404,7 @@ export type AnnotationBodyT4 = {
   language?: LanguageT;
   format?: FormatT;
   value?: ValueT;
+  creator?: CreatorT;
 }
 
 export type AnnotationBodyT5 = {
@@ -652,6 +680,10 @@ export type RangeItemsT =
 | { kind: 'T2'; value: CanvasT }
 | { kind: 'T3'; value: RangeT }
 
+export type StringsT =
+| { kind: 'T1'; value: string }
+| { kind: 'T2'; value: string[] }
+
 export type IdT = string
 
 export type TypeT = string
@@ -703,6 +735,10 @@ export type LastT = string
 export type NextT = string
 
 export type StartIndexT = number /*int*/
+
+export type NameT = string
+
+export type NicknameT = string
 
 export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
   switch (x.kind) {
@@ -1478,6 +1514,7 @@ export function writeAnnotationT(x: AnnotationT, context: any = x): any {
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'motivation': _atd_write_optional_field(writeMotivationT, x.motivation, x),
     'created': _atd_write_optional_field(writeCreatedT, x.created, x),
+    'creator': _atd_write_optional_field(writeCreatorT, x.creator, x),
     'modified': _atd_write_optional_field(writeModifiedT, x.modified, x),
     'body': _atd_write_optional_field(writeBodyT, x.body, x),
     'target': _atd_write_optional_field(writeTargetT, x.target, x),
@@ -1494,10 +1531,111 @@ export function readAnnotationT(x: any, context: any = x): AnnotationT {
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     motivation: _atd_read_optional_field(readMotivationT, x['motivation'], x),
     created: _atd_read_optional_field(readCreatedT, x['created'], x),
+    creator: _atd_read_optional_field(readCreatorT, x['creator'], x),
     modified: _atd_read_optional_field(readModifiedT, x['modified'], x),
     body: _atd_read_optional_field(readBodyT, x['body'], x),
     target: _atd_read_optional_field(readTargetT, x['target'], x),
   };
+}
+
+export function _writeCreatorT(x: CreatorT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeCreatorItemT(x.value, x)]
+    case 'T2':
+      return ['T2', _atd_write_array(writeCreatorItemT)(x.value, x)]
+  }
+}
+
+export function _readCreatorT(x: any, context: any = x): CreatorT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readCreatorItemT(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: _atd_read_array(readCreatorItemT)(x[1], x) }
+    default:
+      _atd_bad_json('CreatorT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function _writeCreatorItemT(x: CreatorItemT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeCreatorItemT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeCreatorItemT2(x.value, x)]
+  }
+}
+
+export function _readCreatorItemT(x: any, context: any = x): CreatorItemT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readCreatorItemT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readCreatorItemT2(x[1], x) }
+    default:
+      _atd_bad_json('CreatorItemT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeCreatorItemT1(x: CreatorItemT1, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readCreatorItemT1(x: any, context: any = x): CreatorItemT1 {
+  return _atd_read_string(x, context);
+}
+
+export function writeCreatorItemT2(x: CreatorItemT2, context: any = x): any {
+  return {
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'name': _atd_write_optional_field(writeNameT, x.name, x),
+    'nickname': _atd_write_optional_field(writeNicknameT, x.nickname, x),
+    'email': _atd_write_optional_field(writeEmailStringsT, x.email, x),
+    'email_sha1': _atd_write_optional_field(writeEmailSha1StringsT, x.email_sha1, x),
+    'homepage': _atd_write_optional_field(writeHomepageStringsT, x.homepage, x),
+  };
+}
+
+export function readCreatorItemT2(x: any, context: any = x): CreatorItemT2 {
+  return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    name: _atd_read_optional_field(readNameT, x['name'], x),
+    nickname: _atd_read_optional_field(readNicknameT, x['nickname'], x),
+    email: _atd_read_optional_field(readEmailStringsT, x['email'], x),
+    email_sha1: _atd_read_optional_field(readEmailSha1StringsT, x['email_sha1'], x),
+    homepage: _atd_read_optional_field(readHomepageStringsT, x['homepage'], x),
+  };
+}
+
+export function _writeEmailStringsT(x: EmailStringsT, context: any = x): any {
+  return writeStringsT(x, context);
+}
+
+export function _readEmailStringsT(x: any, context: any = x): EmailStringsT {
+  return readStringsT(x, context);
+}
+
+export function _writeEmailSha1StringsT(x: EmailSha1StringsT, context: any = x): any {
+  return writeStringsT(x, context);
+}
+
+export function _readEmailSha1StringsT(x: any, context: any = x): EmailSha1StringsT {
+  return readStringsT(x, context);
+}
+
+export function _writeHomepageStringsT(x: HomepageStringsT, context: any = x): any {
+  return writeStringsT(x, context);
+}
+
+export function _readHomepageStringsT(x: any, context: any = x): HomepageStringsT {
+  return readStringsT(x, context);
 }
 
 export function _writeBodyT(x: BodyT, context: any = x): any {
@@ -1704,6 +1842,7 @@ export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): an
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'value': _atd_write_optional_field(writeValueT, x.value, x),
+    'creator': _atd_write_optional_field(writeCreatorT, x.creator, x),
   };
 }
 
@@ -1713,6 +1852,7 @@ export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     value: _atd_read_optional_field(readValueT, x['value'], x),
+    creator: _atd_read_optional_field(readCreatorT, x['creator'], x),
   };
 }
 
@@ -2622,6 +2762,28 @@ export function _readRangeItemsT(x: any, context: any = x): RangeItemsT {
   }
 }
 
+export function writeStringsT(x: StringsT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', _atd_write_string(x.value, x)]
+    case 'T2':
+      return ['T2', _atd_write_array(_atd_write_string)(x.value, x)]
+  }
+}
+
+export function readStringsT(x: any, context: any = x): StringsT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: _atd_read_string(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: _atd_read_array(_atd_read_string)(x[1], x) }
+    default:
+      _atd_bad_json('StringsT', x, context)
+      throw new Error('impossible')
+  }
+}
+
 export function writeIdT(x: IdT, context: any = x): any {
   return _atd_write_string(x, context);
 }
@@ -2828,6 +2990,22 @@ export function writeStartIndexT(x: StartIndexT, context: any = x): any {
 
 export function readStartIndexT(x: any, context: any = x): StartIndexT {
   return _atd_read_int(x, context);
+}
+
+export function writeNameT(x: NameT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readNameT(x: any, context: any = x): NameT {
+  return _atd_read_string(x, context);
+}
+
+export function writeNicknameT(x: NicknameT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readNicknameT(x: any, context: any = x): NicknameT {
+  return _atd_read_string(x, context);
 }
 
 
@@ -3200,7 +3378,11 @@ function _atd_write_field_with_default<T>(
 
 ///// appended to specification.ts
 
-import { normalize_service, restore_service, normalize_part_of, restore_part_of,  normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service_item, restore_service_item, normalize_motivation, restore_motivation } from "./adapter";
+import {
+    normalize_creator, restore_creator, normalize_email_strings, restore_email_strings,
+    normalize_email_sha1_strings, restore_email_sha1_strings, normalize_homepage_strings, restore_homepage_strings, normalize_creator_item, restore_creator_item,
+    normalize_service, restore_service, normalize_part_of, restore_part_of, normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service_item, restore_service_item, normalize_motivation, restore_motivation
+} from "./adapter";
 
 export function writeSpecificationT(x: any, context: any = x): SpecificationT {
     return restore_specification(x, context, _writeSpecificationT);
@@ -3352,4 +3534,44 @@ export function writePartOfT(x: any, context: any = x): PartOfT {
 
 export function readPartOfT(x: any, context: any = x): PartOfT {
     return normalize_part_of(x, context, _readPartOfT);
+}
+
+export function writeCreatorT(x: any, context: any = x): CreatorT {
+    return restore_creator(x, context, _writeCreatorT);
+}
+
+export function readCreatorT(x: any, context: any = x): CreatorT {
+    return normalize_creator(x, context, _readCreatorT);
+}
+
+export function writeCreatorItemT(x: any, context: any = x): CreatorItemT {
+    return restore_creator_item(x, context, _writeCreatorItemT);
+}
+
+export function readCreatorItemT(x: any, context: any = x): CreatorItemT {
+    return normalize_creator_item(x, context, _readCreatorItemT);
+}
+
+export function writeEmailStringsT(x: any, context: any = x): EmailStringsT {
+    return restore_email_strings(x, context, _writeEmailStringsT);
+}
+
+export function readEmailStringsT(x: any, context: any = x): EmailStringsT {
+    return normalize_email_strings(x, context, _readEmailStringsT);
+}
+
+export function writeEmailSha1StringsT(x: any, context: any = x): EmailSha1StringsT {
+    return restore_email_sha1_strings(x, context, _writeEmailSha1StringsT);
+}
+
+export function readEmailSha1StringsT(x: any, context: any = x): EmailSha1StringsT {
+    return normalize_email_sha1_strings(x, context, _readEmailSha1StringsT);
+}
+
+export function writeHomepageStringsT(x: any, context: any = x): HomepageStringsT {
+    return restore_homepage_strings(x, context, _writeHomepageStringsT);
+}
+
+export function readHomepageStringsT(x: any, context: any = x): HomepageStringsT {
+    return normalize_homepage_strings(x, context, _readHomepageStringsT);
 }

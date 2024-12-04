@@ -60,6 +60,21 @@ sed -i 's/export function readContextT(/export function _readContextT(/g' specif
 sed -i 's/export function writePartOfT(/export function _writePartOfT(/g' specification.ts
 sed -i 's/export function readPartOfT(/export function _readPartOfT(/g' specification.ts
 
+sed -i 's/export function writeCreatorT(/export function _writeCreatorT(/g' specification.ts
+sed -i 's/export function readCreatorT(/export function _readCreatorT(/g' specification.ts
+
+sed -i 's/export function writeCreatorItemT(/export function _writeCreatorItemT(/g' specification.ts
+sed -i 's/export function readCreatorItemT(/export function _readCreatorItemT(/g' specification.ts
+
+sed -i 's/export function writeEmailStringsT(/export function _writeEmailStringsT(/g' specification.ts
+sed -i 's/export function readEmailStringsT(/export function _readEmailStringsT(/g' specification.ts
+
+sed -i 's/export function writeEmailSha1StringsT(/export function _writeEmailSha1StringsT(/g' specification.ts
+sed -i 's/export function readEmailSha1StringsT(/export function _readEmailSha1StringsT(/g' specification.ts
+
+sed -i 's/export function writeHomepageStringsT(/export function _writeHomepageStringsT(/g' specification.ts
+sed -i 's/export function readHomepageStringsT(/export function _readHomepageStringsT(/g' specification.ts
+
 # rename _type to use type
 sed -i 's/_type/type/g' specification.ts
 # add adapter code
