@@ -224,10 +224,37 @@ type annotation_t = {
   ?rendering : rendering_t list option;
   ?motivation : motivation_t option;
   ?created : created_t option;
+  ?creator : creator_t option;
   ?modified : modified_t option;
   ?body : body_t option;
   ?target : target_t option;
 }
+
+type creator_t = [
+  | T1 of creator_item_t
+  | T2 of creator_item_t list
+]
+
+type creator_item_t = [
+  | T1 of creator_item_t1
+  | T2 of creator_item_t2
+]
+
+type creator_item_t1 = string
+
+type creator_item_t2 = {
+  ?id : id_t option;
+  ?_type <json name="type"> : type_t option;
+  ?name : name_t option;
+  ?nickname : nickname_t option;
+  ?email : email_strings_t option;
+  ?email_sha1 : email_sha1_strings_t option;
+  ?homepage : homepage_strings_t option;
+}
+
+type email_strings_t = strings_t
+type email_sha1_strings_t = strings_t
+type homepage_strings_t = strings_t
 
 type body_t = [
   | T1 of annotation_body_t
@@ -273,6 +300,7 @@ type annotation_body_t4 = {
   ?language : language_t option;
   ?format : format_t option;
   ?value : value_t option;
+  ?creator : creator_t option;
 }
 
 type annotation_body_t5 = {
@@ -540,6 +568,11 @@ type range_items_t = [
   | T3 of range_t
 ]
 
+type strings_t = [
+  | T1 of string
+  | T2 of string list
+]
+
 type id_t = string
 type type_t = string
 type height_t = int
@@ -566,3 +599,5 @@ type total_t = int
 type last_t = string
 type next_t = string
 type start_index_t = int
+type name_t = string
+type nickname_t = string
