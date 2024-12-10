@@ -637,7 +637,7 @@ export type AnnotationCollectionT = {
   rendering?: RenderingT[];
   partOf?: PartOfT;
   total?: TotalT;
-  first?: FirstT;
+  first: FirstT;
   last?: LastT;
   service?: ServiceT;
   thumbnail?: ThumbnailT[];
@@ -2623,7 +2623,7 @@ export function writeAnnotationCollectionT(x: AnnotationCollectionT, context: an
     'rendering': _atd_write_optional_field(_atd_write_array(writeRenderingT), x.rendering, x),
     'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
     'total': _atd_write_optional_field(writeTotalT, x.total, x),
-    'first': _atd_write_optional_field(writeFirstT, x.first, x),
+    'first': _atd_write_required_field('AnnotationCollectionT', 'first', writeFirstT, x.first, x),
     'last': _atd_write_optional_field(writeLastT, x.last, x),
     'service': _atd_write_optional_field(writeServiceT, x.service, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
@@ -2640,7 +2640,7 @@ export function readAnnotationCollectionT(x: any, context: any = x): AnnotationC
     rendering: _atd_read_optional_field(_atd_read_array(readRenderingT), x['rendering'], x),
     partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
     total: _atd_read_optional_field(readTotalT, x['total'], x),
-    first: _atd_read_optional_field(readFirstT, x['first'], x),
+    first: _atd_read_required_field('AnnotationCollectionT', 'first', readFirstT, x['first'], x),
     last: _atd_read_optional_field(readLastT, x['last'], x),
     service: _atd_read_optional_field(readServiceT, x['service'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),

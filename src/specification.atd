@@ -525,7 +525,7 @@ type annotation_collection_t = {
   ?rendering : rendering_t list option;
   ?partOf : part_of_t option;
   ?total : total_t option;
-  ?first : first_t option;
+  first : first_t;
   ?last : last_t option;
   ?service : service_t option;
   ?thumbnail : thumbnail_t list option;
