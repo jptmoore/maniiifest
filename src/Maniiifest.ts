@@ -63,8 +63,8 @@ export class Maniiifest {
      * @returns {T.ContextT | null} The context if the specification is of kind 'Manifest', otherwise null.
      */
     getManifestContext(): T.ContextT | null {
-        return this.specification.kind === 'Manifest' && this.specification.value.context != undefined 
-            ? F.writeContextT(this.specification.value.context) 
+        return this.specification.kind === 'Manifest' && this.specification.value.context != undefined
+            ? F.writeContextT(this.specification.value.context)
             : null;
     }
 
@@ -74,8 +74,8 @@ export class Maniiifest {
      * @returns {T.IdT | null} The manifest ID if the specification kind is 'Manifest', otherwise `null`.
      */
     getManifestId(): T.IdT | null {
-        return this.specification.kind === 'Manifest' && this.specification.value.id != undefined 
-            ? F.writeIdT(this.specification.value.id) 
+        return this.specification.kind === 'Manifest' && this.specification.value.id != undefined
+            ? F.writeIdT(this.specification.value.id)
             : null;
     }
 
@@ -85,8 +85,8 @@ export class Maniiifest {
      * @returns {T.LabelT | null} The label if the specification is of kind 'Manifest' and has a label value, otherwise null.
      */
     getManifestLabel(): T.LabelT | null {
-        return this.specification.kind === 'Manifest' && this.specification.value.label != undefined 
-            ? F.writeLabelT(this.specification.value.label) 
+        return this.specification.kind === 'Manifest' && this.specification.value.label != undefined
+            ? F.writeLabelT(this.specification.value.label)
             : null;
     }
 
@@ -224,8 +224,8 @@ export class Maniiifest {
      * @returns {T.IdT | null} The collection ID if the specification is of kind 'Collection', otherwise null.
      */
     getCollectionId(): T.IdT | null {
-        return this.specification.kind === 'Collection' && this.specification.value.id != undefined 
-            ? F.writeIdT(this.specification.value.id) 
+        return this.specification.kind === 'Collection' && this.specification.value.id != undefined
+            ? F.writeIdT(this.specification.value.id)
             : null;
     }
 
@@ -235,8 +235,8 @@ export class Maniiifest {
      * @returns {T.LabelT | null} The collection label if the specification is of kind 'Collection', otherwise null.
      */
     getCollectionLabel(): T.LabelT | null {
-        return this.specification.kind === 'Collection' && this.specification.value.label != undefined 
-            ? F.writeLabelT(this.specification.value.label) 
+        return this.specification.kind === 'Collection' && this.specification.value.label != undefined
+            ? F.writeLabelT(this.specification.value.label)
             : null;
     }
 
@@ -287,14 +287,23 @@ export class Maniiifest {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
                     for (const annotation of annotationPage.items ?? []) {
-                        if (annotation.body.value.kind === 'T4') {
-                            yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                        if (annotation.body.kind === 'T2') { /* if body is an array */
+                            for (const body of annotation.body.value) {
+                                if (body.kind === 'T4') {
+                                    yield F.writeAnnotationBodyT4(body.value);
+                                }
+                            }
+                        } else { /* must be T1 */
+                            if (annotation.body.value.kind === 'T4') {
+                                yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                            }
                         }
                     }
                 }
             }
         }
     }
+
 
     /**
      * Iterates over the W3C annotation page elements on the canvases in the manifest.
@@ -809,8 +818,16 @@ export class Maniiifest {
         if (this.specification.kind === 'Manifest') {
             for (const annotationPage of this.specification.value.annotations ?? []) {
                 for (const annotation of annotationPage.items ?? []) {
-                    if (annotation.body.value.kind === 'T4') {
-                        yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                    if (annotation.body.kind === 'T2') { /* if body is an array */
+                        for (const body of annotation.body.value) {
+                            if (body.kind === 'T4') {
+                                yield F.writeAnnotationBodyT4(body.value);
+                            }
+                        }
+                    } else { /* must be T1 */
+                        if (annotation.body.value.kind === 'T4') {
+                            yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                        }
                     }
                 }
             }
@@ -841,8 +858,8 @@ export class Maniiifest {
      * @returns {T.AnnotationCollectionT | null} The annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollection(): T.AnnotationCollectionT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification != undefined 
-            ? F.writeAnnotationCollectionT(this.specification) 
+        return this.specification.type === 'AnnotationCollection' && this.specification != undefined
+            ? F.writeAnnotationCollectionT(this.specification)
             : null;
     }
 
@@ -852,8 +869,8 @@ export class Maniiifest {
      * @returns {T.IdT | null} The annotation collection ID if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionId(): T.IdT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.id != undefined 
-            ? F.writeIdT(this.specification.id) 
+        return this.specification.type === 'AnnotationCollection' && this.specification.id != undefined
+            ? F.writeIdT(this.specification.id)
             : null;
     }
 
@@ -863,8 +880,8 @@ export class Maniiifest {
      * @returns {T.TypeT | null} The type of the annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionType(): T.TypeT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.type != undefined 
-            ? F.writeTypeT(this.specification.type) 
+        return this.specification.type === 'AnnotationCollection' && this.specification.type != undefined
+            ? F.writeTypeT(this.specification.type)
             : null;
     }
 
@@ -874,8 +891,8 @@ export class Maniiifest {
      * @returns {T.ContextT | null} The annotation collection context if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionContext(): T.ContextT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.context != undefined 
-            ? F.writeContextT(this.specification.context) 
+        return this.specification.type === 'AnnotationCollection' && this.specification.context != undefined
+            ? F.writeContextT(this.specification.context)
             : null;
     }
 
@@ -885,8 +902,8 @@ export class Maniiifest {
      * @returns {T.LabelT | null} The annotation collection label if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionLabel(): T.LabelT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.label != undefined 
-            ? F.writeLabelT(this.specification.label) 
+        return this.specification.type === 'AnnotationCollection' && this.specification.label != undefined
+            ? F.writeLabelT(this.specification.label)
             : null;
     }
 
@@ -896,8 +913,8 @@ export class Maniiifest {
      * @returns {T.FirstT | null} The first annotation in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionFirst(): T.FirstT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.first != undefined 
-            ? F.writeFirstT(this.specification.first) 
+        return this.specification.type === 'AnnotationCollection' && this.specification.first != undefined
+            ? F.writeFirstT(this.specification.first)
             : null;
     }
 
@@ -907,8 +924,8 @@ export class Maniiifest {
      * @returns {T.LastT | null} The last annotation in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionLast(): T.LastT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.last != undefined 
-            ? F.writeLastT(this.specification.last) 
+        return this.specification.type === 'AnnotationCollection' && this.specification.last != undefined
+            ? F.writeLastT(this.specification.last)
             : null;
     }
 
@@ -918,8 +935,8 @@ export class Maniiifest {
      * @returns {T.TotalT | null} The total number of annotations in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionTotal(): T.TotalT | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.total != undefined 
-            ? F.writeTotalT(this.specification.total) 
+        return this.specification.type === 'AnnotationCollection' && this.specification.total != undefined
+            ? F.writeTotalT(this.specification.total)
             : null;
     }
 
@@ -929,8 +946,8 @@ export class Maniiifest {
      * @returns {T.AnnotationPageT | null} The annotation page if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPage(): T.AnnotationPageT | null {
-        return this.specification.type === 'AnnotationPage' && this.specification != undefined 
-            ? F.writeAnnotationPageT(this.specification) 
+        return this.specification.type === 'AnnotationPage' && this.specification != undefined
+            ? F.writeAnnotationPageT(this.specification)
             : null;
     }
 
@@ -940,8 +957,8 @@ export class Maniiifest {
      * @returns {T.TypeT | null} The type of the annotation page if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPageType(): T.TypeT | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.type != undefined 
-            ? F.writeTypeT(this.specification.type) 
+        return this.specification.type === 'AnnotationPage' && this.specification.type != undefined
+            ? F.writeTypeT(this.specification.type)
             : null;
     }
 
@@ -951,8 +968,8 @@ export class Maniiifest {
      * @returns {T.IdT | null} The annotation page ID if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPageId(): T.IdT | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.id != undefined 
-            ? F.writeIdT(this.specification.id) 
+        return this.specification.type === 'AnnotationPage' && this.specification.id != undefined
+            ? F.writeIdT(this.specification.id)
             : null;
     }
 
@@ -962,8 +979,8 @@ export class Maniiifest {
      * @returns {T.ContextT | null} The annotation page context if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPageContext(): T.ContextT | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.context != undefined 
-            ? F.writeContextT(this.specification.context) 
+        return this.specification.type === 'AnnotationPage' && this.specification.context != undefined
+            ? F.writeContextT(this.specification.context)
             : null;
     }
 
@@ -973,9 +990,9 @@ export class Maniiifest {
      * @returns {T.PartOfT | null} The 'partOf' property if the specification type is 'AnnotationPage', otherwise null.
      */
     getAnnotationPagePartOf(): T.PartOfT | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.partOf != undefined 
-        ? F.writePartOfT(this.specification.partOf) 
-        : null;
+        return this.specification.type === 'AnnotationPage' && this.specification.partOf != undefined
+            ? F.writePartOfT(this.specification.partOf)
+            : null;
     }
 
     /**
@@ -999,8 +1016,16 @@ export class Maniiifest {
     *iterateAnnotationPageAnnotationTextualBody(): IterableIterator<T.AnnotationBodyT4> {
         if (this.specification.type === 'AnnotationPage') {
             for (const annotation of this.specification.items ?? []) {
-                if (annotation.body.value.kind === 'T4') {
-                    yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                if (annotation.body.kind === 'T2') { /* if body is an array */
+                    for (const body of annotation.body.value) {
+                        if (body.kind === 'T4') {
+                            yield F.writeAnnotationBodyT4(body.value);
+                        }
+                    }
+                } else { /* must be T1 */
+                    if (annotation.body.value.kind === 'T4') {
+                        yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                    }
                 }
             }
         }
@@ -1012,8 +1037,8 @@ export class Maniiifest {
      * @returns {T.AnnotationT | null} The annotation if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotation(): T.AnnotationT | null {
-        return this.specification.type === 'Annotation' && this.specification != undefined 
-            ? F.writeAnnotationT(this.specification) 
+        return this.specification.type === 'Annotation' && this.specification != undefined
+            ? F.writeAnnotationT(this.specification)
             : null;
     }
 
@@ -1023,8 +1048,8 @@ export class Maniiifest {
      * @returns {T.IdT | null} The annotation ID if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationId(): T.IdT | null {
-        return this.specification.type === 'Annotation' && this.specification.id != undefined 
-            ? F.writeIdT(this.specification.id) 
+        return this.specification.type === 'Annotation' && this.specification.id != undefined
+            ? F.writeIdT(this.specification.id)
             : null;
     }
 
@@ -1034,8 +1059,8 @@ export class Maniiifest {
      * @returns {T.TypeT | null} The annotation type if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationType(): T.TypeT | null {
-        return this.specification.type === 'Annotation' && this.specification.type != undefined 
-            ? F.writeTypeT(this.specification.type) 
+        return this.specification.type === 'Annotation' && this.specification.type != undefined
+            ? F.writeTypeT(this.specification.type)
             : null;
     }
 
@@ -1045,8 +1070,8 @@ export class Maniiifest {
      * @returns {T.ContextT | null} The annotation context if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationContext(): T.ContextT | null {
-        return this.specification.type === 'Annotation' && this.specification.context != undefined 
-            ? F.writeContextT(this.specification.context) 
+        return this.specification.type === 'Annotation' && this.specification.context != undefined
+            ? F.writeContextT(this.specification.context)
             : null;
     }
 
@@ -1056,8 +1081,8 @@ export class Maniiifest {
      * @returns {T.BodyT | null} The annotation body if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationBody(): T.BodyT | null {
-        return this.specification.type === 'Annotation' && this.specification.body != undefined 
-            ? F.writeBodyT(this.specification.body) 
+        return this.specification.type === 'Annotation' && this.specification.body != undefined
+            ? F.writeBodyT(this.specification.body)
             : null;
     }
 
@@ -1067,8 +1092,8 @@ export class Maniiifest {
      * @returns {T.TargetT | null} The annotation target if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationTarget(): T.TargetT | null {
-        return this.specification.type === 'Annotation' && this.specification.target != undefined 
-            ? F.writeTargetT(this.specification.target) 
+        return this.specification.type === 'Annotation' && this.specification.target != undefined
+            ? F.writeTargetT(this.specification.target)
             : null;
     }
 
@@ -1078,8 +1103,8 @@ export class Maniiifest {
      * @returns {T.MotivationT | null} The annotation motivation if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationMotivation(): T.MotivationT | null {
-        return this.specification.type === 'Annotation' && this.specification.motivation != undefined 
-            ? F.writeMotivationT(this.specification.motivation) 
+        return this.specification.type === 'Annotation' && this.specification.motivation != undefined
+            ? F.writeMotivationT(this.specification.motivation)
             : null;
     }
 
