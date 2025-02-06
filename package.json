@@ -1,6 +1,6 @@
 {
   "name": "maniiifest",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jptmoore/maniiifest.git"
+    "url": "git+https://github.com/jptmoore/maniiifest.git"
   },
   "keywords": [
     "IIIF",
