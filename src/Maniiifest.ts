@@ -287,14 +287,14 @@ export class Maniiifest {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
                     for (const annotation of annotationPage.items ?? []) {
-                        if (annotation.body.kind === 'T2') { /* if body is an array */
+                        if (annotation.body?.kind === 'T2') { /* if body is an array */
                             for (const body of annotation.body.value) {
                                 if (body.kind === 'T4') {
                                     yield F.writeAnnotationBodyT4(body.value);
                                 }
                             }
                         } else { /* must be T1 */
-                            if (annotation.body.value.kind === 'T4') {
+                            if (annotation.body?.value?.kind === 'T4') {
                                 yield F.writeAnnotationBodyT4(annotation.body.value.value);
                             }
                         }
@@ -818,14 +818,14 @@ export class Maniiifest {
         if (this.specification.kind === 'Manifest') {
             for (const annotationPage of this.specification.value.annotations ?? []) {
                 for (const annotation of annotationPage.items ?? []) {
-                    if (annotation.body.kind === 'T2') { /* if body is an array */
+                    if (annotation.body?.kind === 'T2') { /* if body is an array */
                         for (const body of annotation.body.value) {
                             if (body.kind === 'T4') {
                                 yield F.writeAnnotationBodyT4(body.value);
                             }
                         }
                     } else { /* must be T1 */
-                        if (annotation.body.value.kind === 'T4') {
+                        if (annotation.body?.value?.kind === 'T4') {
                             yield F.writeAnnotationBodyT4(annotation.body.value.value);
                         }
                     }
@@ -1016,14 +1016,14 @@ export class Maniiifest {
     *iterateAnnotationPageAnnotationTextualBody(): IterableIterator<T.AnnotationBodyT4> {
         if (this.specification.type === 'AnnotationPage') {
             for (const annotation of this.specification.items ?? []) {
-                if (annotation.body.kind === 'T2') { /* if body is an array */
+                if (annotation.body?.kind === 'T2') { /* if body is an array */
                     for (const body of annotation.body.value) {
                         if (body.kind === 'T4') {
                             yield F.writeAnnotationBodyT4(body.value);
                         }
                     }
                 } else { /* must be T1 */
-                    if (annotation.body.value.kind === 'T4') {
+                    if (annotation.body?.value?.kind === 'T4') {
                         yield F.writeAnnotationBodyT4(annotation.body.value.value);
                     }
                 }
