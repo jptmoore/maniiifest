@@ -434,14 +434,20 @@ export type AnnotationTargetT =
 | { kind: 'T1'; value: AnnotationTargetT1 }
 | { kind: 'T2'; value: AnnotationTargetT2 }
 | { kind: 'T3'; value: AnnotationTargetT3 }
+| { kind: 'T4'; value: AnnotationTargetT4 }
 
 export type AnnotationTargetT1 = string
 
-export type AnnotationTargetT2 = SpecificResourceT
-
-export type AnnotationTargetT3 = {
+export type AnnotationTargetT2 = {
   source: IdT;
   scope: IdT;
+}
+
+export type AnnotationTargetT3 = SpecificResourceT
+
+export type AnnotationTargetT4 = {
+  id: IdT;
+  partOf?: PartOfT;
 }
 
 export type SpecificResourceT = {
@@ -1936,6 +1942,8 @@ export function _writeAnnotationTargetT(x: AnnotationTargetT, context: any = x):
       return ['T2', writeAnnotationTargetT2(x.value, x)]
     case 'T3':
       return ['T3', writeAnnotationTargetT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeAnnotationTargetT4(x.value, x)]
   }
 }
 
@@ -1948,6 +1956,8 @@ export function _readAnnotationTargetT(x: any, context: any = x): AnnotationTarg
       return { kind: 'T2', value: readAnnotationTargetT2(x[1], x) }
     case 'T3':
       return { kind: 'T3', value: readAnnotationTargetT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readAnnotationTargetT4(x[1], x) }
     default:
       _atd_bad_json('AnnotationTargetT', x, context)
       throw new Error('impossible')
@@ -1963,24 +1973,38 @@ export function readAnnotationTargetT1(x: any, context: any = x): AnnotationTarg
 }
 
 export function writeAnnotationTargetT2(x: AnnotationTargetT2, context: any = x): any {
-  return writeSpecificResourceT(x, context);
-}
-
-export function readAnnotationTargetT2(x: any, context: any = x): AnnotationTargetT2 {
-  return readSpecificResourceT(x, context);
-}
-
-export function writeAnnotationTargetT3(x: AnnotationTargetT3, context: any = x): any {
   return {
-    'source': _atd_write_required_field('AnnotationTargetT3', 'source', writeIdT, x.source, x),
-    'scope': _atd_write_required_field('AnnotationTargetT3', 'scope', writeIdT, x.scope, x),
+    'source': _atd_write_required_field('AnnotationTargetT2', 'source', writeIdT, x.source, x),
+    'scope': _atd_write_required_field('AnnotationTargetT2', 'scope', writeIdT, x.scope, x),
   };
 }
 
-export function readAnnotationTargetT3(x: any, context: any = x): AnnotationTargetT3 {
+export function readAnnotationTargetT2(x: any, context: any = x): AnnotationTargetT2 {
   return {
-    source: _atd_read_required_field('AnnotationTargetT3', 'source', readIdT, x['source'], x),
-    scope: _atd_read_required_field('AnnotationTargetT3', 'scope', readIdT, x['scope'], x),
+    source: _atd_read_required_field('AnnotationTargetT2', 'source', readIdT, x['source'], x),
+    scope: _atd_read_required_field('AnnotationTargetT2', 'scope', readIdT, x['scope'], x),
+  };
+}
+
+export function writeAnnotationTargetT3(x: AnnotationTargetT3, context: any = x): any {
+  return writeSpecificResourceT(x, context);
+}
+
+export function readAnnotationTargetT3(x: any, context: any = x): AnnotationTargetT3 {
+  return readSpecificResourceT(x, context);
+}
+
+export function writeAnnotationTargetT4(x: AnnotationTargetT4, context: any = x): any {
+  return {
+    'id': _atd_write_required_field('AnnotationTargetT4', 'id', writeIdT, x.id, x),
+    'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
+  };
+}
+
+export function readAnnotationTargetT4(x: any, context: any = x): AnnotationTargetT4 {
+  return {
+    id: _atd_read_required_field('AnnotationTargetT4', 'id', readIdT, x['id'], x),
+    partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
   };
 }
 

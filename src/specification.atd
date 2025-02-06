@@ -325,15 +325,21 @@ type annotation_target_t = [
   | T1 of annotation_target_t1
   | T2 of annotation_target_t2
   | T3 of annotation_target_t3
+  | T4 of annotation_target_t4
 ]  
 
 type annotation_target_t1 = string
 
-type annotation_target_t2 = specific_resource_t
-
-type annotation_target_t3 = {
+type annotation_target_t2 = {
   source : id_t;
   scope : id_t;
+}
+
+type annotation_target_t3 = specific_resource_t
+
+type annotation_target_t4 = {
+  id : id_t;
+  ?partOf : part_of_t option;
 }
 
 type specific_resource_t = {
