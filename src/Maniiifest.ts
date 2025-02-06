@@ -1032,6 +1032,29 @@ export class Maniiifest {
     }
 
     /**
+     * Iterates over the target of annotations that contain partOf properties in the annotation page.
+     *
+     * @returns {IterableIterator<T.AnnotationTargetT4>} An iterator over the target of annotations with partOf properties.
+     */    
+    *iterateAnnotationPageAnnotationPartOf(): IterableIterator<T.AnnotationTargetT4> {
+        if (this.specification.type === 'AnnotationPage') {
+            for (const annotation of this.specification.items ?? []) {
+                if (annotation.target?.kind === 'T2') { /* if target is an array */
+                    for (const target of annotation.target.value) {
+                        if (target.kind === 'T4') {
+                            yield F.writeAnnotationTargetT4(target.value);
+                        }
+                    }
+                } else { /* must be T1 */
+                    if (annotation.target?.value?.kind === 'T4') {
+                        yield F.writeAnnotationTargetT4(annotation.target.value.value);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Retrieves the annotation if the specification type is 'Annotation'.
      *
      * @returns {T.AnnotationT | null} The annotation if the specification type is 'Annotation', otherwise `null`.
