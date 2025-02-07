@@ -1032,6 +1032,27 @@ export class Maniiifest {
     }
 
     /**
+     * Iterates over the textual bodies of annotations in a single annotation.
+     *
+     * @returns {IterableIterator<T.AnnotationBodyT4>} An iterator over the textual bodies of an annotation.
+     */
+    *iterateAnnotationTextualBody(): IterableIterator<T.AnnotationBodyT4> {
+        if (this.specification.type === 'Annotation') {
+            if (this.specification.body?.kind === 'T2') { /* if body is an array */
+                for (const body of this.specification.body.value) {
+                    if (body.kind === 'T4') {
+                        yield F.writeAnnotationBodyT4(body.value);
+                    }
+                }
+            } else { /* must be T1 */
+                if (this.specification.body?.value?.kind === 'T4') {
+                    yield F.writeAnnotationBodyT4(this.specification.body.value.value);
+                }
+            }
+        }
+    }
+
+    /**
      * Iterates over the target of annotations that contain partOf properties in the annotation page.
      *
      * @returns {IterableIterator<T.AnnotationTargetT4>} An iterator over the target of annotations with partOf properties.
