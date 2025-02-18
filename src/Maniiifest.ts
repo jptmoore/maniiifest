@@ -1032,7 +1032,7 @@ export class Maniiifest {
     }
 
     /**
-     * Iterates over the textual bodies of annotations in a single annotation.
+     * Iterates over the textual bodies in a single annotation.
      *
      * @returns {IterableIterator<T.AnnotationBodyT4>} An iterator over the textual bodies of an annotation.
      */
@@ -1053,7 +1053,7 @@ export class Maniiifest {
     }
 
     /**
-     * Iterates over the resource bodies of annotations in a single annotation.
+     * Iterates over the resource bodies in a single annotation.
      *
      * @returns {IterableIterator<T.AnnotationBodyT2>} An iterator over the resource bodies of an annotation.
      */
@@ -1074,7 +1074,7 @@ export class Maniiifest {
     }
 
     /**
-     * Iterates over the target of annotations in a single annotation.
+     * Iterates over targets in a single annotation.
      *
      * @returns {IterableIterator<T.AnnotationTargetT>} An iterator over the target of an annotation.
      */
