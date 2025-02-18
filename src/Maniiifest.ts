@@ -1055,7 +1055,7 @@ export class Maniiifest {
     /**
      * Iterates over the resource bodies of annotations in a single annotation.
      *
-     * @returns {IterableIterator<T.AnnotationBodyT4>} An iterator over the resource bodies of an annotation.
+     * @returns {IterableIterator<T.AnnotationBodyT2>} An iterator over the resource bodies of an annotation.
      */
     *iterateAnnotationResourceBody(): IterableIterator<T.AnnotationBodyT2> {
         if (this.specification.type === 'Annotation') {
@@ -1072,6 +1072,24 @@ export class Maniiifest {
             }
         }
     }
+
+    /**
+     * Iterates over the target of annotations in a single annotation.
+     *
+     * @returns {IterableIterator<T.AnnotationTargetT>} An iterator over the target of an annotation.
+     */
+    *iterateAnnotationTarget(): IterableIterator<T.AnnotationTargetT> {
+        if (this.specification.type === 'Annotation') {
+            if (this.specification.target?.kind === 'T2') { /* if body is an array */
+                for (const target of this.specification.target.value) {
+                    yield F.writeAnnotationTargetT(target);
+                }
+            } else { /* must be T1 */
+                yield F.writeAnnotationTargetT(this.specification.target.value);
+            }
+        }
+    }
+    
 
     /**
      * Iterates over the target of annotations that contain partOf properties in the annotation page.
