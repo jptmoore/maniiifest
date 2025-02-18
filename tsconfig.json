@@ -2,8 +2,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "declarationMap": false,
+    "sourceMap": false,
     "target": "es2015", // Updated from "es5" to "es2015"
     "module": "commonjs"
   },
