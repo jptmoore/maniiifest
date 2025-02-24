@@ -595,6 +595,47 @@ export class Maniiifest {
         }
     }
 
+
+    /**
+     * Iterates over the collections and manifests in the specification.
+     *
+     * This generator function yields collections from the specification, recursively from nested collections,
+     * and manifests found within the collections.
+     *
+     * @yields {T.CollectionT | T.ManifestT} The next collection or manifest item in the specification.
+     */
+    *iterateCollection(): IterableIterator<T.CollectionT | T.ManifestT> {
+        if (!this.specification || !this.specification.kind || !this.specification.value) {
+            return; // Handle invalid specification
+        }
+        if (this.specification.kind === "Collection") {
+            yield F.writeCollectionT(this.specification.value);
+
+            const traverse = function* (items?: Array<{ kind: string; value: any }>) {
+                if (!items) return; // Handle case where items might not exist
+                for (const item of items) {
+                    if (item.kind === "Collection") {
+                        yield F.writeCollectionT(item.value);
+                        if (item.value.items) {
+                            yield* traverse(item.value.items); // Recursively process nested collections
+                        }
+                    } else if (item.kind === "Manifest") {
+                        yield F.writeManifestT(item.value); // Yield manifests found in the collection
+                    }
+                }
+            };
+            if (this.specification.value.items) {
+                yield* traverse(this.specification.value.items);
+            }
+        } else if (this.specification.kind === "Manifest") {
+            // If the specification is a Manifest, yield it directly
+            yield F.writeManifestT(this.specification.value);
+        }
+    }
+
+
+
+
     /**
      * Iterates over the collections in the specification.
      *
@@ -602,7 +643,7 @@ export class Maniiifest {
      *
      * @yields {T.CollectionT} The next collection item in the specification.
      */
-    *iterateCollection(): IterableIterator<T.CollectionT> {
+    *iterateCollectionCollection(): IterableIterator<T.CollectionT> {
         if (this.specification.kind === 'Collection') {
             yield F.writeCollectionT(this.specification.value);
             const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.CollectionT> {
@@ -1089,13 +1130,13 @@ export class Maniiifest {
             }
         }
     }
-    
+
 
     /**
      * Iterates over the target of annotations that contain partOf properties in the annotation page.
      *
      * @returns {IterableIterator<T.AnnotationTargetT4>} An iterator over the target of annotations with partOf properties.
-     */    
+     */
     *iterateAnnotationPageAnnotationPartOf(): IterableIterator<T.AnnotationTargetT4> {
         if (this.specification.type === 'AnnotationPage') {
             for (const annotation of this.specification.items ?? []) {
