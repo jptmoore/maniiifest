@@ -287,7 +287,7 @@ export type MultiPolygonT = [number, number][][]
 
 export type AnnotationPageT = {
   context?: ContextT;
-  id: IdT;
+  id?: IdT;
   type: TypeT;
   label?: LabelT;
   partOf?: PartOfT;
@@ -1481,7 +1481,7 @@ export function readMultiPolygonT(x: any, context: any = x): MultiPolygonT {
 export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any {
   return {
     '@context': _atd_write_optional_field(writeContextT, x.context, x),
-    'id': _atd_write_required_field('AnnotationPageT', 'id', writeIdT, x.id, x),
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_required_field('AnnotationPageT', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
@@ -1497,7 +1497,7 @@ export function writeAnnotationPageT(x: AnnotationPageT, context: any = x): any 
 export function readAnnotationPageT(x: any, context: any = x): AnnotationPageT {
   return {
     context: _atd_read_optional_field(readContextT, x['@context'], x),
-    id: _atd_read_required_field('AnnotationPageT', 'id', readIdT, x['id'], x),
+    id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_required_field('AnnotationPageT', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
