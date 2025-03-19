@@ -371,6 +371,7 @@ type resource_selector_t = [
   | T3 of resource_selector_t3
   | T4 of resource_selector_t4
   | T5 of resource_selector_t5
+  | T6 of resource_selector_t6
 ]
 
 type resource_selector_t1 = string
@@ -401,6 +402,13 @@ type resource_selector_t5 = {
   ?rotation : rotatation_t option;
   ?quality : quality_t option;
   ?format : format_t option;
+}
+
+type resource_selector_t6 = {
+  _type <json name="type"> : type_t;
+  ?prefix : prefix_t option;
+  exact : exact_t;
+  ?suffix : suffix_t option;
 }
 
 type metadata_t = {
@@ -607,3 +615,6 @@ type next_t = string
 type start_index_t = int
 type name_t = string
 type nickname_t = string
+type prefix_t = string
+type exact_t = string
+type suffix_t = string
