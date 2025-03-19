@@ -477,6 +477,7 @@ export type ResourceSelectorT =
 | { kind: 'T3'; value: ResourceSelectorT3 }
 | { kind: 'T4'; value: ResourceSelectorT4 }
 | { kind: 'T5'; value: ResourceSelectorT5 }
+| { kind: 'T6'; value: ResourceSelectorT6 }
 
 export type ResourceSelectorT1 = string
 
@@ -507,6 +508,13 @@ export type ResourceSelectorT5 = {
   rotation?: RotatationT;
   quality?: QualityT;
   format?: FormatT;
+}
+
+export type ResourceSelectorT6 = {
+  type: TypeT;
+  prefix?: PrefixT;
+  exact: ExactT;
+  suffix?: SuffixT;
 }
 
 export type MetadataT = {
@@ -745,6 +753,12 @@ export type StartIndexT = number /*int*/
 export type NameT = string
 
 export type NicknameT = string
+
+export type PrefixT = string
+
+export type ExactT = string
+
+export type SuffixT = string
 
 export function _writeSpecificationT(x: SpecificationT, context: any = x): any {
   switch (x.kind) {
@@ -2102,6 +2116,8 @@ export function _writeResourceSelectorT(x: ResourceSelectorT, context: any = x):
       return ['T4', writeResourceSelectorT4(x.value, x)]
     case 'T5':
       return ['T5', writeResourceSelectorT5(x.value, x)]
+    case 'T6':
+      return ['T6', writeResourceSelectorT6(x.value, x)]
   }
 }
 
@@ -2118,6 +2134,8 @@ export function _readResourceSelectorT(x: any, context: any = x): ResourceSelect
       return { kind: 'T4', value: readResourceSelectorT4(x[1], x) }
     case 'T5':
       return { kind: 'T5', value: readResourceSelectorT5(x[1], x) }
+    case 'T6':
+      return { kind: 'T6', value: readResourceSelectorT6(x[1], x) }
     default:
       _atd_bad_json('ResourceSelectorT', x, context)
       throw new Error('impossible')
@@ -2207,6 +2225,24 @@ export function readResourceSelectorT5(x: any, context: any = x): ResourceSelect
     rotation: _atd_read_optional_field(readRotatationT, x['rotation'], x),
     quality: _atd_read_optional_field(readQualityT, x['quality'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
+  };
+}
+
+export function writeResourceSelectorT6(x: ResourceSelectorT6, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('ResourceSelectorT6', 'type', writeTypeT, x.type, x),
+    'prefix': _atd_write_optional_field(writePrefixT, x.prefix, x),
+    'exact': _atd_write_required_field('ResourceSelectorT6', 'exact', writeExactT, x.exact, x),
+    'suffix': _atd_write_optional_field(writeSuffixT, x.suffix, x),
+  };
+}
+
+export function readResourceSelectorT6(x: any, context: any = x): ResourceSelectorT6 {
+  return {
+    type: _atd_read_required_field('ResourceSelectorT6', 'type', readTypeT, x['type'], x),
+    prefix: _atd_read_optional_field(readPrefixT, x['prefix'], x),
+    exact: _atd_read_required_field('ResourceSelectorT6', 'exact', readExactT, x['exact'], x),
+    suffix: _atd_read_optional_field(readSuffixT, x['suffix'], x),
   };
 }
 
@@ -3029,6 +3065,30 @@ export function writeNicknameT(x: NicknameT, context: any = x): any {
 }
 
 export function readNicknameT(x: any, context: any = x): NicknameT {
+  return _atd_read_string(x, context);
+}
+
+export function writePrefixT(x: PrefixT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readPrefixT(x: any, context: any = x): PrefixT {
+  return _atd_read_string(x, context);
+}
+
+export function writeExactT(x: ExactT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readExactT(x: any, context: any = x): ExactT {
+  return _atd_read_string(x, context);
+}
+
+export function writeSuffixT(x: SuffixT, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readSuffixT(x: any, context: any = x): SuffixT {
   return _atd_read_string(x, context);
 }
 
