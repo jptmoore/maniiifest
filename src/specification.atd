@@ -202,7 +202,7 @@ type multi_polygon_t = (float * float) list list
 
 type annotation_page_t = {
   ?context <json name="@context"> : context_t option;
-  id : id_t;
+  ?id : id_t option;
   _type <json name="type"> : type_t;
   ?label : label_t option;
   ?partOf : part_of_t option;
