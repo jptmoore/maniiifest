@@ -186,6 +186,17 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the service from the manifest specification if it is of kind 'Manifest'.
+     *
+     * @returns {T.ServiceT | null} The service if the specification is of kind 'Manifest' and has a service value, otherwise null.
+     */
+    getManifestService(): T.ServiceT | null {
+        return this.specification.kind === 'Manifest' && this.specification.value.service !== undefined
+            ? F.writeServiceT(this.specification.value.service)
+            : null;
+    }
+
+    /**
      * Retrieves the manifest from the manifest specification if it is of kind 'Manifest'.
      *
      * @returns {T.ManifestT | null} The manifest if the specification is of kind 'Manifest' and has a value, otherwise null.
@@ -256,6 +267,17 @@ export class Maniiifest {
             }
         }
         return null;
+    }
+
+    /**
+     * Retrieves the service from the collection specification if it is of kind 'Collection'.
+     *
+     * @returns {T.ServiceT | null} The service if the specification is of kind 'Collection' and has a service value, otherwise null.
+     */
+    getCollectionService(): T.ServiceT | null {
+        return this.specification.kind === 'Collection' && this.specification.value.service !== undefined
+            ? F.writeServiceT(this.specification.value.service)
+            : null;
     }
 
     /**
@@ -772,6 +794,82 @@ export class Maniiifest {
                 }
             };
             if (this.specification.value.items) { // Check if items exist before starting traversal
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }
+
+    /**
+     * Iterates over the providers in the collection.
+     *
+     * This generator function yields providers from the collection's provider property and recursively from nested collections.
+     *
+     * @yields {T.ProviderT} The next provider item in the collection.
+     */
+    *iterateCollectionProvider(): IterableIterator<T.ProviderT> {
+        if (this.specification.kind === 'Collection') {
+            // Yield providers from the top-level collection
+            for (const provider of this.specification.value.provider ?? []) {
+                yield F.writeProviderT(provider);
+            }
+            // Define a recursive generator function to traverse nested collections
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.ProviderT> {
+                if (!items) return; // Handle case where items might not exist
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        // Yield providers from nested collections
+                        for (const provider of item.value.provider ?? []) {
+                            yield F.writeProviderT(provider);
+                        }
+                        // Recursively traverse nested collections
+                        if (item.value.items) {
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            // Start traversal if there are nested items
+            if (this.specification.value.items) {
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }    
+
+    /**
+     * Iterates over the services in the collection.
+     *
+     * This generator function yields services from the collection's service property and recursively from nested collections.
+     *
+     * @yields {T.ServiceItemT} The next service item in the collection.
+     */
+    *iterateCollectionService(): IterableIterator<T.ServiceItemT> {
+        if (this.specification.kind === 'Collection') {
+            // Yield services from the top-level collection
+            if (this.specification.value.service?.kind === 'T2') {
+                for (const serviceItem of this.specification.value.service.value ?? []) {
+                    yield F.writeServiceItemT(serviceItem);
+                }
+            }
+            // Define a recursive generator function to traverse nested collections
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.ServiceItemT> {
+                if (!items) return; // Handle case where items might not exist
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        // Yield services from nested collections
+                        if (item.value.service?.kind === 'T2') {
+                            for (const serviceItem of item.value.service.value ?? []) {
+                                yield F.writeServiceItemT(serviceItem);
+                            }
+                        }
+                        // Recursively traverse nested collections
+                        if (item.value.items) {
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            // Start traversal if there are nested items
+            if (this.specification.value.items) {
                 yield* traverse(this.specification.value.items);
             }
         }
