@@ -281,6 +281,17 @@ export class Maniiifest {
     }
 
     /**
+     * Retrieves the required statement from the collection specification if it is of kind 'Collection'.
+     *
+     * @returns {T.RequiredStatementT | null} The required statement if the specification is of kind 'Manifest' and has a required statement value, otherwise null.
+     */
+    getCollectionRequiredStatement(): T.RequiredStatementT | null {
+        return this.specification.kind === 'Collection' && this.specification.value.requiredStatement !== undefined
+            ? F.writeRequiredStatementT(this.specification.value.requiredStatement)
+            : null;
+    }
+
+    /**
      * Iterates over the W3C annotation elements on the canvases in the manifest.
      *
      * This generator function yields W3C annotation elements from the canvases in the manifest.
