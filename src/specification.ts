@@ -397,6 +397,7 @@ export type AnnotationBodyT3 = {
   accessibility?: AccessibilityT;
   source: SourceT;
   selector?: SelectorT;
+  language?: LanguageT;
 }
 
 export type AnnotationBodyT4 = {
@@ -441,6 +442,7 @@ export type AnnotationTargetT1 = string
 export type AnnotationTargetT2 = {
   source: IdT;
   scope: IdT;
+  language?: LanguageT;
 }
 
 export type AnnotationTargetT3 = SpecificResourceT
@@ -448,6 +450,7 @@ export type AnnotationTargetT3 = SpecificResourceT
 export type AnnotationTargetT4 = {
   id: IdT;
   partOf?: PartOfT;
+  language?: LanguageT;
 }
 
 export type SpecificResourceT = {
@@ -457,6 +460,7 @@ export type SpecificResourceT = {
   accessibility?: AccessibilityT;
   source: SourceT;
   selector?: SelectorT;
+  language?: LanguageT;
 }
 
 export type SourceT =
@@ -1842,6 +1846,7 @@ export function writeAnnotationBodyT3(x: AnnotationBodyT3, context: any = x): an
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
     'source': _atd_write_required_field('AnnotationBodyT3', 'source', writeSourceT, x.source, x),
     'selector': _atd_write_optional_field(writeSelectorT, x.selector, x),
+    'language': _atd_write_optional_field(writeLanguageT, x.language, x),
   };
 }
 
@@ -1853,6 +1858,7 @@ export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
     source: _atd_read_required_field('AnnotationBodyT3', 'source', readSourceT, x['source'], x),
     selector: _atd_read_optional_field(readSelectorT, x['selector'], x),
+    language: _atd_read_optional_field(readLanguageT, x['language'], x),
   };
 }
 
@@ -1990,6 +1996,7 @@ export function writeAnnotationTargetT2(x: AnnotationTargetT2, context: any = x)
   return {
     'source': _atd_write_required_field('AnnotationTargetT2', 'source', writeIdT, x.source, x),
     'scope': _atd_write_required_field('AnnotationTargetT2', 'scope', writeIdT, x.scope, x),
+    'language': _atd_write_optional_field(writeLanguageT, x.language, x),
   };
 }
 
@@ -1997,6 +2004,7 @@ export function readAnnotationTargetT2(x: any, context: any = x): AnnotationTarg
   return {
     source: _atd_read_required_field('AnnotationTargetT2', 'source', readIdT, x['source'], x),
     scope: _atd_read_required_field('AnnotationTargetT2', 'scope', readIdT, x['scope'], x),
+    language: _atd_read_optional_field(readLanguageT, x['language'], x),
   };
 }
 
@@ -2012,6 +2020,7 @@ export function writeAnnotationTargetT4(x: AnnotationTargetT4, context: any = x)
   return {
     'id': _atd_write_required_field('AnnotationTargetT4', 'id', writeIdT, x.id, x),
     'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
+    'language': _atd_write_optional_field(writeLanguageT, x.language, x),
   };
 }
 
@@ -2019,6 +2028,7 @@ export function readAnnotationTargetT4(x: any, context: any = x): AnnotationTarg
   return {
     id: _atd_read_required_field('AnnotationTargetT4', 'id', readIdT, x['id'], x),
     partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
+    language: _atd_read_optional_field(readLanguageT, x['language'], x),
   };
 }
 
@@ -2030,6 +2040,7 @@ export function writeSpecificResourceT(x: SpecificResourceT, context: any = x): 
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
     'source': _atd_write_required_field('SpecificResourceT', 'source', writeSourceT, x.source, x),
     'selector': _atd_write_optional_field(writeSelectorT, x.selector, x),
+    'language': _atd_write_optional_field(writeLanguageT, x.language, x),
   };
 }
 
@@ -2041,6 +2052,7 @@ export function readSpecificResourceT(x: any, context: any = x): SpecificResourc
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
     source: _atd_read_required_field('SpecificResourceT', 'source', readSourceT, x['source'], x),
     selector: _atd_read_optional_field(readSelectorT, x['selector'], x),
+    language: _atd_read_optional_field(readLanguageT, x['language'], x),
   };
 }
 

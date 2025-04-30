@@ -333,6 +333,7 @@ type annotation_target_t1 = string
 type annotation_target_t2 = {
   source : id_t;
   scope : id_t;
+  ?language : language_t option;
 }
 
 type annotation_target_t3 = specific_resource_t
@@ -340,6 +341,7 @@ type annotation_target_t3 = specific_resource_t
 type annotation_target_t4 = {
   id : id_t;
   ?partOf : part_of_t option;
+  ?language : language_t option;
 }
 
 type specific_resource_t = {
@@ -349,6 +351,7 @@ type specific_resource_t = {
   ?accessibility : accessibility_t option;
   source : source_t;
   ?selector : selector_t option;
+  ?language : language_t option;
 }
 
 type source_t = [
