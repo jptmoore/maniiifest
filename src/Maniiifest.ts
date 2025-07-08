@@ -844,7 +844,43 @@ export class Maniiifest {
                 yield* traverse(this.specification.value.items);
             }
         }
-    }    
+    }
+
+    /**
+     * Iterates over the homepages in the collection.
+     *
+     * This generator function yields homepages from the collection's homepage property and recursively from nested collections.
+     *
+     * @yields {T.HomepageT} The next homepage item in the collection.
+     */
+    *iterateCollectionHomepage(): IterableIterator<T.HomepageT> {
+        if (this.specification.kind === 'Collection') {
+            // Yield homepages from the top-level collection
+            for (const homepage of this.specification.value.homepage ?? []) {
+                yield F.writeHomepageT(homepage);
+            }
+            // Define a recursive generator function to traverse nested collections
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T.HomepageT> {
+                if (!items) return; // Handle case where items might not exist
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        // Yield homepages from nested collections
+                        for (const homepage of item.value.homepage ?? []) {
+                            yield F.writeHomepageT(homepage);
+                        }
+                        // Recursively traverse nested collections
+                        if (item.value.items) {
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            // Start traversal if there are nested items
+            if (this.specification.value.items) {
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }
 
     /**
      * Iterates over the services in the collection.
