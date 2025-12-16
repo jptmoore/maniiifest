@@ -375,6 +375,7 @@ type resource_selector_t = [
   | T4 of resource_selector_t4
   | T5 of resource_selector_t5
   | T6 of resource_selector_t6
+  | T7 of resource_selector_t7
 ]
 
 type resource_selector_t1 = string
@@ -412,6 +413,11 @@ type resource_selector_t6 = {
   ?prefix : prefix_t option;
   exact : exact_t;
   ?suffix : suffix_t option;
+}
+
+type resource_selector_t7 = {
+  _type <json name="type"> : type_t;
+  value : value_t;
 }
 
 type metadata_t = {
