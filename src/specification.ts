@@ -482,6 +482,7 @@ export type ResourceSelectorT =
 | { kind: 'T4'; value: ResourceSelectorT4 }
 | { kind: 'T5'; value: ResourceSelectorT5 }
 | { kind: 'T6'; value: ResourceSelectorT6 }
+| { kind: 'T7'; value: ResourceSelectorT7 }
 
 export type ResourceSelectorT1 = string
 
@@ -519,6 +520,11 @@ export type ResourceSelectorT6 = {
   prefix?: PrefixT;
   exact: ExactT;
   suffix?: SuffixT;
+}
+
+export type ResourceSelectorT7 = {
+  type: TypeT;
+  value: ValueT;
 }
 
 export type MetadataT = {
@@ -2130,6 +2136,8 @@ export function _writeResourceSelectorT(x: ResourceSelectorT, context: any = x):
       return ['T5', writeResourceSelectorT5(x.value, x)]
     case 'T6':
       return ['T6', writeResourceSelectorT6(x.value, x)]
+    case 'T7':
+      return ['T7', writeResourceSelectorT7(x.value, x)]
   }
 }
 
@@ -2148,6 +2156,8 @@ export function _readResourceSelectorT(x: any, context: any = x): ResourceSelect
       return { kind: 'T5', value: readResourceSelectorT5(x[1], x) }
     case 'T6':
       return { kind: 'T6', value: readResourceSelectorT6(x[1], x) }
+    case 'T7':
+      return { kind: 'T7', value: readResourceSelectorT7(x[1], x) }
     default:
       _atd_bad_json('ResourceSelectorT', x, context)
       throw new Error('impossible')
@@ -2255,6 +2265,20 @@ export function readResourceSelectorT6(x: any, context: any = x): ResourceSelect
     prefix: _atd_read_optional_field(readPrefixT, x['prefix'], x),
     exact: _atd_read_required_field('ResourceSelectorT6', 'exact', readExactT, x['exact'], x),
     suffix: _atd_read_optional_field(readSuffixT, x['suffix'], x),
+  };
+}
+
+export function writeResourceSelectorT7(x: ResourceSelectorT7, context: any = x): any {
+  return {
+    'type': _atd_write_required_field('ResourceSelectorT7', 'type', writeTypeT, x.type, x),
+    'value': _atd_write_required_field('ResourceSelectorT7', 'value', writeValueT, x.value, x),
+  };
+}
+
+export function readResourceSelectorT7(x: any, context: any = x): ResourceSelectorT7 {
+  return {
+    type: _atd_read_required_field('ResourceSelectorT7', 'type', readTypeT, x['type'], x),
+    value: _atd_read_required_field('ResourceSelectorT7', 'value', readValueT, x['value'], x),
   };
 }
 
