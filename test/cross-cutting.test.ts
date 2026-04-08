@@ -38,6 +38,36 @@ describe('Constructor validation', () => {
   });
 });
 
+describe('Constructor error handling', () => {
+  it('wraps parse errors with descriptive message for Manifest', () => {
+    expect(() => new Maniiifest(null)).toThrow(/Failed to parse IIIF data/);
+  });
+
+  it('wraps parse errors with descriptive message for Annotation', () => {
+    expect(() => new Maniiifest(null, "Annotation")).toThrow(/Failed to parse IIIF data as Annotation/);
+  });
+
+  it('wraps parse errors with descriptive message for AnnotationPage', () => {
+    expect(() => new Maniiifest(null, "AnnotationPage")).toThrow(/Failed to parse IIIF data as AnnotationPage/);
+  });
+
+  it('wraps parse errors with descriptive message for AnnotationCollection', () => {
+    expect(() => new Maniiifest(null, "AnnotationCollection")).toThrow(/Failed to parse IIIF data as AnnotationCollection/);
+  });
+
+  it('preserves unsupported type error without wrapping', () => {
+    expect(() => new Maniiifest({}, "BadType" as any)).toThrow('Unsupported type: BadType');
+  });
+
+  it('wraps errors when data is a non-object primitive', () => {
+    expect(() => new Maniiifest(42)).toThrow(/Failed to parse IIIF data/);
+  });
+
+  it('wraps errors when data is undefined', () => {
+    expect(() => new Maniiifest(undefined)).toThrow(/Failed to parse IIIF data/);
+  });
+});
+
 describe('Private specification field', () => {
   it('specification is not on the prototype', () => {
     const m = new Maniiifest({ id: "x", type: "Manifest", label: { en: ["M"] } });

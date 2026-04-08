@@ -30,21 +30,41 @@ export class Maniiifest {
      * @throws {Error} Throws an error if an unsupported type is provided.
      */
     constructor(data: any, type?: string) {
-        switch (type) {
-            case "AnnotationCollection":
-                this.specification = F.readAnnotationCollectionT(data);
-                break;
-            case "AnnotationPage":
-                this.specification = F.readAnnotationPageT(data);
-                break;
-            case "Annotation":
-                this.specification = F.readAnnotationT(data);
-                break;
-            case undefined:
-                this.specification = F.readSpecificationT(data);
-                break;
-            default:
-                throw new Error(`Unsupported type: ${type}`);
+        try {
+            switch (type) {
+                case "AnnotationCollection":
+                    this.specification = F.readAnnotationCollectionT(data);
+                    break;
+                case "AnnotationPage":
+                    this.specification = F.readAnnotationPageT(data);
+                    break;
+                case "Annotation":
+                    this.specification = F.readAnnotationT(data);
+                    break;
+                case undefined:
+                    this.specification = F.readSpecificationT(data);
+                    break;
+                default:
+                    throw new Error(`Unsupported type: ${type}`);
+            }
+        } catch (error) {
+            if (error instanceof Error && error.message.startsWith('Unsupported type:')) {
+                throw error;
+            }
+            throw new Error(`Failed to parse IIIF data${type ? ` as ${type}` : ''}: ${error instanceof Error ? error.message : String(error)}`);
+        }
+    }
+
+    /**
+     * Yields service items from an ATD service field that may be Array or single Value.
+     */
+    private *yieldServiceItems(service: any): IterableIterator<U.ServiceItem> {
+        if (service?.kind === 'Array') {
+            for (const item of service.value ?? []) {
+                yield F.writeServiceItemT(item) as unknown as U.ServiceItem;
+            }
+        } else if (service?.kind === 'Value') {
+            yield F.writeServiceItemT(service.value) as unknown as U.ServiceItem;
         }
     }
 
@@ -97,7 +117,7 @@ export class Maniiifest {
      * @returns {U.LngString | null} The label for the specified language if it exists, otherwise null.
      */
     getManifestLabelByLanguage(language: string): U.LngString | null {
-        if (this.specification.kind === 'Manifest' && this.specification.value.label.kind === 'Multilingual') {
+        if (this.specification.kind === 'Manifest' && this.specification.value.label !== undefined && this.specification.value.label.kind === 'Multilingual') {
             const labels = this.specification.value.label.value;
             for (const [lang, values] of labels) {
                 if (lang === language) {
@@ -258,7 +278,7 @@ export class Maniiifest {
      * @returns {U.LngString | null} The label for the specified language if it exists, otherwise null.
      */
     getCollectionLabelByLanguage(language: string): U.LngString | null {
-        if (this.specification.kind === 'Collection' && this.specification.value.label.kind === 'Multilingual') {
+        if (this.specification.kind === 'Collection' && this.specification.value.label !== undefined && this.specification.value.label.kind === 'Multilingual') {
             const labels = this.specification.value.label.value;
             for (const [lang, values] of labels) {
                 if (lang === language) {
@@ -891,35 +911,19 @@ export class Maniiifest {
      */
     *iterateCollectionService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Collection') {
-            // Yield services from the top-level collection
-            if (this.specification.value.service?.kind === 'Array') {
-                for (const serviceItem of this.specification.value.service.value ?? []) {
-                    yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
-                }
-            } else if (this.specification.value.service?.kind === 'Value') {
-                yield F.writeServiceItemT(this.specification.value.service.value) as unknown as U.ServiceItem;
-            }
-            // Define a recursive generator function to traverse nested collections
+            yield* this.yieldServiceItems(this.specification.value.service);
+            const self = this;
             const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.ServiceItem> {
-                if (!items) return; // Handle case where items might not exist
+                if (!items) return;
                 for (const item of items) {
                     if (item.kind === 'Collection') {
-                        // Yield services from nested collections
-                        if (item.value.service?.kind === 'Array') {
-                            for (const serviceItem of item.value.service.value ?? []) {
-                                yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
-                            }
-                        } else if (item.value.service?.kind === 'Value') {
-                            yield F.writeServiceItemT(item.value.service.value) as unknown as U.ServiceItem;
-                        }
-                        // Recursively traverse nested collections
+                        yield* self.yieldServiceItems(item.value.service);
                         if (item.value.items) {
                             yield* traverse(item.value.items);
                         }
                     }
                 }
             };
-            // Start traversal if there are nested items
             if (this.specification.value.items) {
                 yield* traverse(this.specification.value.items);
             }
@@ -936,13 +940,7 @@ export class Maniiifest {
      */
     *iterateManifestService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
-            if (this.specification.value.service?.kind === 'Array') {
-                for (const serviceItem of this.specification.value.service.value ?? []) {
-                    yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
-                }
-            } else if (this.specification.value.service?.kind === 'Value') {
-                yield F.writeServiceItemT(this.specification.value.service.value) as unknown as U.ServiceItem;
-            }
+            yield* this.yieldServiceItems(this.specification.value.service);
         }
     }
 
@@ -957,13 +955,7 @@ export class Maniiifest {
     *iterateManifestThumbnailService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
             for (const thumbnail of this.specification.value.thumbnail ?? []) {
-                if (thumbnail.service?.kind === 'Array') {
-                    for (const serviceItem of thumbnail.service.value ?? []) {
-                        yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
-                    }
-                } else if (thumbnail.service?.kind === 'Value') {
-                    yield F.writeServiceItemT(thumbnail.service.value) as unknown as U.ServiceItem;
-                }
+                yield* this.yieldServiceItems(thumbnail.service);
             }
         }
     }
@@ -977,13 +969,7 @@ export class Maniiifest {
      */
     *iterateManifestServices(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
-            if (this.specification.value.services?.kind === 'Array') {
-                for (const servicesItem of this.specification.value.services.value ?? []) {
-                    yield F.writeServiceItemT(servicesItem) as unknown as U.ServiceItem;
-                }
-            } else if (this.specification.value.services?.kind === 'Value') {
-                yield F.writeServiceItemT(this.specification.value.services.value) as unknown as U.ServiceItem;
-            }
+            yield* this.yieldServiceItems(this.specification.value.services);
         }
     }
 
@@ -1053,7 +1039,7 @@ export class Maniiifest {
      * @returns {U.AnnotationCollection | null} The annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollection(): U.AnnotationCollection | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification !== undefined
+        return this.specification.type === 'AnnotationCollection'
             ? F.writeAnnotationCollectionT(this.specification)
             : null;
     }
@@ -1075,7 +1061,7 @@ export class Maniiifest {
      * @returns {U.Type | null} The type of the annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionType(): U.Type | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.type !== undefined
+        return this.specification.type === 'AnnotationCollection'
             ? F.writeTypeT(this.specification.type)
             : null;
     }
@@ -1141,7 +1127,7 @@ export class Maniiifest {
      * @returns {U.AnnotationPage | null} The annotation page if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPage(): U.AnnotationPage | null {
-        return this.specification.type === 'AnnotationPage' && this.specification !== undefined
+        return this.specification.type === 'AnnotationPage'
             ? F.writeAnnotationPageT(this.specification)
             : null;
     }
@@ -1152,7 +1138,7 @@ export class Maniiifest {
      * @returns {U.Type | null} The type of the annotation page if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPageType(): U.Type | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.type !== undefined
+        return this.specification.type === 'AnnotationPage'
             ? F.writeTypeT(this.specification.type)
             : null;
     }
@@ -1315,7 +1301,7 @@ export class Maniiifest {
      * @returns {U.Annotation | null} The annotation if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotation(): U.Annotation | null {
-        return this.specification.type === 'Annotation' && this.specification !== undefined
+        return this.specification.type === 'Annotation'
             ? F.writeAnnotationT(this.specification)
             : null;
     }
@@ -1337,7 +1323,7 @@ export class Maniiifest {
      * @returns {U.Type | null} The annotation type if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationType(): U.Type | null {
-        return this.specification.type === 'Annotation' && this.specification.type !== undefined
+        return this.specification.type === 'Annotation'
             ? F.writeTypeT(this.specification.type)
             : null;
     }
@@ -1537,11 +1523,7 @@ export class Maniiifest {
     *iterateManifestCanvasService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
-                if (canvas.service?.kind === 'Array') {
-                    for (const serviceItem of canvas.service.value ?? []) {
-                        yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
-                    }
-                }
+                yield* this.yieldServiceItems(canvas.service);
             }
         }
     }
