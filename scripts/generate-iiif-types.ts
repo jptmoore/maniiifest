@@ -526,28 +526,27 @@ function generateTypes(defs: AtdTypeDef[]): string {
     if (shouldSkip(def.name, index)) continue;
 
     const tsName = toPascal(def.name);
-    const origin = `/** @atd ${def.name} */`;
 
     if (def.tag === 'prim') {
       const ts = PRIM_MAP[def.prim];
-      lines.push(origin, `export type ${tsName} = ${ts};`, '');
+      lines.push(`export type ${tsName} = ${ts};`, '');
       continue;
     }
 
     if (def.tag === 'alias') {
       // Special override (lng_string_t → LanguageMap)
       if (OVERRIDE_MAP[def.name]) {
-        lines.push(origin, `export type ${tsName} = ${OVERRIDE_MAP[def.name]};`, '');
+        lines.push(`export type ${tsName} = ${OVERRIDE_MAP[def.name]};`, '');
         continue;
       }
       const ts = translateType(def.rhs, index);
-      lines.push(origin, `export type ${tsName} = ${ts};`, '');
+      lines.push(`export type ${tsName} = ${ts};`, '');
       continue;
     }
 
     if (def.tag === 'record') {
       const fields = collectFields(def.name, index);
-      lines.push(origin, `export interface ${tsName} {`);
+      lines.push(`export interface ${tsName} {`);
       for (const f of fields) {
         const key = tsFieldName(f);
         // Strip 'option' suffix from type then translate
@@ -563,7 +562,7 @@ function generateTypes(defs: AtdTypeDef[]): string {
     if (def.tag === 'sum') {
       const variants = collectVariants(def.name, index);
       const union = collapseVariants(variants, index);
-      lines.push(origin, `export type ${tsName} = ${union};`, '');
+      lines.push(`export type ${tsName} = ${union};`, '');
       continue;
     }
   }
