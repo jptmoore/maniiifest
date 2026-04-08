@@ -237,14 +237,10 @@ const OVERRIDE_MAP: Record<string, string> = {
 };
 
 /**
- * Better names for numbered sub-record types that surface in public unions.
- * Without this, e.g. `part_of_t2` → `PartOfT2`, which is confusing.
+ * Better names for types whose auto-derived PascalCase names are misleading.
+ * With the meaningful variant names, most types now have clear auto-derived names.
  */
-const RENAME_MAP: Record<string, string> = {
-  part_of_t2:      'PartOfObject',
-  first_t2:        'AnnotationPageRef',
-  creator_item_t2: 'CreatorObject',
-};
+const RENAME_MAP: Record<string, string> = {};
 
 // ---------------------------------------------------------------------------
 // Validation
@@ -333,8 +329,8 @@ function translateType(expr: string, index?: DefIndex, depth = 0): string {
     return `${inner}[]`;
   }
 
-  // Known ATD type name (ends with _t or _t<digits>)
-  if (expr.match(/^[a-z_][a-z0-9_]*_t\d*$/)) {
+  // Known ATD type name (snake_case identifier)
+  if (expr.match(/^[a-z_][a-z0-9_]*$/)) {
     if (OVERRIDE_MAP[expr]) return OVERRIDE_MAP[expr];
     // If this is a numbered payload type (would be skipped) or a primitive alias,
     // resolve through the index to get the TS type directly.
@@ -463,17 +459,38 @@ function tsFieldName(field: AtdField): string {
 // ---------------------------------------------------------------------------
 
 /**
+ * Build a set of type names that appear as variant payloads in sum types.
+ * These payload types (when they are simple aliases/prims) can be inlined
+ * rather than emitted as top-level declarations.
+ */
+function buildVariantPayloads(index: DefIndex): Set<string> {
+  const payloads = new Set<string>();
+  for (const def of index.values()) {
+    if (def.tag === 'sum') {
+      for (const v of def.variants) {
+        if (!v.type || v.isInherit) continue;
+        const raw = v.type.replace(/ option$/, '').replace(/ list$/, '').trim();
+        if (index.has(raw)) payloads.add(raw);
+      }
+    }
+  }
+  return payloads;
+}
+
+// Module-level cache, initialised in generateTypes
+let _variantPayloads: Set<string> = new Set();
+
+/**
  * Types that the generator should NOT emit as top-level declarations.
  *
- * We skip numbered payload types only when they are trivial scalars or
- * aliases that can be inlined (e.g. `context_t1 = string`).
- * Record-shaped numbered sub-types (geometry_t1, annotation_body_t3, …) are
- * still emitted because they have named fields that must remain named in the
- * union.
+ * We skip variant payload types only when they are trivial scalars or
+ * aliases that can be inlined (e.g. `context_value = string`).
+ * Record-shaped sub-types (geometry_point, annotation_body_textual_body, …)
+ * are still emitted because they have named fields.
  */
 function shouldSkip(name: string, index?: DefIndex): boolean {
-  if (!/^.+_t\d+$/.test(name)) return false;
-  if (!index) return true; // conservative: skip if we can't check
+  if (!index) return false;
+  if (!_variantPayloads.has(name)) return false;
   const def = index.get(name);
   if (!def) return true;
   // Keep record types — they are real interfaces and can't be inlined
@@ -486,6 +503,7 @@ function shouldSkip(name: string, index?: DefIndex): boolean {
 
 function generateTypes(defs: AtdTypeDef[]): string {
   const index = buildIndex(defs);
+  _variantPayloads = buildVariantPayloads(index);
   const lines: string[] = [];
 
   lines.push(

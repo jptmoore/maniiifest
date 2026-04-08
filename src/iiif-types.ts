@@ -226,49 +226,49 @@ export interface Properties {
 }
 
 /** @atd geometries_t */
-export type Geometries = GeometryT1 | GeometryT2 | GeometryT3 | GeometryT4 | GeometryT5 | GeometryT6;
+export type Geometries = GeometryPoint | GeometryMultiPoint | GeometryLineString | GeometryMultiLineString | GeometryPolygon | GeometryMultiPolygon;
 
 /** @atd geometry_t */
-export type Geometry = GeometryT1 | GeometryT2 | GeometryT3 | GeometryT4 | GeometryT5 | GeometryT6 | GeometryT7;
+export type Geometry = GeometryPoint | GeometryMultiPoint | GeometryLineString | GeometryMultiLineString | GeometryPolygon | GeometryMultiPolygon | GeometryCollection;
 
-/** @atd geometry_t1 */
-export interface GeometryT1 {
+/** @atd geometry_point */
+export interface GeometryPoint {
   type?: Type;
   coordinates?: PointCoordinates[];
 }
 
-/** @atd geometry_t2 */
-export interface GeometryT2 {
+/** @atd geometry_multi_point */
+export interface GeometryMultiPoint {
   type?: Type;
   coordinates?: MultiPointCoordinates[];
 }
 
-/** @atd geometry_t3 */
-export interface GeometryT3 {
+/** @atd geometry_line_string */
+export interface GeometryLineString {
   type?: Type;
   coordinates?: LinestringCoordinates[];
 }
 
-/** @atd geometry_t4 */
-export interface GeometryT4 {
+/** @atd geometry_multi_line_string */
+export interface GeometryMultiLineString {
   type?: Type;
   coordinates?: MultiLinestringCoordinates[];
 }
 
-/** @atd geometry_t5 */
-export interface GeometryT5 {
+/** @atd geometry_polygon */
+export interface GeometryPolygon {
   type?: Type;
   coordinates?: Polygon[];
 }
 
-/** @atd geometry_t6 */
-export interface GeometryT6 {
+/** @atd geometry_multi_polygon */
+export interface GeometryMultiPolygon {
   type?: Type;
   coordinates?: MultiPolygon[];
 }
 
-/** @atd geometry_t7 */
-export interface GeometryT7 {
+/** @atd geometry_collection */
+export interface GeometryCollection {
   type?: Type;
   geometries: Geometries[];
 }
@@ -326,10 +326,10 @@ export interface Annotation {
 export type Creator = CreatorItem | CreatorItem[];
 
 /** @atd creator_item_t */
-export type CreatorItem = string | CreatorObject;
+export type CreatorItem = string | CreatorItemObject;
 
-/** @atd creator_item_t2 */
-export interface CreatorObject {
+/** @atd creator_item_object */
+export interface CreatorItemObject {
   id?: Id;
   type?: Type;
   name?: Name;
@@ -352,13 +352,13 @@ export type HomepageStrings = Strings;
 export type Body = AnnotationBody | AnnotationBody[];
 
 /** @atd annotation_body_items_t */
-export type AnnotationBodyItems = string | AnnotationBodyT2 | AnnotationBodyT3 | AnnotationBodyT4 | AnnotationBodyT5 | AnnotationBodyT6 | AnnotationBodyT7;
+export type AnnotationBodyItems = string | AnnotationBodyResource | AnnotationBodySpecificResource | AnnotationBodyTextualBody | AnnotationBodyFeature | AnnotationBodyFeatureCollection | AnnotationBodyUntyped;
 
 /** @atd annotation_body_t */
-export type AnnotationBody = string | AnnotationBodyT2 | AnnotationBodyT3 | AnnotationBodyT4 | AnnotationBodyT5 | AnnotationBodyT6 | AnnotationBodyT7 | AnnotationBodyT8;
+export type AnnotationBody = string | AnnotationBodyResource | AnnotationBodySpecificResource | AnnotationBodyTextualBody | AnnotationBodyFeature | AnnotationBodyFeatureCollection | AnnotationBodyUntyped | AnnotationBodyChoice;
 
-/** @atd annotation_body_t7 */
-export interface AnnotationBodyT7 {
+/** @atd annotation_body_untyped */
+export interface AnnotationBodyUntyped {
   id?: Id;
   label?: Label;
   format?: Format;
@@ -367,8 +367,8 @@ export interface AnnotationBodyT7 {
   value?: Value;
 }
 
-/** @atd annotation_body_t2 */
-export interface AnnotationBodyT2 {
+/** @atd annotation_body_resource */
+export interface AnnotationBodyResource {
   id: Id;
   type: Type;
   label?: Label;
@@ -384,8 +384,8 @@ export interface AnnotationBodyT2 {
   annotations?: AnnotationPage[];
 }
 
-/** @atd annotation_body_t3 */
-export interface AnnotationBodyT3 {
+/** @atd annotation_body_specific_resource */
+export interface AnnotationBodySpecificResource {
   id?: Id;
   type?: Type;
   format?: Format;
@@ -395,8 +395,8 @@ export interface AnnotationBodyT3 {
   language?: Language;
 }
 
-/** @atd annotation_body_t4 */
-export interface AnnotationBodyT4 {
+/** @atd annotation_body_textual_body */
+export interface AnnotationBodyTextualBody {
   type: Type;
   language?: Language;
   format?: Format;
@@ -404,24 +404,24 @@ export interface AnnotationBodyT4 {
   creator?: Creator;
 }
 
-/** @atd annotation_body_t5 */
-export interface AnnotationBodyT5 {
+/** @atd annotation_body_feature */
+export interface AnnotationBodyFeature {
   id?: Id;
   type?: Type;
   properties?: Properties;
   geometry?: Geometry;
 }
 
-/** @atd annotation_body_t6 */
-export interface AnnotationBodyT6 {
+/** @atd annotation_body_feature_collection */
+export interface AnnotationBodyFeatureCollection {
   id?: Id;
   type: Type;
   features?: Feature[];
   transformation?: Transformation;
 }
 
-/** @atd annotation_body_t8 */
-export interface AnnotationBodyT8 {
+/** @atd annotation_body_choice */
+export interface AnnotationBodyChoice {
   type?: Type;
   items: AnnotationBodyItems[];
 }
@@ -430,17 +430,17 @@ export interface AnnotationBodyT8 {
 export type Target = AnnotationTarget | AnnotationTarget[];
 
 /** @atd annotation_target_t */
-export type AnnotationTarget = string | AnnotationTargetT2 | SpecificResource | AnnotationTargetT4;
+export type AnnotationTarget = string | AnnotationTargetSelectorTarget | SpecificResource | AnnotationTargetCanvasRef;
 
-/** @atd annotation_target_t2 */
-export interface AnnotationTargetT2 {
+/** @atd annotation_target_selector_target */
+export interface AnnotationTargetSelectorTarget {
   source: Id;
   scope: Id;
   language?: Language;
 }
 
-/** @atd annotation_target_t4 */
-export interface AnnotationTargetT4 {
+/** @atd annotation_target_canvas_ref */
+export interface AnnotationTargetCanvasRef {
   id: Id;
   partOf?: PartOf;
   language?: Language;
@@ -464,18 +464,18 @@ export type Source = Id | Class;
 export type Selector = ResourceSelector | ResourceSelector[];
 
 /** @atd resource_selector_t */
-export type ResourceSelector = string | ResourceSelectorT2 | ResourceSelectorT3 | ResourceSelectorT4 | ResourceSelectorT5 | ResourceSelectorT6 | ResourceSelectorT7;
+export type ResourceSelector = string | ResourceSelectorPoint | ResourceSelectorFragment | ResourceSelectorSvg | ResourceSelectorImageApi | ResourceSelectorTextQuote | ResourceSelectorXpath;
 
-/** @atd resource_selector_t2 */
-export interface ResourceSelectorT2 {
+/** @atd resource_selector_point */
+export interface ResourceSelectorPoint {
   type: Type;
   t?: Duration;
   x?: Dimension;
   y?: Dimension;
 }
 
-/** @atd resource_selector_t3 */
-export interface ResourceSelectorT3 {
+/** @atd resource_selector_fragment */
+export interface ResourceSelectorFragment {
   type: Type;
   conformsTo?: ConformsTo;
   value: Value;
@@ -484,14 +484,14 @@ export interface ResourceSelectorT3 {
 /** @atd conforms_to_t */
 export type ConformsTo = string;
 
-/** @atd resource_selector_t4 */
-export interface ResourceSelectorT4 {
+/** @atd resource_selector_svg */
+export interface ResourceSelectorSvg {
   type: Type;
   value: Value;
 }
 
-/** @atd resource_selector_t5 */
-export interface ResourceSelectorT5 {
+/** @atd resource_selector_image_api */
+export interface ResourceSelectorImageApi {
   type: Type;
   region?: Region;
   size?: Size;
@@ -500,16 +500,16 @@ export interface ResourceSelectorT5 {
   format?: Format;
 }
 
-/** @atd resource_selector_t6 */
-export interface ResourceSelectorT6 {
+/** @atd resource_selector_text_quote */
+export interface ResourceSelectorTextQuote {
   type: Type;
   prefix?: Prefix;
   exact: Exact;
   suffix?: Suffix;
 }
 
-/** @atd resource_selector_t7 */
-export interface ResourceSelectorT7 {
+/** @atd resource_selector_xpath */
+export interface ResourceSelectorXpath {
   type: Type;
   value: Value;
 }
@@ -553,10 +553,10 @@ export interface Resource {
 export type Service = ServiceItem | ServiceItem[];
 
 /** @atd service_item_t */
-export type ServiceItem = ServiceItemT1 | ServiceItemT2;
+export type ServiceItem = ServiceItemModern | ServiceItemLegacy;
 
-/** @atd service_item_t1 */
-export interface ServiceItemT1 {
+/** @atd service_item_modern */
+export interface ServiceItemModern {
   id: Id;
   type: Type;
   label?: Label;
@@ -564,8 +564,8 @@ export interface ServiceItemT1 {
   service?: Service;
 }
 
-/** @atd service_item_t2 */
-export interface ServiceItemT2 {
+/** @atd service_item_legacy */
+export interface ServiceItemLegacy {
   "@id": Id;
   "@type": Type;
   label?: Label;
@@ -622,7 +622,7 @@ export interface Provider {
 /** @atd part_of_t */
 export type PartOf = string | PartOfObject;
 
-/** @atd part_of_t2 */
+/** @atd part_of_object */
 export interface PartOfObject {
   id: Id;
   type?: Type;
@@ -653,10 +653,10 @@ export interface AnnotationCollection {
 }
 
 /** @atd first_t */
-export type First = string | AnnotationPageRef;
+export type First = string | FirstObject;
 
-/** @atd first_t2 */
-export interface AnnotationPageRef {
+/** @atd first_object */
+export interface FirstObject {
   id: Id;
   type: Type;
   label?: Label;

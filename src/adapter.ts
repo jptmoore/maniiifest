@@ -27,9 +27,9 @@ export function restore_service<T, R>(x: T, context: any = x, fn: (input: T, con
 
 export function normalize_service<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -44,9 +44,9 @@ export function restore_service_item<T, R>(x: T, context: any = x, fn: (input: T
 export function normalize_service_item<T, R>(x: T, context: any = {}, fn: (input: [string, T], context: any) => R): R {
     if (x !== null && typeof x === 'object') {
         if ('id' in x) {
-            return fn(['T1', x], context);
+            return fn(['Modern', x], context);
         } else if ('@id' in x) {
-            return fn(['T2', x], context);
+            return fn(['Legacy', x], context);
         } else {
             throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
         }
@@ -65,9 +65,9 @@ export function restore_motivation<T, R>(x: T, context: any = x, fn: (input: T, 
 
 export function normalize_motivation<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     } else if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -84,22 +84,22 @@ export function restore_annotation_body<T, R>(x: T, context: any = x, fn: (input
 export function normalize_annotation_body<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     const resourceTypes = ['Image', 'Video', 'Audio', 'Sound', 'Text'];
     if (typeof x === 'string') {
-        return fn(['T1', x], context);
+        return fn(['String', x], context);
     } else if (typeof x === 'object' && resourceTypes.includes(x.type)) {
-        return fn(['T2', x], context);
+        return fn(['Resource', x], context);
     } else if (typeof x === 'object' && x.type === 'SpecificResource') {
-        return fn(['T3', x], context);
+        return fn(['SpecificResource', x], context);
     } else if (typeof x === 'object' && x.type === 'TextualBody') {
-        return fn(['T4', x], context);
+        return fn(['TextualBody', x], context);
     } else if (typeof x === 'object' && x.type === 'Feature') {
-        return fn(['T5', x], context);
+        return fn(['Feature', x], context);
     } else if (typeof x === 'object' && x.type === 'FeatureCollection') {
-        return fn(['T6', x], context);
+        return fn(['FeatureCollection', x], context);
     } else if (typeof x === 'object' && x.type === 'Choice') {
         // T8 before T7: T7 is the untyped catch-all and must come last
-        return fn(['T8', x], context);
+        return fn(['Choice', x], context);
     } else if (typeof x === 'object') {
-        return fn(['T7', x], context);
+        return fn(['Untyped', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -116,15 +116,15 @@ export function restore_annotation_body_items<T, R>(x: T, context: any = x, fn: 
 export function normalize_annotation_body_items<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     const resourceTypes = ['Image', 'Video', 'Audio', 'Sound', 'Text'];
     if (typeof x === 'string') {
-        return fn(['T1', x], context);
+        return fn(['String', x], context);
     } else if (typeof x === 'object' && resourceTypes.includes(x.type)) {
-        return fn(['T2', x], context);
+        return fn(['Resource', x], context);
     } else if (typeof x === 'object' && x.type === 'SpecificResource') {
-        return fn(['T3', x], context);
+        return fn(['SpecificResource', x], context);
     } else if (typeof x === 'object' && x.type === 'TextualBody') {
-        return fn(['T4', x], context);
+        return fn(['TextualBody', x], context);
     } else if (typeof x === 'object' && x.type === 'Feature') {
-        return fn(['T5', x], context);
+        return fn(['Feature', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -141,13 +141,13 @@ export function restore_annotation_target<T, R>(x: T, context: any = x, fn: (inp
 
 export function normalize_annotation_target<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
-        return fn(['T1', x], context);
+        return fn(['String', x], context);
     } else if (('source' in x) && ('scope' in x)) {
-        return fn(['T2', x], context);
+        return fn(['SelectorTarget', x], context);
     } else if (('source' in x)) {
-        return fn(['T3', x], context);        
+        return fn(['SpecificResource', x], context);        
     } else if (('id' in x)) {
-        return fn(['T4', x], context);    
+        return fn(['CanvasRef', x], context);    
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -163,19 +163,19 @@ export function restore_resource_selector<T, R>(x: T, context: any = x, fn: (inp
 
 export function normalize_resource_selector<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof x === 'string') {
-        return fn(['T1', x], context);
+        return fn(['String', x], context);
     } else if (typeof x === 'object' && x.type === 'PointSelector') {
-        return fn(['T2', x], context);
+        return fn(['PointSelector', x], context);
     } else if (typeof x === 'object' && x.type === 'FragmentSelector') {
-        return fn(['T3', x], context);
+        return fn(['FragmentSelector', x], context);
     } else if (typeof x === 'object' && x.type === 'SvgSelector') {
-        return fn(['T4', x], context);
+        return fn(['SvgSelector', x], context);
     } else if (typeof x === 'object' && (x.type === 'ImageApiSelector' || x.type === 'iiif:ImageApiSelector')) {
-        return fn(['T5', x], context);
+        return fn(['ImageApiSelector', x], context);
     } else if (typeof x === 'object' && x.type === 'TextQuoteSelector') {
-        return fn(['T6', x], context);
+        return fn(['TextQuoteSelector', x], context);
     } else if (typeof x === 'object' && x.type === 'XPathSelector') {
-        return fn(['T7', x], context);
+        return fn(['XPathSelector', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -192,9 +192,9 @@ export function restore_source<T, R>(x: T, context: any = x, fn: (input: T, cont
 
 export function normalize_source<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
-        return fn(['T1', x], context);
+        return fn(['Ref', x], context);
     } else if (typeof (x) === 'object') {
-        return fn(['T2', x], context);
+        return fn(['Object', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -210,9 +210,9 @@ export function restore_body<T, R>(x: T, context: any = x, fn: (input: T, contex
 
 export function normalize_body<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -226,9 +226,9 @@ export function restore_target<T, R>(x: T, context: any = x, fn: (input: T, cont
 
 export function normalize_target<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -242,9 +242,9 @@ export function restore_first<T, R>(x: T, context: any = x, fn: (input: T, conte
 
 export function normalize_first<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
-        return fn(['T1', x], context);
+        return fn(['Ref', x], context);
     } else if (typeof (x) === 'object') {
-        return fn(['T2', x], context);
+        return fn(['Object', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -260,9 +260,9 @@ export function restore_label<T, R>(x: T, context: any = x, fn: (input: T, conte
 
 export function normalize_label<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
-        return fn(['T1', x], context);
+        return fn(['Plain', x], context);
     } else if (typeof (x) === 'object') {
-        return fn(['T2', x], context);
+        return fn(['Multilingual', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -278,9 +278,9 @@ export function restore_selector<T, R>(x: T, context: any = x, fn: (input: T, co
 
 export function normalize_selector<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -294,11 +294,11 @@ export function restore_range_items<T, R>(x: T, context: any = x, fn: (input: T,
 
 export function normalize_range_items<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof x === 'object' && x.type === 'SpecificResource') {
-        return fn(['T1', x], context);
+        return fn(['SpecificResource', x], context);
     } else if (typeof x === 'object' && x.type === 'Canvas') {
-        return fn(['T2', x], context);
+        return fn(['Canvas', x], context);
     } else if (typeof x === 'object' && x.type === 'Range') {
-        return fn(['T3', x], context);
+        return fn(['Range', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -314,19 +314,19 @@ export function restore_geometry<T, R>(x: T, context: any = x, fn: (input: T, co
 
 export function normalize_geometry<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof x === 'object' && x.type === 'Point') {
-        return fn(['T1', x], context);
+        return fn(['Point', x], context);
     } else if (typeof x === 'object' && x.type === 'MultiPoint') {
-        return fn(['T2', x], context);
+        return fn(['MultiPoint', x], context);
     } else if (typeof x === 'object' && x.type === 'LineString') {
-        return fn(['T3', x], context);
+        return fn(['LineString', x], context);
     } else if (typeof x === 'object' && x.type === 'MultiLineString') {
-        return fn(['T4', x], context);
+        return fn(['MultiLineString', x], context);
     } else if (typeof x === 'object' && x.type === 'Polygon') {
-        return fn(['T5', x], context);
+        return fn(['Polygon', x], context);
     } else if (typeof x === 'object' && x.type === 'MultiPolygon') {
-        return fn(['T6', x], context);
+        return fn(['MultiPolygon', x], context);
     } else if (typeof x === 'object' && x.type === 'GeometryCollection') {
-        return fn(['T7', x], context);
+        return fn(['GeometryCollection', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -342,9 +342,9 @@ export function restore_language<T, R>(x: T, context: any = x, fn: (input: T, co
 
 export function normalize_language<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -358,9 +358,9 @@ export function restore_context<T, R>(x: T, context: any = x, fn: (input: T, con
 
 export function normalize_context<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -374,9 +374,9 @@ export function restore_part_of<T, R>(x: T, context: any = x, fn: (input: T, con
 
 export function normalize_part_of<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
-        return fn(['T1', x], context);
+        return fn(['Ref', x], context);
     } else if (typeof (x) === 'object') {
-        return fn(['T2', x], context);
+        return fn(['Object', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -392,9 +392,9 @@ export function restore_creator<T, R>(x: T, context: any = x, fn: (input: T, con
 
 export function normalize_creator<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -408,9 +408,9 @@ export function restore_creator_item<T, R>(x: T, context: any = x, fn: (input: T
 
 export function normalize_creator_item<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
-        return fn(['T1', x], context);
+        return fn(['Ref', x], context);
     } else if (typeof (x) === 'object') {
-        return fn(['T2', x], context);
+        return fn(['Object', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -426,9 +426,9 @@ export function restore_email_strings<T, R>(x: T, context: any = x, fn: (input: 
 
 export function normalize_email_strings<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -442,9 +442,9 @@ export function restore_email_sha1_strings<T, R>(x: T, context: any = x, fn: (in
 
 export function normalize_email_sha1_strings<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }
 
@@ -458,8 +458,8 @@ export function restore_homepage_strings<T, R>(x: T, context: any = x, fn: (inpu
 
 export function normalize_homepage_strings<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (Array.isArray(x)) {
-        return fn(['T2', x], context);
+        return fn(['Array', x], context);
     } else {
-        return fn(['T1', x], context);
+        return fn(['Value', x], context);
     }
 }

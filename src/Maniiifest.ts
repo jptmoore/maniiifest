@@ -97,7 +97,7 @@ export class Maniiifest {
      * @returns {U.LngString | null} The label for the specified language if it exists, otherwise null.
      */
     getManifestLabelByLanguage(language: string): U.LngString | null {
-        if (this.specification.kind === 'Manifest' && this.specification.value.label.kind === 'T2') {
+        if (this.specification.kind === 'Manifest' && this.specification.value.label.kind === 'Multilingual') {
             const labels = this.specification.value.label.value;
             for (const [lang, _] of labels) {
                 if (lang === language) {
@@ -258,7 +258,7 @@ export class Maniiifest {
      * @returns {U.LngString | null} The label for the specified language if it exists, otherwise null.
      */
     getCollectionLabelByLanguage(language: string): U.LngString | null {
-        if (this.specification.kind === 'Collection' && this.specification.value.label.kind === 'T2') {
+        if (this.specification.kind === 'Collection' && this.specification.value.label.kind === 'Multilingual') {
             const labels = this.specification.value.label.value;
             for (const [lang, _] of labels) {
                 if (lang === language) {
@@ -313,22 +313,22 @@ export class Maniiifest {
     /**
      * Iterates over the textual bodies of annotations in the manifest's canvases.
      *
-     * @returns {IterableIterator<U.AnnotationBodyT4>} An iterator over the textual bodies of annotations.
+     * @returns {IterableIterator<U.AnnotationBodyTextualBody>} An iterator over the textual bodies of annotations.
      */
-    *iterateManifestCanvasW3cAnnotationTextualBody(): IterableIterator<U.AnnotationBodyT4> {
+    *iterateManifestCanvasW3cAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.kind === 'Manifest') {
             for (const canvas of this.specification.value.items ?? []) {
                 for (const annotationPage of canvas.annotations ?? []) {
                     for (const annotation of annotationPage.items ?? []) {
-                        if (annotation.body?.kind === 'T2') { /* if body is an array */
+                        if (annotation.body?.kind === 'Array') { /* if body is an array */
                             for (const body of annotation.body.value) {
-                                if (body.kind === 'T4') {
-                                    yield F.writeAnnotationBodyT4(body.value);
+                                if (body.kind === 'TextualBody') {
+                                    yield F.writeAnnotationBodyTextualBody(body.value);
                                 }
                             }
                         } else { /* must be T1 */
-                            if (annotation.body?.value?.kind === 'T4') {
-                                yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                            if (annotation.body?.value?.kind === 'TextualBody') {
+                                yield F.writeAnnotationBodyTextualBody(annotation.body.value.value);
                             }
                         }
                     }
@@ -892,7 +892,7 @@ export class Maniiifest {
     *iterateCollectionService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Collection') {
             // Yield services from the top-level collection
-            if (this.specification.value.service?.kind === 'T2') {
+            if (this.specification.value.service?.kind === 'Array') {
                 for (const serviceItem of this.specification.value.service.value ?? []) {
                     yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                 }
@@ -903,7 +903,7 @@ export class Maniiifest {
                 for (const item of items) {
                     if (item.kind === 'Collection') {
                         // Yield services from nested collections
-                        if (item.value.service?.kind === 'T2') {
+                        if (item.value.service?.kind === 'Array') {
                             for (const serviceItem of item.value.service.value ?? []) {
                                 yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                             }
@@ -932,7 +932,7 @@ export class Maniiifest {
      */
     *iterateManifestService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
-            if (this.specification.value.service?.kind === 'T2') {
+            if (this.specification.value.service?.kind === 'Array') {
                 for (const serviceItem of this.specification.value.service.value ?? []) {
                     yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                 }
@@ -952,7 +952,7 @@ export class Maniiifest {
     *iterateManifestThumbnailService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
             for (const thumbnail of this.specification.value.thumbnail ?? []) {
-                if (this.specification.value.service?.kind === 'T2') {
+                if (this.specification.value.service?.kind === 'Array') {
                     for (const serviceItem of thumbnail.service.value ?? []) {
                         yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                     }
@@ -970,7 +970,7 @@ export class Maniiifest {
      */
     *iterateManifestServices(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
-            if (this.specification.value.services?.kind === 'T2') {
+            if (this.specification.value.services?.kind === 'Array') {
                 for (const servicesItem of this.specification.value.services.value ?? []) {
                     yield F.writeServiceItemT(servicesItem) as unknown as U.ServiceItem;
                 }
@@ -998,21 +998,21 @@ export class Maniiifest {
     /**
      * Iterates over the textual bodies of annotations in the manifest.
      *
-     * @returns {IterableIterator<U.AnnotationBodyT4>} An iterator over the textual bodies of annotations.
+     * @returns {IterableIterator<U.AnnotationBodyTextualBody>} An iterator over the textual bodies of annotations.
      */
-    *iterateManifestW3cAnnotationTextualBody(): IterableIterator<U.AnnotationBodyT4> {
+    *iterateManifestW3cAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.kind === 'Manifest') {
             for (const annotationPage of this.specification.value.annotations ?? []) {
                 for (const annotation of annotationPage.items ?? []) {
-                    if (annotation.body?.kind === 'T2') { /* if body is an array */
+                    if (annotation.body?.kind === 'Array') { /* if body is an array */
                         for (const body of annotation.body.value) {
-                            if (body.kind === 'T4') {
-                                yield F.writeAnnotationBodyT4(body.value);
+                            if (body.kind === 'TextualBody') {
+                                yield F.writeAnnotationBodyTextualBody(body.value);
                             }
                         }
                     } else { /* must be T1 */
-                        if (annotation.body?.value?.kind === 'T4') {
-                            yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                        if (annotation.body?.value?.kind === 'TextualBody') {
+                            yield F.writeAnnotationBodyTextualBody(annotation.body.value.value);
                         }
                     }
                 }
@@ -1197,20 +1197,20 @@ export class Maniiifest {
     /**
      * Iterates over the textual bodies of annotations in the annotation page.
      *
-     * @returns {IterableIterator<U.AnnotationBodyT4>} An iterator over the textual bodies of annotations.
+     * @returns {IterableIterator<U.AnnotationBodyTextualBody>} An iterator over the textual bodies of annotations.
      */
-    *iterateAnnotationPageAnnotationTextualBody(): IterableIterator<U.AnnotationBodyT4> {
+    *iterateAnnotationPageAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.type === 'AnnotationPage') {
             for (const annotation of this.specification.items ?? []) {
-                if (annotation.body?.kind === 'T2') { /* if body is an array */
+                if (annotation.body?.kind === 'Array') { /* if body is an array */
                     for (const body of annotation.body.value) {
-                        if (body.kind === 'T4') {
-                            yield F.writeAnnotationBodyT4(body.value);
+                        if (body.kind === 'TextualBody') {
+                            yield F.writeAnnotationBodyTextualBody(body.value);
                         }
                     }
                 } else { /* must be T1 */
-                    if (annotation.body?.value?.kind === 'T4') {
-                        yield F.writeAnnotationBodyT4(annotation.body.value.value);
+                    if (annotation.body?.value?.kind === 'TextualBody') {
+                        yield F.writeAnnotationBodyTextualBody(annotation.body.value.value);
                     }
                 }
             }
@@ -1220,19 +1220,19 @@ export class Maniiifest {
     /**
      * Iterates over the textual bodies in a single annotation.
      *
-     * @returns {IterableIterator<U.AnnotationBodyT4>} An iterator over the textual bodies of an annotation.
+     * @returns {IterableIterator<U.AnnotationBodyTextualBody>} An iterator over the textual bodies of an annotation.
      */
-    *iterateAnnotationTextualBody(): IterableIterator<U.AnnotationBodyT4> {
+    *iterateAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.type === 'Annotation') {
-            if (this.specification.body?.kind === 'T2') { /* if body is an array */
+            if (this.specification.body?.kind === 'Array') { /* if body is an array */
                 for (const body of this.specification.body.value) {
-                    if (body.kind === 'T4') {
-                        yield F.writeAnnotationBodyT4(body.value);
+                    if (body.kind === 'TextualBody') {
+                        yield F.writeAnnotationBodyTextualBody(body.value);
                     }
                 }
             } else { /* must be T1 */
-                if (this.specification.body?.value?.kind === 'T4') {
-                    yield F.writeAnnotationBodyT4(this.specification.body.value.value);
+                if (this.specification.body?.value?.kind === 'TextualBody') {
+                    yield F.writeAnnotationBodyTextualBody(this.specification.body.value.value);
                 }
             }
         }
@@ -1241,19 +1241,19 @@ export class Maniiifest {
     /**
      * Iterates over the resource bodies in a single annotation.
      *
-     * @returns {IterableIterator<U.AnnotationBodyT2>} An iterator over the resource bodies of an annotation.
+     * @returns {IterableIterator<U.AnnotationBodyResource>} An iterator over the resource bodies of an annotation.
      */
-    *iterateAnnotationResourceBody(): IterableIterator<U.AnnotationBodyT2> {
+    *iterateAnnotationResourceBody(): IterableIterator<U.AnnotationBodyResource> {
         if (this.specification.type === 'Annotation') {
-            if (this.specification.body?.kind === 'T2') { /* if body is an array */
+            if (this.specification.body?.kind === 'Array') { /* if body is an array */
                 for (const body of this.specification.body.value) {
-                    if (body.kind === 'T2') {
-                        yield F.writeAnnotationBodyT2(body.value);
+                    if (body.kind === 'Resource') {
+                        yield F.writeAnnotationBodyResource(body.value);
                     }
                 }
             } else { /* must be T1 */
-                if (this.specification.body?.value?.kind === 'T2') {
-                    yield F.writeAnnotationBodyT2(this.specification.body.value.value);
+                if (this.specification.body?.value?.kind === 'Resource') {
+                    yield F.writeAnnotationBodyResource(this.specification.body.value.value);
                 }
             }
         }
@@ -1266,7 +1266,7 @@ export class Maniiifest {
      */
     *iterateAnnotationTarget(): IterableIterator<U.AnnotationTarget> {
         if (this.specification.type === 'Annotation') {
-            if (this.specification.target?.kind === 'T2') { /* if body is an array */
+            if (this.specification.target?.kind === 'Array') { /* if body is an array */
                 for (const target of this.specification.target.value) {
                     yield F.writeAnnotationTargetT(target) as unknown as U.AnnotationTarget;
                 }
@@ -1280,20 +1280,20 @@ export class Maniiifest {
     /**
      * Iterates over the target of annotations that contain partOf properties in the annotation page.
      *
-     * @returns {IterableIterator<U.AnnotationTargetT4>} An iterator over the target of annotations with partOf properties.
+     * @returns {IterableIterator<U.AnnotationTargetCanvasRef>} An iterator over the target of annotations with partOf properties.
      */
-    *iterateAnnotationPageAnnotationPartOf(): IterableIterator<U.AnnotationTargetT4> {
+    *iterateAnnotationPageAnnotationPartOf(): IterableIterator<U.AnnotationTargetCanvasRef> {
         if (this.specification.type === 'AnnotationPage') {
             for (const annotation of this.specification.items ?? []) {
-                if (annotation.target?.kind === 'T2') { /* if target is an array */
+                if (annotation.target?.kind === 'Array') { /* if target is an array */
                     for (const target of annotation.target.value) {
-                        if (target.kind === 'T4') {
-                            yield F.writeAnnotationTargetT4(target.value);
+                        if (target.kind === 'CanvasRef') {
+                            yield F.writeAnnotationTargetCanvasRef(target.value);
                         }
                     }
                 } else { /* must be T1 */
-                    if (annotation.target?.value?.kind === 'T4') {
-                        yield F.writeAnnotationTargetT4(annotation.target.value.value);
+                    if (annotation.target?.value?.kind === 'CanvasRef') {
+                        yield F.writeAnnotationTargetCanvasRef(annotation.target.value.value);
                     }
                 }
             }
@@ -1378,17 +1378,17 @@ export class Maniiifest {
     }
 
     /**
-     * Returns the feature collection if the specification kind is 'T6', otherwise returns null.
+     * Returns the feature collection if the specification kind is 'FeatureCollection', otherwise returns null.
      */
     getAnnotationFeatureCollection(): U.FeatureCollection | null {
-        return this.specification.body.value.kind === 'T6' ? F.writeFeatureCollectionT(this.specification.body.value.value) : null;
+        return this.specification.body.value.kind === 'FeatureCollection' ? F.writeFeatureCollectionT(this.specification.body.value.value) : null;
     }
 
     /**
-     * Generator function that yields each feature if the specification kind is 'T6'.
+     * Generator function that yields each feature if the specification kind is 'FeatureCollection'.
      */
     *iterateAnnotationFeature(): IterableIterator<U.Feature> {
-        if (this.specification.body.value.kind === 'T6') {
+        if (this.specification.body.value.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {
                 yield F.writeFeatureT(feature);
             }
@@ -1396,13 +1396,13 @@ export class Maniiifest {
     }
 
     /**
-     * Generator function that yields point coordinates for each feature with geometry kind 'T1' 
-     * if the specification kind is 'T6'.
+     * Generator function that yields point coordinates for each feature with geometry kind 'Point' 
+     * if the specification kind is 'FeatureCollection'.
      */
     *iterateAnnotationGeometryPointCoordinates(): IterableIterator<U.PointCoordinates> {
-        if (this.specification.body.value.kind === 'T6') {
+        if (this.specification.body.value.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {
-                if (feature.geometry.kind === 'T1') {
+                if (feature.geometry.kind === 'Point') {
                     for (const coordinates of feature.geometry.value.coordinates ?? []) {
                         yield F.writePointCoordinatesT(coordinates);
                     }

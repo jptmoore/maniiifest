@@ -56,12 +56,12 @@ type manifest_t = {
 }
 
 type context_t = [
-  | T1 of context_t1
-  | T2 of context_t2
+  | Value of context_value
+  | Array of context_array
 ]
 
-type context_t1 = string
-type context_t2 = string list
+type context_value = string
+type context_array = string list
 
 type class_t = {
   id : id_t;
@@ -140,49 +140,49 @@ type properties_t = {
 }
 
 type geometries_t = [
-  | T1 of geometry_t1
-  | T2 of geometry_t2
-  | T3 of geometry_t3
-  | T4 of geometry_t4
-  | T5 of geometry_t5
-  | T6 of geometry_t6
+  | Point of geometry_point
+  | MultiPoint of geometry_multi_point
+  | LineString of geometry_line_string
+  | MultiLineString of geometry_multi_line_string
+  | Polygon of geometry_polygon
+  | MultiPolygon of geometry_multi_polygon
 ]
 type geometry_t = [
  | inherit geometries_t
- | T7 of geometry_t7
+ | GeometryCollection of geometry_collection
 ]
 
-type geometry_t1 = {
+type geometry_point = {
   ?_type : type_t option;
   ?coordinates : point_coordinates_t list option;
 }
 
-type geometry_t2 = {
+type geometry_multi_point = {
   ?_type : type_t option;
   ?coordinates : multi_point_coordinates_t list option;
 }
 
-type geometry_t3 = {
+type geometry_line_string = {
   ?_type : type_t option;
   ?coordinates : linestring_coordinates_t list option;
 }
 
-type geometry_t4 = {
+type geometry_multi_line_string = {
   ?_type : type_t option;
   ?coordinates : multi_linestring_coordinates_t list option;
 }
 
-type geometry_t5 = {
+type geometry_polygon = {
   ?_type : type_t option;
   ?coordinates : polygon_t list option;
 }
 
-type geometry_t6 = {
+type geometry_multi_polygon = {
   ?_type : type_t option;
   ?coordinates : multi_polygon_t list option;
 }
 
-type geometry_t7 = {
+type geometry_collection = {
   ?_type : type_t option;
   geometries : geometries_t list;
 }
@@ -231,18 +231,18 @@ type annotation_t = {
 }
 
 type creator_t = [
-  | T1 of creator_item_t
-  | T2 of creator_item_t list
+  | Value of creator_item_t
+  | Array of creator_item_t list
 ]
 
 type creator_item_t = [
-  | T1 of creator_item_t1
-  | T2 of creator_item_t2
+  | Ref of creator_item_ref
+  | Object of creator_item_object
 ]
 
-type creator_item_t1 = string
+type creator_item_ref = string
 
-type creator_item_t2 = {
+type creator_item_object = {
   ?id : id_t option;
   ?_type <json name="type"> : type_t option;
   ?name : name_t option;
@@ -257,26 +257,26 @@ type email_sha1_strings_t = strings_t
 type homepage_strings_t = strings_t
 
 type body_t = [
-  | T1 of annotation_body_t
-  | T2 of annotation_body_t list
+  | Value of annotation_body_t
+  | Array of annotation_body_t list
 ]
 
 type annotation_body_items_t = [
-  | T1 of annotation_body_t1
-  | T2 of annotation_body_t2
-  | T3 of annotation_body_t3
-  | T4 of annotation_body_t4
-  | T5 of annotation_body_t5
-  | T6 of annotation_body_t6
-  | T7 of annotation_body_t7
+  | String of annotation_body_string
+  | Resource of annotation_body_resource
+  | SpecificResource of annotation_body_specific_resource
+  | TextualBody of annotation_body_textual_body
+  | Feature of annotation_body_feature
+  | FeatureCollection of annotation_body_feature_collection
+  | Untyped of annotation_body_untyped
 ]
 
 type annotation_body_t = [
   inherit annotation_body_items_t
-  | T8 of annotation_body_t8
+  | Choice of annotation_body_choice
 ]
 
-type annotation_body_t7 = {
+type annotation_body_untyped = {
   ?id : id_t option;
   ?label : label_t option;
   ?format : format_t option;
@@ -285,17 +285,17 @@ type annotation_body_t7 = {
   ?value : value_t option;    
 }
 
-type annotation_body_t1 = string
+type annotation_body_string = string
 
-type annotation_body_t2 = {
+type annotation_body_resource = {
   inherit resource_t;
 }
 
-type annotation_body_t3 = {
+type annotation_body_specific_resource = {
   inherit specific_resource_t;
 }
 
-type annotation_body_t4 = {
+type annotation_body_textual_body = {
   _type <json name="type"> : type_t;
   ?language : language_t option;
   ?format : format_t option;
@@ -303,42 +303,42 @@ type annotation_body_t4 = {
   ?creator : creator_t option;
 }
 
-type annotation_body_t5 = {
+type annotation_body_feature = {
   inherit feature_t;
 }
 
-type annotation_body_t6 = {
+type annotation_body_feature_collection = {
   inherit feature_collection_t;
 }
 
-type annotation_body_t8 = {
+type annotation_body_choice = {
   ?_type <json name="type"> : type_t option;
   items : annotation_body_items_t list;
 }
 
 type target_t = [
-  | T1 of annotation_target_t
-  | T2 of annotation_target_t list
+  | Value of annotation_target_t
+  | Array of annotation_target_t list
 ]
 
 type annotation_target_t = [
-  | T1 of annotation_target_t1
-  | T2 of annotation_target_t2
-  | T3 of annotation_target_t3
-  | T4 of annotation_target_t4
+  | String of annotation_target_string
+  | SelectorTarget of annotation_target_selector_target
+  | SpecificResource of annotation_target_specific_resource
+  | CanvasRef of annotation_target_canvas_ref
 ]  
 
-type annotation_target_t1 = string
+type annotation_target_string = string
 
-type annotation_target_t2 = {
+type annotation_target_selector_target = {
   source : id_t;
   scope : id_t;
   ?language : language_t option;
 }
 
-type annotation_target_t3 = specific_resource_t
+type annotation_target_specific_resource = specific_resource_t
 
-type annotation_target_t4 = {
+type annotation_target_canvas_ref = {
   id : id_t;
   ?partOf : part_of_t option;
   ?language : language_t option;
@@ -355,39 +355,39 @@ type specific_resource_t = {
 }
 
 type source_t = [
-  | T1 of source_t1
-  | T2 of source_t2
+  | Ref of source_ref
+  | Object of source_object
 ]
 
-type source_t1 = id_t
+type source_ref = id_t
 
-type source_t2 = class_t
+type source_object = class_t
 
 type selector_t = [
-  | T1 of resource_selector_t
-  | T2 of resource_selector_t list
+  | Value of resource_selector_t
+  | Array of resource_selector_t list
 ]
 
 type resource_selector_t = [
-  | T1 of resource_selector_t1
-  | T2 of resource_selector_t2
-  | T3 of resource_selector_t3
-  | T4 of resource_selector_t4
-  | T5 of resource_selector_t5
-  | T6 of resource_selector_t6
-  | T7 of resource_selector_t7
+  | String of resource_selector_string
+  | PointSelector of resource_selector_point
+  | FragmentSelector of resource_selector_fragment
+  | SvgSelector of resource_selector_svg
+  | ImageApiSelector of resource_selector_image_api
+  | TextQuoteSelector of resource_selector_text_quote
+  | XPathSelector of resource_selector_xpath
 ]
 
-type resource_selector_t1 = string
+type resource_selector_string = string
 
-type resource_selector_t2 = {
+type resource_selector_point = {
   _type <json name="type"> : type_t;
   ?t : duration_t option;
   ?x : dimension_t option;
   ?y : dimension_t option;
 }
 
-type resource_selector_t3 = {
+type resource_selector_fragment = {
   _type <json name="type"> : type_t;
   ?conformsTo : conforms_to_t option;
   value : value_t;
@@ -395,11 +395,11 @@ type resource_selector_t3 = {
 
 type conforms_to_t = string
 
-type resource_selector_t4 = {
+type resource_selector_svg = {
   _type <json name="type"> : type_t;
   value : value_t;
 }
-type resource_selector_t5 = {
+type resource_selector_image_api = {
   _type <json name="type"> : type_t;
   ?region : region_t option;
   ?size : size_t option;
@@ -408,14 +408,14 @@ type resource_selector_t5 = {
   ?format : format_t option;
 }
 
-type resource_selector_t6 = {
+type resource_selector_text_quote = {
   _type <json name="type"> : type_t;
   ?prefix : prefix_t option;
   exact : exact_t;
   ?suffix : suffix_t option;
 }
 
-type resource_selector_t7 = {
+type resource_selector_xpath = {
   _type <json name="type"> : type_t;
   value : value_t;
 }
@@ -449,22 +449,22 @@ type resource_t = {
 }
 
 type service_t = [
-  | T1 of service_item_t
-  | T2 of service_item_t list
+  | Value of service_item_t
+  | Array of service_item_t list
 ]
 
 type service_item_t = [
-  | T1 of service_item_t1
-  | T2 of service_item_t2
+  | Modern of service_item_modern
+  | Legacy of service_item_legacy
 ]
 
-type service_item_t1 = {
+type service_item_modern = {
   inherit class_t;
   ?profile : profile_t option;
   ?service : service_t option;
 }
 
-type service_item_t2 = {
+type service_item_legacy = {
   id <json name="@id"> : id_t;
   _type <json name="@type"> : type_t;
   ?label : label_t option;  
@@ -473,26 +473,26 @@ type service_item_t2 = {
 }
 
 type label_t = [
-  | T1 of label_t1
-  | T2 of label_t2
+  | Plain of label_plain
+  | Multilingual of label_multilingual
 ]
 
-type label_t1 = string
+type label_plain = string
 
-type label_t2 = lng_string_t
+type label_multilingual = lng_string_t
 
 type summary_t = lng_string_t
 
 type lng_string_t = (string * string list) list <json repr="object">
 
 type language_t = [
-  | T1 of language_t1
-  | T2 of language_t2
+  | Value of language_value
+  | Array of language_array
 ]
 
-type language_t1 = string
+type language_value = string
 
-type language_t2 = string list
+type language_array = string list
 
 type external_t = {
   inherit class_t;
@@ -518,13 +518,13 @@ type provider_t = {
 }
 
 type part_of_t = [
-  | T1 of part_of_t1
-  | T2 of part_of_t2
+  | Ref of part_of_ref
+  | Object of part_of_object
 ]
 
-type part_of_t1 = string
+type part_of_ref = string
 
-type part_of_t2 = {
+type part_of_object = {
   id : id_t;
   ?_type <json name="type"> : type_t option;
   ?label : label_t option;
@@ -534,13 +534,13 @@ type part_of_t2 = {
 type start_t = class_t
 
 type motivation_t = [
-  | T1 of motivation_t1
-  | T2 of motivation_t2
+  | Value of motivation_value
+  | Array of motivation_array
 ]
 
-type motivation_t1 = string
+type motivation_value = string
 
-type motivation_t2 = string list
+type motivation_array = string list
 
 type annotation_collection_t = {
   ?context <json name="@context"> : context_t option;
@@ -556,13 +556,13 @@ type annotation_collection_t = {
 }
 
 type first_t = [
-  | T1 of first_t1
-  | T2 of first_t2
+  | Ref of first_ref
+  | Object of first_object
 ]
 
-type first_t1 = string
+type first_ref = string
 
-type first_t2 = {
+type first_object = {
   id : id_t;
   _type <json name="type"> : type_t;
   ?label : label_t option;
@@ -586,14 +586,14 @@ type range_t = {
 }
 
 type range_items_t = [
-  | T1 of specific_resource_t
-  | T2 of canvas_t
-  | T3 of range_t
+  | SpecificResource of specific_resource_t
+  | Canvas of canvas_t
+  | Range of range_t
 ]
 
 type strings_t = [
-  | T1 of string
-  | T2 of string list
+  | Value of string
+  | Array of string list
 ]
 
 type id_t = string

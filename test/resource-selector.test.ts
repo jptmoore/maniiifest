@@ -16,8 +16,8 @@ describe('normalize_resource_selector', () => {
       // Cast to any to bypass TypeScript constraint for string input
       const result = normalize_resource_selector(selector as any, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T1', selector], selector);
-      expect(result).toEqual(['T1', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['String', selector], selector);
+      expect(result).toEqual(['String', selector]);
     });
   });
 
@@ -30,8 +30,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T2', selector], selector);
-      expect(result).toEqual(['T2', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['PointSelector', selector], selector);
+      expect(result).toEqual(['PointSelector', selector]);
     });
   });
 
@@ -45,8 +45,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T3', selector], selector);
-      expect(result).toEqual(['T3', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['FragmentSelector', selector], selector);
+      expect(result).toEqual(['FragmentSelector', selector]);
     });
 
     it('should handle FragmentSelector with spatial coordinates', () => {
@@ -58,8 +58,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T3', selector], selector);
-      expect(result).toEqual(['T3', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['FragmentSelector', selector], selector);
+      expect(result).toEqual(['FragmentSelector', selector]);
     });
 
     it('should handle FragmentSelector with temporal coordinates', () => {
@@ -71,8 +71,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T3', selector], selector);
-      expect(result).toEqual(['T3', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['FragmentSelector', selector], selector);
+      expect(result).toEqual(['FragmentSelector', selector]);
     });
   });
 
@@ -85,8 +85,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T4', selector], selector);
-      expect(result).toEqual(['T4', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['SvgSelector', selector], selector);
+      expect(result).toEqual(['SvgSelector', selector]);
     });
 
     it('should handle complex SVG selector', () => {
@@ -97,8 +97,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T4', selector], selector);
-      expect(result).toEqual(['T4', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['SvgSelector', selector], selector);
+      expect(result).toEqual(['SvgSelector', selector]);
     });
   });
 
@@ -111,8 +111,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T5', selector], selector);
-      expect(result).toEqual(['T5', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['ImageApiSelector', selector], selector);
+      expect(result).toEqual(['ImageApiSelector', selector]);
     });
 
     it('should normalize iiif:ImageApiSelector correctly', () => {
@@ -124,8 +124,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T5', selector], selector);
-      expect(result).toEqual(['T5', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['ImageApiSelector', selector], selector);
+      expect(result).toEqual(['ImageApiSelector', selector]);
     });
 
     it('should handle ImageApiSelector with all parameters', () => {
@@ -140,8 +140,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T5', selector], selector);
-      expect(result).toEqual(['T5', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['ImageApiSelector', selector], selector);
+      expect(result).toEqual(['ImageApiSelector', selector]);
     });
   });
 
@@ -154,8 +154,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T6', selector], selector);
-      expect(result).toEqual(['T6', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['TextQuoteSelector', selector], selector);
+      expect(result).toEqual(['TextQuoteSelector', selector]);
     });
 
     it('should handle TextQuoteSelector with prefix and suffix', () => {
@@ -168,8 +168,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T6', selector], selector);
-      expect(result).toEqual(['T6', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['TextQuoteSelector', selector], selector);
+      expect(result).toEqual(['TextQuoteSelector', selector]);
     });
 
     it('should handle TextQuoteSelector with refinedBy', () => {
@@ -185,8 +185,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T6', selector], selector);
-      expect(result).toEqual(['T6', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['TextQuoteSelector', selector], selector);
+      expect(result).toEqual(['TextQuoteSelector', selector]);
     });
   });
 
@@ -199,8 +199,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T7', selector], selector);
-      expect(result).toEqual(['T7', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['XPathSelector', selector], selector);
+      expect(result).toEqual(['XPathSelector', selector]);
     });
 
     it('should handle complex XPathSelector', () => {
@@ -211,8 +211,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T7', selector], selector);
-      expect(result).toEqual(['T7', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['XPathSelector', selector], selector);
+      expect(result).toEqual(['XPathSelector', selector]);
     });
 
     it('should handle XPathSelector with refinedBy', () => {
@@ -227,8 +227,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T7', selector], selector);
-      expect(result).toEqual(['T7', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['XPathSelector', selector], selector);
+      expect(result).toEqual(['XPathSelector', selector]);
     });
   });
 
@@ -279,7 +279,7 @@ describe('normalize_resource_selector', () => {
       
       normalize_resource_selector(selector, customContext, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T3', selector], customContext);
+      expect(mockFn).toHaveBeenCalledWith(['FragmentSelector', selector], customContext);
     });
 
     it('should default context to selector when not provided', () => {
@@ -290,7 +290,7 @@ describe('normalize_resource_selector', () => {
       
       normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T3', selector], selector);
+      expect(mockFn).toHaveBeenCalledWith(['FragmentSelector', selector], selector);
     });
   });
 
@@ -304,8 +304,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T3', selector], selector);
-      expect(result).toEqual(['T3', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['FragmentSelector', selector], selector);
+      expect(result).toEqual(['FragmentSelector', selector]);
     });
 
     it('should handle IIIF Canvas FragmentSelector', () => {
@@ -317,8 +317,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T3', selector], selector);
-      expect(result).toEqual(['T3', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['FragmentSelector', selector], selector);
+      expect(result).toEqual(['FragmentSelector', selector]);
     });
 
     it('should handle Web Annotation TextQuoteSelector', () => {
@@ -331,8 +331,8 @@ describe('normalize_resource_selector', () => {
       
       const result = normalize_resource_selector(selector, undefined, mockFn);
       
-      expect(mockFn).toHaveBeenCalledWith(['T6', selector], selector);
-      expect(result).toEqual(['T6', selector]);
+      expect(mockFn).toHaveBeenCalledWith(['TextQuoteSelector', selector], selector);
+      expect(result).toEqual(['TextQuoteSelector', selector]);
     });
   });
 });
