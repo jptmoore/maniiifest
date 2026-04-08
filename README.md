@@ -71,6 +71,24 @@ for (const anno of parser.iterateManifestCanvasAnnotation()) { /* ... */ }
 for (const range of parser.iterateManifestRange()) { /* ... */ }
 ```
 
+Canvas and range properties are accessible through the manifest:
+
+```typescript
+// Canvas-level iteration
+for (const label of parser.iterateManifestCanvasLabel()) { /* ... */ }
+for (const thumb of parser.iterateManifestCanvasThumbnail()) { /* ... */ }
+for (const meta of parser.iterateManifestCanvasMetadata()) { /* ... */ }
+for (const rendering of parser.iterateManifestCanvasRendering()) { /* ... */ }
+for (const seeAlso of parser.iterateManifestCanvasSeeAlso()) { /* ... */ }
+for (const service of parser.iterateManifestCanvasService()) { /* ... */ }
+
+// Range-level iteration (structures / table of contents)
+for (const label of parser.iterateManifestRangeLabel()) { /* ... */ }
+for (const item of parser.iterateManifestRangeItem()) { /* ... */ }
+for (const rendering of parser.iterateManifestRangeRendering()) { /* ... */ }
+for (const anno of parser.iterateManifestRangeAnnotation()) { /* ... */ }
+```
+
 ### Collection
 
 ```typescript
@@ -78,10 +96,18 @@ const parser = new Maniiifest(collection);
 
 parser.getCollectionId();
 parser.getCollectionLabel();
+parser.getCollectionSummary();
+parser.getCollectionRights();
+parser.getCollectionNavDate();
+parser.getCollectionNavPlace();
 
 for (const manifest of parser.iterateCollectionManifest()) { /* ... */ }
 for (const nested of parser.iterateCollectionCollection()) { /* ... */ }
 for (const meta of parser.iterateCollectionMetadata()) { /* ... */ }
+for (const rendering of parser.iterateCollectionRendering()) { /* ... */ }
+for (const seeAlso of parser.iterateCollectionSeeAlso()) { /* ... */ }
+for (const behavior of parser.iterateCollectionBehavior()) { /* ... */ }
+for (const partOf of parser.iterateCollectionPartOf()) { /* ... */ }
 ```
 
 ### Annotation
@@ -93,6 +119,9 @@ parser.getAnnotationId();
 parser.getAnnotationBody();
 parser.getAnnotationTarget();
 parser.getAnnotationMotivation();
+parser.getAnnotationCreator();
+parser.getAnnotationCreated();
+parser.getAnnotationModified();
 
 for (const body of parser.iterateAnnotationTextualBody()) { /* ... */ }
 for (const target of parser.iterateAnnotationTarget()) { /* ... */ }
@@ -105,8 +134,25 @@ const parser = new Maniiifest(page, 'AnnotationPage');
 
 parser.getAnnotationPageId();
 parser.getAnnotationPagePartOf();
+parser.getAnnotationPageLabel();
+parser.getAnnotationPageNext();
+parser.getAnnotationPageStartIndex();
 
 for (const anno of parser.iterateAnnotationPageAnnotation()) { /* ... */ }
+```
+
+### Annotation Collection
+
+```typescript
+const parser = new Maniiifest(collection, 'AnnotationCollection');
+
+parser.getAnnotationCollectionId();
+parser.getAnnotationCollectionLabel();
+parser.getAnnotationCollectionTotal();
+parser.getAnnotationCollectionFirst();
+parser.getAnnotationCollectionLast();
+
+for (const anno of parser.iterateAnnotationCollectionAnnotation()) { /* ... */ }
 ```
 
 Full API docs: [jptmoore.github.io/maniiifest](https://jptmoore.github.io/maniiifest/classes/Maniiifest.html)

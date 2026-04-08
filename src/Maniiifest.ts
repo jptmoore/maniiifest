@@ -63,7 +63,7 @@ export class Maniiifest {
      * @returns {U.Context | null} The context if the specification is of kind 'Manifest', otherwise null.
      */
     getManifestContext(): U.Context | null {
-        return this.specification.kind === 'Manifest' && this.specification.value.context != undefined
+        return this.specification.kind === 'Manifest' && this.specification.value.context !== undefined
             ? F.writeContextT(this.specification.value.context) as unknown as U.Context
             : null;
     }
@@ -74,7 +74,7 @@ export class Maniiifest {
      * @returns {U.Id | null} The manifest ID if the specification kind is 'Manifest', otherwise `null`.
      */
     getManifestId(): U.Id | null {
-        return this.specification.kind === 'Manifest' && this.specification.value.id != undefined
+        return this.specification.kind === 'Manifest' && this.specification.value.id !== undefined
             ? F.writeIdT(this.specification.value.id)
             : null;
     }
@@ -85,7 +85,7 @@ export class Maniiifest {
      * @returns {U.Label | null} The label if the specification is of kind 'Manifest' and has a label value, otherwise null.
      */
     getManifestLabel(): U.Label | null {
-        return this.specification.kind === 'Manifest' && this.specification.value.label != undefined
+        return this.specification.kind === 'Manifest' && this.specification.value.label !== undefined
             ? F.writeLabelT(this.specification.value.label) as unknown as U.Label
             : null;
     }
@@ -99,9 +99,9 @@ export class Maniiifest {
     getManifestLabelByLanguage(language: string): U.LngString | null {
         if (this.specification.kind === 'Manifest' && this.specification.value.label.kind === 'Multilingual') {
             const labels = this.specification.value.label.value;
-            for (const [lang, _] of labels) {
+            for (const [lang, values] of labels) {
                 if (lang === language) {
-                    return F.writeLngStringT(this.specification.value.label.value);
+                    return F.writeLngStringT([[lang, values]]);
                 }
             }
         }
@@ -224,7 +224,7 @@ export class Maniiifest {
      * @returns {U.Context | null} The context if the specification is of kind 'Collection', otherwise null.
      */
     getCollectionContext(): U.Context | null {
-        return this.specification.kind === 'Collection' && this.specification.value.context != undefined
+        return this.specification.kind === 'Collection' && this.specification.value.context !== undefined
             ? F.writeContextT(this.specification.value.context) as unknown as U.Context
             : null;
     }
@@ -235,7 +235,7 @@ export class Maniiifest {
      * @returns {U.Id | null} The collection ID if the specification is of kind 'Collection', otherwise null.
      */
     getCollectionId(): U.Id | null {
-        return this.specification.kind === 'Collection' && this.specification.value.id != undefined
+        return this.specification.kind === 'Collection' && this.specification.value.id !== undefined
             ? F.writeIdT(this.specification.value.id)
             : null;
     }
@@ -246,7 +246,7 @@ export class Maniiifest {
      * @returns {U.Label | null} The collection label if the specification is of kind 'Collection', otherwise null.
      */
     getCollectionLabel(): U.Label | null {
-        return this.specification.kind === 'Collection' && this.specification.value.label != undefined
+        return this.specification.kind === 'Collection' && this.specification.value.label !== undefined
             ? F.writeLabelT(this.specification.value.label) as unknown as U.Label
             : null;
     }
@@ -260,9 +260,9 @@ export class Maniiifest {
     getCollectionLabelByLanguage(language: string): U.LngString | null {
         if (this.specification.kind === 'Collection' && this.specification.value.label.kind === 'Multilingual') {
             const labels = this.specification.value.label.value;
-            for (const [lang, _] of labels) {
+            for (const [lang, values] of labels) {
                 if (lang === language) {
-                    return F.writeLngStringT(this.specification.value.label.value);
+                    return F.writeLngStringT([[lang, values]]);
                 }
             }
         }
@@ -283,7 +283,7 @@ export class Maniiifest {
     /**
      * Retrieves the required statement from the collection specification if it is of kind 'Collection'.
      *
-     * @returns {U.RequiredStatement | null} The required statement if the specification is of kind 'Manifest' and has a required statement value, otherwise null.
+     * @returns {U.RequiredStatement | null} The required statement if the specification is of kind 'Collection' and has a required statement value, otherwise null.
      */
     getCollectionRequiredStatement(): U.RequiredStatement | null {
         return this.specification.kind === 'Collection' && this.specification.value.requiredStatement !== undefined
@@ -896,6 +896,8 @@ export class Maniiifest {
                 for (const serviceItem of this.specification.value.service.value ?? []) {
                     yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                 }
+            } else if (this.specification.value.service?.kind === 'Value') {
+                yield F.writeServiceItemT(this.specification.value.service.value) as unknown as U.ServiceItem;
             }
             // Define a recursive generator function to traverse nested collections
             const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.ServiceItem> {
@@ -907,6 +909,8 @@ export class Maniiifest {
                             for (const serviceItem of item.value.service.value ?? []) {
                                 yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                             }
+                        } else if (item.value.service?.kind === 'Value') {
+                            yield F.writeServiceItemT(item.value.service.value) as unknown as U.ServiceItem;
                         }
                         // Recursively traverse nested collections
                         if (item.value.items) {
@@ -936,8 +940,9 @@ export class Maniiifest {
                 for (const serviceItem of this.specification.value.service.value ?? []) {
                     yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                 }
+            } else if (this.specification.value.service?.kind === 'Value') {
+                yield F.writeServiceItemT(this.specification.value.service.value) as unknown as U.ServiceItem;
             }
-
         }
     }
 
@@ -956,6 +961,8 @@ export class Maniiifest {
                     for (const serviceItem of thumbnail.service.value ?? []) {
                         yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                     }
+                } else if (thumbnail.service?.kind === 'Value') {
+                    yield F.writeServiceItemT(thumbnail.service.value) as unknown as U.ServiceItem;
                 }
             }
         }
@@ -974,6 +981,8 @@ export class Maniiifest {
                 for (const servicesItem of this.specification.value.services.value ?? []) {
                     yield F.writeServiceItemT(servicesItem) as unknown as U.ServiceItem;
                 }
+            } else if (this.specification.value.services?.kind === 'Value') {
+                yield F.writeServiceItemT(this.specification.value.services.value) as unknown as U.ServiceItem;
             }
         }
     }
@@ -1044,7 +1053,7 @@ export class Maniiifest {
      * @returns {U.AnnotationCollection | null} The annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollection(): U.AnnotationCollection | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification !== undefined
             ? F.writeAnnotationCollectionT(this.specification)
             : null;
     }
@@ -1055,7 +1064,7 @@ export class Maniiifest {
      * @returns {U.Id | null} The annotation collection ID if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionId(): U.Id | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.id != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification.id !== undefined
             ? F.writeIdT(this.specification.id)
             : null;
     }
@@ -1066,7 +1075,7 @@ export class Maniiifest {
      * @returns {U.Type | null} The type of the annotation collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionType(): U.Type | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.type != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification.type !== undefined
             ? F.writeTypeT(this.specification.type)
             : null;
     }
@@ -1077,7 +1086,7 @@ export class Maniiifest {
      * @returns {U.Context | null} The annotation collection context if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionContext(): U.Context | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.context != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification.context !== undefined
             ? F.writeContextT(this.specification.context) as unknown as U.Context
             : null;
     }
@@ -1088,7 +1097,7 @@ export class Maniiifest {
      * @returns {U.Label | null} The annotation collection label if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionLabel(): U.Label | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.label != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification.label !== undefined
             ? F.writeLabelT(this.specification.label) as unknown as U.Label
             : null;
     }
@@ -1099,7 +1108,7 @@ export class Maniiifest {
      * @returns {U.First | null} The first annotation in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionFirst(): U.First | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.first != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification.first !== undefined
             ? F.writeFirstT(this.specification.first) as unknown as U.First
             : null;
     }
@@ -1110,7 +1119,7 @@ export class Maniiifest {
      * @returns {U.Last | null} The last annotation in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionLast(): U.Last | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.last != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification.last !== undefined
             ? F.writeLastT(this.specification.last)
             : null;
     }
@@ -1121,7 +1130,7 @@ export class Maniiifest {
      * @returns {U.Total | null} The total number of annotations in the collection if the specification type is 'AnnotationCollection', otherwise `null`.
      */
     getAnnotationCollectionTotal(): U.Total | null {
-        return this.specification.type === 'AnnotationCollection' && this.specification.total != undefined
+        return this.specification.type === 'AnnotationCollection' && this.specification.total !== undefined
             ? F.writeTotalT(this.specification.total)
             : null;
     }
@@ -1132,7 +1141,7 @@ export class Maniiifest {
      * @returns {U.AnnotationPage | null} The annotation page if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPage(): U.AnnotationPage | null {
-        return this.specification.type === 'AnnotationPage' && this.specification != undefined
+        return this.specification.type === 'AnnotationPage' && this.specification !== undefined
             ? F.writeAnnotationPageT(this.specification)
             : null;
     }
@@ -1143,7 +1152,7 @@ export class Maniiifest {
      * @returns {U.Type | null} The type of the annotation page if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPageType(): U.Type | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.type != undefined
+        return this.specification.type === 'AnnotationPage' && this.specification.type !== undefined
             ? F.writeTypeT(this.specification.type)
             : null;
     }
@@ -1154,7 +1163,7 @@ export class Maniiifest {
      * @returns {U.Id | null} The annotation page ID if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPageId(): U.Id | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.id != undefined
+        return this.specification.type === 'AnnotationPage' && this.specification.id !== undefined
             ? F.writeIdT(this.specification.id)
             : null;
     }
@@ -1165,7 +1174,7 @@ export class Maniiifest {
      * @returns {U.Context | null} The annotation page context if the specification type is 'AnnotationPage', otherwise `null`.
      */
     getAnnotationPageContext(): U.Context | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.context != undefined
+        return this.specification.type === 'AnnotationPage' && this.specification.context !== undefined
             ? F.writeContextT(this.specification.context) as unknown as U.Context
             : null;
     }
@@ -1176,7 +1185,7 @@ export class Maniiifest {
      * @returns {U.PartOf | null} The 'partOf' property if the specification type is 'AnnotationPage', otherwise null.
      */
     getAnnotationPagePartOf(): U.PartOf | null {
-        return this.specification.type === 'AnnotationPage' && this.specification.partOf != undefined
+        return this.specification.type === 'AnnotationPage' && this.specification.partOf !== undefined
             ? F.writePartOfT(this.specification.partOf) as unknown as U.PartOf
             : null;
     }
@@ -1270,7 +1279,7 @@ export class Maniiifest {
                 for (const target of this.specification.target.value) {
                     yield F.writeAnnotationTargetT(target) as unknown as U.AnnotationTarget;
                 }
-            } else { /* single value */
+            } else if (this.specification.target) { /* single value */
                 yield F.writeAnnotationTargetT(this.specification.target.value) as unknown as U.AnnotationTarget;
             }
         }
@@ -1306,7 +1315,7 @@ export class Maniiifest {
      * @returns {U.Annotation | null} The annotation if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotation(): U.Annotation | null {
-        return this.specification.type === 'Annotation' && this.specification != undefined
+        return this.specification.type === 'Annotation' && this.specification !== undefined
             ? F.writeAnnotationT(this.specification)
             : null;
     }
@@ -1317,7 +1326,7 @@ export class Maniiifest {
      * @returns {U.Id | null} The annotation ID if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationId(): U.Id | null {
-        return this.specification.type === 'Annotation' && this.specification.id != undefined
+        return this.specification.type === 'Annotation' && this.specification.id !== undefined
             ? F.writeIdT(this.specification.id)
             : null;
     }
@@ -1328,7 +1337,7 @@ export class Maniiifest {
      * @returns {U.Type | null} The annotation type if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationType(): U.Type | null {
-        return this.specification.type === 'Annotation' && this.specification.type != undefined
+        return this.specification.type === 'Annotation' && this.specification.type !== undefined
             ? F.writeTypeT(this.specification.type)
             : null;
     }
@@ -1339,7 +1348,7 @@ export class Maniiifest {
      * @returns {U.Context | null} The annotation context if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationContext(): U.Context | null {
-        return this.specification.type === 'Annotation' && this.specification.context != undefined
+        return this.specification.type === 'Annotation' && this.specification.context !== undefined
             ? F.writeContextT(this.specification.context) as unknown as U.Context
             : null;
     }
@@ -1350,7 +1359,7 @@ export class Maniiifest {
      * @returns {U.Body | null} The annotation body if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationBody(): U.Body | null {
-        return this.specification.type === 'Annotation' && this.specification.body != undefined
+        return this.specification.type === 'Annotation' && this.specification.body !== undefined
             ? F.writeBodyT(this.specification.body) as unknown as U.Body
             : null;
     }
@@ -1361,7 +1370,7 @@ export class Maniiifest {
      * @returns {U.Target | null} The annotation target if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationTarget(): U.Target | null {
-        return this.specification.type === 'Annotation' && this.specification.target != undefined
+        return this.specification.type === 'Annotation' && this.specification.target !== undefined
             ? F.writeTargetT(this.specification.target) as unknown as U.Target
             : null;
     }
@@ -1372,7 +1381,7 @@ export class Maniiifest {
      * @returns {U.Motivation | null} The annotation motivation if the specification type is 'Annotation', otherwise `null`.
      */
     getAnnotationMotivation(): U.Motivation | null {
-        return this.specification.type === 'Annotation' && this.specification.motivation != undefined
+        return this.specification.type === 'Annotation' && this.specification.motivation !== undefined
             ? F.writeMotivationT(this.specification.motivation) as unknown as U.Motivation
             : null;
     }
@@ -1381,14 +1390,14 @@ export class Maniiifest {
      * Returns the feature collection if the specification kind is 'FeatureCollection', otherwise returns null.
      */
     getAnnotationFeatureCollection(): U.FeatureCollection | null {
-        return this.specification.body?.value?.kind === 'FeatureCollection' ? F.writeFeatureCollectionT(this.specification.body.value.value) : null;
+        return this.specification.type === 'Annotation' && this.specification.body?.value?.kind === 'FeatureCollection' ? F.writeFeatureCollectionT(this.specification.body.value.value) : null;
     }
 
     /**
      * Generator function that yields each feature if the specification kind is 'FeatureCollection'.
      */
     *iterateAnnotationFeature(): IterableIterator<U.Feature> {
-        if (this.specification.body?.value?.kind === 'FeatureCollection') {
+        if (this.specification.type === 'Annotation' && this.specification.body?.value?.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {
                 yield F.writeFeatureT(feature);
             }
@@ -1400,13 +1409,475 @@ export class Maniiifest {
      * if the specification kind is 'FeatureCollection'.
      */
     *iterateAnnotationGeometryPointCoordinates(): IterableIterator<U.PointCoordinates> {
-        if (this.specification.body?.value?.kind === 'FeatureCollection') {
+        if (this.specification.type === 'Annotation' && this.specification.body?.value?.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {
                 if (feature.geometry?.kind === 'Point') {
                     for (const coordinates of feature.geometry.value.coordinates ?? []) {
                         yield F.writePointCoordinatesT(coordinates);
                     }
                 }
+            }
+        }
+    }
+
+    // ──────────────────────────────────────────
+    // Canvas accessors (within Manifest context)
+    // ──────────────────────────────────────────
+
+    /**
+     * Iterates over the labels of canvases in the manifest.
+     *
+     * @yields {U.Label} The next canvas label in the manifest.
+     */
+    *iterateManifestCanvasLabel(): IterableIterator<U.Label> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                if (canvas.label !== undefined) {
+                    yield F.writeLabelT(canvas.label) as unknown as U.Label;
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the metadata elements of canvases in the manifest.
+     *
+     * @yields {U.Metadata} The next canvas metadata element in the manifest.
+     */
+    *iterateManifestCanvasMetadata(): IterableIterator<U.Metadata> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const metadata of canvas.metadata ?? []) {
+                    yield F.writeMetadataT(metadata);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the thumbnail elements of canvases in the manifest.
+     *
+     * @yields {U.Thumbnail} The next canvas thumbnail element in the manifest.
+     */
+    *iterateManifestCanvasThumbnail(): IterableIterator<U.Thumbnail> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const thumbnail of canvas.thumbnail ?? []) {
+                    yield F.writeThumbnailT(thumbnail);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the rendering elements of canvases in the manifest.
+     *
+     * @yields {U.Rendering} The next canvas rendering element in the manifest.
+     */
+    *iterateManifestCanvasRendering(): IterableIterator<U.Rendering> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const rendering of canvas.rendering ?? []) {
+                    yield F.writeRenderingT(rendering);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the seeAlso elements of canvases in the manifest.
+     *
+     * @yields {U.SeeAlso} The next canvas seeAlso element in the manifest.
+     */
+    *iterateManifestCanvasSeeAlso(): IterableIterator<U.SeeAlso> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const seeAlso of canvas.seeAlso ?? []) {
+                    yield F.writeSeeAlsoT(seeAlso);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the homepage elements of canvases in the manifest.
+     *
+     * @yields {U.Homepage} The next canvas homepage element in the manifest.
+     */
+    *iterateManifestCanvasHomepage(): IterableIterator<U.Homepage> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const homepage of canvas.homepage ?? []) {
+                    yield F.writeHomepageT(homepage);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the provider elements of canvases in the manifest.
+     *
+     * @yields {U.Provider} The next canvas provider element in the manifest.
+     */
+    *iterateManifestCanvasProvider(): IterableIterator<U.Provider> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const provider of canvas.provider ?? []) {
+                    yield F.writeProviderT(provider);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the service elements of canvases in the manifest.
+     *
+     * @yields {U.ServiceItem} The next canvas service item in the manifest.
+     */
+    *iterateManifestCanvasService(): IterableIterator<U.ServiceItem> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                if (canvas.service?.kind === 'Array') {
+                    for (const serviceItem of canvas.service.value ?? []) {
+                        yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the behavior elements of canvases in the manifest.
+     *
+     * @yields {U.Behavior} The next canvas behavior element in the manifest.
+     */
+    *iterateManifestCanvasBehavior(): IterableIterator<U.Behavior> {
+        if (this.specification.kind === 'Manifest') {
+            for (const canvas of this.specification.value.items ?? []) {
+                for (const behavior of canvas.behavior ?? []) {
+                    yield F.writeBehaviorT(behavior);
+                }
+            }
+        }
+    }
+
+    // ──────────────────────────────────────────
+    // Range accessors (within Manifest context)
+    // ──────────────────────────────────────────
+
+    /**
+     * Iterates over the labels of ranges in the manifest.
+     *
+     * @yields {U.Label} The next range label in the manifest.
+     */
+    *iterateManifestRangeLabel(): IterableIterator<U.Label> {
+        if (this.specification.kind === 'Manifest') {
+            for (const range of this.specification.value.structures ?? []) {
+                if (range.label !== undefined) {
+                    yield F.writeLabelT(range.label) as unknown as U.Label;
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the rendering elements of ranges in the manifest.
+     *
+     * @yields {U.Rendering} The next range rendering element in the manifest.
+     */
+    *iterateManifestRangeRendering(): IterableIterator<U.Rendering> {
+        if (this.specification.kind === 'Manifest') {
+            for (const range of this.specification.value.structures ?? []) {
+                for (const rendering of range.rendering ?? []) {
+                    yield F.writeRenderingT(rendering);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the thumbnail elements of ranges in the manifest.
+     *
+     * @yields {U.Thumbnail} The next range thumbnail element in the manifest.
+     */
+    *iterateManifestRangeThumbnail(): IterableIterator<U.Thumbnail> {
+        if (this.specification.kind === 'Manifest') {
+            for (const range of this.specification.value.structures ?? []) {
+                for (const thumbnail of range.thumbnail ?? []) {
+                    yield F.writeThumbnailT(thumbnail);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates over the annotations in ranges of the manifest.
+     *
+     * @yields {U.Annotation} The next annotation in the ranges of the manifest.
+     */
+    *iterateManifestRangeAnnotation(): IterableIterator<U.Annotation> {
+        if (this.specification.kind === 'Manifest') {
+            for (const range of this.specification.value.structures ?? []) {
+                for (const annotationPage of range.annotations ?? []) {
+                    for (const annotation of annotationPage.items ?? []) {
+                        yield F.writeAnnotationT(annotation);
+                    }
+                }
+            }
+        }
+    }
+
+    // ──────────────────────────────────────────
+    // Collection getters & iterators
+    // ──────────────────────────────────────────
+
+    /**
+     * Retrieves the summary from the collection specification if it is of kind 'Collection'.
+     *
+     * @returns {U.Summary | null} The summary if the specification is of kind 'Collection', otherwise null.
+     */
+    getCollectionSummary(): U.Summary | null {
+        return this.specification.kind === 'Collection' && this.specification.value?.summary !== undefined
+            ? F.writeSummaryT(this.specification.value.summary)
+            : null;
+    }
+
+    /**
+     * Retrieves the rights statement from the collection specification if it is of kind 'Collection'.
+     *
+     * @returns {U.Rights | null} The rights statement if the specification is of kind 'Collection', otherwise null.
+     */
+    getCollectionRights(): U.Rights | null {
+        return this.specification.kind === 'Collection' && this.specification.value.rights !== undefined
+            ? F.writeRightsT(this.specification.value.rights)
+            : null;
+    }
+
+    /**
+     * Retrieves the navigation date from the collection specification if it is of kind 'Collection'.
+     *
+     * @returns {U.NavDate | null} The navigation date if the specification is of kind 'Collection', otherwise null.
+     */
+    getCollectionNavDate(): U.NavDate | null {
+        return this.specification.kind === 'Collection' && this.specification.value.navDate !== undefined
+            ? F.writeNavDateT(this.specification.value.navDate)
+            : null;
+    }
+
+    /**
+     * Retrieves the navigation place from the collection specification if it is of kind 'Collection'.
+     *
+     * @returns {U.NavPlace | null} The navigation place if the specification is of kind 'Collection', otherwise null.
+     */
+    getCollectionNavPlace(): U.NavPlace | null {
+        return this.specification.kind === 'Collection' && this.specification.value.navPlace !== undefined
+            ? F.writeNavPlaceT(this.specification.value.navPlace)
+            : null;
+    }
+
+    /**
+     * Iterates over the rendering elements in the collection and nested collections.
+     *
+     * @yields {U.Rendering} The next rendering element in the collection.
+     */
+    *iterateCollectionRendering(): IterableIterator<U.Rendering> {
+        if (this.specification.kind === 'Collection') {
+            for (const rendering of this.specification.value.rendering ?? []) {
+                yield F.writeRenderingT(rendering);
+            }
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Rendering> {
+                if (!items) return;
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        for (const rendering of item.value.rendering ?? []) {
+                            yield F.writeRenderingT(rendering);
+                        }
+                        if (item.value.items) {
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            if (this.specification.value.items) {
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }
+
+    /**
+     * Iterates over the seeAlso elements in the collection and nested collections.
+     *
+     * @yields {U.SeeAlso} The next seeAlso element in the collection.
+     */
+    *iterateCollectionSeeAlso(): IterableIterator<U.SeeAlso> {
+        if (this.specification.kind === 'Collection') {
+            for (const seeAlso of this.specification.value.seeAlso ?? []) {
+                yield F.writeSeeAlsoT(seeAlso);
+            }
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.SeeAlso> {
+                if (!items) return;
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        for (const seeAlso of item.value.seeAlso ?? []) {
+                            yield F.writeSeeAlsoT(seeAlso);
+                        }
+                        if (item.value.items) {
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            if (this.specification.value.items) {
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }
+
+    /**
+     * Iterates over the behavior elements in the collection and nested collections.
+     *
+     * @yields {U.Behavior} The next behavior element in the collection.
+     */
+    *iterateCollectionBehavior(): IterableIterator<U.Behavior> {
+        if (this.specification.kind === 'Collection') {
+            for (const behavior of this.specification.value.behavior ?? []) {
+                yield F.writeBehaviorT(behavior);
+            }
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Behavior> {
+                if (!items) return;
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        for (const behavior of item.value.behavior ?? []) {
+                            yield F.writeBehaviorT(behavior);
+                        }
+                        if (item.value.items) {
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            if (this.specification.value.items) {
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }
+
+    /**
+     * Iterates over the partOf elements in the collection and nested collections.
+     *
+     * @yields {U.PartOf} The next partOf element in the collection.
+     */
+    *iterateCollectionPartOf(): IterableIterator<U.PartOf> {
+        if (this.specification.kind === 'Collection') {
+            for (const partOf of this.specification.value.partOf ?? []) {
+                yield F.writePartOfT(partOf) as unknown as U.PartOf;
+            }
+            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.PartOf> {
+                if (!items) return;
+                for (const item of items) {
+                    if (item.kind === 'Collection') {
+                        for (const partOf of item.value.partOf ?? []) {
+                            yield F.writePartOfT(partOf) as unknown as U.PartOf;
+                        }
+                        if (item.value.items) {
+                            yield* traverse(item.value.items);
+                        }
+                    }
+                }
+            };
+            if (this.specification.value.items) {
+                yield* traverse(this.specification.value.items);
+            }
+        }
+    }
+
+    // ──────────────────────────────────────────
+    // Annotation provenance
+    // ──────────────────────────────────────────
+
+    /**
+     * Retrieves the creator from the annotation if the specification type is 'Annotation'.
+     *
+     * @returns {U.Creator | null} The creator if the specification type is 'Annotation', otherwise null.
+     */
+    getAnnotationCreator(): U.Creator | null {
+        return this.specification.type === 'Annotation' && this.specification.creator !== undefined
+            ? F.writeCreatorT(this.specification.creator) as unknown as U.Creator
+            : null;
+    }
+
+    /**
+     * Retrieves the created date from the annotation if the specification type is 'Annotation'.
+     *
+     * @returns {U.Created | null} The created date if the specification type is 'Annotation', otherwise null.
+     */
+    getAnnotationCreated(): U.Created | null {
+        return this.specification.type === 'Annotation' && this.specification.created !== undefined
+            ? F.writeCreatedT(this.specification.created)
+            : null;
+    }
+
+    /**
+     * Retrieves the modified date from the annotation if the specification type is 'Annotation'.
+     *
+     * @returns {U.Modified | null} The modified date if the specification type is 'Annotation', otherwise null.
+     */
+    getAnnotationModified(): U.Modified | null {
+        return this.specification.type === 'Annotation' && this.specification.modified !== undefined
+            ? F.writeModifiedT(this.specification.modified)
+            : null;
+    }
+
+    // ──────────────────────────────────────────
+    // AnnotationPage pagination
+    // ──────────────────────────────────────────
+
+    /**
+     * Retrieves the label from the annotation page if the specification type is 'AnnotationPage'.
+     *
+     * @returns {U.Label | null} The label if the specification type is 'AnnotationPage', otherwise null.
+     */
+    getAnnotationPageLabel(): U.Label | null {
+        return this.specification.type === 'AnnotationPage' && this.specification.label !== undefined
+            ? F.writeLabelT(this.specification.label) as unknown as U.Label
+            : null;
+    }
+
+    /**
+     * Retrieves the next page reference from the annotation page if the specification type is 'AnnotationPage'.
+     *
+     * @returns {U.Next | null} The next page reference if the specification type is 'AnnotationPage', otherwise null.
+     */
+    getAnnotationPageNext(): U.Next | null {
+        return this.specification.type === 'AnnotationPage' && this.specification.next !== undefined
+            ? F.writeNextT(this.specification.next)
+            : null;
+    }
+
+    /**
+     * Retrieves the start index from the annotation page if the specification type is 'AnnotationPage'.
+     *
+     * @returns {U.StartIndex | null} The start index if the specification type is 'AnnotationPage', otherwise null.
+     */
+    getAnnotationPageStartIndex(): U.StartIndex | null {
+        return this.specification.type === 'AnnotationPage' && this.specification.startIndex !== undefined
+            ? F.writeStartIndexT(this.specification.startIndex)
+            : null;
+    }
+
+    // ──────────────────────────────────────────
+    // AnnotationCollection items
+    // ──────────────────────────────────────────
+
+    /**
+     * Iterates over the annotations in the annotation collection.
+     *
+     * @yields {U.Annotation} The next annotation in the annotation collection.
+     */
+    *iterateAnnotationCollectionAnnotation(): IterableIterator<U.Annotation> {
+        if (this.specification.type === 'AnnotationCollection') {
+            for (const annotation of this.specification.items ?? []) {
+                yield F.writeAnnotationT(annotation);
             }
         }
     }
