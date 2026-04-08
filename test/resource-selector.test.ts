@@ -9,7 +9,7 @@ describe('normalize_resource_selector', () => {
     mockFn.mockClear();
   });
 
-  describe('String selector (T1)', () => {
+  describe('String selector', () => {
     it('should normalize string selector correctly', () => {
       const selector = "https://example.com/page.html#xywh=160,120,320,240";
       
@@ -21,7 +21,7 @@ describe('normalize_resource_selector', () => {
     });
   });
 
-  describe('PointSelector (T2)', () => {
+  describe('PointSelector', () => {
     it('should normalize PointSelector correctly', () => {
       const selector = {
         type: 'PointSelector',
@@ -35,7 +35,7 @@ describe('normalize_resource_selector', () => {
     });
   });
 
-  describe('FragmentSelector (T3)', () => {
+  describe('FragmentSelector', () => {
     it('should normalize FragmentSelector correctly', () => {
       const selector = {
         type: 'FragmentSelector',
@@ -76,7 +76,7 @@ describe('normalize_resource_selector', () => {
     });
   });
 
-  describe('SvgSelector (T4)', () => {
+  describe('SvgSelector', () => {
     it('should normalize SvgSelector correctly', () => {
       const selector = {
         type: 'SvgSelector',
@@ -102,7 +102,7 @@ describe('normalize_resource_selector', () => {
     });
   });
 
-  describe('ImageApiSelector (T5)', () => {
+  describe('ImageApiSelector', () => {
     it('should normalize ImageApiSelector correctly', () => {
       const selector = {
         type: 'ImageApiSelector',
@@ -145,7 +145,7 @@ describe('normalize_resource_selector', () => {
     });
   });
 
-  describe('TextQuoteSelector (T6)', () => {
+  describe('TextQuoteSelector', () => {
     it('should normalize TextQuoteSelector with exact match', () => {
       const selector = {
         type: 'TextQuoteSelector',
@@ -190,7 +190,7 @@ describe('normalize_resource_selector', () => {
     });
   });
 
-  describe('XPathSelector (T7)', () => {
+  describe('XPathSelector', () => {
     it('should normalize XPathSelector correctly', () => {
       const selector = {
         type: 'XPathSelector',

@@ -510,7 +510,7 @@ export type ResourceSelectorImageApi = {
   type: TypeT;
   region?: RegionT;
   size?: SizeT;
-  rotation?: RotatationT;
+  rotation?: RotationT;
   quality?: QualityT;
   format?: FormatT;
 }
@@ -750,7 +750,7 @@ export type SizeT = string
 
 export type QualityT = string
 
-export type RotatationT = string
+export type RotationT = string
 
 export type TotalT = number /*int*/
 
@@ -2233,7 +2233,7 @@ export function writeResourceSelectorImageApi(x: ResourceSelectorImageApi, conte
     'type': _atd_write_required_field('ResourceSelectorImageApi', 'type', writeTypeT, x.type, x),
     'region': _atd_write_optional_field(writeRegionT, x.region, x),
     'size': _atd_write_optional_field(writeSizeT, x.size, x),
-    'rotation': _atd_write_optional_field(writeRotatationT, x.rotation, x),
+    'rotation': _atd_write_optional_field(writeRotationT, x.rotation, x),
     'quality': _atd_write_optional_field(writeQualityT, x.quality, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
   };
@@ -2244,7 +2244,7 @@ export function readResourceSelectorImageApi(x: any, context: any = x): Resource
     type: _atd_read_required_field('ResourceSelectorImageApi', 'type', readTypeT, x['type'], x),
     region: _atd_read_optional_field(readRegionT, x['region'], x),
     size: _atd_read_optional_field(readSizeT, x['size'], x),
-    rotation: _atd_read_optional_field(readRotatationT, x['rotation'], x),
+    rotation: _atd_read_optional_field(readRotationT, x['rotation'], x),
     quality: _atd_read_optional_field(readQualityT, x['quality'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
   };
@@ -3048,11 +3048,11 @@ export function readQualityT(x: any, context: any = x): QualityT {
   return _atd_read_string(x, context);
 }
 
-export function writeRotatationT(x: RotatationT, context: any = x): any {
+export function writeRotationT(x: RotationT, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readRotatationT(x: any, context: any = x): RotatationT {
+export function readRotationT(x: any, context: any = x): RotationT {
   return _atd_read_string(x, context);
 }
 

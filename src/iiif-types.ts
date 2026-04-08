@@ -495,7 +495,7 @@ export interface ResourceSelectorImageApi {
   type: Type;
   region?: Region;
   size?: Size;
-  rotation?: Rotatation;
+  rotation?: Rotation;
   quality?: Quality;
   format?: Format;
 }
@@ -751,8 +751,8 @@ export type Size = string;
 /** @atd quality_t */
 export type Quality = string;
 
-/** @atd rotatation_t */
-export type Rotatation = string;
+/** @atd rotation_t */
+export type Rotation = string;
 
 /** @atd total_t */
 export type Total = number;

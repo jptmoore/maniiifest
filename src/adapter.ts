@@ -96,7 +96,7 @@ export function normalize_annotation_body<T extends { type: string }, R>(x: T, c
     } else if (typeof x === 'object' && x.type === 'FeatureCollection') {
         return fn(['FeatureCollection', x], context);
     } else if (typeof x === 'object' && x.type === 'Choice') {
-        // T8 before T7: T7 is the untyped catch-all and must come last
+        // Choice before Untyped: Untyped is the catch-all and must come last
         return fn(['Choice', x], context);
     } else if (typeof x === 'object') {
         return fn(['Untyped', x], context);

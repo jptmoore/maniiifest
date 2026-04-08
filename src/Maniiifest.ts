@@ -326,7 +326,7 @@ export class Maniiifest {
                                     yield F.writeAnnotationBodyTextualBody(body.value);
                                 }
                             }
-                        } else { /* must be T1 */
+                        } else { /* single value */
                             if (annotation.body?.value?.kind === 'TextualBody') {
                                 yield F.writeAnnotationBodyTextualBody(annotation.body.value.value);
                             }
@@ -952,7 +952,7 @@ export class Maniiifest {
     *iterateManifestThumbnailService(): IterableIterator<U.ServiceItem> {
         if (this.specification.kind === 'Manifest') {
             for (const thumbnail of this.specification.value.thumbnail ?? []) {
-                if (this.specification.value.service?.kind === 'Array') {
+                if (thumbnail.service?.kind === 'Array') {
                     for (const serviceItem of thumbnail.service.value ?? []) {
                         yield F.writeServiceItemT(serviceItem) as unknown as U.ServiceItem;
                     }
@@ -1010,7 +1010,7 @@ export class Maniiifest {
                                 yield F.writeAnnotationBodyTextualBody(body.value);
                             }
                         }
-                    } else { /* must be T1 */
+                    } else { /* single value */
                         if (annotation.body?.value?.kind === 'TextualBody') {
                             yield F.writeAnnotationBodyTextualBody(annotation.body.value.value);
                         }
@@ -1208,7 +1208,7 @@ export class Maniiifest {
                             yield F.writeAnnotationBodyTextualBody(body.value);
                         }
                     }
-                } else { /* must be T1 */
+                } else { /* single value */
                     if (annotation.body?.value?.kind === 'TextualBody') {
                         yield F.writeAnnotationBodyTextualBody(annotation.body.value.value);
                     }
@@ -1230,7 +1230,7 @@ export class Maniiifest {
                         yield F.writeAnnotationBodyTextualBody(body.value);
                     }
                 }
-            } else { /* must be T1 */
+            } else { /* single value */
                 if (this.specification.body?.value?.kind === 'TextualBody') {
                     yield F.writeAnnotationBodyTextualBody(this.specification.body.value.value);
                 }
@@ -1251,7 +1251,7 @@ export class Maniiifest {
                         yield F.writeAnnotationBodyResource(body.value);
                     }
                 }
-            } else { /* must be T1 */
+            } else { /* single value */
                 if (this.specification.body?.value?.kind === 'Resource') {
                     yield F.writeAnnotationBodyResource(this.specification.body.value.value);
                 }
@@ -1266,11 +1266,11 @@ export class Maniiifest {
      */
     *iterateAnnotationTarget(): IterableIterator<U.AnnotationTarget> {
         if (this.specification.type === 'Annotation') {
-            if (this.specification.target?.kind === 'Array') { /* if body is an array */
+            if (this.specification.target?.kind === 'Array') { /* if target is an array */
                 for (const target of this.specification.target.value) {
                     yield F.writeAnnotationTargetT(target) as unknown as U.AnnotationTarget;
                 }
-            } else { /* must be T1 */
+            } else { /* single value */
                 yield F.writeAnnotationTargetT(this.specification.target.value) as unknown as U.AnnotationTarget;
             }
         }
@@ -1291,7 +1291,7 @@ export class Maniiifest {
                             yield F.writeAnnotationTargetCanvasRef(target.value);
                         }
                     }
-                } else { /* must be T1 */
+                } else { /* single value */
                     if (annotation.target?.value?.kind === 'CanvasRef') {
                         yield F.writeAnnotationTargetCanvasRef(annotation.target.value.value);
                     }
@@ -1381,14 +1381,14 @@ export class Maniiifest {
      * Returns the feature collection if the specification kind is 'FeatureCollection', otherwise returns null.
      */
     getAnnotationFeatureCollection(): U.FeatureCollection | null {
-        return this.specification.body.value.kind === 'FeatureCollection' ? F.writeFeatureCollectionT(this.specification.body.value.value) : null;
+        return this.specification.body?.value?.kind === 'FeatureCollection' ? F.writeFeatureCollectionT(this.specification.body.value.value) : null;
     }
 
     /**
      * Generator function that yields each feature if the specification kind is 'FeatureCollection'.
      */
     *iterateAnnotationFeature(): IterableIterator<U.Feature> {
-        if (this.specification.body.value.kind === 'FeatureCollection') {
+        if (this.specification.body?.value?.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {
                 yield F.writeFeatureT(feature);
             }
@@ -1400,9 +1400,9 @@ export class Maniiifest {
      * if the specification kind is 'FeatureCollection'.
      */
     *iterateAnnotationGeometryPointCoordinates(): IterableIterator<U.PointCoordinates> {
-        if (this.specification.body.value.kind === 'FeatureCollection') {
+        if (this.specification.body?.value?.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {
-                if (feature.geometry.kind === 'Point') {
+                if (feature.geometry?.kind === 'Point') {
                     for (const coordinates of feature.geometry.value.coordinates ?? []) {
                         yield F.writePointCoordinatesT(coordinates);
                     }

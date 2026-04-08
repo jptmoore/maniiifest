@@ -403,7 +403,7 @@ type resource_selector_image_api = {
   _type <json name="type"> : type_t;
   ?region : region_t option;
   ?size : size_t option;
-  ?rotation : rotatation_t option;
+  ?rotation : rotation_t option;
   ?quality : quality_t option;
   ?format : format_t option;
 }
@@ -617,7 +617,7 @@ type default_t = string
 type region_t = string
 type size_t = string
 type quality_t = string
-type rotatation_t = string
+type rotation_t = string
 type total_t = int
 type last_t = string
 type next_t = string
