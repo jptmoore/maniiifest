@@ -345,16 +345,6 @@ export type BodyT =
 | { kind: 'T2'; value: AnnotationBodyT[] }
 
 export type AnnotationBodyItemsT =
-| { kind: 'T0'; value: AnnotationBodyT0 }
-| { kind: 'T1'; value: AnnotationBodyT1 }
-| { kind: 'T2'; value: AnnotationBodyT2 }
-| { kind: 'T3'; value: AnnotationBodyT3 }
-| { kind: 'T4'; value: AnnotationBodyT4 }
-| { kind: 'T5'; value: AnnotationBodyT5 }
-| { kind: 'T6'; value: AnnotationBodyT6 }
-
-export type AnnotationBodyT =
-| { kind: 'T0'; value: AnnotationBodyT0 }
 | { kind: 'T1'; value: AnnotationBodyT1 }
 | { kind: 'T2'; value: AnnotationBodyT2 }
 | { kind: 'T3'; value: AnnotationBodyT3 }
@@ -363,7 +353,17 @@ export type AnnotationBodyT =
 | { kind: 'T6'; value: AnnotationBodyT6 }
 | { kind: 'T7'; value: AnnotationBodyT7 }
 
-export type AnnotationBodyT0 = {
+export type AnnotationBodyT =
+| { kind: 'T1'; value: AnnotationBodyT1 }
+| { kind: 'T2'; value: AnnotationBodyT2 }
+| { kind: 'T3'; value: AnnotationBodyT3 }
+| { kind: 'T4'; value: AnnotationBodyT4 }
+| { kind: 'T5'; value: AnnotationBodyT5 }
+| { kind: 'T6'; value: AnnotationBodyT6 }
+| { kind: 'T7'; value: AnnotationBodyT7 }
+| { kind: 'T8'; value: AnnotationBodyT8 }
+
+export type AnnotationBodyT7 = {
   id?: IdT;
   label?: LabelT;
   format?: FormatT;
@@ -422,7 +422,7 @@ export type AnnotationBodyT6 = {
   transformation?: TransformationT;
 }
 
-export type AnnotationBodyT7 = {
+export type AnnotationBodyT8 = {
   type?: TypeT;
   items: AnnotationBodyItemsT[];
 }
@@ -1692,50 +1692,6 @@ export function _readBodyT(x: any, context: any = x): BodyT {
 
 export function _writeAnnotationBodyItemsT(x: AnnotationBodyItemsT, context: any = x): any {
   switch (x.kind) {
-    case 'T0':
-      return ['T0', writeAnnotationBodyT0(x.value, x)]
-    case 'T1':
-      return ['T1', writeAnnotationBodyT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeAnnotationBodyT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeAnnotationBodyT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeAnnotationBodyT4(x.value, x)]
-    case 'T5':
-      return ['T5', writeAnnotationBodyT5(x.value, x)]
-    case 'T6':
-      return ['T6', writeAnnotationBodyT6(x.value, x)]
-  }
-}
-
-export function _readAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
-  _atd_check_json_tuple(2, x, context)
-  switch (x[0]) {
-    case 'T0':
-      return { kind: 'T0', value: readAnnotationBodyT0(x[1], x) }
-    case 'T1':
-      return { kind: 'T1', value: readAnnotationBodyT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
-    case 'T5':
-      return { kind: 'T5', value: readAnnotationBodyT5(x[1], x) }
-    case 'T6':
-      return { kind: 'T6', value: readAnnotationBodyT6(x[1], x) }
-    default:
-      _atd_bad_json('AnnotationBodyItemsT', x, context)
-      throw new Error('impossible')
-  }
-}
-
-export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any {
-  switch (x.kind) {
-    case 'T0':
-      return ['T0', writeAnnotationBodyT0(x.value, x)]
     case 'T1':
       return ['T1', writeAnnotationBodyT1(x.value, x)]
     case 'T2':
@@ -1753,11 +1709,9 @@ export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any
   }
 }
 
-export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
+export function _readAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T0':
-      return { kind: 'T0', value: readAnnotationBodyT0(x[1], x) }
     case 'T1':
       return { kind: 'T1', value: readAnnotationBodyT1(x[1], x) }
     case 'T2':
@@ -1773,12 +1727,58 @@ export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT 
     case 'T7':
       return { kind: 'T7', value: readAnnotationBodyT7(x[1], x) }
     default:
+      _atd_bad_json('AnnotationBodyItemsT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any {
+  switch (x.kind) {
+    case 'T1':
+      return ['T1', writeAnnotationBodyT1(x.value, x)]
+    case 'T2':
+      return ['T2', writeAnnotationBodyT2(x.value, x)]
+    case 'T3':
+      return ['T3', writeAnnotationBodyT3(x.value, x)]
+    case 'T4':
+      return ['T4', writeAnnotationBodyT4(x.value, x)]
+    case 'T5':
+      return ['T5', writeAnnotationBodyT5(x.value, x)]
+    case 'T6':
+      return ['T6', writeAnnotationBodyT6(x.value, x)]
+    case 'T7':
+      return ['T7', writeAnnotationBodyT7(x.value, x)]
+    case 'T8':
+      return ['T8', writeAnnotationBodyT8(x.value, x)]
+  }
+}
+
+export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'T1':
+      return { kind: 'T1', value: readAnnotationBodyT1(x[1], x) }
+    case 'T2':
+      return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
+    case 'T3':
+      return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
+    case 'T4':
+      return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
+    case 'T5':
+      return { kind: 'T5', value: readAnnotationBodyT5(x[1], x) }
+    case 'T6':
+      return { kind: 'T6', value: readAnnotationBodyT6(x[1], x) }
+    case 'T7':
+      return { kind: 'T7', value: readAnnotationBodyT7(x[1], x) }
+    case 'T8':
+      return { kind: 'T8', value: readAnnotationBodyT8(x[1], x) }
+    default:
       _atd_bad_json('AnnotationBodyT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeAnnotationBodyT0(x: AnnotationBodyT0, context: any = x): any {
+export function writeAnnotationBodyT7(x: AnnotationBodyT7, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
@@ -1789,7 +1789,7 @@ export function writeAnnotationBodyT0(x: AnnotationBodyT0, context: any = x): an
   };
 }
 
-export function readAnnotationBodyT0(x: any, context: any = x): AnnotationBodyT0 {
+export function readAnnotationBodyT7(x: any, context: any = x): AnnotationBodyT7 {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
@@ -1924,17 +1924,17 @@ export function readAnnotationBodyT6(x: any, context: any = x): AnnotationBodyT6
   };
 }
 
-export function writeAnnotationBodyT7(x: AnnotationBodyT7, context: any = x): any {
+export function writeAnnotationBodyT8(x: AnnotationBodyT8, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'items': _atd_write_required_field('AnnotationBodyT7', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
+    'items': _atd_write_required_field('AnnotationBodyT8', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
   };
 }
 
-export function readAnnotationBodyT7(x: any, context: any = x): AnnotationBodyT7 {
+export function readAnnotationBodyT8(x: any, context: any = x): AnnotationBodyT8 {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    items: _atd_read_required_field('AnnotationBodyT7', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
+    items: _atd_read_required_field('AnnotationBodyT8', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
   };
 }
 

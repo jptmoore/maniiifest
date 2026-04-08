@@ -352,13 +352,13 @@ export type HomepageStrings = Strings;
 export type Body = AnnotationBody | AnnotationBody[];
 
 /** @atd annotation_body_items_t */
-export type AnnotationBodyItems = AnnotationBodyT0 | string | AnnotationBodyT2 | AnnotationBodyT3 | AnnotationBodyT4 | AnnotationBodyT5 | AnnotationBodyT6;
+export type AnnotationBodyItems = string | AnnotationBodyT2 | AnnotationBodyT3 | AnnotationBodyT4 | AnnotationBodyT5 | AnnotationBodyT6 | AnnotationBodyT7;
 
 /** @atd annotation_body_t */
-export type AnnotationBody = AnnotationBodyT0 | string | AnnotationBodyT2 | AnnotationBodyT3 | AnnotationBodyT4 | AnnotationBodyT5 | AnnotationBodyT6 | AnnotationBodyT7;
+export type AnnotationBody = string | AnnotationBodyT2 | AnnotationBodyT3 | AnnotationBodyT4 | AnnotationBodyT5 | AnnotationBodyT6 | AnnotationBodyT7 | AnnotationBodyT8;
 
-/** @atd annotation_body_t0 */
-export interface AnnotationBodyT0 {
+/** @atd annotation_body_t7 */
+export interface AnnotationBodyT7 {
   id?: Id;
   label?: Label;
   format?: Format;
@@ -420,8 +420,8 @@ export interface AnnotationBodyT6 {
   transformation?: Transformation;
 }
 
-/** @atd annotation_body_t7 */
-export interface AnnotationBodyT7 {
+/** @atd annotation_body_t8 */
+export interface AnnotationBodyT8 {
   type?: Type;
   items: AnnotationBodyItems[];
 }

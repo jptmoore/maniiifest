@@ -262,21 +262,21 @@ type body_t = [
 ]
 
 type annotation_body_items_t = [
-  | T0 of annotation_body_t0
   | T1 of annotation_body_t1
   | T2 of annotation_body_t2
   | T3 of annotation_body_t3
   | T4 of annotation_body_t4
   | T5 of annotation_body_t5
   | T6 of annotation_body_t6
+  | T7 of annotation_body_t7
 ]
 
 type annotation_body_t = [
   inherit annotation_body_items_t
-  | T7 of annotation_body_t7
+  | T8 of annotation_body_t8
 ]
 
-type annotation_body_t0 = {
+type annotation_body_t7 = {
   ?id : id_t option;
   ?label : label_t option;
   ?format : format_t option;
@@ -311,7 +311,7 @@ type annotation_body_t6 = {
   inherit feature_collection_t;
 }
 
-type annotation_body_t7 = {
+type annotation_body_t8 = {
   ?_type <json name="type"> : type_t option;
   items : annotation_body_items_t list;
 }

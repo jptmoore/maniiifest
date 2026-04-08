@@ -82,23 +82,24 @@ export function restore_annotation_body<T, R>(x: T, context: any = x, fn: (input
 }
 
 export function normalize_annotation_body<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    const resourceTypes = ['Image', 'Video', 'Audio', 'Sound', 'Text'];
     if (typeof x === 'string') {
         return fn(['T1', x], context);
-    } else if (typeof x === 'object' && x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' || x.type == 'Sound' || x.type == 'Text') {
+    } else if (typeof x === 'object' && resourceTypes.includes(x.type)) {
         return fn(['T2', x], context);
     } else if (typeof x === 'object' && x.type === 'SpecificResource') {
-        return fn(['T3', x], context);    
+        return fn(['T3', x], context);
     } else if (typeof x === 'object' && x.type === 'TextualBody') {
         return fn(['T4', x], context);
     } else if (typeof x === 'object' && x.type === 'Feature') {
         return fn(['T5', x], context);
     } else if (typeof x === 'object' && x.type === 'FeatureCollection') {
-        return fn(['T6', x], context);    
+        return fn(['T6', x], context);
     } else if (typeof x === 'object' && x.type === 'Choice') {
-        return fn(['T7', x], context)    
-    } else if (typeof x === 'object') { 
-        // handle special case where type is not defined within body object
-        return fn(['T0', x], context);        
+        // T8 before T7: T7 is the untyped catch-all and must come last
+        return fn(['T8', x], context);
+    } else if (typeof x === 'object') {
+        return fn(['T7', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -113,16 +114,17 @@ export function restore_annotation_body_items<T, R>(x: T, context: any = x, fn: 
 }
 
 export function normalize_annotation_body_items<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    const resourceTypes = ['Image', 'Video', 'Audio', 'Sound', 'Text'];
     if (typeof x === 'string') {
         return fn(['T1', x], context);
-    } else if (typeof x === 'object' && x.type === 'Image'  || x.type == 'Video' || x.type == 'Audio' || x.type == 'Sound' || x.type == 'Text') {
+    } else if (typeof x === 'object' && resourceTypes.includes(x.type)) {
         return fn(['T2', x], context);
     } else if (typeof x === 'object' && x.type === 'SpecificResource') {
-        return fn(['T3', x], context);    
+        return fn(['T3', x], context);
     } else if (typeof x === 'object' && x.type === 'TextualBody') {
         return fn(['T4', x], context);
     } else if (typeof x === 'object' && x.type === 'Feature') {
-        return fn(['T5', x], context); 
+        return fn(['T5', x], context);
     } else {
         throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
     }
@@ -168,7 +170,7 @@ export function normalize_resource_selector<T extends { type: string }, R>(x: T,
         return fn(['T3', x], context);
     } else if (typeof x === 'object' && x.type === 'SvgSelector') {
         return fn(['T4', x], context);
-    } else if (typeof x === 'object' && x.type === 'ImageApiSelector' || x.type === 'iiif:ImageApiSelector') {
+    } else if (typeof x === 'object' && (x.type === 'ImageApiSelector' || x.type === 'iiif:ImageApiSelector')) {
         return fn(['T5', x], context);
     } else if (typeof x === 'object' && x.type === 'TextQuoteSelector') {
         return fn(['T6', x], context);
