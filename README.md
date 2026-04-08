@@ -179,56 +179,7 @@ for (const item of manifest.metadata ?? []) {
 
 A full list of exported types is in the generated [src/iiif-types.ts](src/iiif-types.ts) file.
 
-## Examples
-
-### Iterating metadata from a nested collection
-
-```typescript
-import { Maniiifest } from 'maniiifest';
-
-const response = await fetch('https://iiif.wellcomecollection.org/presentation/b19974760');
-const parser = new Maniiifest(await response.json());
-
-let count = 0;
-for (const item of parser.iterateCollectionManifest()) {
-    if (count++ >= 25) break;
-    const manifest = new Maniiifest(item);
-    for (const meta of manifest.iterateManifestMetadata()) {
-        console.log(meta);
-    }
-}
-```
-
-### Following external annotation page references
-
-```typescript
-import { Maniiifest } from 'maniiifest';
-
-const response = await fetch('https://iiif.io/api/cookbook/recipe/0269-embedded-or-referenced-annotations/manifest.json');
-const parser = new Maniiifest(await response.json());
-
-for (const page of parser.iterateManifestCanvasW3cAnnotationPage()) {
-    const pageData = await fetch(page.id).then(r => r.json());
-    const pageParser = new Maniiifest(pageData, 'AnnotationPage');
-    for (const anno of pageParser.iterateAnnotationPageAnnotation()) {
-        console.log(anno.body?.value);
-    }
-}
-```
-
-### Reading georeference coordinates
-
-```typescript
-import { Maniiifest } from 'maniiifest';
-
-const response = await fetch('https://annotations.allmaps.org/maps/cde9210870a2652a');
-const annotation = new Maniiifest(await response.json(), 'Annotation');
-
-const points = Array.from(annotation.iterateAnnotationGeometryPointCoordinates());
-for (let i = 0; i < points.length; i += 2) {
-    console.log(`x: ${points[i]}, y: ${points[i + 1]}`);
-}
-```
+## More examples
 
 More examples can be found [here](https://github.com/jptmoore/maniiitest).
 
