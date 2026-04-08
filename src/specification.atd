@@ -383,8 +383,8 @@ type resource_selector_t1 = string
 type resource_selector_t2 = {
   _type <json name="type"> : type_t;
   ?t : duration_t option;
-  ?x : dimenson_t option;
-  ?y : dimenson_t option;
+  ?x : dimension_t option;
+  ?y : dimension_t option;
 }
 
 type resource_selector_t3 = {
@@ -611,7 +611,7 @@ type nav_date_t = string
 type rights_t = string
 type value_t = string
 type accessibility_t = string
-type dimenson_t = int
+type dimension_t = int
 type pattern_t = string
 type default_t = string
 type region_t = string

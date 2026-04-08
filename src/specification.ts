@@ -489,8 +489,8 @@ export type ResourceSelectorT1 = string
 export type ResourceSelectorT2 = {
   type: TypeT;
   t?: DurationT;
-  x_?: DimensonT;
-  y?: DimensonT;
+  x_?: DimensionT;
+  y?: DimensionT;
 }
 
 export type ResourceSelectorT3 = {
@@ -738,7 +738,7 @@ export type ValueT = string
 
 export type AccessibilityT = string
 
-export type DimensonT = number /*int*/
+export type DimensionT = number /*int*/
 
 export type PatternT = string
 
@@ -2176,8 +2176,8 @@ export function writeResourceSelectorT2(x: ResourceSelectorT2, context: any = x)
   return {
     'type': _atd_write_required_field('ResourceSelectorT2', 'type', writeTypeT, x.type, x),
     't': _atd_write_optional_field(writeDurationT, x.t, x),
-    'x': _atd_write_optional_field(writeDimensonT, x.x_, x),
-    'y': _atd_write_optional_field(writeDimensonT, x.y, x),
+    'x': _atd_write_optional_field(writeDimensionT, x.x_, x),
+    'y': _atd_write_optional_field(writeDimensionT, x.y, x),
   };
 }
 
@@ -2185,8 +2185,8 @@ export function readResourceSelectorT2(x: any, context: any = x): ResourceSelect
   return {
     type: _atd_read_required_field('ResourceSelectorT2', 'type', readTypeT, x['type'], x),
     t: _atd_read_optional_field(readDurationT, x['t'], x),
-    x_: _atd_read_optional_field(readDimensonT, x['x'], x),
-    y: _atd_read_optional_field(readDimensonT, x['y'], x),
+    x_: _atd_read_optional_field(readDimensionT, x['x'], x),
+    y: _atd_read_optional_field(readDimensionT, x['y'], x),
   };
 }
 
@@ -3000,11 +3000,11 @@ export function readAccessibilityT(x: any, context: any = x): AccessibilityT {
   return _atd_read_string(x, context);
 }
 
-export function writeDimensonT(x: DimensonT, context: any = x): any {
+export function writeDimensionT(x: DimensionT, context: any = x): any {
   return _atd_write_int(x, context);
 }
 
-export function readDimensonT(x: any, context: any = x): DimensonT {
+export function readDimensionT(x: any, context: any = x): DimensionT {
   return _atd_read_int(x, context);
 }
 
