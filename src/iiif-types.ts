@@ -470,8 +470,8 @@ export type ResourceSelector = string | ResourceSelectorT2 | ResourceSelectorT3 
 export interface ResourceSelectorT2 {
   type: Type;
   t?: Duration;
-  x?: Dimenson;
-  y?: Dimenson;
+  x?: Dimension;
+  y?: Dimension;
 }
 
 /** @atd resource_selector_t3 */
@@ -733,8 +733,8 @@ export type Value = string;
 /** @atd accessibility_t */
 export type Accessibility = string;
 
-/** @atd dimenson_t */
-export type Dimenson = number;
+/** @atd dimension_t */
+export type Dimension = number;
 
 /** @atd pattern_t */
 export type Pattern = string;
