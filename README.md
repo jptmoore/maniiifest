@@ -41,6 +41,44 @@ const annotationCollectionParser = new Maniiifest(annotation_collection, "Annota
 ```
 The aim is to support the most relevant subset of the W3C standard as used within IIIF manifests.
 
+## Types
+
+Maniiifest exports TypeScript types that match the real IIIF JSON structure. These are auto-generated from the internal ATD specification and can be used to annotate your own IIIF data:
+
+```typescript
+import { Maniiifest } from 'maniiifest';
+import type { Manifest, Canvas, Annotation, Label, Metadata, Service } from 'maniiifest';
+```
+
+The IIIF spec uses polymorphic JSON fields where a property can take several different shapes — a string, an object, an array, or a union of multiple object types. The exported types capture these variations. You typically use the top-level union types like `Label`, `Service`, or `AnnotationBody` and let TypeScript handle the structural matching:
+
+```typescript
+import { Maniiifest } from 'maniiifest';
+import type { Manifest, Metadata } from 'maniiifest';
+
+const response = await fetch('https://example.org/iiif/manifest.json');
+const manifest: Manifest = await response.json();
+
+// Properties are fully typed
+console.log(manifest.id);
+console.log(manifest.label);
+
+if (manifest.metadata) {
+    for (const item of manifest.metadata) {
+        const meta: Metadata = item;
+        console.log(meta.label, '->', meta.value);
+    }
+}
+
+// Pass typed JSON into Maniiifest for parsed access
+const parser = new Maniiifest(manifest);
+for (const annotation of parser.iterateManifestCanvasAnnotation()) {
+    console.log(annotation);
+}
+```
+
+A full list of exported types can be found in the generated [src/iiif-types.ts](src/iiif-types.ts) file.
+
 ## Documentation
 
 Documentation for the current supported get methods and generators available [here](https://jptmoore.github.io/maniiifest/classes/Maniiifest.html). If you would like to see other methods added please raise an issue.
@@ -153,9 +191,10 @@ More examples of parsing complex manifests and collections can be found [here](h
 
 ## Scripts
 
-- `npm run build`: Compile the TypeScript code.
+- `npm run build`: Compile TypeScript to `dist/`.
 - `npm run test`: Run the tests using Jest.
 - `npm start`: Run the example script.
+- `npm run compilespec`: Recompile `specification.ts` from the ATD spec and regenerate `iiif-types.ts`. Requires [atdts](https://github.com/ahrefs/atd). Only needed when `specification.atd` changes.
 - `npm run generate-docs`: Generate documentation using TypeDoc.
 
 ## License
