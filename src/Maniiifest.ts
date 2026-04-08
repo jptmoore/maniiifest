@@ -53,7 +53,7 @@ export class Maniiifest {
      *
      * @returns {string} The type of the manifest specification.
      */
-    getSpecificationType(): string {
+    getSpecificationType(): 'Manifest' | 'Collection' {
         return this.specification.kind;
     }
 
