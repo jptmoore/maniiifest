@@ -52,8 +52,8 @@ describe('all cookbook recipes parse', () => {
 describe('manifest basics', () => {
   it('0001: id, label, and one canvas with a painting annotation', () => {
     const m = new Maniiifest(load('0001-mvm-image.json'));
-    expect(m.getManifestId()).toBeTruthy();
-    expect(m.getManifestLabel()).toBeTruthy();
+    expect(m.getManifestId()).toContain('/0001-mvm-image/');
+    expect(m.getManifestLabel()).toEqual({ en: ['Single Image Example'] });
     const canvases = Array.from(m.iterateManifestCanvas());
     expect(canvases.length).toBe(1);
     const annos = Array.from(m.iterateManifestCanvasAnnotation());
@@ -62,7 +62,7 @@ describe('manifest basics', () => {
 
   it('0002: audio manifest has a canvas', () => {
     const m = new Maniiifest(load('0002-mvm-audio.json'));
-    expect(m.getManifestLabel()).toBeTruthy();
+    expect(m.getManifestLabel()).toEqual({ en: ['Simplest Audio Example 1'] });
     const canvases = Array.from(m.iterateManifestCanvas());
     expect(canvases.length).toBe(1);
   });
@@ -76,8 +76,8 @@ describe('manifest basics', () => {
   it('0004: canvas has explicit width and height', () => {
     const m = new Maniiifest(load('0004-canvas-size.json'));
     const canvas = Array.from(m.iterateManifestCanvas())[0];
-    expect(canvas.width).toBeDefined();
-    expect(canvas.height).toBeDefined();
+    expect(canvas.width).toBe(1920);
+    expect(canvas.height).toBe(1080);
   });
 });
 
@@ -92,7 +92,7 @@ describe('image service', () => {
     expect(annos.length).toBe(1);
     // The annotation body should contain a service
     const body = annos[0].body;
-    expect(body).toBeDefined();
+    expect(body).not.toBeNull();
   });
 });
 
@@ -104,19 +104,20 @@ describe('labels and language', () => {
   it('0006: multilingual label', () => {
     const m = new Maniiifest(load('0006-text-language.json'));
     const label = m.getManifestLabel();
-    expect(label).toBeTruthy();
+    expect(label).toHaveProperty('en');
+    expect(label).toHaveProperty('fr');
   });
 
   it('0118: multiple label values', () => {
     const m = new Maniiifest(load('0118-multivalue.json'));
     const label = m.getManifestLabel();
-    expect(label).toBeTruthy();
+    expect(label).toHaveProperty('fr');
   });
 
   it('0007: summary with HTML formatting', () => {
     const m = new Maniiifest(load('0007-string-formats.json'));
     const summary = m.getManifestSummary();
-    expect(summary).toBeTruthy();
+    expect(summary).toHaveProperty('en');
   });
 });
 
@@ -141,8 +142,8 @@ describe('metadata', () => {
 describe('rights', () => {
   it('0008: rights and requiredStatement', () => {
     const m = new Maniiifest(load('0008-rights.json'));
-    expect(m.getManifestRights()).toBeTruthy();
-    expect(m.getManifestRequiredStatement()).toBeTruthy();
+    expect(m.getManifestRights()).toBe('http://creativecommons.org/licenses/by-sa/3.0/');
+    expect(m.getManifestRequiredStatement()).toHaveProperty('label');
   });
 });
 
@@ -178,7 +179,7 @@ describe('thumbnails', () => {
     const m = new Maniiifest(load('0117-add-image-thumbnail.json'));
     const thumbs = Array.from(m.iterateManifestThumbnail());
     expect(thumbs.length).toBe(1);
-    expect(thumbs[0].id).toBeTruthy();
+    expect(thumbs[0].id).toMatch(/^https:\/\//);
   });
 
   it('0232: canvas-level thumbnail on AV', () => {
@@ -197,14 +198,14 @@ describe('special canvases', () => {
     const m = new Maniiifest(load('0013-placeholderCanvas.json'));
     const manifest = m.getManifest();
     const canvas = manifest?.items?.[0];
-    expect(canvas?.placeholderCanvas).toBeDefined();
+    expect(canvas?.placeholderCanvas).toHaveProperty('id');
   });
 
   it('0014: accompanyingCanvas', () => {
     const m = new Maniiifest(load('0014-accompanyingcanvas.json'));
     const manifest = m.getManifest();
     const canvas = manifest?.items?.[0];
-    expect(canvas?.accompanyingCanvas).toBeDefined();
+    expect(canvas?.accompanyingCanvas).toHaveProperty('id');
   });
 });
 
@@ -215,17 +216,17 @@ describe('special canvases', () => {
 describe('navigation', () => {
   it('0202: start canvas', () => {
     const m = new Maniiifest(load('0202-start-canvas.json'));
-    expect(m.getManifestStart()).toBeTruthy();
+    expect(m.getManifestStart()).toHaveProperty('id');
   });
 
   it('0015: start with time offset', () => {
     const m = new Maniiifest(load('0015-start.json'));
-    expect(m.getManifestStart()).toBeTruthy();
+    expect(m.getManifestStart()).toHaveProperty('id');
   });
 
   it('0154: navPlace on manifest', () => {
     const m = new Maniiifest(load('0154-geo-extension.json'));
-    expect(m.getManifestNavPlace()).toBeTruthy();
+    expect(m.getManifestNavPlace()).toHaveProperty('type');
     const features = Array.from(m.iterateManifestNavPlaceFeature());
     expect(features.length).toBe(1);
   });
@@ -246,7 +247,7 @@ describe('provider', () => {
     const m = new Maniiifest(load('0234-provider.json'));
     const providers = Array.from(m.iterateManifestProvider());
     expect(providers.length).toBe(1);
-    expect(providers[0].id).toBeTruthy();
+    expect(providers[0].id).toBe('https://id.loc.gov/authorities/n79055331');
     const homepages = Array.from(m.iterateManifestProviderHomepage());
     expect(homepages.length).toBe(1);
   });
@@ -259,8 +260,8 @@ describe('provider', () => {
 describe('collections', () => {
   it('0032: simple collection with manifests', () => {
     const m = new Maniiifest(load('0032-collection.json'));
-    expect(m.getCollectionId()).toBeTruthy();
-    expect(m.getCollectionLabel()).toBeTruthy();
+    expect(m.getCollectionId()).toContain('/0032-collection/');
+    expect(m.getCollectionLabel()).toEqual({ en: ['Simple Collection Example'] });
     const manifests = Array.from(m.iterateCollectionManifest());
     expect(manifests.length).toBe(2);
   });
@@ -273,18 +274,18 @@ describe('collections', () => {
 
   it('0068: nested newspaper collection', () => {
     const m = new Maniiifest(load('0068-newspaper.json'));
-    expect(m.getCollectionId()).toBeTruthy();
-    expect(m.getCollectionLabel()).toBeTruthy();
+    expect(m.getCollectionId()).toContain('/0068-newspaper/');
+    expect(m.getCollectionLabel()).toEqual({ de: ['Berliner Tageblatt'] });
   });
 
   it('0318: collection with navPlace and navDate', () => {
     const m = new Maniiifest(load('0318-navPlace-navDate.json'));
-    expect(m.getCollectionId()).toBeTruthy();
+    expect(m.getCollectionId()).toContain('/0318-navPlace-navDate/');
   });
 
   it('0230: collection with navDate', () => {
     const m = new Maniiifest(load('0230-navdate.json'));
-    expect(m.getCollectionId()).toBeTruthy();
+    expect(m.getCollectionId()).toContain('/0230-navdate/');
   });
 });
 
@@ -398,7 +399,7 @@ describe('rendering, seeAlso, homepage', () => {
     const m = new Maniiifest(load('0046-rendering.json'));
     const renderings = Array.from(m.iterateManifestRendering());
     expect(renderings.length).toBe(1);
-    expect(renderings[0].id).toBeTruthy();
+    expect(renderings[0].id).toBe('https://fixtures.iiif.io/other/UCLA/kabuki_ezukushi_rtl.pdf');
   });
 
   it('0047: homepage', () => {
@@ -423,7 +424,7 @@ describe('complex A/V', () => {
     const m = new Maniiifest(load('0064-opera-one-canvas.json'));
     const canvases = Array.from(m.iterateManifestCanvas());
     expect(canvases.length).toBe(1);
-    expect(canvases[0].duration).toBeDefined();
+    expect(canvases[0].duration).toBe(7278.422);
   });
 
   it('0065: opera on multiple canvases', () => {
@@ -492,7 +493,7 @@ describe('collection getters (0068-newspaper)', () => {
   it('getCollectionRequiredStatement returns the statement', () => {
     const m = new Maniiifest(load('0068-newspaper.json'));
     const rs = m.getCollectionRequiredStatement();
-    expect(rs).toBeDefined();
+    expect(rs).not.toBeNull();
     expect(rs).toHaveProperty('label');
     expect(rs).toHaveProperty('value');
   });
@@ -523,7 +524,7 @@ describe('collection summary (0318-navPlace-navDate)', () => {
   it('getCollectionSummary returns the summary from real data', () => {
     const m = new Maniiifest(load('0318-navPlace-navDate.json'));
     const summary = m.getCollectionSummary();
-    expect(summary).toBeDefined();
+    expect(summary).not.toBeNull();
     expect((summary as any).en[0]).toContain("Rome");
   });
 });
@@ -565,19 +566,19 @@ describe('manifest extended getters', () => {
   it('getManifestLabel returns a plain label object', () => {
     const m = new Maniiifest(load('0029-metadata-anywhere.json'));
     const label = m.getManifestLabel();
-    expect(label).toBeDefined();
+    expect(label).not.toBeNull();
     expect(label).not.toHaveProperty('kind');
   });
 
   it('getManifestSummary returns the summary', () => {
     const m = new Maniiifest(load('0008-rights.json'));
-    expect(m.getManifestSummary()).toBeDefined();
+    expect(m.getManifestSummary()).toHaveProperty('en');
   });
 
   it('getManifestRequiredStatement returns the statement', () => {
     const m = new Maniiifest(load('0029-metadata-anywhere.json'));
     const rs = m.getManifestRequiredStatement();
-    expect(rs).toBeDefined();
+    expect(rs).not.toBeNull();
     expect(rs).toHaveProperty('label');
     expect(rs).toHaveProperty('value');
   });
