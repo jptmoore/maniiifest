@@ -11,7 +11,7 @@
     "test": "jest",
     "build": "tsc",
     "start": "ts-node examples/example.ts",
-    "generate-docs": "typedoc --out docs src",
+    "generate-docs": "typedoc --excludePrivate --out docs src",
     "generate-iiif-types": "ts-node scripts/generate-iiif-types.ts",
     "compilespec": "ts-node scripts/compilespec.ts"
   },

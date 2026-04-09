@@ -1,6 +1,4 @@
 import { Maniiifest } from '../src/Maniiifest';
-import { ManiiifestAnnotationCollection } from '../src/ManiiifestAnnotationCollection';
-import { ManiiifestAnnotationPage } from '../src/ManiiifestAnnotationPage';
 
 describe('AnnotationCollection getters', () => {
 
@@ -207,7 +205,7 @@ describe('AnnotationPage iterators', () => {
     expect(result[0].value).toBe("Comment 1");
   });
 
-  it('iterateAnnotationPageAnnotationPartOf yields T4 targets (id + partOf)', () => {
+  it('iterateAnnotationPageAnnotationCanvasRef yields canvas ref targets (id + partOf)', () => {
     const page = {
       id: "http://example.org/page1",
       type: "AnnotationPage",
@@ -228,7 +226,7 @@ describe('AnnotationPage iterators', () => {
       ]
     };
     const m = Maniiifest.parseAnnotationPage(page);
-    const result = Array.from(m.iterateAnnotationPageAnnotationPartOf());
+    const result = Array.from(m.iterateAnnotationPageAnnotationCanvasRef());
     expect(result).toHaveLength(1);
     expect(result[0]).toHaveProperty('id');
     expect(result[0]).toHaveProperty('partOf');

@@ -77,7 +77,7 @@ export class ManiiifestAnnotationPage {
         }
     }
 
-    *iterateAnnotationPageAnnotationPartOf(): IterableIterator<U.AnnotationTargetCanvasRef> {
+    *iterateAnnotationPageAnnotationCanvasRef(): IterableIterator<U.AnnotationTargetCanvasRef> {
         for (const annotation of this.specification.items ?? []) {
             if (annotation.target?.kind === 'Array') {
                 for (const target of annotation.target.value) {

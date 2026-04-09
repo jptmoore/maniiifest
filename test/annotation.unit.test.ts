@@ -1,5 +1,4 @@
 import { Maniiifest } from '../src/Maniiifest';
-import { ManiiifestAnnotation } from '../src/ManiiifestAnnotation';
 
 describe('Annotation getters', () => {
 
