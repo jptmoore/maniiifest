@@ -185,7 +185,7 @@ function generateIiifTypes(): void {
 if (require.main === module) {
   console.log('Discovering adapter types from src/adapter.ts...');
   const adapterTypes = discoverAdapterTypes();
-  console.log(`  Found ${adapterTypes.length} adapted types`);
+  console.log(`Found ${adapterTypes.length} adapted types`);
 
   console.log('Running atdts...');
   const rawSpec = runAtdts();
