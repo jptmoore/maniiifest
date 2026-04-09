@@ -57,7 +57,7 @@ describe('manifest basics', () => {
     const canvases = Array.from(m.iterateManifestCanvas());
     expect(canvases.length).toBe(1);
     const annos = Array.from(m.iterateManifestCanvasAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0002: audio manifest has a canvas', () => {
@@ -89,7 +89,7 @@ describe('image service', () => {
   it('0005: annotation body has a service', () => {
     const m = new Maniiifest(load('0005-image-service.json'));
     const annos = Array.from(m.iterateManifestCanvasAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
     // The annotation body should contain a service
     const body = annos[0].body;
     expect(body).toBeDefined();
@@ -128,9 +128,9 @@ describe('metadata', () => {
   it('0029: metadata on manifest and canvas levels', () => {
     const m = new Maniiifest(load('0029-metadata-anywhere.json'));
     const manifestMeta = Array.from(m.iterateManifestMetadata());
-    expect(manifestMeta.length).toBeGreaterThan(0);
+    expect(manifestMeta.length).toBe(4);
     const canvasMeta = Array.from(m.iterateManifestCanvasMetadata());
-    expect(canvasMeta.length).toBeGreaterThan(0);
+    expect(canvasMeta.length).toBe(2);
   });
 });
 
@@ -154,7 +154,7 @@ describe('multi-canvas books', () => {
   it('0009: multiple canvases', () => {
     const m = new Maniiifest(load('0009-book-1.json'));
     const canvases = Array.from(m.iterateManifestCanvas());
-    expect(canvases.length).toBeGreaterThan(1);
+    expect(canvases.length).toBe(5);
   });
 
   it('0011: behavior continuous', () => {
@@ -177,14 +177,14 @@ describe('thumbnails', () => {
   it('0117: manifest-level thumbnail', () => {
     const m = new Maniiifest(load('0117-add-image-thumbnail.json'));
     const thumbs = Array.from(m.iterateManifestThumbnail());
-    expect(thumbs.length).toBeGreaterThan(0);
+    expect(thumbs.length).toBe(1);
     expect(thumbs[0].id).toBeTruthy();
   });
 
   it('0232: canvas-level thumbnail on AV', () => {
     const m = new Maniiifest(load('0232-image-thumbnail-canvas.json'));
     const thumbs = Array.from(m.iterateManifestCanvasThumbnail());
-    expect(thumbs.length).toBeGreaterThan(0);
+    expect(thumbs.length).toBe(2);
   });
 });
 
@@ -227,13 +227,13 @@ describe('navigation', () => {
     const m = new Maniiifest(load('0154-geo-extension.json'));
     expect(m.getManifestNavPlace()).toBeTruthy();
     const features = Array.from(m.iterateManifestNavPlaceFeature());
-    expect(features.length).toBeGreaterThan(0);
+    expect(features.length).toBe(1);
   });
 
   it('0240: navPlace on individual canvases', () => {
     const m = new Maniiifest(load('0240-navPlace-on-canvases.json'));
     const features = Array.from(m.iterateManifestCanvasNavPlaceFeature());
-    expect(features.length).toBeGreaterThan(0);
+    expect(features.length).toBe(2);
   });
 });
 
@@ -245,10 +245,10 @@ describe('provider', () => {
   it('0234: provider with homepage and logo', () => {
     const m = new Maniiifest(load('0234-provider.json'));
     const providers = Array.from(m.iterateManifestProvider());
-    expect(providers.length).toBeGreaterThan(0);
+    expect(providers.length).toBe(1);
     expect(providers[0].id).toBeTruthy();
     const homepages = Array.from(m.iterateManifestProviderHomepage());
-    expect(homepages.length).toBeGreaterThan(0);
+    expect(homepages.length).toBe(1);
   });
 });
 
@@ -262,13 +262,13 @@ describe('collections', () => {
     expect(m.getCollectionId()).toBeTruthy();
     expect(m.getCollectionLabel()).toBeTruthy();
     const manifests = Array.from(m.iterateCollectionManifest());
-    expect(manifests.length).toBeGreaterThan(0);
+    expect(manifests.length).toBe(2);
   });
 
   it('0030: multi-volume collection', () => {
     const m = new Maniiifest(load('0030-multi-volume.json'));
     const manifests = Array.from(m.iterateCollectionManifest());
-    expect(manifests.length).toBeGreaterThan(0);
+    expect(manifests.length).toBe(2);
   });
 
   it('0068: nested newspaper collection', () => {
@@ -296,56 +296,56 @@ describe('annotations', () => {
   it('0017: transcription AV has rendering on canvas', () => {
     const m = new Maniiifest(load('0017-transcription-av.json'));
     const rendering = Array.from(m.iterateManifestCanvasRendering());
-    expect(rendering.length).toBeGreaterThan(0);
+    expect(rendering.length).toBe(1);
     expect(rendering[0].format).toBe('text/plain');
   });
 
   it('0266: full-canvas annotation with commenting motivation', () => {
     const m = new Maniiifest(load('0266-full-canvas-annotation.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0019: HTML annotation body', () => {
     const m = new Maniiifest(load('0019-html-in-annotations.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0021: tagging annotation', () => {
     const m = new Maniiifest(load('0021-tagging.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0269: embedded vs referenced annotation pages', () => {
     const m = new Maniiifest(load('0269-embedded-or-referenced-annotations.json'));
     const pages = Array.from(m.iterateManifestCanvasW3cAnnotationPage());
-    expect(pages.length).toBeGreaterThan(0);
+    expect(pages.length).toBe(1);
   });
 
   it('0377: image in annotation body', () => {
     const m = new Maniiifest(load('0377-image-in-annotation.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0135: point annotation on canvas', () => {
     const m = new Maniiifest(load('0135-annotating-point-in-canvas.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0139: geolocate canvas fragment', () => {
     const m = new Maniiifest(load('0139-geolocate-canvas-fragment.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0346: multilingual annotation body', () => {
     const m = new Maniiifest(load('0346-multilingual-annotation-body.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 });
 
@@ -357,17 +357,17 @@ describe('ranges and table of contents', () => {
   it('0024: book with structures (TOC)', () => {
     const m = new Maniiifest(load('0024-book-4-toc.json'));
     const ranges = Array.from(m.iterateManifestRange());
-    expect(ranges.length).toBeGreaterThan(0);
+    expect(ranges.length).toBe(1);
     const labels = Array.from(m.iterateManifestRangeLabel());
-    expect(labels.length).toBeGreaterThan(0);
+    expect(labels.length).toBe(1);
   });
 
   it('0026: opera with nested TOC ranges', () => {
     const m = new Maniiifest(load('0026-toc-opera.json'));
     const ranges = Array.from(m.iterateManifestRange());
-    expect(ranges.length).toBeGreaterThan(0);
+    expect(ranges.length).toBe(1);
     const items = Array.from(m.iterateManifestRangeItem());
-    expect(items.length).toBeGreaterThan(0);
+    expect(items.length).toBe(2);
   });
 });
 
@@ -379,13 +379,13 @@ describe('choice', () => {
   it('0033: image choice', () => {
     const m = new Maniiifest(load('0033-choice.json'));
     const annos = Array.from(m.iterateManifestCanvasAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 
   it('0434: AV choice', () => {
     const m = new Maniiifest(load('0434-choice-av.json'));
     const annos = Array.from(m.iterateManifestCanvasAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
   });
 });
 
@@ -397,20 +397,20 @@ describe('rendering, seeAlso, homepage', () => {
   it('0046: rendering (PDF download)', () => {
     const m = new Maniiifest(load('0046-rendering.json'));
     const renderings = Array.from(m.iterateManifestRendering());
-    expect(renderings.length).toBeGreaterThan(0);
+    expect(renderings.length).toBe(1);
     expect(renderings[0].id).toBeTruthy();
   });
 
   it('0047: homepage', () => {
     const m = new Maniiifest(load('0047-homepage.json'));
     const homepages = Array.from(m.iterateManifestHomepage());
-    expect(homepages.length).toBeGreaterThan(0);
+    expect(homepages.length).toBe(1);
   });
 
   it('0053: seeAlso', () => {
     const m = new Maniiifest(load('0053-seeAlso.json'));
     const seeAlso = Array.from(m.iterateManifestSeeAlso());
-    expect(seeAlso.length).toBeGreaterThan(0);
+    expect(seeAlso.length).toBe(1);
   });
 });
 
@@ -429,13 +429,13 @@ describe('complex A/V', () => {
   it('0065: opera on multiple canvases', () => {
     const m = new Maniiifest(load('0065-opera-multiple-canvases.json'));
     const canvases = Array.from(m.iterateManifestCanvas());
-    expect(canvases.length).toBeGreaterThan(1);
+    expect(canvases.length).toBe(2);
   });
 
   it('0074: multiple language captions', () => {
     const m = new Maniiifest(load('0074-multiple-language-captions.json'));
     const pages = Array.from(m.iterateManifestCanvasW3cAnnotationPage());
-    expect(pages.length).toBeGreaterThan(0);
+    expect(pages.length).toBe(1);
   });
 });
 
@@ -447,21 +447,21 @@ describe('layout and composition', () => {
   it('0035: foldouts with behavior', () => {
     const m = new Maniiifest(load('0035-foldouts.json'));
     const canvases = Array.from(m.iterateManifestCanvas());
-    expect(canvases.length).toBeGreaterThan(0);
+    expect(canvases.length).toBe(9);
     const behaviors = Array.from(m.iterateManifestBehavior());
-    expect(behaviors.length).toBeGreaterThan(0);
+    expect(behaviors.length).toBe(1);
   });
 
   it('0036: composition from multiple images', () => {
     const m = new Maniiifest(load('0036-composition-from-multiple-images.json'));
     const annos = Array.from(m.iterateManifestCanvasAnnotation());
-    expect(annos.length).toBeGreaterThan(1);
+    expect(annos.length).toBe(2);
   });
 
   it('0031: bound multivolume', () => {
     const m = new Maniiifest(load('0031-bound-multivolume.json'));
     const ranges = Array.from(m.iterateManifestRange());
-    expect(ranges.length).toBeGreaterThan(0);
+    expect(ranges.length).toBe(1);
   });
 });
 
@@ -484,7 +484,7 @@ describe('collection getters (0068-newspaper)', () => {
   it('iterateCollectionProvider finds providers', () => {
     const m = new Maniiifest(load('0068-newspaper.json'));
     const providers = Array.from(m.iterateCollectionProvider());
-    expect(providers.length).toBeGreaterThan(0);
+    expect(providers.length).toBe(1);
     expect(providers[0]).toHaveProperty('id');
     expect(providers[0]).toHaveProperty('type');
   });
@@ -500,7 +500,7 @@ describe('collection getters (0068-newspaper)', () => {
   it('iterateCollectionMetadata yields metadata entries', () => {
     const m = new Maniiifest(load('0068-newspaper.json'));
     const meta = Array.from(m.iterateCollectionMetadata());
-    expect(meta.length).toBeGreaterThan(0);
+    expect(meta.length).toBe(2);
     for (const item of meta) {
       expect(item).toHaveProperty('label');
       expect(item).toHaveProperty('value');
@@ -510,7 +510,7 @@ describe('collection getters (0068-newspaper)', () => {
   it('iterateCollectionSeeAlso yields seeAlso', () => {
     const m = new Maniiifest(load('0068-newspaper.json'));
     const seeAlso = Array.from(m.iterateCollectionSeeAlso());
-    expect(seeAlso.length).toBeGreaterThan(0);
+    expect(seeAlso.length).toBe(1);
     expect(seeAlso[0]).toHaveProperty('id');
   });
 });
@@ -542,7 +542,7 @@ describe('canvas iterators (0029-metadata-anywhere)', () => {
   it('iterateManifestCanvasMetadata yields canvas metadata', () => {
     const m = new Maniiifest(load('0029-metadata-anywhere.json'));
     const result = Array.from(m.iterateManifestCanvasMetadata());
-    expect(result.length).toBeGreaterThan(0);
+    expect(result.length).toBe(2);
   });
 
   it('iterateManifestCanvasThumbnail yields canvas thumbnails', () => {
@@ -585,7 +585,7 @@ describe('manifest extended getters', () => {
   it('iterateManifestMetadata yields metadata items', () => {
     const m = new Maniiifest(load('0029-metadata-anywhere.json'));
     const meta = Array.from(m.iterateManifestMetadata());
-    expect(meta.length).toBeGreaterThan(0);
+    expect(meta.length).toBe(4);
     for (const item of meta) {
       expect(item).toHaveProperty('label');
       expect(item).toHaveProperty('value');
@@ -603,7 +603,7 @@ describe('manifest extended getters', () => {
   it('iterateManifestCanvasW3cAnnotation yields W3C annotations from canvas', () => {
     const m = new Maniiifest(load('0266-full-canvas-annotation.json'));
     const annos = Array.from(m.iterateManifestCanvasW3cAnnotation());
-    expect(annos.length).toBeGreaterThan(0);
+    expect(annos.length).toBe(1);
     expect(annos[0]).toHaveProperty('id');
     expect(annos[0]).toHaveProperty('type');
   });

@@ -15,7 +15,7 @@ function download(url: string, maxRedirects = 5): Promise<string> {
     if (maxRedirects <= 0) {
       return reject(new Error(`Too many redirects for ${url}`));
     }
-    const req = https.get(url, { timeout: 15_000 }, (res) => {
+    const req = https.get(url, { timeout: 30_000 }, (res) => {
       if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
         return download(res.headers.location, maxRedirects - 1).then(resolve, reject);
       }
@@ -55,7 +55,14 @@ async function main() {
 
   for (const fixture of missing) {
     try {
-      const data = await download(fixture.url);
+      let data: string;
+      try {
+        data = await download(fixture.url);
+      } catch {
+        // one retry after a short pause
+        await new Promise((r) => setTimeout(r, 1_000));
+        data = await download(fixture.url);
+      }
       JSON.parse(data); // validate JSON before writing
       fs.writeFileSync(path.join(cookbookDir, fixture.name), data, 'utf-8');
       console.log(`  ✓ ${fixture.name}`);

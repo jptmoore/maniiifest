@@ -45,3 +45,6 @@ yarn.lock
 
 # auto-downloaded IIIF Cookbook fixtures
 test/cookbook/
+
+# TypeScript build info
+*.tsbuildinfo
