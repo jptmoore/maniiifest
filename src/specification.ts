@@ -71,12 +71,12 @@ export type ManifestT = {
 }
 
 export type ContextT =
-| { kind: 'T1'; value: ContextT1 }
-| { kind: 'T2'; value: ContextT2 }
+| { kind: 'Value'; value: ContextValue }
+| { kind: 'Array'; value: ContextArray }
 
-export type ContextT1 = string
+export type ContextValue = string
 
-export type ContextT2 = string[]
+export type ContextArray = string[]
 
 export type ClassT = {
   id: IdT;
@@ -222,53 +222,53 @@ export type PropertiesT = {
 }
 
 export type GeometriesT =
-| { kind: 'T1'; value: GeometryT1 }
-| { kind: 'T2'; value: GeometryT2 }
-| { kind: 'T3'; value: GeometryT3 }
-| { kind: 'T4'; value: GeometryT4 }
-| { kind: 'T5'; value: GeometryT5 }
-| { kind: 'T6'; value: GeometryT6 }
+| { kind: 'Point'; value: GeometryPoint }
+| { kind: 'MultiPoint'; value: GeometryMultiPoint }
+| { kind: 'LineString'; value: GeometryLineString }
+| { kind: 'MultiLineString'; value: GeometryMultiLineString }
+| { kind: 'Polygon'; value: GeometryPolygon }
+| { kind: 'MultiPolygon'; value: GeometryMultiPolygon }
 
 export type GeometryT =
-| { kind: 'T1'; value: GeometryT1 }
-| { kind: 'T2'; value: GeometryT2 }
-| { kind: 'T3'; value: GeometryT3 }
-| { kind: 'T4'; value: GeometryT4 }
-| { kind: 'T5'; value: GeometryT5 }
-| { kind: 'T6'; value: GeometryT6 }
-| { kind: 'T7'; value: GeometryT7 }
+| { kind: 'Point'; value: GeometryPoint }
+| { kind: 'MultiPoint'; value: GeometryMultiPoint }
+| { kind: 'LineString'; value: GeometryLineString }
+| { kind: 'MultiLineString'; value: GeometryMultiLineString }
+| { kind: 'Polygon'; value: GeometryPolygon }
+| { kind: 'MultiPolygon'; value: GeometryMultiPolygon }
+| { kind: 'GeometryCollection'; value: GeometryCollection }
 
-export type GeometryT1 = {
+export type GeometryPoint = {
   type?: TypeT;
   coordinates?: PointCoordinatesT[];
 }
 
-export type GeometryT2 = {
+export type GeometryMultiPoint = {
   type?: TypeT;
   coordinates?: MultiPointCoordinatesT[];
 }
 
-export type GeometryT3 = {
+export type GeometryLineString = {
   type?: TypeT;
   coordinates?: LinestringCoordinatesT[];
 }
 
-export type GeometryT4 = {
+export type GeometryMultiLineString = {
   type?: TypeT;
   coordinates?: MultiLinestringCoordinatesT[];
 }
 
-export type GeometryT5 = {
+export type GeometryPolygon = {
   type?: TypeT;
   coordinates?: PolygonT[];
 }
 
-export type GeometryT6 = {
+export type GeometryMultiPolygon = {
   type?: TypeT;
   coordinates?: MultiPolygonT[];
 }
 
-export type GeometryT7 = {
+export type GeometryCollection = {
   type?: TypeT;
   geometries: GeometriesT[];
 }
@@ -315,16 +315,16 @@ export type AnnotationT = {
 }
 
 export type CreatorT =
-| { kind: 'T1'; value: CreatorItemT }
-| { kind: 'T2'; value: CreatorItemT[] }
+| { kind: 'Value'; value: CreatorItemT }
+| { kind: 'Array'; value: CreatorItemT[] }
 
 export type CreatorItemT =
-| { kind: 'T1'; value: CreatorItemT1 }
-| { kind: 'T2'; value: CreatorItemT2 }
+| { kind: 'Ref'; value: CreatorItemRef }
+| { kind: 'Object'; value: CreatorItemObject }
 
-export type CreatorItemT1 = string
+export type CreatorItemRef = string
 
-export type CreatorItemT2 = {
+export type CreatorItemObject = {
   id?: IdT;
   type?: TypeT;
   name?: NameT;
@@ -341,29 +341,29 @@ export type EmailSha1StringsT = StringsT
 export type HomepageStringsT = StringsT
 
 export type BodyT =
-| { kind: 'T1'; value: AnnotationBodyT }
-| { kind: 'T2'; value: AnnotationBodyT[] }
+| { kind: 'Value'; value: AnnotationBodyT }
+| { kind: 'Array'; value: AnnotationBodyT[] }
 
 export type AnnotationBodyItemsT =
-| { kind: 'T0'; value: AnnotationBodyT0 }
-| { kind: 'T1'; value: AnnotationBodyT1 }
-| { kind: 'T2'; value: AnnotationBodyT2 }
-| { kind: 'T3'; value: AnnotationBodyT3 }
-| { kind: 'T4'; value: AnnotationBodyT4 }
-| { kind: 'T5'; value: AnnotationBodyT5 }
-| { kind: 'T6'; value: AnnotationBodyT6 }
+| { kind: 'String'; value: AnnotationBodyString }
+| { kind: 'Resource'; value: AnnotationBodyResource }
+| { kind: 'SpecificResource'; value: AnnotationBodySpecificResource }
+| { kind: 'TextualBody'; value: AnnotationBodyTextualBody }
+| { kind: 'Feature'; value: AnnotationBodyFeature }
+| { kind: 'FeatureCollection'; value: AnnotationBodyFeatureCollection }
+| { kind: 'Untyped'; value: AnnotationBodyUntyped }
 
 export type AnnotationBodyT =
-| { kind: 'T0'; value: AnnotationBodyT0 }
-| { kind: 'T1'; value: AnnotationBodyT1 }
-| { kind: 'T2'; value: AnnotationBodyT2 }
-| { kind: 'T3'; value: AnnotationBodyT3 }
-| { kind: 'T4'; value: AnnotationBodyT4 }
-| { kind: 'T5'; value: AnnotationBodyT5 }
-| { kind: 'T6'; value: AnnotationBodyT6 }
-| { kind: 'T7'; value: AnnotationBodyT7 }
+| { kind: 'String'; value: AnnotationBodyString }
+| { kind: 'Resource'; value: AnnotationBodyResource }
+| { kind: 'SpecificResource'; value: AnnotationBodySpecificResource }
+| { kind: 'TextualBody'; value: AnnotationBodyTextualBody }
+| { kind: 'Feature'; value: AnnotationBodyFeature }
+| { kind: 'FeatureCollection'; value: AnnotationBodyFeatureCollection }
+| { kind: 'Untyped'; value: AnnotationBodyUntyped }
+| { kind: 'Choice'; value: AnnotationBodyChoice }
 
-export type AnnotationBodyT0 = {
+export type AnnotationBodyUntyped = {
   id?: IdT;
   label?: LabelT;
   format?: FormatT;
@@ -372,9 +372,9 @@ export type AnnotationBodyT0 = {
   value?: ValueT;
 }
 
-export type AnnotationBodyT1 = string
+export type AnnotationBodyString = string
 
-export type AnnotationBodyT2 = {
+export type AnnotationBodyResource = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -390,7 +390,7 @@ export type AnnotationBodyT2 = {
   annotations?: AnnotationPageT[];
 }
 
-export type AnnotationBodyT3 = {
+export type AnnotationBodySpecificResource = {
   id?: IdT;
   type?: TypeT;
   format?: FormatT;
@@ -400,7 +400,7 @@ export type AnnotationBodyT3 = {
   language?: LanguageT;
 }
 
-export type AnnotationBodyT4 = {
+export type AnnotationBodyTextualBody = {
   type: TypeT;
   language?: LanguageT;
   format?: FormatT;
@@ -408,46 +408,46 @@ export type AnnotationBodyT4 = {
   creator?: CreatorT;
 }
 
-export type AnnotationBodyT5 = {
+export type AnnotationBodyFeature = {
   id?: IdT;
   type?: TypeT;
   properties?: PropertiesT;
   geometry?: GeometryT;
 }
 
-export type AnnotationBodyT6 = {
+export type AnnotationBodyFeatureCollection = {
   id?: IdT;
   type: TypeT;
   features?: FeatureT[];
   transformation?: TransformationT;
 }
 
-export type AnnotationBodyT7 = {
+export type AnnotationBodyChoice = {
   type?: TypeT;
   items: AnnotationBodyItemsT[];
 }
 
 export type TargetT =
-| { kind: 'T1'; value: AnnotationTargetT }
-| { kind: 'T2'; value: AnnotationTargetT[] }
+| { kind: 'Value'; value: AnnotationTargetT }
+| { kind: 'Array'; value: AnnotationTargetT[] }
 
 export type AnnotationTargetT =
-| { kind: 'T1'; value: AnnotationTargetT1 }
-| { kind: 'T2'; value: AnnotationTargetT2 }
-| { kind: 'T3'; value: AnnotationTargetT3 }
-| { kind: 'T4'; value: AnnotationTargetT4 }
+| { kind: 'String'; value: AnnotationTargetString }
+| { kind: 'SelectorTarget'; value: AnnotationTargetSelectorTarget }
+| { kind: 'SpecificResource'; value: AnnotationTargetSpecificResource }
+| { kind: 'CanvasRef'; value: AnnotationTargetCanvasRef }
 
-export type AnnotationTargetT1 = string
+export type AnnotationTargetString = string
 
-export type AnnotationTargetT2 = {
+export type AnnotationTargetSelectorTarget = {
   source: IdT;
   scope: IdT;
   language?: LanguageT;
 }
 
-export type AnnotationTargetT3 = SpecificResourceT
+export type AnnotationTargetSpecificResource = SpecificResourceT
 
-export type AnnotationTargetT4 = {
+export type AnnotationTargetCanvasRef = {
   id: IdT;
   partOf?: PartOfT;
   language?: LanguageT;
@@ -464,36 +464,36 @@ export type SpecificResourceT = {
 }
 
 export type SourceT =
-| { kind: 'T1'; value: SourceT1 }
-| { kind: 'T2'; value: SourceT2 }
+| { kind: 'Ref'; value: SourceRef }
+| { kind: 'Object'; value: SourceObject }
 
-export type SourceT1 = IdT
+export type SourceRef = IdT
 
-export type SourceT2 = ClassT
+export type SourceObject = ClassT
 
 export type SelectorT =
-| { kind: 'T1'; value: ResourceSelectorT }
-| { kind: 'T2'; value: ResourceSelectorT[] }
+| { kind: 'Value'; value: ResourceSelectorT }
+| { kind: 'Array'; value: ResourceSelectorT[] }
 
 export type ResourceSelectorT =
-| { kind: 'T1'; value: ResourceSelectorT1 }
-| { kind: 'T2'; value: ResourceSelectorT2 }
-| { kind: 'T3'; value: ResourceSelectorT3 }
-| { kind: 'T4'; value: ResourceSelectorT4 }
-| { kind: 'T5'; value: ResourceSelectorT5 }
-| { kind: 'T6'; value: ResourceSelectorT6 }
-| { kind: 'T7'; value: ResourceSelectorT7 }
+| { kind: 'String'; value: ResourceSelectorString }
+| { kind: 'PointSelector'; value: ResourceSelectorPoint }
+| { kind: 'FragmentSelector'; value: ResourceSelectorFragment }
+| { kind: 'SvgSelector'; value: ResourceSelectorSvg }
+| { kind: 'ImageApiSelector'; value: ResourceSelectorImageApi }
+| { kind: 'TextQuoteSelector'; value: ResourceSelectorTextQuote }
+| { kind: 'XPathSelector'; value: ResourceSelectorXpath }
 
-export type ResourceSelectorT1 = string
+export type ResourceSelectorString = string
 
-export type ResourceSelectorT2 = {
+export type ResourceSelectorPoint = {
   type: TypeT;
   t?: DurationT;
-  x_?: DimensonT;
-  y?: DimensonT;
+  x_?: DimensionT;
+  y?: DimensionT;
 }
 
-export type ResourceSelectorT3 = {
+export type ResourceSelectorFragment = {
   type: TypeT;
   conformsTo?: ConformsToT;
   value: ValueT;
@@ -501,28 +501,28 @@ export type ResourceSelectorT3 = {
 
 export type ConformsToT = string
 
-export type ResourceSelectorT4 = {
+export type ResourceSelectorSvg = {
   type: TypeT;
   value: ValueT;
 }
 
-export type ResourceSelectorT5 = {
+export type ResourceSelectorImageApi = {
   type: TypeT;
   region?: RegionT;
   size?: SizeT;
-  rotation?: RotatationT;
+  rotation?: RotationT;
   quality?: QualityT;
   format?: FormatT;
 }
 
-export type ResourceSelectorT6 = {
+export type ResourceSelectorTextQuote = {
   type: TypeT;
   prefix?: PrefixT;
   exact: ExactT;
   suffix?: SuffixT;
 }
 
-export type ResourceSelectorT7 = {
+export type ResourceSelectorXpath = {
   type: TypeT;
   value: ValueT;
 }
@@ -558,14 +558,14 @@ export type ResourceT = {
 }
 
 export type ServiceT =
-| { kind: 'T1'; value: ServiceItemT }
-| { kind: 'T2'; value: ServiceItemT[] }
+| { kind: 'Value'; value: ServiceItemT }
+| { kind: 'Array'; value: ServiceItemT[] }
 
 export type ServiceItemT =
-| { kind: 'T1'; value: ServiceItemT1 }
-| { kind: 'T2'; value: ServiceItemT2 }
+| { kind: 'Modern'; value: ServiceItemModern }
+| { kind: 'Legacy'; value: ServiceItemLegacy }
 
-export type ServiceItemT1 = {
+export type ServiceItemModern = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -573,7 +573,7 @@ export type ServiceItemT1 = {
   service?: ServiceT;
 }
 
-export type ServiceItemT2 = {
+export type ServiceItemLegacy = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -582,24 +582,24 @@ export type ServiceItemT2 = {
 }
 
 export type LabelT =
-| { kind: 'T1'; value: LabelT1 }
-| { kind: 'T2'; value: LabelT2 }
+| { kind: 'Plain'; value: LabelPlain }
+| { kind: 'Multilingual'; value: LabelMultilingual }
 
-export type LabelT1 = string
+export type LabelPlain = string
 
-export type LabelT2 = LngStringT
+export type LabelMultilingual = LngStringT
 
 export type SummaryT = LngStringT
 
 export type LngStringT = [string, string[]][]
 
 export type LanguageT =
-| { kind: 'T1'; value: LanguageT1 }
-| { kind: 'T2'; value: LanguageT2 }
+| { kind: 'Value'; value: LanguageValue }
+| { kind: 'Array'; value: LanguageArray }
 
-export type LanguageT1 = string
+export type LanguageValue = string
 
-export type LanguageT2 = string[]
+export type LanguageArray = string[]
 
 export type ExternalT = {
   id: IdT;
@@ -631,12 +631,12 @@ export type ProviderT = {
 }
 
 export type PartOfT =
-| { kind: 'T1'; value: PartOfT1 }
-| { kind: 'T2'; value: PartOfT2 }
+| { kind: 'Ref'; value: PartOfRef }
+| { kind: 'Object'; value: PartOfObject }
 
-export type PartOfT1 = string
+export type PartOfRef = string
 
-export type PartOfT2 = {
+export type PartOfObject = {
   id: IdT;
   type?: TypeT;
   label?: LabelT;
@@ -646,12 +646,12 @@ export type PartOfT2 = {
 export type StartT = ClassT
 
 export type MotivationT =
-| { kind: 'T1'; value: MotivationT1 }
-| { kind: 'T2'; value: MotivationT2 }
+| { kind: 'Value'; value: MotivationValue }
+| { kind: 'Array'; value: MotivationArray }
 
-export type MotivationT1 = string
+export type MotivationValue = string
 
-export type MotivationT2 = string[]
+export type MotivationArray = string[]
 
 export type AnnotationCollectionT = {
   context?: ContextT;
@@ -669,12 +669,12 @@ export type AnnotationCollectionT = {
 }
 
 export type FirstT =
-| { kind: 'T1'; value: FirstT1 }
-| { kind: 'T2'; value: FirstT2 }
+| { kind: 'Ref'; value: FirstRef }
+| { kind: 'Object'; value: FirstObject }
 
-export type FirstT1 = string
+export type FirstRef = string
 
-export type FirstT2 = {
+export type FirstObject = {
   id: IdT;
   type: TypeT;
   label?: LabelT;
@@ -700,13 +700,13 @@ export type RangeT = {
 }
 
 export type RangeItemsT =
-| { kind: 'T1'; value: SpecificResourceT }
-| { kind: 'T2'; value: CanvasT }
-| { kind: 'T3'; value: RangeT }
+| { kind: 'SpecificResource'; value: SpecificResourceT }
+| { kind: 'Canvas'; value: CanvasT }
+| { kind: 'Range'; value: RangeT }
 
 export type StringsT =
-| { kind: 'T1'; value: string }
-| { kind: 'T2'; value: string[] }
+| { kind: 'Value'; value: string }
+| { kind: 'Array'; value: string[] }
 
 export type IdT = string
 
@@ -738,7 +738,7 @@ export type ValueT = string
 
 export type AccessibilityT = string
 
-export type DimensonT = number /*int*/
+export type DimensionT = number /*int*/
 
 export type PatternT = string
 
@@ -750,7 +750,7 @@ export type SizeT = string
 
 export type QualityT = string
 
-export type RotatationT = string
+export type RotationT = string
 
 export type TotalT = number /*int*/
 
@@ -906,39 +906,39 @@ export function readManifestT(x: any, context: any = x): ManifestT {
 
 export function _writeContextT(x: ContextT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeContextT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeContextT2(x.value, x)]
+    case 'Value':
+      return ['Value', writeContextValue(x.value, x)]
+    case 'Array':
+      return ['Array', writeContextArray(x.value, x)]
   }
 }
 
 export function _readContextT(x: any, context: any = x): ContextT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readContextT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readContextT2(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readContextValue(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: readContextArray(x[1], x) }
     default:
       _atd_bad_json('ContextT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeContextT1(x: ContextT1, context: any = x): any {
+export function writeContextValue(x: ContextValue, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readContextT1(x: any, context: any = x): ContextT1 {
+export function readContextValue(x: any, context: any = x): ContextValue {
   return _atd_read_string(x, context);
 }
 
-export function writeContextT2(x: ContextT2, context: any = x): any {
+export function writeContextArray(x: ContextArray, context: any = x): any {
   return _atd_write_array(_atd_write_string)(x, context);
 }
 
-export function readContextT2(x: any, context: any = x): ContextT2 {
+export function readContextArray(x: any, context: any = x): ContextArray {
   return _atd_read_array(_atd_read_string)(x, context);
 }
 
@@ -1278,36 +1278,36 @@ export function readPropertiesT(x: any, context: any = x): PropertiesT {
 
 export function writeGeometriesT(x: GeometriesT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeGeometryT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeGeometryT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeGeometryT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeGeometryT4(x.value, x)]
-    case 'T5':
-      return ['T5', writeGeometryT5(x.value, x)]
-    case 'T6':
-      return ['T6', writeGeometryT6(x.value, x)]
+    case 'Point':
+      return ['Point', writeGeometryPoint(x.value, x)]
+    case 'MultiPoint':
+      return ['MultiPoint', writeGeometryMultiPoint(x.value, x)]
+    case 'LineString':
+      return ['LineString', writeGeometryLineString(x.value, x)]
+    case 'MultiLineString':
+      return ['MultiLineString', writeGeometryMultiLineString(x.value, x)]
+    case 'Polygon':
+      return ['Polygon', writeGeometryPolygon(x.value, x)]
+    case 'MultiPolygon':
+      return ['MultiPolygon', writeGeometryMultiPolygon(x.value, x)]
   }
 }
 
 export function readGeometriesT(x: any, context: any = x): GeometriesT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readGeometryT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readGeometryT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readGeometryT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readGeometryT4(x[1], x) }
-    case 'T5':
-      return { kind: 'T5', value: readGeometryT5(x[1], x) }
-    case 'T6':
-      return { kind: 'T6', value: readGeometryT6(x[1], x) }
+    case 'Point':
+      return { kind: 'Point', value: readGeometryPoint(x[1], x) }
+    case 'MultiPoint':
+      return { kind: 'MultiPoint', value: readGeometryMultiPoint(x[1], x) }
+    case 'LineString':
+      return { kind: 'LineString', value: readGeometryLineString(x[1], x) }
+    case 'MultiLineString':
+      return { kind: 'MultiLineString', value: readGeometryMultiLineString(x[1], x) }
+    case 'Polygon':
+      return { kind: 'Polygon', value: readGeometryPolygon(x[1], x) }
+    case 'MultiPolygon':
+      return { kind: 'MultiPolygon', value: readGeometryMultiPolygon(x[1], x) }
     default:
       _atd_bad_json('GeometriesT', x, context)
       throw new Error('impossible')
@@ -1316,141 +1316,141 @@ export function readGeometriesT(x: any, context: any = x): GeometriesT {
 
 export function _writeGeometryT(x: GeometryT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeGeometryT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeGeometryT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeGeometryT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeGeometryT4(x.value, x)]
-    case 'T5':
-      return ['T5', writeGeometryT5(x.value, x)]
-    case 'T6':
-      return ['T6', writeGeometryT6(x.value, x)]
-    case 'T7':
-      return ['T7', writeGeometryT7(x.value, x)]
+    case 'Point':
+      return ['Point', writeGeometryPoint(x.value, x)]
+    case 'MultiPoint':
+      return ['MultiPoint', writeGeometryMultiPoint(x.value, x)]
+    case 'LineString':
+      return ['LineString', writeGeometryLineString(x.value, x)]
+    case 'MultiLineString':
+      return ['MultiLineString', writeGeometryMultiLineString(x.value, x)]
+    case 'Polygon':
+      return ['Polygon', writeGeometryPolygon(x.value, x)]
+    case 'MultiPolygon':
+      return ['MultiPolygon', writeGeometryMultiPolygon(x.value, x)]
+    case 'GeometryCollection':
+      return ['GeometryCollection', writeGeometryCollection(x.value, x)]
   }
 }
 
 export function _readGeometryT(x: any, context: any = x): GeometryT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readGeometryT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readGeometryT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readGeometryT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readGeometryT4(x[1], x) }
-    case 'T5':
-      return { kind: 'T5', value: readGeometryT5(x[1], x) }
-    case 'T6':
-      return { kind: 'T6', value: readGeometryT6(x[1], x) }
-    case 'T7':
-      return { kind: 'T7', value: readGeometryT7(x[1], x) }
+    case 'Point':
+      return { kind: 'Point', value: readGeometryPoint(x[1], x) }
+    case 'MultiPoint':
+      return { kind: 'MultiPoint', value: readGeometryMultiPoint(x[1], x) }
+    case 'LineString':
+      return { kind: 'LineString', value: readGeometryLineString(x[1], x) }
+    case 'MultiLineString':
+      return { kind: 'MultiLineString', value: readGeometryMultiLineString(x[1], x) }
+    case 'Polygon':
+      return { kind: 'Polygon', value: readGeometryPolygon(x[1], x) }
+    case 'MultiPolygon':
+      return { kind: 'MultiPolygon', value: readGeometryMultiPolygon(x[1], x) }
+    case 'GeometryCollection':
+      return { kind: 'GeometryCollection', value: readGeometryCollection(x[1], x) }
     default:
       _atd_bad_json('GeometryT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeGeometryT1(x: GeometryT1, context: any = x): any {
+export function writeGeometryPoint(x: GeometryPoint, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'coordinates': _atd_write_optional_field(_atd_write_array(writePointCoordinatesT), x.coordinates, x),
   };
 }
 
-export function readGeometryT1(x: any, context: any = x): GeometryT1 {
+export function readGeometryPoint(x: any, context: any = x): GeometryPoint {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     coordinates: _atd_read_optional_field(_atd_read_array(readPointCoordinatesT), x['coordinates'], x),
   };
 }
 
-export function writeGeometryT2(x: GeometryT2, context: any = x): any {
+export function writeGeometryMultiPoint(x: GeometryMultiPoint, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'coordinates': _atd_write_optional_field(_atd_write_array(writeMultiPointCoordinatesT), x.coordinates, x),
   };
 }
 
-export function readGeometryT2(x: any, context: any = x): GeometryT2 {
+export function readGeometryMultiPoint(x: any, context: any = x): GeometryMultiPoint {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     coordinates: _atd_read_optional_field(_atd_read_array(readMultiPointCoordinatesT), x['coordinates'], x),
   };
 }
 
-export function writeGeometryT3(x: GeometryT3, context: any = x): any {
+export function writeGeometryLineString(x: GeometryLineString, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'coordinates': _atd_write_optional_field(_atd_write_array(writeLinestringCoordinatesT), x.coordinates, x),
   };
 }
 
-export function readGeometryT3(x: any, context: any = x): GeometryT3 {
+export function readGeometryLineString(x: any, context: any = x): GeometryLineString {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     coordinates: _atd_read_optional_field(_atd_read_array(readLinestringCoordinatesT), x['coordinates'], x),
   };
 }
 
-export function writeGeometryT4(x: GeometryT4, context: any = x): any {
+export function writeGeometryMultiLineString(x: GeometryMultiLineString, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'coordinates': _atd_write_optional_field(_atd_write_array(writeMultiLinestringCoordinatesT), x.coordinates, x),
   };
 }
 
-export function readGeometryT4(x: any, context: any = x): GeometryT4 {
+export function readGeometryMultiLineString(x: any, context: any = x): GeometryMultiLineString {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     coordinates: _atd_read_optional_field(_atd_read_array(readMultiLinestringCoordinatesT), x['coordinates'], x),
   };
 }
 
-export function writeGeometryT5(x: GeometryT5, context: any = x): any {
+export function writeGeometryPolygon(x: GeometryPolygon, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'coordinates': _atd_write_optional_field(_atd_write_array(writePolygonT), x.coordinates, x),
   };
 }
 
-export function readGeometryT5(x: any, context: any = x): GeometryT5 {
+export function readGeometryPolygon(x: any, context: any = x): GeometryPolygon {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     coordinates: _atd_read_optional_field(_atd_read_array(readPolygonT), x['coordinates'], x),
   };
 }
 
-export function writeGeometryT6(x: GeometryT6, context: any = x): any {
+export function writeGeometryMultiPolygon(x: GeometryMultiPolygon, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'coordinates': _atd_write_optional_field(_atd_write_array(writeMultiPolygonT), x.coordinates, x),
   };
 }
 
-export function readGeometryT6(x: any, context: any = x): GeometryT6 {
+export function readGeometryMultiPolygon(x: any, context: any = x): GeometryMultiPolygon {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     coordinates: _atd_read_optional_field(_atd_read_array(readMultiPolygonT), x['coordinates'], x),
   };
 }
 
-export function writeGeometryT7(x: GeometryT7, context: any = x): any {
+export function writeGeometryCollection(x: GeometryCollection, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'geometries': _atd_write_required_field('GeometryT7', 'geometries', _atd_write_array(writeGeometriesT), x.geometries, x),
+    'geometries': _atd_write_required_field('GeometryCollection', 'geometries', _atd_write_array(writeGeometriesT), x.geometries, x),
   };
 }
 
-export function readGeometryT7(x: any, context: any = x): GeometryT7 {
+export function readGeometryCollection(x: any, context: any = x): GeometryCollection {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    geometries: _atd_read_required_field('GeometryT7', 'geometries', _atd_read_array(readGeometriesT), x['geometries'], x),
+    geometries: _atd_read_required_field('GeometryCollection', 'geometries', _atd_read_array(readGeometriesT), x['geometries'], x),
   };
 }
 
@@ -1570,20 +1570,20 @@ export function readAnnotationT(x: any, context: any = x): AnnotationT {
 
 export function _writeCreatorT(x: CreatorT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeCreatorItemT(x.value, x)]
-    case 'T2':
-      return ['T2', _atd_write_array(writeCreatorItemT)(x.value, x)]
+    case 'Value':
+      return ['Value', writeCreatorItemT(x.value, x)]
+    case 'Array':
+      return ['Array', _atd_write_array(writeCreatorItemT)(x.value, x)]
   }
 }
 
 export function _readCreatorT(x: any, context: any = x): CreatorT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readCreatorItemT(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: _atd_read_array(readCreatorItemT)(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readCreatorItemT(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: _atd_read_array(readCreatorItemT)(x[1], x) }
     default:
       _atd_bad_json('CreatorT', x, context)
       throw new Error('impossible')
@@ -1592,35 +1592,35 @@ export function _readCreatorT(x: any, context: any = x): CreatorT {
 
 export function _writeCreatorItemT(x: CreatorItemT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeCreatorItemT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeCreatorItemT2(x.value, x)]
+    case 'Ref':
+      return ['Ref', writeCreatorItemRef(x.value, x)]
+    case 'Object':
+      return ['Object', writeCreatorItemObject(x.value, x)]
   }
 }
 
 export function _readCreatorItemT(x: any, context: any = x): CreatorItemT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readCreatorItemT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readCreatorItemT2(x[1], x) }
+    case 'Ref':
+      return { kind: 'Ref', value: readCreatorItemRef(x[1], x) }
+    case 'Object':
+      return { kind: 'Object', value: readCreatorItemObject(x[1], x) }
     default:
       _atd_bad_json('CreatorItemT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeCreatorItemT1(x: CreatorItemT1, context: any = x): any {
+export function writeCreatorItemRef(x: CreatorItemRef, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readCreatorItemT1(x: any, context: any = x): CreatorItemT1 {
+export function readCreatorItemRef(x: any, context: any = x): CreatorItemRef {
   return _atd_read_string(x, context);
 }
 
-export function writeCreatorItemT2(x: CreatorItemT2, context: any = x): any {
+export function writeCreatorItemObject(x: CreatorItemObject, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
@@ -1632,7 +1632,7 @@ export function writeCreatorItemT2(x: CreatorItemT2, context: any = x): any {
   };
 }
 
-export function readCreatorItemT2(x: any, context: any = x): CreatorItemT2 {
+export function readCreatorItemObject(x: any, context: any = x): CreatorItemObject {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
@@ -1670,20 +1670,20 @@ export function _readHomepageStringsT(x: any, context: any = x): HomepageStrings
 
 export function _writeBodyT(x: BodyT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeAnnotationBodyT(x.value, x)]
-    case 'T2':
-      return ['T2', _atd_write_array(writeAnnotationBodyT)(x.value, x)]
+    case 'Value':
+      return ['Value', writeAnnotationBodyT(x.value, x)]
+    case 'Array':
+      return ['Array', _atd_write_array(writeAnnotationBodyT)(x.value, x)]
   }
 }
 
 export function _readBodyT(x: any, context: any = x): BodyT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readAnnotationBodyT(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: _atd_read_array(readAnnotationBodyT)(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readAnnotationBodyT(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: _atd_read_array(readAnnotationBodyT)(x[1], x) }
     default:
       _atd_bad_json('BodyT', x, context)
       throw new Error('impossible')
@@ -1692,40 +1692,40 @@ export function _readBodyT(x: any, context: any = x): BodyT {
 
 export function _writeAnnotationBodyItemsT(x: AnnotationBodyItemsT, context: any = x): any {
   switch (x.kind) {
-    case 'T0':
-      return ['T0', writeAnnotationBodyT0(x.value, x)]
-    case 'T1':
-      return ['T1', writeAnnotationBodyT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeAnnotationBodyT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeAnnotationBodyT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeAnnotationBodyT4(x.value, x)]
-    case 'T5':
-      return ['T5', writeAnnotationBodyT5(x.value, x)]
-    case 'T6':
-      return ['T6', writeAnnotationBodyT6(x.value, x)]
+    case 'String':
+      return ['String', writeAnnotationBodyString(x.value, x)]
+    case 'Resource':
+      return ['Resource', writeAnnotationBodyResource(x.value, x)]
+    case 'SpecificResource':
+      return ['SpecificResource', writeAnnotationBodySpecificResource(x.value, x)]
+    case 'TextualBody':
+      return ['TextualBody', writeAnnotationBodyTextualBody(x.value, x)]
+    case 'Feature':
+      return ['Feature', writeAnnotationBodyFeature(x.value, x)]
+    case 'FeatureCollection':
+      return ['FeatureCollection', writeAnnotationBodyFeatureCollection(x.value, x)]
+    case 'Untyped':
+      return ['Untyped', writeAnnotationBodyUntyped(x.value, x)]
   }
 }
 
 export function _readAnnotationBodyItemsT(x: any, context: any = x): AnnotationBodyItemsT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T0':
-      return { kind: 'T0', value: readAnnotationBodyT0(x[1], x) }
-    case 'T1':
-      return { kind: 'T1', value: readAnnotationBodyT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
-    case 'T5':
-      return { kind: 'T5', value: readAnnotationBodyT5(x[1], x) }
-    case 'T6':
-      return { kind: 'T6', value: readAnnotationBodyT6(x[1], x) }
+    case 'String':
+      return { kind: 'String', value: readAnnotationBodyString(x[1], x) }
+    case 'Resource':
+      return { kind: 'Resource', value: readAnnotationBodyResource(x[1], x) }
+    case 'SpecificResource':
+      return { kind: 'SpecificResource', value: readAnnotationBodySpecificResource(x[1], x) }
+    case 'TextualBody':
+      return { kind: 'TextualBody', value: readAnnotationBodyTextualBody(x[1], x) }
+    case 'Feature':
+      return { kind: 'Feature', value: readAnnotationBodyFeature(x[1], x) }
+    case 'FeatureCollection':
+      return { kind: 'FeatureCollection', value: readAnnotationBodyFeatureCollection(x[1], x) }
+    case 'Untyped':
+      return { kind: 'Untyped', value: readAnnotationBodyUntyped(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyItemsT', x, context)
       throw new Error('impossible')
@@ -1734,51 +1734,51 @@ export function _readAnnotationBodyItemsT(x: any, context: any = x): AnnotationB
 
 export function _writeAnnotationBodyT(x: AnnotationBodyT, context: any = x): any {
   switch (x.kind) {
-    case 'T0':
-      return ['T0', writeAnnotationBodyT0(x.value, x)]
-    case 'T1':
-      return ['T1', writeAnnotationBodyT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeAnnotationBodyT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeAnnotationBodyT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeAnnotationBodyT4(x.value, x)]
-    case 'T5':
-      return ['T5', writeAnnotationBodyT5(x.value, x)]
-    case 'T6':
-      return ['T6', writeAnnotationBodyT6(x.value, x)]
-    case 'T7':
-      return ['T7', writeAnnotationBodyT7(x.value, x)]
+    case 'String':
+      return ['String', writeAnnotationBodyString(x.value, x)]
+    case 'Resource':
+      return ['Resource', writeAnnotationBodyResource(x.value, x)]
+    case 'SpecificResource':
+      return ['SpecificResource', writeAnnotationBodySpecificResource(x.value, x)]
+    case 'TextualBody':
+      return ['TextualBody', writeAnnotationBodyTextualBody(x.value, x)]
+    case 'Feature':
+      return ['Feature', writeAnnotationBodyFeature(x.value, x)]
+    case 'FeatureCollection':
+      return ['FeatureCollection', writeAnnotationBodyFeatureCollection(x.value, x)]
+    case 'Untyped':
+      return ['Untyped', writeAnnotationBodyUntyped(x.value, x)]
+    case 'Choice':
+      return ['Choice', writeAnnotationBodyChoice(x.value, x)]
   }
 }
 
 export function _readAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T0':
-      return { kind: 'T0', value: readAnnotationBodyT0(x[1], x) }
-    case 'T1':
-      return { kind: 'T1', value: readAnnotationBodyT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readAnnotationBodyT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readAnnotationBodyT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readAnnotationBodyT4(x[1], x) }
-    case 'T5':
-      return { kind: 'T5', value: readAnnotationBodyT5(x[1], x) }
-    case 'T6':
-      return { kind: 'T6', value: readAnnotationBodyT6(x[1], x) }
-    case 'T7':
-      return { kind: 'T7', value: readAnnotationBodyT7(x[1], x) }
+    case 'String':
+      return { kind: 'String', value: readAnnotationBodyString(x[1], x) }
+    case 'Resource':
+      return { kind: 'Resource', value: readAnnotationBodyResource(x[1], x) }
+    case 'SpecificResource':
+      return { kind: 'SpecificResource', value: readAnnotationBodySpecificResource(x[1], x) }
+    case 'TextualBody':
+      return { kind: 'TextualBody', value: readAnnotationBodyTextualBody(x[1], x) }
+    case 'Feature':
+      return { kind: 'Feature', value: readAnnotationBodyFeature(x[1], x) }
+    case 'FeatureCollection':
+      return { kind: 'FeatureCollection', value: readAnnotationBodyFeatureCollection(x[1], x) }
+    case 'Untyped':
+      return { kind: 'Untyped', value: readAnnotationBodyUntyped(x[1], x) }
+    case 'Choice':
+      return { kind: 'Choice', value: readAnnotationBodyChoice(x[1], x) }
     default:
       _atd_bad_json('AnnotationBodyT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeAnnotationBodyT0(x: AnnotationBodyT0, context: any = x): any {
+export function writeAnnotationBodyUntyped(x: AnnotationBodyUntyped, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
@@ -1789,7 +1789,7 @@ export function writeAnnotationBodyT0(x: AnnotationBodyT0, context: any = x): an
   };
 }
 
-export function readAnnotationBodyT0(x: any, context: any = x): AnnotationBodyT0 {
+export function readAnnotationBodyUntyped(x: any, context: any = x): AnnotationBodyUntyped {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
@@ -1800,18 +1800,18 @@ export function readAnnotationBodyT0(x: any, context: any = x): AnnotationBodyT0
   };
 }
 
-export function writeAnnotationBodyT1(x: AnnotationBodyT1, context: any = x): any {
+export function writeAnnotationBodyString(x: AnnotationBodyString, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readAnnotationBodyT1(x: any, context: any = x): AnnotationBodyT1 {
+export function readAnnotationBodyString(x: any, context: any = x): AnnotationBodyString {
   return _atd_read_string(x, context);
 }
 
-export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): any {
+export function writeAnnotationBodyResource(x: AnnotationBodyResource, context: any = x): any {
   return {
-    'id': _atd_write_required_field('AnnotationBodyT2', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('AnnotationBodyT2', 'type', writeTypeT, x.type, x),
+    'id': _atd_write_required_field('AnnotationBodyResource', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('AnnotationBodyResource', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
@@ -1826,10 +1826,10 @@ export function writeAnnotationBodyT2(x: AnnotationBodyT2, context: any = x): an
   };
 }
 
-export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2 {
+export function readAnnotationBodyResource(x: any, context: any = x): AnnotationBodyResource {
   return {
-    id: _atd_read_required_field('AnnotationBodyT2', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('AnnotationBodyT2', 'type', readTypeT, x['type'], x),
+    id: _atd_read_required_field('AnnotationBodyResource', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('AnnotationBodyResource', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
@@ -1844,33 +1844,33 @@ export function readAnnotationBodyT2(x: any, context: any = x): AnnotationBodyT2
   };
 }
 
-export function writeAnnotationBodyT3(x: AnnotationBodyT3, context: any = x): any {
+export function writeAnnotationBodySpecificResource(x: AnnotationBodySpecificResource, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'accessibility': _atd_write_optional_field(writeAccessibilityT, x.accessibility, x),
-    'source': _atd_write_required_field('AnnotationBodyT3', 'source', writeSourceT, x.source, x),
+    'source': _atd_write_required_field('AnnotationBodySpecificResource', 'source', writeSourceT, x.source, x),
     'selector': _atd_write_optional_field(writeSelectorT, x.selector, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
   };
 }
 
-export function readAnnotationBodyT3(x: any, context: any = x): AnnotationBodyT3 {
+export function readAnnotationBodySpecificResource(x: any, context: any = x): AnnotationBodySpecificResource {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     accessibility: _atd_read_optional_field(readAccessibilityT, x['accessibility'], x),
-    source: _atd_read_required_field('AnnotationBodyT3', 'source', readSourceT, x['source'], x),
+    source: _atd_read_required_field('AnnotationBodySpecificResource', 'source', readSourceT, x['source'], x),
     selector: _atd_read_optional_field(readSelectorT, x['selector'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
   };
 }
 
-export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): any {
+export function writeAnnotationBodyTextualBody(x: AnnotationBodyTextualBody, context: any = x): any {
   return {
-    'type': _atd_write_required_field('AnnotationBodyT4', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('AnnotationBodyTextualBody', 'type', writeTypeT, x.type, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'value': _atd_write_optional_field(writeValueT, x.value, x),
@@ -1878,9 +1878,9 @@ export function writeAnnotationBodyT4(x: AnnotationBodyT4, context: any = x): an
   };
 }
 
-export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4 {
+export function readAnnotationBodyTextualBody(x: any, context: any = x): AnnotationBodyTextualBody {
   return {
-    type: _atd_read_required_field('AnnotationBodyT4', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('AnnotationBodyTextualBody', 'type', readTypeT, x['type'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     value: _atd_read_optional_field(readValueT, x['value'], x),
@@ -1888,7 +1888,7 @@ export function readAnnotationBodyT4(x: any, context: any = x): AnnotationBodyT4
   };
 }
 
-export function writeAnnotationBodyT5(x: AnnotationBodyT5, context: any = x): any {
+export function writeAnnotationBodyFeature(x: AnnotationBodyFeature, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
@@ -1897,7 +1897,7 @@ export function writeAnnotationBodyT5(x: AnnotationBodyT5, context: any = x): an
   };
 }
 
-export function readAnnotationBodyT5(x: any, context: any = x): AnnotationBodyT5 {
+export function readAnnotationBodyFeature(x: any, context: any = x): AnnotationBodyFeature {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
@@ -1906,54 +1906,54 @@ export function readAnnotationBodyT5(x: any, context: any = x): AnnotationBodyT5
   };
 }
 
-export function writeAnnotationBodyT6(x: AnnotationBodyT6, context: any = x): any {
+export function writeAnnotationBodyFeatureCollection(x: AnnotationBodyFeatureCollection, context: any = x): any {
   return {
     'id': _atd_write_optional_field(writeIdT, x.id, x),
-    'type': _atd_write_required_field('AnnotationBodyT6', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('AnnotationBodyFeatureCollection', 'type', writeTypeT, x.type, x),
     'features': _atd_write_optional_field(_atd_write_array(writeFeatureT), x.features, x),
     'transformation': _atd_write_optional_field(writeTransformationT, x.transformation, x),
   };
 }
 
-export function readAnnotationBodyT6(x: any, context: any = x): AnnotationBodyT6 {
+export function readAnnotationBodyFeatureCollection(x: any, context: any = x): AnnotationBodyFeatureCollection {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
-    type: _atd_read_required_field('AnnotationBodyT6', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('AnnotationBodyFeatureCollection', 'type', readTypeT, x['type'], x),
     features: _atd_read_optional_field(_atd_read_array(readFeatureT), x['features'], x),
     transformation: _atd_read_optional_field(readTransformationT, x['transformation'], x),
   };
 }
 
-export function writeAnnotationBodyT7(x: AnnotationBodyT7, context: any = x): any {
+export function writeAnnotationBodyChoice(x: AnnotationBodyChoice, context: any = x): any {
   return {
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'items': _atd_write_required_field('AnnotationBodyT7', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
+    'items': _atd_write_required_field('AnnotationBodyChoice', 'items', _atd_write_array(writeAnnotationBodyItemsT), x.items, x),
   };
 }
 
-export function readAnnotationBodyT7(x: any, context: any = x): AnnotationBodyT7 {
+export function readAnnotationBodyChoice(x: any, context: any = x): AnnotationBodyChoice {
   return {
     type: _atd_read_optional_field(readTypeT, x['type'], x),
-    items: _atd_read_required_field('AnnotationBodyT7', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
+    items: _atd_read_required_field('AnnotationBodyChoice', 'items', _atd_read_array(readAnnotationBodyItemsT), x['items'], x),
   };
 }
 
 export function _writeTargetT(x: TargetT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeAnnotationTargetT(x.value, x)]
-    case 'T2':
-      return ['T2', _atd_write_array(writeAnnotationTargetT)(x.value, x)]
+    case 'Value':
+      return ['Value', writeAnnotationTargetT(x.value, x)]
+    case 'Array':
+      return ['Array', _atd_write_array(writeAnnotationTargetT)(x.value, x)]
   }
 }
 
 export function _readTargetT(x: any, context: any = x): TargetT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readAnnotationTargetT(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: _atd_read_array(readAnnotationTargetT)(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readAnnotationTargetT(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: _atd_read_array(readAnnotationTargetT)(x[1], x) }
     default:
       _atd_bad_json('TargetT', x, context)
       throw new Error('impossible')
@@ -1962,77 +1962,77 @@ export function _readTargetT(x: any, context: any = x): TargetT {
 
 export function _writeAnnotationTargetT(x: AnnotationTargetT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeAnnotationTargetT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeAnnotationTargetT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeAnnotationTargetT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeAnnotationTargetT4(x.value, x)]
+    case 'String':
+      return ['String', writeAnnotationTargetString(x.value, x)]
+    case 'SelectorTarget':
+      return ['SelectorTarget', writeAnnotationTargetSelectorTarget(x.value, x)]
+    case 'SpecificResource':
+      return ['SpecificResource', writeAnnotationTargetSpecificResource(x.value, x)]
+    case 'CanvasRef':
+      return ['CanvasRef', writeAnnotationTargetCanvasRef(x.value, x)]
   }
 }
 
 export function _readAnnotationTargetT(x: any, context: any = x): AnnotationTargetT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readAnnotationTargetT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readAnnotationTargetT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readAnnotationTargetT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readAnnotationTargetT4(x[1], x) }
+    case 'String':
+      return { kind: 'String', value: readAnnotationTargetString(x[1], x) }
+    case 'SelectorTarget':
+      return { kind: 'SelectorTarget', value: readAnnotationTargetSelectorTarget(x[1], x) }
+    case 'SpecificResource':
+      return { kind: 'SpecificResource', value: readAnnotationTargetSpecificResource(x[1], x) }
+    case 'CanvasRef':
+      return { kind: 'CanvasRef', value: readAnnotationTargetCanvasRef(x[1], x) }
     default:
       _atd_bad_json('AnnotationTargetT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeAnnotationTargetT1(x: AnnotationTargetT1, context: any = x): any {
+export function writeAnnotationTargetString(x: AnnotationTargetString, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readAnnotationTargetT1(x: any, context: any = x): AnnotationTargetT1 {
+export function readAnnotationTargetString(x: any, context: any = x): AnnotationTargetString {
   return _atd_read_string(x, context);
 }
 
-export function writeAnnotationTargetT2(x: AnnotationTargetT2, context: any = x): any {
+export function writeAnnotationTargetSelectorTarget(x: AnnotationTargetSelectorTarget, context: any = x): any {
   return {
-    'source': _atd_write_required_field('AnnotationTargetT2', 'source', writeIdT, x.source, x),
-    'scope': _atd_write_required_field('AnnotationTargetT2', 'scope', writeIdT, x.scope, x),
+    'source': _atd_write_required_field('AnnotationTargetSelectorTarget', 'source', writeIdT, x.source, x),
+    'scope': _atd_write_required_field('AnnotationTargetSelectorTarget', 'scope', writeIdT, x.scope, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
   };
 }
 
-export function readAnnotationTargetT2(x: any, context: any = x): AnnotationTargetT2 {
+export function readAnnotationTargetSelectorTarget(x: any, context: any = x): AnnotationTargetSelectorTarget {
   return {
-    source: _atd_read_required_field('AnnotationTargetT2', 'source', readIdT, x['source'], x),
-    scope: _atd_read_required_field('AnnotationTargetT2', 'scope', readIdT, x['scope'], x),
+    source: _atd_read_required_field('AnnotationTargetSelectorTarget', 'source', readIdT, x['source'], x),
+    scope: _atd_read_required_field('AnnotationTargetSelectorTarget', 'scope', readIdT, x['scope'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
   };
 }
 
-export function writeAnnotationTargetT3(x: AnnotationTargetT3, context: any = x): any {
+export function writeAnnotationTargetSpecificResource(x: AnnotationTargetSpecificResource, context: any = x): any {
   return writeSpecificResourceT(x, context);
 }
 
-export function readAnnotationTargetT3(x: any, context: any = x): AnnotationTargetT3 {
+export function readAnnotationTargetSpecificResource(x: any, context: any = x): AnnotationTargetSpecificResource {
   return readSpecificResourceT(x, context);
 }
 
-export function writeAnnotationTargetT4(x: AnnotationTargetT4, context: any = x): any {
+export function writeAnnotationTargetCanvasRef(x: AnnotationTargetCanvasRef, context: any = x): any {
   return {
-    'id': _atd_write_required_field('AnnotationTargetT4', 'id', writeIdT, x.id, x),
+    'id': _atd_write_required_field('AnnotationTargetCanvasRef', 'id', writeIdT, x.id, x),
     'partOf': _atd_write_optional_field(writePartOfT, x.partOf, x),
     'language': _atd_write_optional_field(writeLanguageT, x.language, x),
   };
 }
 
-export function readAnnotationTargetT4(x: any, context: any = x): AnnotationTargetT4 {
+export function readAnnotationTargetCanvasRef(x: any, context: any = x): AnnotationTargetCanvasRef {
   return {
-    id: _atd_read_required_field('AnnotationTargetT4', 'id', readIdT, x['id'], x),
+    id: _atd_read_required_field('AnnotationTargetCanvasRef', 'id', readIdT, x['id'], x),
     partOf: _atd_read_optional_field(readPartOfT, x['partOf'], x),
     language: _atd_read_optional_field(readLanguageT, x['language'], x),
   };
@@ -2064,58 +2064,58 @@ export function readSpecificResourceT(x: any, context: any = x): SpecificResourc
 
 export function _writeSourceT(x: SourceT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeSourceT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeSourceT2(x.value, x)]
+    case 'Ref':
+      return ['Ref', writeSourceRef(x.value, x)]
+    case 'Object':
+      return ['Object', writeSourceObject(x.value, x)]
   }
 }
 
 export function _readSourceT(x: any, context: any = x): SourceT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readSourceT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readSourceT2(x[1], x) }
+    case 'Ref':
+      return { kind: 'Ref', value: readSourceRef(x[1], x) }
+    case 'Object':
+      return { kind: 'Object', value: readSourceObject(x[1], x) }
     default:
       _atd_bad_json('SourceT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeSourceT1(x: SourceT1, context: any = x): any {
+export function writeSourceRef(x: SourceRef, context: any = x): any {
   return writeIdT(x, context);
 }
 
-export function readSourceT1(x: any, context: any = x): SourceT1 {
+export function readSourceRef(x: any, context: any = x): SourceRef {
   return readIdT(x, context);
 }
 
-export function writeSourceT2(x: SourceT2, context: any = x): any {
+export function writeSourceObject(x: SourceObject, context: any = x): any {
   return writeClassT(x, context);
 }
 
-export function readSourceT2(x: any, context: any = x): SourceT2 {
+export function readSourceObject(x: any, context: any = x): SourceObject {
   return readClassT(x, context);
 }
 
 export function _writeSelectorT(x: SelectorT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeResourceSelectorT(x.value, x)]
-    case 'T2':
-      return ['T2', _atd_write_array(writeResourceSelectorT)(x.value, x)]
+    case 'Value':
+      return ['Value', writeResourceSelectorT(x.value, x)]
+    case 'Array':
+      return ['Array', _atd_write_array(writeResourceSelectorT)(x.value, x)]
   }
 }
 
 export function _readSelectorT(x: any, context: any = x): SelectorT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readResourceSelectorT(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: _atd_read_array(readResourceSelectorT)(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readResourceSelectorT(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: _atd_read_array(readResourceSelectorT)(x[1], x) }
     default:
       _atd_bad_json('SelectorT', x, context)
       throw new Error('impossible')
@@ -2124,85 +2124,85 @@ export function _readSelectorT(x: any, context: any = x): SelectorT {
 
 export function _writeResourceSelectorT(x: ResourceSelectorT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeResourceSelectorT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeResourceSelectorT2(x.value, x)]
-    case 'T3':
-      return ['T3', writeResourceSelectorT3(x.value, x)]
-    case 'T4':
-      return ['T4', writeResourceSelectorT4(x.value, x)]
-    case 'T5':
-      return ['T5', writeResourceSelectorT5(x.value, x)]
-    case 'T6':
-      return ['T6', writeResourceSelectorT6(x.value, x)]
-    case 'T7':
-      return ['T7', writeResourceSelectorT7(x.value, x)]
+    case 'String':
+      return ['String', writeResourceSelectorString(x.value, x)]
+    case 'PointSelector':
+      return ['PointSelector', writeResourceSelectorPoint(x.value, x)]
+    case 'FragmentSelector':
+      return ['FragmentSelector', writeResourceSelectorFragment(x.value, x)]
+    case 'SvgSelector':
+      return ['SvgSelector', writeResourceSelectorSvg(x.value, x)]
+    case 'ImageApiSelector':
+      return ['ImageApiSelector', writeResourceSelectorImageApi(x.value, x)]
+    case 'TextQuoteSelector':
+      return ['TextQuoteSelector', writeResourceSelectorTextQuote(x.value, x)]
+    case 'XPathSelector':
+      return ['XPathSelector', writeResourceSelectorXpath(x.value, x)]
   }
 }
 
 export function _readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readResourceSelectorT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readResourceSelectorT2(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readResourceSelectorT3(x[1], x) }
-    case 'T4':
-      return { kind: 'T4', value: readResourceSelectorT4(x[1], x) }
-    case 'T5':
-      return { kind: 'T5', value: readResourceSelectorT5(x[1], x) }
-    case 'T6':
-      return { kind: 'T6', value: readResourceSelectorT6(x[1], x) }
-    case 'T7':
-      return { kind: 'T7', value: readResourceSelectorT7(x[1], x) }
+    case 'String':
+      return { kind: 'String', value: readResourceSelectorString(x[1], x) }
+    case 'PointSelector':
+      return { kind: 'PointSelector', value: readResourceSelectorPoint(x[1], x) }
+    case 'FragmentSelector':
+      return { kind: 'FragmentSelector', value: readResourceSelectorFragment(x[1], x) }
+    case 'SvgSelector':
+      return { kind: 'SvgSelector', value: readResourceSelectorSvg(x[1], x) }
+    case 'ImageApiSelector':
+      return { kind: 'ImageApiSelector', value: readResourceSelectorImageApi(x[1], x) }
+    case 'TextQuoteSelector':
+      return { kind: 'TextQuoteSelector', value: readResourceSelectorTextQuote(x[1], x) }
+    case 'XPathSelector':
+      return { kind: 'XPathSelector', value: readResourceSelectorXpath(x[1], x) }
     default:
       _atd_bad_json('ResourceSelectorT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeResourceSelectorT1(x: ResourceSelectorT1, context: any = x): any {
+export function writeResourceSelectorString(x: ResourceSelectorString, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readResourceSelectorT1(x: any, context: any = x): ResourceSelectorT1 {
+export function readResourceSelectorString(x: any, context: any = x): ResourceSelectorString {
   return _atd_read_string(x, context);
 }
 
-export function writeResourceSelectorT2(x: ResourceSelectorT2, context: any = x): any {
+export function writeResourceSelectorPoint(x: ResourceSelectorPoint, context: any = x): any {
   return {
-    'type': _atd_write_required_field('ResourceSelectorT2', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('ResourceSelectorPoint', 'type', writeTypeT, x.type, x),
     't': _atd_write_optional_field(writeDurationT, x.t, x),
-    'x': _atd_write_optional_field(writeDimensonT, x.x_, x),
-    'y': _atd_write_optional_field(writeDimensonT, x.y, x),
+    'x': _atd_write_optional_field(writeDimensionT, x.x_, x),
+    'y': _atd_write_optional_field(writeDimensionT, x.y, x),
   };
 }
 
-export function readResourceSelectorT2(x: any, context: any = x): ResourceSelectorT2 {
+export function readResourceSelectorPoint(x: any, context: any = x): ResourceSelectorPoint {
   return {
-    type: _atd_read_required_field('ResourceSelectorT2', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('ResourceSelectorPoint', 'type', readTypeT, x['type'], x),
     t: _atd_read_optional_field(readDurationT, x['t'], x),
-    x_: _atd_read_optional_field(readDimensonT, x['x'], x),
-    y: _atd_read_optional_field(readDimensonT, x['y'], x),
+    x_: _atd_read_optional_field(readDimensionT, x['x'], x),
+    y: _atd_read_optional_field(readDimensionT, x['y'], x),
   };
 }
 
-export function writeResourceSelectorT3(x: ResourceSelectorT3, context: any = x): any {
+export function writeResourceSelectorFragment(x: ResourceSelectorFragment, context: any = x): any {
   return {
-    'type': _atd_write_required_field('ResourceSelectorT3', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('ResourceSelectorFragment', 'type', writeTypeT, x.type, x),
     'conformsTo': _atd_write_optional_field(writeConformsToT, x.conformsTo, x),
-    'value': _atd_write_required_field('ResourceSelectorT3', 'value', writeValueT, x.value, x),
+    'value': _atd_write_required_field('ResourceSelectorFragment', 'value', writeValueT, x.value, x),
   };
 }
 
-export function readResourceSelectorT3(x: any, context: any = x): ResourceSelectorT3 {
+export function readResourceSelectorFragment(x: any, context: any = x): ResourceSelectorFragment {
   return {
-    type: _atd_read_required_field('ResourceSelectorT3', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('ResourceSelectorFragment', 'type', readTypeT, x['type'], x),
     conformsTo: _atd_read_optional_field(readConformsToT, x['conformsTo'], x),
-    value: _atd_read_required_field('ResourceSelectorT3', 'value', readValueT, x['value'], x),
+    value: _atd_read_required_field('ResourceSelectorFragment', 'value', readValueT, x['value'], x),
   };
 }
 
@@ -2214,71 +2214,71 @@ export function readConformsToT(x: any, context: any = x): ConformsToT {
   return _atd_read_string(x, context);
 }
 
-export function writeResourceSelectorT4(x: ResourceSelectorT4, context: any = x): any {
+export function writeResourceSelectorSvg(x: ResourceSelectorSvg, context: any = x): any {
   return {
-    'type': _atd_write_required_field('ResourceSelectorT4', 'type', writeTypeT, x.type, x),
-    'value': _atd_write_required_field('ResourceSelectorT4', 'value', writeValueT, x.value, x),
+    'type': _atd_write_required_field('ResourceSelectorSvg', 'type', writeTypeT, x.type, x),
+    'value': _atd_write_required_field('ResourceSelectorSvg', 'value', writeValueT, x.value, x),
   };
 }
 
-export function readResourceSelectorT4(x: any, context: any = x): ResourceSelectorT4 {
+export function readResourceSelectorSvg(x: any, context: any = x): ResourceSelectorSvg {
   return {
-    type: _atd_read_required_field('ResourceSelectorT4', 'type', readTypeT, x['type'], x),
-    value: _atd_read_required_field('ResourceSelectorT4', 'value', readValueT, x['value'], x),
+    type: _atd_read_required_field('ResourceSelectorSvg', 'type', readTypeT, x['type'], x),
+    value: _atd_read_required_field('ResourceSelectorSvg', 'value', readValueT, x['value'], x),
   };
 }
 
-export function writeResourceSelectorT5(x: ResourceSelectorT5, context: any = x): any {
+export function writeResourceSelectorImageApi(x: ResourceSelectorImageApi, context: any = x): any {
   return {
-    'type': _atd_write_required_field('ResourceSelectorT5', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('ResourceSelectorImageApi', 'type', writeTypeT, x.type, x),
     'region': _atd_write_optional_field(writeRegionT, x.region, x),
     'size': _atd_write_optional_field(writeSizeT, x.size, x),
-    'rotation': _atd_write_optional_field(writeRotatationT, x.rotation, x),
+    'rotation': _atd_write_optional_field(writeRotationT, x.rotation, x),
     'quality': _atd_write_optional_field(writeQualityT, x.quality, x),
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
   };
 }
 
-export function readResourceSelectorT5(x: any, context: any = x): ResourceSelectorT5 {
+export function readResourceSelectorImageApi(x: any, context: any = x): ResourceSelectorImageApi {
   return {
-    type: _atd_read_required_field('ResourceSelectorT5', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('ResourceSelectorImageApi', 'type', readTypeT, x['type'], x),
     region: _atd_read_optional_field(readRegionT, x['region'], x),
     size: _atd_read_optional_field(readSizeT, x['size'], x),
-    rotation: _atd_read_optional_field(readRotatationT, x['rotation'], x),
+    rotation: _atd_read_optional_field(readRotationT, x['rotation'], x),
     quality: _atd_read_optional_field(readQualityT, x['quality'], x),
     format: _atd_read_optional_field(readFormatT, x['format'], x),
   };
 }
 
-export function writeResourceSelectorT6(x: ResourceSelectorT6, context: any = x): any {
+export function writeResourceSelectorTextQuote(x: ResourceSelectorTextQuote, context: any = x): any {
   return {
-    'type': _atd_write_required_field('ResourceSelectorT6', 'type', writeTypeT, x.type, x),
+    'type': _atd_write_required_field('ResourceSelectorTextQuote', 'type', writeTypeT, x.type, x),
     'prefix': _atd_write_optional_field(writePrefixT, x.prefix, x),
-    'exact': _atd_write_required_field('ResourceSelectorT6', 'exact', writeExactT, x.exact, x),
+    'exact': _atd_write_required_field('ResourceSelectorTextQuote', 'exact', writeExactT, x.exact, x),
     'suffix': _atd_write_optional_field(writeSuffixT, x.suffix, x),
   };
 }
 
-export function readResourceSelectorT6(x: any, context: any = x): ResourceSelectorT6 {
+export function readResourceSelectorTextQuote(x: any, context: any = x): ResourceSelectorTextQuote {
   return {
-    type: _atd_read_required_field('ResourceSelectorT6', 'type', readTypeT, x['type'], x),
+    type: _atd_read_required_field('ResourceSelectorTextQuote', 'type', readTypeT, x['type'], x),
     prefix: _atd_read_optional_field(readPrefixT, x['prefix'], x),
-    exact: _atd_read_required_field('ResourceSelectorT6', 'exact', readExactT, x['exact'], x),
+    exact: _atd_read_required_field('ResourceSelectorTextQuote', 'exact', readExactT, x['exact'], x),
     suffix: _atd_read_optional_field(readSuffixT, x['suffix'], x),
   };
 }
 
-export function writeResourceSelectorT7(x: ResourceSelectorT7, context: any = x): any {
+export function writeResourceSelectorXpath(x: ResourceSelectorXpath, context: any = x): any {
   return {
-    'type': _atd_write_required_field('ResourceSelectorT7', 'type', writeTypeT, x.type, x),
-    'value': _atd_write_required_field('ResourceSelectorT7', 'value', writeValueT, x.value, x),
+    'type': _atd_write_required_field('ResourceSelectorXpath', 'type', writeTypeT, x.type, x),
+    'value': _atd_write_required_field('ResourceSelectorXpath', 'value', writeValueT, x.value, x),
   };
 }
 
-export function readResourceSelectorT7(x: any, context: any = x): ResourceSelectorT7 {
+export function readResourceSelectorXpath(x: any, context: any = x): ResourceSelectorXpath {
   return {
-    type: _atd_read_required_field('ResourceSelectorT7', 'type', readTypeT, x['type'], x),
-    value: _atd_read_required_field('ResourceSelectorT7', 'value', readValueT, x['value'], x),
+    type: _atd_read_required_field('ResourceSelectorXpath', 'type', readTypeT, x['type'], x),
+    value: _atd_read_required_field('ResourceSelectorXpath', 'value', readValueT, x['value'], x),
   };
 }
 
@@ -2364,20 +2364,20 @@ export function readResourceT(x: any, context: any = x): ResourceT {
 
 export function _writeServiceT(x: ServiceT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeServiceItemT(x.value, x)]
-    case 'T2':
-      return ['T2', _atd_write_array(writeServiceItemT)(x.value, x)]
+    case 'Value':
+      return ['Value', writeServiceItemT(x.value, x)]
+    case 'Array':
+      return ['Array', _atd_write_array(writeServiceItemT)(x.value, x)]
   }
 }
 
 export function _readServiceT(x: any, context: any = x): ServiceT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readServiceItemT(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: _atd_read_array(readServiceItemT)(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readServiceItemT(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: _atd_read_array(readServiceItemT)(x[1], x) }
     default:
       _atd_bad_json('ServiceT', x, context)
       throw new Error('impossible')
@@ -2386,60 +2386,60 @@ export function _readServiceT(x: any, context: any = x): ServiceT {
 
 export function _writeServiceItemT(x: ServiceItemT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeServiceItemT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeServiceItemT2(x.value, x)]
+    case 'Modern':
+      return ['Modern', writeServiceItemModern(x.value, x)]
+    case 'Legacy':
+      return ['Legacy', writeServiceItemLegacy(x.value, x)]
   }
 }
 
 export function _readServiceItemT(x: any, context: any = x): ServiceItemT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readServiceItemT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readServiceItemT2(x[1], x) }
+    case 'Modern':
+      return { kind: 'Modern', value: readServiceItemModern(x[1], x) }
+    case 'Legacy':
+      return { kind: 'Legacy', value: readServiceItemLegacy(x[1], x) }
     default:
       _atd_bad_json('ServiceItemT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeServiceItemT1(x: ServiceItemT1, context: any = x): any {
+export function writeServiceItemModern(x: ServiceItemModern, context: any = x): any {
   return {
-    'id': _atd_write_required_field('ServiceItemT1', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('ServiceItemT1', 'type', writeTypeT, x.type, x),
+    'id': _atd_write_required_field('ServiceItemModern', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('ServiceItemModern', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
     'service': _atd_write_optional_field(writeServiceT, x.service, x),
   };
 }
 
-export function readServiceItemT1(x: any, context: any = x): ServiceItemT1 {
+export function readServiceItemModern(x: any, context: any = x): ServiceItemModern {
   return {
-    id: _atd_read_required_field('ServiceItemT1', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('ServiceItemT1', 'type', readTypeT, x['type'], x),
+    id: _atd_read_required_field('ServiceItemModern', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('ServiceItemModern', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
     service: _atd_read_optional_field(readServiceT, x['service'], x),
   };
 }
 
-export function writeServiceItemT2(x: ServiceItemT2, context: any = x): any {
+export function writeServiceItemLegacy(x: ServiceItemLegacy, context: any = x): any {
   return {
-    '@id': _atd_write_required_field('ServiceItemT2', 'id', writeIdT, x.id, x),
-    '@type': _atd_write_required_field('ServiceItemT2', 'type', writeTypeT, x.type, x),
+    '@id': _atd_write_required_field('ServiceItemLegacy', 'id', writeIdT, x.id, x),
+    '@type': _atd_write_required_field('ServiceItemLegacy', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'profile': _atd_write_optional_field(writeProfileT, x.profile, x),
     'service': _atd_write_optional_field(writeServiceT, x.service, x),
   };
 }
 
-export function readServiceItemT2(x: any, context: any = x): ServiceItemT2 {
+export function readServiceItemLegacy(x: any, context: any = x): ServiceItemLegacy {
   return {
-    id: _atd_read_required_field('ServiceItemT2', '@id', readIdT, x['@id'], x),
-    type: _atd_read_required_field('ServiceItemT2', '@type', readTypeT, x['@type'], x),
+    id: _atd_read_required_field('ServiceItemLegacy', '@id', readIdT, x['@id'], x),
+    type: _atd_read_required_field('ServiceItemLegacy', '@type', readTypeT, x['@type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     profile: _atd_read_optional_field(readProfileT, x['profile'], x),
     service: _atd_read_optional_field(readServiceT, x['service'], x),
@@ -2448,39 +2448,39 @@ export function readServiceItemT2(x: any, context: any = x): ServiceItemT2 {
 
 export function _writeLabelT(x: LabelT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeLabelT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeLabelT2(x.value, x)]
+    case 'Plain':
+      return ['Plain', writeLabelPlain(x.value, x)]
+    case 'Multilingual':
+      return ['Multilingual', writeLabelMultilingual(x.value, x)]
   }
 }
 
 export function _readLabelT(x: any, context: any = x): LabelT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readLabelT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readLabelT2(x[1], x) }
+    case 'Plain':
+      return { kind: 'Plain', value: readLabelPlain(x[1], x) }
+    case 'Multilingual':
+      return { kind: 'Multilingual', value: readLabelMultilingual(x[1], x) }
     default:
       _atd_bad_json('LabelT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeLabelT1(x: LabelT1, context: any = x): any {
+export function writeLabelPlain(x: LabelPlain, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readLabelT1(x: any, context: any = x): LabelT1 {
+export function readLabelPlain(x: any, context: any = x): LabelPlain {
   return _atd_read_string(x, context);
 }
 
-export function writeLabelT2(x: LabelT2, context: any = x): any {
+export function writeLabelMultilingual(x: LabelMultilingual, context: any = x): any {
   return writeLngStringT(x, context);
 }
 
-export function readLabelT2(x: any, context: any = x): LabelT2 {
+export function readLabelMultilingual(x: any, context: any = x): LabelMultilingual {
   return readLngStringT(x, context);
 }
 
@@ -2502,39 +2502,39 @@ export function readLngStringT(x: any, context: any = x): LngStringT {
 
 export function _writeLanguageT(x: LanguageT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeLanguageT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeLanguageT2(x.value, x)]
+    case 'Value':
+      return ['Value', writeLanguageValue(x.value, x)]
+    case 'Array':
+      return ['Array', writeLanguageArray(x.value, x)]
   }
 }
 
 export function _readLanguageT(x: any, context: any = x): LanguageT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readLanguageT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readLanguageT2(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readLanguageValue(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: readLanguageArray(x[1], x) }
     default:
       _atd_bad_json('LanguageT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeLanguageT1(x: LanguageT1, context: any = x): any {
+export function writeLanguageValue(x: LanguageValue, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readLanguageT1(x: any, context: any = x): LanguageT1 {
+export function readLanguageValue(x: any, context: any = x): LanguageValue {
   return _atd_read_string(x, context);
 }
 
-export function writeLanguageT2(x: LanguageT2, context: any = x): any {
+export function writeLanguageArray(x: LanguageArray, context: any = x): any {
   return _atd_write_array(_atd_write_string)(x, context);
 }
 
-export function readLanguageT2(x: any, context: any = x): LanguageT2 {
+export function readLanguageArray(x: any, context: any = x): LanguageArray {
   return _atd_read_array(_atd_read_string)(x, context);
 }
 
@@ -2618,46 +2618,46 @@ export function readProviderT(x: any, context: any = x): ProviderT {
 
 export function _writePartOfT(x: PartOfT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writePartOfT1(x.value, x)]
-    case 'T2':
-      return ['T2', writePartOfT2(x.value, x)]
+    case 'Ref':
+      return ['Ref', writePartOfRef(x.value, x)]
+    case 'Object':
+      return ['Object', writePartOfObject(x.value, x)]
   }
 }
 
 export function _readPartOfT(x: any, context: any = x): PartOfT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readPartOfT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readPartOfT2(x[1], x) }
+    case 'Ref':
+      return { kind: 'Ref', value: readPartOfRef(x[1], x) }
+    case 'Object':
+      return { kind: 'Object', value: readPartOfObject(x[1], x) }
     default:
       _atd_bad_json('PartOfT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writePartOfT1(x: PartOfT1, context: any = x): any {
+export function writePartOfRef(x: PartOfRef, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readPartOfT1(x: any, context: any = x): PartOfT1 {
+export function readPartOfRef(x: any, context: any = x): PartOfRef {
   return _atd_read_string(x, context);
 }
 
-export function writePartOfT2(x: PartOfT2, context: any = x): any {
+export function writePartOfObject(x: PartOfObject, context: any = x): any {
   return {
-    'id': _atd_write_required_field('PartOfT2', 'id', writeIdT, x.id, x),
+    'id': _atd_write_required_field('PartOfObject', 'id', writeIdT, x.id, x),
     'type': _atd_write_optional_field(writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'total': _atd_write_optional_field(writeTotalT, x.total, x),
   };
 }
 
-export function readPartOfT2(x: any, context: any = x): PartOfT2 {
+export function readPartOfObject(x: any, context: any = x): PartOfObject {
   return {
-    id: _atd_read_required_field('PartOfT2', 'id', readIdT, x['id'], x),
+    id: _atd_read_required_field('PartOfObject', 'id', readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     total: _atd_read_optional_field(readTotalT, x['total'], x),
@@ -2674,39 +2674,39 @@ export function readStartT(x: any, context: any = x): StartT {
 
 export function _writeMotivationT(x: MotivationT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeMotivationT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeMotivationT2(x.value, x)]
+    case 'Value':
+      return ['Value', writeMotivationValue(x.value, x)]
+    case 'Array':
+      return ['Array', writeMotivationArray(x.value, x)]
   }
 }
 
 export function _readMotivationT(x: any, context: any = x): MotivationT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readMotivationT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readMotivationT2(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: readMotivationValue(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: readMotivationArray(x[1], x) }
     default:
       _atd_bad_json('MotivationT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeMotivationT1(x: MotivationT1, context: any = x): any {
+export function writeMotivationValue(x: MotivationValue, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readMotivationT1(x: any, context: any = x): MotivationT1 {
+export function readMotivationValue(x: any, context: any = x): MotivationValue {
   return _atd_read_string(x, context);
 }
 
-export function writeMotivationT2(x: MotivationT2, context: any = x): any {
+export function writeMotivationArray(x: MotivationArray, context: any = x): any {
   return _atd_write_array(_atd_write_string)(x, context);
 }
 
-export function readMotivationT2(x: any, context: any = x): MotivationT2 {
+export function readMotivationArray(x: any, context: any = x): MotivationArray {
   return _atd_read_array(_atd_read_string)(x, context);
 }
 
@@ -2746,38 +2746,38 @@ export function readAnnotationCollectionT(x: any, context: any = x): AnnotationC
 
 export function _writeFirstT(x: FirstT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeFirstT1(x.value, x)]
-    case 'T2':
-      return ['T2', writeFirstT2(x.value, x)]
+    case 'Ref':
+      return ['Ref', writeFirstRef(x.value, x)]
+    case 'Object':
+      return ['Object', writeFirstObject(x.value, x)]
   }
 }
 
 export function _readFirstT(x: any, context: any = x): FirstT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readFirstT1(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readFirstT2(x[1], x) }
+    case 'Ref':
+      return { kind: 'Ref', value: readFirstRef(x[1], x) }
+    case 'Object':
+      return { kind: 'Object', value: readFirstObject(x[1], x) }
     default:
       _atd_bad_json('FirstT', x, context)
       throw new Error('impossible')
   }
 }
 
-export function writeFirstT1(x: FirstT1, context: any = x): any {
+export function writeFirstRef(x: FirstRef, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readFirstT1(x: any, context: any = x): FirstT1 {
+export function readFirstRef(x: any, context: any = x): FirstRef {
   return _atd_read_string(x, context);
 }
 
-export function writeFirstT2(x: FirstT2, context: any = x): any {
+export function writeFirstObject(x: FirstObject, context: any = x): any {
   return {
-    'id': _atd_write_required_field('FirstT2', 'id', writeIdT, x.id, x),
-    'type': _atd_write_required_field('FirstT2', 'type', writeTypeT, x.type, x),
+    'id': _atd_write_required_field('FirstObject', 'id', writeIdT, x.id, x),
+    'type': _atd_write_required_field('FirstObject', 'type', writeTypeT, x.type, x),
     'label': _atd_write_optional_field(writeLabelT, x.label, x),
     'startIndex': _atd_write_optional_field(writeStartIndexT, x.startIndex, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
@@ -2786,10 +2786,10 @@ export function writeFirstT2(x: FirstT2, context: any = x): any {
   };
 }
 
-export function readFirstT2(x: any, context: any = x): FirstT2 {
+export function readFirstObject(x: any, context: any = x): FirstObject {
   return {
-    id: _atd_read_required_field('FirstT2', 'id', readIdT, x['id'], x),
-    type: _atd_read_required_field('FirstT2', 'type', readTypeT, x['type'], x),
+    id: _atd_read_required_field('FirstObject', 'id', readIdT, x['id'], x),
+    type: _atd_read_required_field('FirstObject', 'type', readTypeT, x['type'], x),
     label: _atd_read_optional_field(readLabelT, x['label'], x),
     startIndex: _atd_read_optional_field(readStartIndexT, x['startIndex'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
@@ -2834,24 +2834,24 @@ export function readRangeT(x: any, context: any = x): RangeT {
 
 export function _writeRangeItemsT(x: RangeItemsT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', writeSpecificResourceT(x.value, x)]
-    case 'T2':
-      return ['T2', writeCanvasT(x.value, x)]
-    case 'T3':
-      return ['T3', writeRangeT(x.value, x)]
+    case 'SpecificResource':
+      return ['SpecificResource', writeSpecificResourceT(x.value, x)]
+    case 'Canvas':
+      return ['Canvas', writeCanvasT(x.value, x)]
+    case 'Range':
+      return ['Range', writeRangeT(x.value, x)]
   }
 }
 
 export function _readRangeItemsT(x: any, context: any = x): RangeItemsT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: readSpecificResourceT(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: readCanvasT(x[1], x) }
-    case 'T3':
-      return { kind: 'T3', value: readRangeT(x[1], x) }
+    case 'SpecificResource':
+      return { kind: 'SpecificResource', value: readSpecificResourceT(x[1], x) }
+    case 'Canvas':
+      return { kind: 'Canvas', value: readCanvasT(x[1], x) }
+    case 'Range':
+      return { kind: 'Range', value: readRangeT(x[1], x) }
     default:
       _atd_bad_json('RangeItemsT', x, context)
       throw new Error('impossible')
@@ -2860,20 +2860,20 @@ export function _readRangeItemsT(x: any, context: any = x): RangeItemsT {
 
 export function writeStringsT(x: StringsT, context: any = x): any {
   switch (x.kind) {
-    case 'T1':
-      return ['T1', _atd_write_string(x.value, x)]
-    case 'T2':
-      return ['T2', _atd_write_array(_atd_write_string)(x.value, x)]
+    case 'Value':
+      return ['Value', _atd_write_string(x.value, x)]
+    case 'Array':
+      return ['Array', _atd_write_array(_atd_write_string)(x.value, x)]
   }
 }
 
 export function readStringsT(x: any, context: any = x): StringsT {
   _atd_check_json_tuple(2, x, context)
   switch (x[0]) {
-    case 'T1':
-      return { kind: 'T1', value: _atd_read_string(x[1], x) }
-    case 'T2':
-      return { kind: 'T2', value: _atd_read_array(_atd_read_string)(x[1], x) }
+    case 'Value':
+      return { kind: 'Value', value: _atd_read_string(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: _atd_read_array(_atd_read_string)(x[1], x) }
     default:
       _atd_bad_json('StringsT', x, context)
       throw new Error('impossible')
@@ -3000,11 +3000,11 @@ export function readAccessibilityT(x: any, context: any = x): AccessibilityT {
   return _atd_read_string(x, context);
 }
 
-export function writeDimensonT(x: DimensonT, context: any = x): any {
+export function writeDimensionT(x: DimensionT, context: any = x): any {
   return _atd_write_int(x, context);
 }
 
-export function readDimensonT(x: any, context: any = x): DimensonT {
+export function readDimensionT(x: any, context: any = x): DimensionT {
   return _atd_read_int(x, context);
 }
 
@@ -3048,11 +3048,11 @@ export function readQualityT(x: any, context: any = x): QualityT {
   return _atd_read_string(x, context);
 }
 
-export function writeRotatationT(x: RotatationT, context: any = x): any {
+export function writeRotationT(x: RotationT, context: any = x): any {
   return _atd_write_string(x, context);
 }
 
-export function readRotatationT(x: any, context: any = x): RotatationT {
+export function readRotationT(x: any, context: any = x): RotationT {
   return _atd_read_string(x, context);
 }
 
@@ -3496,45 +3496,33 @@ function _atd_write_field_with_default<T>(
   return write_elt(value, context)
 }
 
-///// appended to specification.ts
 
 import {
-    normalize_creator, restore_creator, normalize_email_strings, restore_email_strings,
-    normalize_email_sha1_strings, restore_email_sha1_strings, normalize_homepage_strings, restore_homepage_strings, normalize_creator_item, restore_creator_item,
-    normalize_service, restore_service, normalize_part_of, restore_part_of, normalize_context, restore_context, normalize_annotation_body_items, restore_annotation_body_items, normalize_language, restore_language, normalize_geometry, restore_geometry, normalize_range_items, restore_range_items, normalize_resource_selector, restore_resource_selector, normalize_label, restore_label, normalize_first, restore_first, normalize_body, restore_body, normalize_target, restore_target, normalize_source, restore_source, normalize_selector, restore_selector, normalize_annotation_body, restore_annotation_body, normalize_annotation_target, restore_annotation_target, normalize_specification, restore_specification, normalize_service_item, restore_service_item, normalize_motivation, restore_motivation
+    normalize_annotation_body, restore_annotation_body,
+    normalize_annotation_body_items, restore_annotation_body_items,
+    normalize_annotation_target, restore_annotation_target,
+    normalize_body, restore_body,
+    normalize_context, restore_context,
+    normalize_creator, restore_creator,
+    normalize_creator_item, restore_creator_item,
+    normalize_email_sha1_strings, restore_email_sha1_strings,
+    normalize_email_strings, restore_email_strings,
+    normalize_first, restore_first,
+    normalize_geometry, restore_geometry,
+    normalize_homepage_strings, restore_homepage_strings,
+    normalize_label, restore_label,
+    normalize_language, restore_language,
+    normalize_motivation, restore_motivation,
+    normalize_part_of, restore_part_of,
+    normalize_range_items, restore_range_items,
+    normalize_resource_selector, restore_resource_selector,
+    normalize_selector, restore_selector,
+    normalize_service, restore_service,
+    normalize_service_item, restore_service_item,
+    normalize_source, restore_source,
+    normalize_specification, restore_specification,
+    normalize_target, restore_target
 } from "./adapter";
-
-export function writeSpecificationT(x: any, context: any = x): SpecificationT {
-    return restore_specification(x, context, _writeSpecificationT);
-}
-
-export function readSpecificationT(x: any, context: any = x): SpecificationT {
-    return normalize_specification(x, context, _readSpecificationT);
-}
-
-export function writeServiceT(x: any, context: any = x): ServiceT {
-    return restore_service(x, context, _writeServiceT);
-}
-
-export function readServiceT(x: any, context: any = x): ServiceT {
-    return normalize_service(x, context, _readServiceT);
-}
-
-export function readServiceItemT(x: any, context: any = x): ServiceItemT {
-    return normalize_service_item(x, context, _readServiceItemT);
-}
-
-export function writeServiceItemT(x: any, context: any = x): ServiceItemT {
-    return restore_service_item(x, context, _writeServiceItemT);
-}
-
-export function writeMotivationT(x: any, context: any = x): MotivationT {
-    return restore_motivation(x, context, _writeMotivationT);
-}
-
-export function readMotivationT(x: any, context: any = x): MotivationT {
-    return normalize_motivation(x, context, _readMotivationT);
-}
 
 export function writeAnnotationBodyT(x: any, context: any = x): AnnotationBodyT {
     return restore_annotation_body(x, context, _writeAnnotationBodyT);
@@ -3560,22 +3548,6 @@ export function readAnnotationTargetT(x: any, context: any = x): AnnotationTarge
     return normalize_annotation_target(x, context, _readAnnotationTargetT);
 }
 
-export function writeSelectorT(x: any, context: any = x): SelectorT {
-    return restore_selector(x, context, _writeSelectorT);
-}
-
-export function readSelectorT(x: any, context: any = x): SelectorT {
-    return normalize_selector(x, context, _readSelectorT);
-}
-
-export function writeSourceT(x: any, context: any = x): SourceT {
-    return restore_source(x, context, _writeSourceT);
-}
-
-export function readSourceT(x: any, context: any = x): SourceT {
-    return normalize_source(x, context, _readSourceT);
-}
-
 export function writeBodyT(x: any, context: any = x): BodyT {
     return restore_body(x, context, _writeBodyT);
 }
@@ -3584,76 +3556,12 @@ export function readBodyT(x: any, context: any = x): BodyT {
     return normalize_body(x, context, _readBodyT);
 }
 
-export function writeTargetT(x: any, context: any = x): TargetT {
-    return restore_target(x, context, _writeTargetT);
-}
-
-export function readTargetT(x: any, context: any = x): TargetT {
-    return normalize_target(x, context, _readTargetT);
-}
-
-export function writeFirstT(x: any, context: any = x): FirstT {
-    return restore_first(x, context, _writeFirstT);
-}
-
-export function readFirstT(x: any, context: any = x): FirstT {
-    return normalize_first(x, context, _readFirstT);
-}
-
-export function writeLabelT(x: any, context: any = x): LabelT {
-    return restore_label(x, context, _writeLabelT);
-}
-
-export function readLabelT(x: any, context: any = x): LabelT {
-    return normalize_label(x, context, _readLabelT);
-}
-
-export function writeResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
-    return restore_resource_selector(x, context, _writeResourceSelectorT);
-}
-
-export function readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
-    return normalize_resource_selector(x, context, _readResourceSelectorT);
-}
-
-export function writeRangeItemsT(x: any, context: any = x): RangeItemsT {
-    return restore_range_items(x, context, _writeRangeItemsT);
-}
-
-export function readRangeItemsT(x: any, context: any = x): RangeItemsT {
-    return normalize_range_items(x, context, _readRangeItemsT);
-}
-
-export function writeGeometryT(x: any, context: any = x): GeometryT {
-    return restore_geometry(x, context, _writeGeometryT);
-}
-
-export function readGeometryT(x: any, context: any = x): GeometryT {
-    return normalize_geometry(x, context, _readGeometryT);
-}
-
-export function writeLanguageT(x: any, context: any = x): LanguageT {
-    return restore_language(x, context, _writeLanguageT);
-}
-
-export function readLanguageT(x: any, context: any = x): LanguageT {
-    return normalize_language(x, context, _readLanguageT);
-}
-
 export function writeContextT(x: any, context: any = x): ContextT {
     return restore_context(x, context, _writeContextT);
 }
 
 export function readContextT(x: any, context: any = x): ContextT {
     return normalize_context(x, context, _readContextT);
-}
-
-export function writePartOfT(x: any, context: any = x): PartOfT {
-    return restore_part_of(x, context, _writePartOfT);
-}
-
-export function readPartOfT(x: any, context: any = x): PartOfT {
-    return normalize_part_of(x, context, _readPartOfT);
 }
 
 export function writeCreatorT(x: any, context: any = x): CreatorT {
@@ -3672,14 +3580,6 @@ export function readCreatorItemT(x: any, context: any = x): CreatorItemT {
     return normalize_creator_item(x, context, _readCreatorItemT);
 }
 
-export function writeEmailStringsT(x: any, context: any = x): EmailStringsT {
-    return restore_email_strings(x, context, _writeEmailStringsT);
-}
-
-export function readEmailStringsT(x: any, context: any = x): EmailStringsT {
-    return normalize_email_strings(x, context, _readEmailStringsT);
-}
-
 export function writeEmailSha1StringsT(x: any, context: any = x): EmailSha1StringsT {
     return restore_email_sha1_strings(x, context, _writeEmailSha1StringsT);
 }
@@ -3688,10 +3588,130 @@ export function readEmailSha1StringsT(x: any, context: any = x): EmailSha1String
     return normalize_email_sha1_strings(x, context, _readEmailSha1StringsT);
 }
 
+export function writeEmailStringsT(x: any, context: any = x): EmailStringsT {
+    return restore_email_strings(x, context, _writeEmailStringsT);
+}
+
+export function readEmailStringsT(x: any, context: any = x): EmailStringsT {
+    return normalize_email_strings(x, context, _readEmailStringsT);
+}
+
+export function writeFirstT(x: any, context: any = x): FirstT {
+    return restore_first(x, context, _writeFirstT);
+}
+
+export function readFirstT(x: any, context: any = x): FirstT {
+    return normalize_first(x, context, _readFirstT);
+}
+
+export function writeGeometryT(x: any, context: any = x): GeometryT {
+    return restore_geometry(x, context, _writeGeometryT);
+}
+
+export function readGeometryT(x: any, context: any = x): GeometryT {
+    return normalize_geometry(x, context, _readGeometryT);
+}
+
 export function writeHomepageStringsT(x: any, context: any = x): HomepageStringsT {
     return restore_homepage_strings(x, context, _writeHomepageStringsT);
 }
 
 export function readHomepageStringsT(x: any, context: any = x): HomepageStringsT {
     return normalize_homepage_strings(x, context, _readHomepageStringsT);
+}
+
+export function writeLabelT(x: any, context: any = x): LabelT {
+    return restore_label(x, context, _writeLabelT);
+}
+
+export function readLabelT(x: any, context: any = x): LabelT {
+    return normalize_label(x, context, _readLabelT);
+}
+
+export function writeLanguageT(x: any, context: any = x): LanguageT {
+    return restore_language(x, context, _writeLanguageT);
+}
+
+export function readLanguageT(x: any, context: any = x): LanguageT {
+    return normalize_language(x, context, _readLanguageT);
+}
+
+export function writeMotivationT(x: any, context: any = x): MotivationT {
+    return restore_motivation(x, context, _writeMotivationT);
+}
+
+export function readMotivationT(x: any, context: any = x): MotivationT {
+    return normalize_motivation(x, context, _readMotivationT);
+}
+
+export function writePartOfT(x: any, context: any = x): PartOfT {
+    return restore_part_of(x, context, _writePartOfT);
+}
+
+export function readPartOfT(x: any, context: any = x): PartOfT {
+    return normalize_part_of(x, context, _readPartOfT);
+}
+
+export function writeRangeItemsT(x: any, context: any = x): RangeItemsT {
+    return restore_range_items(x, context, _writeRangeItemsT);
+}
+
+export function readRangeItemsT(x: any, context: any = x): RangeItemsT {
+    return normalize_range_items(x, context, _readRangeItemsT);
+}
+
+export function writeResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
+    return restore_resource_selector(x, context, _writeResourceSelectorT);
+}
+
+export function readResourceSelectorT(x: any, context: any = x): ResourceSelectorT {
+    return normalize_resource_selector(x, context, _readResourceSelectorT);
+}
+
+export function writeSelectorT(x: any, context: any = x): SelectorT {
+    return restore_selector(x, context, _writeSelectorT);
+}
+
+export function readSelectorT(x: any, context: any = x): SelectorT {
+    return normalize_selector(x, context, _readSelectorT);
+}
+
+export function writeServiceT(x: any, context: any = x): ServiceT {
+    return restore_service(x, context, _writeServiceT);
+}
+
+export function readServiceT(x: any, context: any = x): ServiceT {
+    return normalize_service(x, context, _readServiceT);
+}
+
+export function writeServiceItemT(x: any, context: any = x): ServiceItemT {
+    return restore_service_item(x, context, _writeServiceItemT);
+}
+
+export function readServiceItemT(x: any, context: any = x): ServiceItemT {
+    return normalize_service_item(x, context, _readServiceItemT);
+}
+
+export function writeSourceT(x: any, context: any = x): SourceT {
+    return restore_source(x, context, _writeSourceT);
+}
+
+export function readSourceT(x: any, context: any = x): SourceT {
+    return normalize_source(x, context, _readSourceT);
+}
+
+export function writeSpecificationT(x: any, context: any = x): SpecificationT {
+    return restore_specification(x, context, _writeSpecificationT);
+}
+
+export function readSpecificationT(x: any, context: any = x): SpecificationT {
+    return normalize_specification(x, context, _readSpecificationT);
+}
+
+export function writeTargetT(x: any, context: any = x): TargetT {
+    return restore_target(x, context, _writeTargetT);
+}
+
+export function readTargetT(x: any, context: any = x): TargetT {
+    return normalize_target(x, context, _readTargetT);
 }

@@ -43,5 +43,8 @@ yarn.lock
 # editor
 .vscode/
 
-# test samples
-test/samples/
+# auto-downloaded IIIF Cookbook fixtures
+test/cookbook/
+
+# TypeScript build info
+*.tsbuildinfo
