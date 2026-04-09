@@ -231,4 +231,56 @@ describe('AnnotationPage iterators', () => {
     expect(result[0]).toHaveProperty('id');
     expect(result[0]).toHaveProperty('partOf');
   });
+
+  it('iterateAnnotationPageAnnotationCanvasRef yields from array targets', () => {
+    const page = {
+      id: "http://example.org/page1",
+      type: "AnnotationPage",
+      items: [
+        {
+          id: "http://example.org/anno1",
+          type: "Annotation",
+          body: "http://example.net/body1",
+          target: [
+            { id: "http://example.org/canvas1", partOf: { id: "http://example.org/m1", type: "Manifest" } },
+            { id: "http://example.org/canvas2", partOf: { id: "http://example.org/m1", type: "Manifest" } }
+          ]
+        }
+      ]
+    };
+    const m = Maniiifest.parseAnnotationPage(page);
+    const result = Array.from(m.iterateAnnotationPageAnnotationCanvasRef());
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toContain('canvas1');
+    expect(result[1].id).toContain('canvas2');
+  });
+
+  it('iterateAnnotationPageAnnotationCanvasRef skips non-canvasref targets', () => {
+    const page = {
+      id: "http://example.org/page1",
+      type: "AnnotationPage",
+      items: [
+        {
+          id: "http://example.org/anno1",
+          type: "Annotation",
+          body: "http://example.net/body1",
+          target: "http://example.org/plain-string-target"
+        }
+      ]
+    };
+    const m = Maniiifest.parseAnnotationPage(page);
+    const result = Array.from(m.iterateAnnotationPageAnnotationCanvasRef());
+    expect(result).toHaveLength(0);
+  });
+
+  it('iterateAnnotationPageAnnotationCanvasRef yields nothing for empty items', () => {
+    const page = {
+      id: "http://example.org/page1",
+      type: "AnnotationPage",
+      items: []
+    };
+    const m = Maniiifest.parseAnnotationPage(page);
+    const result = Array.from(m.iterateAnnotationPageAnnotationCanvasRef());
+    expect(result).toHaveLength(0);
+  });
 });

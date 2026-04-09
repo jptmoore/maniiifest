@@ -55,6 +55,7 @@ export class ManiiifestAnnotationCollection {
         return this.specification.total !== undefined ? F.writeTotalT(this.specification.total) : null;
     }
 
+    /** @yields {U.Annotation} Each annotation in the collection. */
     *iterateAnnotationCollectionAnnotation(): IterableIterator<U.Annotation> {
         for (const annotation of this.specification.items ?? []) {
             yield F.writeAnnotationT(annotation);

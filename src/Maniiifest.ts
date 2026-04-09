@@ -361,7 +361,7 @@ export class Maniiifest {
     /**
      * Iterates over the textual bodies of annotations in the manifest's canvases.
      *
-     * @returns {IterableIterator<U.AnnotationBodyTextualBody>} An iterator over the textual bodies of annotations.
+     * @yields {U.AnnotationBodyTextualBody} The next textual body from a canvas annotation.
      */
     *iterateManifestCanvasW3cAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.kind === 'Manifest') {
@@ -905,7 +905,7 @@ export class Maniiifest {
     /**
      * Iterates over the textual bodies of annotations in the manifest.
      *
-     * @returns {IterableIterator<U.AnnotationBodyTextualBody>} An iterator over the textual bodies of annotations.
+     * @yields {U.AnnotationBodyTextualBody} The next textual body from a manifest annotation.
      */
     *iterateManifestW3cAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.kind === 'Manifest') {

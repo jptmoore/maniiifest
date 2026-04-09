@@ -134,7 +134,10 @@ parser.getAnnotationCreated();
 parser.getAnnotationModified();
 
 for (const body of parser.iterateAnnotationTextualBody()) { /* ... */ }
+for (const body of parser.iterateAnnotationResourceBody()) { /* ... */ }
 for (const target of parser.iterateAnnotationTarget()) { /* ... */ }
+for (const feature of parser.iterateAnnotationFeature()) { /* ... */ }
+for (const coords of parser.iterateAnnotationGeometryPointCoordinates()) { /* ... */ }
 ```
 
 ### Annotation Page
@@ -147,8 +150,9 @@ parser.getAnnotationPagePartOf();
 parser.getAnnotationPageLabel();
 parser.getAnnotationPageNext();
 parser.getAnnotationPageStartIndex();
-
 for (const anno of parser.iterateAnnotationPageAnnotation()) { /* ... */ }
+for (const body of parser.iterateAnnotationPageAnnotationTextualBody()) { /* ... */ }
+for (const ref of parser.iterateAnnotationPageAnnotationCanvasRef()) { /* ... */ }
 ```
 
 ### Annotation Collection

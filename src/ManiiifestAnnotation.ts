@@ -74,6 +74,7 @@ export class ManiiifestAnnotation {
         return null;
     }
 
+    /** @yields {U.AnnotationBodyTextualBody} Each textual body from the annotation. */
     *iterateAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.body?.kind === 'Array') {
             for (const body of this.specification.body.value) {
@@ -88,6 +89,7 @@ export class ManiiifestAnnotation {
         }
     }
 
+    /** @yields {U.AnnotationBodyResource} Each resource body from the annotation. */
     *iterateAnnotationResourceBody(): IterableIterator<U.AnnotationBodyResource> {
         if (this.specification.body?.kind === 'Array') {
             for (const body of this.specification.body.value) {
@@ -102,6 +104,7 @@ export class ManiiifestAnnotation {
         }
     }
 
+    /** @yields {U.AnnotationTarget} Each target of the annotation. */
     *iterateAnnotationTarget(): IterableIterator<U.AnnotationTarget> {
         if (this.specification.target?.kind === 'Array') {
             for (const target of this.specification.target.value) {
@@ -112,6 +115,7 @@ export class ManiiifestAnnotation {
         }
     }
 
+    /** @yields {U.Feature} Each GeoJSON feature from a FeatureCollection body. */
     *iterateAnnotationFeature(): IterableIterator<U.Feature> {
         if (this.specification.body?.kind === 'Value' && this.specification.body.value.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {
@@ -120,6 +124,7 @@ export class ManiiifestAnnotation {
         }
     }
 
+    /** @yields {U.PointCoordinates} Each point coordinate pair from FeatureCollection geometry. */
     *iterateAnnotationGeometryPointCoordinates(): IterableIterator<U.PointCoordinates> {
         if (this.specification.body?.kind === 'Value' && this.specification.body.value.kind === 'FeatureCollection') {
             for (const feature of this.specification.body.value.value.features ?? []) {

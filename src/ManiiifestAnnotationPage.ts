@@ -55,12 +55,14 @@ export class ManiiifestAnnotationPage {
         return this.specification.startIndex !== undefined ? F.writeStartIndexT(this.specification.startIndex) : null;
     }
 
+    /** @yields {U.Annotation} Each annotation in the page. */
     *iterateAnnotationPageAnnotation(): IterableIterator<U.Annotation> {
         for (const annotation of this.specification.items ?? []) {
             yield F.writeAnnotationT(annotation);
         }
     }
 
+    /** @yields {U.AnnotationBodyTextualBody} Each textual body from annotations in the page. */
     *iterateAnnotationPageAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         for (const annotation of this.specification.items ?? []) {
             if (annotation.body?.kind === 'Array') {
@@ -77,6 +79,7 @@ export class ManiiifestAnnotationPage {
         }
     }
 
+    /** @yields {U.AnnotationTargetCanvasRef} Each canvas reference target from annotations in the page. */
     *iterateAnnotationPageAnnotationCanvasRef(): IterableIterator<U.AnnotationTargetCanvasRef> {
         for (const annotation of this.specification.items ?? []) {
             if (annotation.target?.kind === 'Array') {
