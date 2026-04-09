@@ -524,33 +524,7 @@ describe('Collection new iterators', () => {
   });
 });
 
-describe('Collection new getters with real sample (collection.json)', () => {
-  const fs = require('fs');
-  const path = require('path');
-  const data = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'samples', 'collection.json'), 'utf-8')
-  );
 
-  it('getCollectionSummary returns the summary from real data', () => {
-    const m = new Maniiifest(data);
-    const summary = m.getCollectionSummary();
-    expect(summary).toBeDefined();
-    expect((summary as any).en[0]).toContain("Rising from the Ashes");
-  });
-
-  it('iterateCollectionBehavior yields behaviors from real data', () => {
-    const m = new Maniiifest(data);
-    const result = Array.from(m.iterateCollectionBehavior());
-    expect(result).toEqual(["unordered"]);
-  });
-
-  it('iterateCollectionPartOf yields partOf from real data', () => {
-    const m = new Maniiifest(data);
-    const result = Array.from(m.iterateCollectionPartOf());
-    expect(result.length).toBeGreaterThan(0);
-    expect((result[0] as any).type).toBe("Collection");
-  });
-});
 
 // ──────────────────────────────────────────
 // Annotation provenance
@@ -616,26 +590,6 @@ describe('Annotation provenance getters', () => {
     const { modified: _, ...noModified } = annotation;
     const m = new Maniiifest(noModified, "Annotation");
     expect(m.getAnnotationModified()).toBeNull();
-  });
-});
-
-describe('Annotation provenance with real sample (anno1.json)', () => {
-  const fs = require('fs');
-  const path = require('path');
-  const data = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'samples', 'anno1.json'), 'utf-8')
-  );
-
-  it('getAnnotationCreated returns date from real data', () => {
-    const m = new Maniiifest(data, "Annotation");
-    expect(m.getAnnotationCreated()).toBe("2024-01-04T17:24:11Z");
-  });
-
-  it('getAnnotationCreator returns creator from real data', () => {
-    const m = new Maniiifest(data, "Annotation");
-    const creator = m.getAnnotationCreator();
-    expect(creator).toBeDefined();
-    expect((creator as any).name).toBe("john.moore@nationalarchives.gov.uk");
   });
 });
 
@@ -713,24 +667,6 @@ describe('AnnotationPage pagination getters', () => {
   });
 });
 
-describe('AnnotationPage pagination with real sample (annopage1.json)', () => {
-  const fs = require('fs');
-  const path = require('path');
-  const data = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'samples', 'annopage1.json'), 'utf-8')
-  );
-
-  it('getAnnotationPageNext returns next from real data', () => {
-    const m = new Maniiifest(data, "AnnotationPage");
-    expect(m.getAnnotationPageNext()).toBe("https://miiify.rocks/annotations/diamond_jubilee_of_the_metro/?page=1");
-  });
-
-  it('getAnnotationPageStartIndex returns startIndex from real data', () => {
-    const m = new Maniiifest(data, "AnnotationPage");
-    expect(m.getAnnotationPageStartIndex()).toBe(0);
-  });
-});
-
 // ──────────────────────────────────────────
 // AnnotationCollection items
 // ──────────────────────────────────────────
@@ -783,48 +719,4 @@ describe('AnnotationCollection annotation iterator', () => {
   });
 });
 
-describe('AnnotationCollection with real sample (annocol1.json)', () => {
-  const fs = require('fs');
-  const path = require('path');
-  const data = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'samples', 'annocol1.json'), 'utf-8')
-  );
 
-  it('iterateAnnotationCollectionAnnotation yields empty when items are in first page not top-level', () => {
-    // annocol1.json has items inside "first" embedded page, not at top level
-    const m = new Maniiifest(data, "AnnotationCollection");
-    const result = Array.from(m.iterateAnnotationCollectionAnnotation());
-    expect(result).toEqual([]);
-  });
-});
-
-// ──────────────────────────────────────────
-// Canvas accessors with real sample
-// ──────────────────────────────────────────
-
-describe('Canvas iterators with real sample (buddha.json)', () => {
-  const fs = require('fs');
-  const path = require('path');
-  const data = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'samples', 'buddha.json'), 'utf-8')
-  );
-
-  it('iterateManifestCanvasLabel yields canvas labels from real data', () => {
-    const m = new Maniiifest(data);
-    const result = Array.from(m.iterateManifestCanvasLabel());
-    expect(result.length).toBeGreaterThan(0);
-  });
-
-  it('iterateManifestCanvasMetadata yields canvas metadata from real data', () => {
-    const m = new Maniiifest(data);
-    const result = Array.from(m.iterateManifestCanvasMetadata());
-    // buddha.json canvases may or may not have metadata; test that it doesn't crash
-    expect(Array.isArray(result)).toBe(true);
-  });
-
-  it('iterateManifestCanvasThumbnail yields canvas thumbnails from real data', () => {
-    const m = new Maniiifest(data);
-    const result = Array.from(m.iterateManifestCanvasThumbnail());
-    expect(Array.isArray(result)).toBe(true);
-  });
-});

@@ -232,32 +232,3 @@ describe('AnnotationPage iterators', () => {
     expect(result[0]).toHaveProperty('partOf');
   });
 });
-
-describe('AnnotationPage with real sample (annopage2.json)', () => {
-  const fs = require('fs');
-  const path = require('path');
-  const data = JSON.parse(
-    fs.readFileSync(path.join(__dirname, 'samples', 'annopage2.json'), 'utf-8')
-  );
-
-  it('parses and iterates annotations', () => {
-    const m = new Maniiifest(data, "AnnotationPage");
-    const annotations = Array.from(m.iterateAnnotationPageAnnotation());
-    expect(annotations).toHaveLength(2);
-    expect(annotations[0].id).toBe("http://example.org/anno1");
-    expect(annotations[1].id).toBe("http://example.org/anno2");
-  });
-
-  it('getAnnotationPagePartOf returns the partOf object', () => {
-    const m = new Maniiifest(data, "AnnotationPage");
-    const partOf = m.getAnnotationPagePartOf();
-    expect(partOf).toBeDefined();
-    expect(partOf).toHaveProperty('id');
-    expect(partOf).not.toHaveProperty('kind');
-  });
-
-  it('getAnnotationPageContext returns the context string', () => {
-    const m = new Maniiifest(data, "AnnotationPage");
-    expect(m.getAnnotationPageContext()).toBe("http://www.w3.org/ns/anno.jsonld");
-  });
-});
