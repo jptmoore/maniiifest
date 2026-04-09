@@ -1,4 +1,5 @@
 import { Maniiifest } from '../src/Maniiifest';
+import { ManiiifestAnnotation } from '../src/ManiiifestAnnotation';
 
 describe('Annotation getters', () => {
 
@@ -16,7 +17,7 @@ describe('Annotation getters', () => {
   };
 
   it('getAnnotation returns a well-formed Annotation', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const result = m.getAnnotation();
     expect(result).toBeDefined();
     expect(result!.id).toBe("http://example.org/anno7");
@@ -24,17 +25,17 @@ describe('Annotation getters', () => {
   });
 
   it('getAnnotationId returns the id', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     expect(m.getAnnotationId()).toBe("http://example.org/anno7");
   });
 
   it('getAnnotationType returns the type', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     expect(m.getAnnotationType()).toBe("Annotation");
   });
 
   it('getAnnotationContext returns string (polymorphic unwrap)', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const ctx = m.getAnnotationContext();
     expect(typeof ctx).toBe('string');
     expect(ctx).toBe("http://www.w3.org/ns/anno.jsonld");
@@ -42,12 +43,12 @@ describe('Annotation getters', () => {
 
   it('getAnnotationContext returns null when absent', () => {
     const { "@context": _, ...noCtx } = annotation;
-    const m = new Maniiifest(noCtx, "Annotation");
+    const m = Maniiifest.parseAnnotation(noCtx);
     expect(m.getAnnotationContext()).toBeNull();
   });
 
   it('getAnnotationBody returns the body object (polymorphic unwrap)', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const body = m.getAnnotationBody();
     expect(body).toEqual({
       type: "TextualBody",
@@ -58,15 +59,15 @@ describe('Annotation getters', () => {
   });
 
   it('getAnnotationBody returns string when body is a URI', () => {
-    const m = new Maniiifest({
+    const m = Maniiifest.parseAnnotation({
       ...annotation,
       body: "http://example.net/comment1"
-    }, "Annotation");
+    });
     expect(m.getAnnotationBody()).toBe("http://example.net/comment1");
   });
 
   it('getAnnotationTarget returns string for URI target', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     expect(m.getAnnotationTarget()).toBe("http://example.org/target1");
   });
 
@@ -79,20 +80,20 @@ describe('Annotation getters', () => {
         selector: { type: "FragmentSelector", value: "xywh=0,0,100,100" }
       }
     };
-    const m = new Maniiifest(specificTarget, "Annotation");
+    const m = Maniiifest.parseAnnotation(specificTarget);
     const target = m.getAnnotationTarget();
     expect(target).toBeDefined();
     expect(typeof target).toBe('object');
   });
 
   it('getAnnotationMotivation returns the motivation', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     expect(m.getAnnotationMotivation()).toBe("commenting");
   });
 
   it('getAnnotationMotivation returns null when absent', () => {
     const { motivation: _, ...noMotivation } = annotation;
-    const m = new Maniiifest(noMotivation, "Annotation");
+    const m = Maniiifest.parseAnnotation(noMotivation);
     expect(m.getAnnotationMotivation()).toBeNull();
   });
 });
@@ -110,7 +111,7 @@ describe('Annotation body iterators', () => {
       },
       target: "http://example.org/target1"
     };
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const result = Array.from(m.iterateAnnotationTextualBody());
     expect(result).toHaveLength(1);
     expect(result[0].value).toBe("Hello");
@@ -127,7 +128,7 @@ describe('Annotation body iterators', () => {
       ],
       target: "http://example.org/target1"
     };
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const result = Array.from(m.iterateAnnotationTextualBody());
     expect(result).toHaveLength(2);
     expect(result[0].value).toBe("First");
@@ -145,7 +146,7 @@ describe('Annotation body iterators', () => {
       },
       target: "http://example.org/target1"
     };
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const result = Array.from(m.iterateAnnotationResourceBody());
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe("http://example.org/image.jpg");
@@ -162,7 +163,7 @@ describe('Annotation target iterators', () => {
       body: "http://example.net/body1",
       target: "http://example.org/target1"
     };
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const result = Array.from(m.iterateAnnotationTarget());
     expect(result).toHaveLength(1);
     expect(result[0]).toBe("http://example.org/target1");
@@ -179,7 +180,7 @@ describe('Annotation target iterators', () => {
         selector: { type: "FragmentSelector", value: "xywh=0,0,100,100" }
       }
     };
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const result = Array.from(m.iterateAnnotationTarget());
     expect(result).toHaveLength(1);
     expect(result[0]).not.toHaveProperty('kind');
@@ -195,7 +196,7 @@ describe('Annotation target iterators', () => {
         "http://example.org/target2"
       ]
     };
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const result = Array.from(m.iterateAnnotationTarget());
     expect(result).toHaveLength(2);
   });

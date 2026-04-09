@@ -1,4 +1,7 @@
 import { Maniiifest } from '../src/Maniiifest';
+import { ManiiifestAnnotation } from '../src/ManiiifestAnnotation';
+import { ManiiifestAnnotationPage } from '../src/ManiiifestAnnotationPage';
+import { ManiiifestAnnotationCollection } from '../src/ManiiifestAnnotationCollection';
 
 /**
  * Cross-cutting tests for:
@@ -9,32 +12,46 @@ import { Maniiifest } from '../src/Maniiifest';
  */
 
 describe('Constructor validation', () => {
-  it('throws on unsupported type argument', () => {
-    expect(() => new Maniiifest({}, "InvalidType" as any)).toThrow('Unsupported type');
-  });
-
-  it('accepts undefined type for Manifest/Collection', () => {
+  it('accepts Manifest data', () => {
     expect(() => new Maniiifest({
       id: "x", type: "Manifest", label: { en: ["M"] }
     })).not.toThrow();
   });
 
-  it('accepts "Annotation" type', () => {
-    expect(() => new Maniiifest({
+  it('accepts Annotation data via static method', () => {
+    expect(() => Maniiifest.parseAnnotation({
       id: "x", type: "Annotation", body: "y", target: "z"
-    }, "Annotation")).not.toThrow();
+    })).not.toThrow();
   });
 
-  it('accepts "AnnotationPage" type', () => {
-    expect(() => new Maniiifest({
+  it('accepts AnnotationPage data via static method', () => {
+    expect(() => Maniiifest.parseAnnotationPage({
       id: "x", type: "AnnotationPage", items: []
-    }, "AnnotationPage")).not.toThrow();
+    })).not.toThrow();
   });
 
-  it('accepts "AnnotationCollection" type', () => {
-    expect(() => new Maniiifest({
+  it('accepts AnnotationCollection data via static method', () => {
+    expect(() => Maniiifest.parseAnnotationCollection({
       id: "x", type: "AnnotationCollection", label: "L", total: 0
-    }, "AnnotationCollection")).not.toThrow();
+    })).not.toThrow();
+  });
+
+  it('accepts Annotation data via direct constructor', () => {
+    expect(() => new ManiiifestAnnotation({
+      id: "x", type: "Annotation", body: "y", target: "z"
+    })).not.toThrow();
+  });
+
+  it('accepts AnnotationPage data via direct constructor', () => {
+    expect(() => new ManiiifestAnnotationPage({
+      id: "x", type: "AnnotationPage", items: []
+    })).not.toThrow();
+  });
+
+  it('accepts AnnotationCollection data via direct constructor', () => {
+    expect(() => new ManiiifestAnnotationCollection({
+      id: "x", type: "AnnotationCollection", label: "L", total: 0
+    })).not.toThrow();
   });
 });
 
@@ -44,19 +61,15 @@ describe('Constructor error handling', () => {
   });
 
   it('wraps parse errors with descriptive message for Annotation', () => {
-    expect(() => new Maniiifest(null, "Annotation")).toThrow(/Failed to parse IIIF data as Annotation/);
+    expect(() => Maniiifest.parseAnnotation(null)).toThrow(/Failed to parse IIIF data as Annotation/);
   });
 
   it('wraps parse errors with descriptive message for AnnotationPage', () => {
-    expect(() => new Maniiifest(null, "AnnotationPage")).toThrow(/Failed to parse IIIF data as AnnotationPage/);
+    expect(() => Maniiifest.parseAnnotationPage(null)).toThrow(/Failed to parse IIIF data as AnnotationPage/);
   });
 
   it('wraps parse errors with descriptive message for AnnotationCollection', () => {
-    expect(() => new Maniiifest(null, "AnnotationCollection")).toThrow(/Failed to parse IIIF data as AnnotationCollection/);
-  });
-
-  it('preserves unsupported type error without wrapping', () => {
-    expect(() => new Maniiifest({}, "BadType" as any)).toThrow('Unsupported type: BadType');
+    expect(() => Maniiifest.parseAnnotationCollection(null)).toThrow(/Failed to parse IIIF data as AnnotationCollection/);
   });
 
   it('wraps errors when data is a non-object primitive', () => {

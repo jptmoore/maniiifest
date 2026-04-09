@@ -31,16 +31,26 @@ for (const manifest of parser.iterateCollectionManifest()) {
 
 ## Constructor
 
-The constructor accepts any IIIF JSON object. Pass an optional second argument to tell the parser what kind of resource it is:
+The `Maniiifest` constructor parses IIIF Manifests and Collections:
 
 ```typescript
-// Manifests and collections are detected automatically
 const parser = new Maniiifest(data);
+```
 
-// For W3C annotation types, specify the type explicitly
-const annotationParser = new Maniiifest(data, 'Annotation');
-const pageParser = new Maniiifest(data, 'AnnotationPage');
-const collectionParser = new Maniiifest(data, 'AnnotationCollection');
+For W3C annotation types, use the dedicated static methods or classes:
+
+```typescript
+import { Maniiifest, ManiiifestAnnotation, ManiiifestAnnotationPage, ManiiifestAnnotationCollection } from 'maniiifest';
+
+// Via static factory methods
+const annotation = Maniiifest.parseAnnotation(data);
+const page = Maniiifest.parseAnnotationPage(data);
+const collection = Maniiifest.parseAnnotationCollection(data);
+
+// Or via direct constructors
+const annotation = new ManiiifestAnnotation(data);
+const page = new ManiiifestAnnotationPage(data);
+const collection = new ManiiifestAnnotationCollection(data);
 ```
 
 ## Getters and iterators
@@ -113,7 +123,7 @@ for (const partOf of parser.iterateCollectionPartOf()) { /* ... */ }
 ### Annotation
 
 ```typescript
-const parser = new Maniiifest(annotation, 'Annotation');
+const parser = Maniiifest.parseAnnotation(annotation);
 
 parser.getAnnotationId();
 parser.getAnnotationBody();
@@ -130,7 +140,7 @@ for (const target of parser.iterateAnnotationTarget()) { /* ... */ }
 ### Annotation Page
 
 ```typescript
-const parser = new Maniiifest(page, 'AnnotationPage');
+const parser = Maniiifest.parseAnnotationPage(page);
 
 parser.getAnnotationPageId();
 parser.getAnnotationPagePartOf();
@@ -144,7 +154,7 @@ for (const anno of parser.iterateAnnotationPageAnnotation()) { /* ... */ }
 ### Annotation Collection
 
 ```typescript
-const parser = new Maniiifest(collection, 'AnnotationCollection');
+const parser = Maniiifest.parseAnnotationCollection(collection);
 
 parser.getAnnotationCollectionId();
 parser.getAnnotationCollectionLabel();

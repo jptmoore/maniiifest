@@ -1,4 +1,6 @@
 import { Maniiifest } from '../src/Maniiifest';
+import { ManiiifestAnnotationCollection } from '../src/ManiiifestAnnotationCollection';
+import { ManiiifestAnnotationPage } from '../src/ManiiifestAnnotationPage';
 
 describe('AnnotationCollection getters', () => {
 
@@ -14,7 +16,7 @@ describe('AnnotationCollection getters', () => {
   };
 
   it('getAnnotationCollection returns a well-formed AnnotationCollection', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     const result = m.getAnnotationCollection();
     expect(result).toBeDefined();
     expect(result!.id).toBe("http://example.org/collection1");
@@ -22,17 +24,17 @@ describe('AnnotationCollection getters', () => {
   });
 
   it('getAnnotationCollectionId returns the id', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     expect(m.getAnnotationCollectionId()).toBe("http://example.org/collection1");
   });
 
   it('getAnnotationCollectionType returns the type', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     expect(m.getAnnotationCollectionType()).toBe("AnnotationCollection");
   });
 
   it('getAnnotationCollectionContext returns string (polymorphic unwrap)', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     const ctx = m.getAnnotationCollectionContext();
     expect(typeof ctx).toBe('string');
     expect(ctx).toBe("http://www.w3.org/ns/anno.jsonld");
@@ -40,12 +42,12 @@ describe('AnnotationCollection getters', () => {
 
   it('getAnnotationCollectionContext returns null when absent', () => {
     const { "@context": _, ...noCtx } = annotationCollection;
-    const m = new Maniiifest(noCtx, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(noCtx);
     expect(m.getAnnotationCollectionContext()).toBeNull();
   });
 
   it('getAnnotationCollectionLabel returns string label', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     expect(m.getAnnotationCollectionLabel()).toBe("Steampunk Annotations");
   });
 
@@ -54,26 +56,26 @@ describe('AnnotationCollection getters', () => {
       ...annotationCollection,
       label: { en: ["English Label"] }
     };
-    const m = new Maniiifest(withStructuredLabel, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(withStructuredLabel);
     const label = m.getAnnotationCollectionLabel();
     expect(label).toEqual({ en: ["English Label"] });
     expect(label).not.toHaveProperty('kind');
   });
 
   it('getAnnotationCollectionTotal returns the total', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     expect(m.getAnnotationCollectionTotal()).toBe(42023);
   });
 
   it('getAnnotationCollectionFirst returns the first URI (polymorphic unwrap)', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     const first = m.getAnnotationCollectionFirst();
     expect(typeof first).toBe('string');
     expect(first).toBe("http://example.org/page1");
   });
 
   it('getAnnotationCollectionLast returns the last URI', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     expect(m.getAnnotationCollectionLast()).toBe("http://example.org/page42");
   });
 });
@@ -108,7 +110,7 @@ describe('AnnotationPage getters', () => {
   };
 
   it('getAnnotationPage returns a well-formed AnnotationPage', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     const result = m.getAnnotationPage();
     expect(result).toBeDefined();
     expect(result!.id).toBe("http://example.org/page1");
@@ -116,17 +118,17 @@ describe('AnnotationPage getters', () => {
   });
 
   it('getAnnotationPageId returns the id', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     expect(m.getAnnotationPageId()).toBe("http://example.org/page1");
   });
 
   it('getAnnotationPageType returns the type', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     expect(m.getAnnotationPageType()).toBe("AnnotationPage");
   });
 
   it('getAnnotationPageContext returns string (polymorphic unwrap)', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     const ctx = m.getAnnotationPageContext();
     expect(typeof ctx).toBe('string');
     expect(ctx).toBe("http://www.w3.org/ns/anno.jsonld");
@@ -134,12 +136,12 @@ describe('AnnotationPage getters', () => {
 
   it('getAnnotationPageContext returns null when absent', () => {
     const { "@context": _, ...noCtx } = annotationPage;
-    const m = new Maniiifest(noCtx, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(noCtx);
     expect(m.getAnnotationPageContext()).toBeNull();
   });
 
   it('getAnnotationPagePartOf returns plain object (polymorphic unwrap)', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     const partOf = m.getAnnotationPagePartOf();
     expect(partOf).toEqual({
       id: "http://example.org/collection1",
@@ -173,7 +175,7 @@ describe('AnnotationPage iterators', () => {
   };
 
   it('iterateAnnotationPageAnnotation yields annotations', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     const result = Array.from(m.iterateAnnotationPageAnnotation());
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe("http://example.org/anno1");
@@ -182,7 +184,7 @@ describe('AnnotationPage iterators', () => {
 
   it('iterateAnnotationPageAnnotation yields empty when no items', () => {
     const empty = { ...annotationPage, items: undefined };
-    const m = new Maniiifest(empty, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(empty);
     expect(Array.from(m.iterateAnnotationPageAnnotation())).toEqual([]);
   });
 
@@ -199,7 +201,7 @@ describe('AnnotationPage iterators', () => {
         }
       ]
     };
-    const m = new Maniiifest(page, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(page);
     const result = Array.from(m.iterateAnnotationPageAnnotationTextualBody());
     expect(result).toHaveLength(1);
     expect(result[0].value).toBe("Comment 1");
@@ -225,7 +227,7 @@ describe('AnnotationPage iterators', () => {
         }
       ]
     };
-    const m = new Maniiifest(page, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(page);
     const result = Array.from(m.iterateAnnotationPageAnnotationPartOf());
     expect(result).toHaveLength(1);
     expect(result[0]).toHaveProperty('id');

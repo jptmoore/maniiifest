@@ -551,7 +551,7 @@ describe('Annotation provenance getters', () => {
   };
 
   it('getAnnotationCreator returns the creator object', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     const creator = m.getAnnotationCreator();
     expect(creator).toBeDefined();
     expect((creator as any).name).toBe("john.moore@example.org");
@@ -559,36 +559,36 @@ describe('Annotation provenance getters', () => {
 
   it('getAnnotationCreator returns string when creator is a ref', () => {
     const withRef = { ...annotation, creator: "http://example.org/user/1" };
-    const m = new Maniiifest(withRef, "Annotation");
+    const m = Maniiifest.parseAnnotation(withRef);
     const creator = m.getAnnotationCreator();
     expect(creator).toBe("http://example.org/user/1");
   });
 
   it('getAnnotationCreator returns null when absent', () => {
     const { creator: _, ...noCreator } = annotation;
-    const m = new Maniiifest(noCreator, "Annotation");
+    const m = Maniiifest.parseAnnotation(noCreator);
     expect(m.getAnnotationCreator()).toBeNull();
   });
 
   it('getAnnotationCreated returns the created date', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     expect(m.getAnnotationCreated()).toBe("2024-01-04T17:24:11Z");
   });
 
   it('getAnnotationCreated returns null when absent', () => {
     const { created: _, ...noCreated } = annotation;
-    const m = new Maniiifest(noCreated, "Annotation");
+    const m = Maniiifest.parseAnnotation(noCreated);
     expect(m.getAnnotationCreated()).toBeNull();
   });
 
   it('getAnnotationModified returns the modified date', () => {
-    const m = new Maniiifest(annotation, "Annotation");
+    const m = Maniiifest.parseAnnotation(annotation);
     expect(m.getAnnotationModified()).toBe("2024-06-15T10:00:00Z");
   });
 
   it('getAnnotationModified returns null when absent', () => {
     const { modified: _, ...noModified } = annotation;
-    const m = new Maniiifest(noModified, "Annotation");
+    const m = Maniiifest.parseAnnotation(noModified);
     expect(m.getAnnotationModified()).toBeNull();
   });
 });
@@ -622,47 +622,47 @@ describe('AnnotationPage pagination getters', () => {
   };
 
   it('getAnnotationPageLabel returns the label', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     expect(m.getAnnotationPageLabel()).toEqual({ en: ["Page 1 of Results"] });
   });
 
   it('getAnnotationPageLabel returns string for plain label', () => {
     const withPlain = { ...annotationPage, label: "Page 1" };
-    const m = new Maniiifest(withPlain, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(withPlain);
     expect(m.getAnnotationPageLabel()).toBe("Page 1");
   });
 
   it('getAnnotationPageLabel returns null when absent', () => {
     const { label: _, ...noLabel } = annotationPage;
-    const m = new Maniiifest(noLabel, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(noLabel);
     expect(m.getAnnotationPageLabel()).toBeNull();
   });
 
   it('getAnnotationPageNext returns the next URI', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     expect(m.getAnnotationPageNext()).toBe("http://example.org/page2");
   });
 
   it('getAnnotationPageNext returns null when absent', () => {
     const { next: _, ...noNext } = annotationPage;
-    const m = new Maniiifest(noNext, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(noNext);
     expect(m.getAnnotationPageNext()).toBeNull();
   });
 
   it('getAnnotationPageStartIndex returns the start index', () => {
-    const m = new Maniiifest(annotationPage, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(annotationPage);
     expect(m.getAnnotationPageStartIndex()).toBe(0);
   });
 
   it('getAnnotationPageStartIndex returns non-zero index', () => {
     const page2 = { ...annotationPage, startIndex: 100 };
-    const m = new Maniiifest(page2, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(page2);
     expect(m.getAnnotationPageStartIndex()).toBe(100);
   });
 
   it('getAnnotationPageStartIndex returns null when absent', () => {
     const { startIndex: _, ...noIdx } = annotationPage;
-    const m = new Maniiifest(noIdx, "AnnotationPage");
+    const m = Maniiifest.parseAnnotationPage(noIdx);
     expect(m.getAnnotationPageStartIndex()).toBeNull();
   });
 });
@@ -696,7 +696,7 @@ describe('AnnotationCollection annotation iterator', () => {
   };
 
   it('iterateAnnotationCollectionAnnotation yields annotations', () => {
-    const m = new Maniiifest(annotationCollection, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(annotationCollection);
     const result = Array.from(m.iterateAnnotationCollectionAnnotation());
     expect(result).toHaveLength(2);
     expect(result[0].id).toBe("http://example.org/anno1");
@@ -705,18 +705,10 @@ describe('AnnotationCollection annotation iterator', () => {
 
   it('iterateAnnotationCollectionAnnotation yields empty when no items', () => {
     const empty = { ...annotationCollection, items: undefined };
-    const m = new Maniiifest(empty, "AnnotationCollection");
+    const m = Maniiifest.parseAnnotationCollection(empty);
     expect(Array.from(m.iterateAnnotationCollectionAnnotation())).toEqual([]);
   });
 
-  it('iterateAnnotationCollectionAnnotation yields empty for wrong type', () => {
-    const page = {
-      id: "p1", type: "AnnotationPage",
-      items: [{ id: "a1", type: "Annotation", body: "b", target: "t" }]
-    };
-    const m = new Maniiifest(page, "AnnotationPage");
-    expect(Array.from(m.iterateAnnotationCollectionAnnotation())).toEqual([]);
-  });
 });
 
 

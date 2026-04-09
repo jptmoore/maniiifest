@@ -7,7 +7,7 @@ async function fetchJson(url: string) {
 
 async function processAnnotationPage(annotationPageUrl: string) {
     const jsonData = await fetchJson(annotationPageUrl);
-    const parser = new Maniiifest(jsonData, "AnnotationPage");
+    const parser = Maniiifest.parseAnnotationPage(jsonData);
     const textualBodies = parser.iterateAnnotationPageAnnotationTextualBody();
     for (const text of textualBodies) {
         console.log(text.value);
