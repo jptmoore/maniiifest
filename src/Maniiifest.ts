@@ -69,6 +69,31 @@ export class Maniiifest {
     }
 
     /**
+     * Recursively traverses all Collection nodes in the tree, yielding
+     * whatever the extract callback produces for each collection value.
+     */
+    private *traverseCollections<T>(
+        extract: (collectionValue: any) => IterableIterator<T>
+    ): IterableIterator<T> {
+        if (this.specification.kind !== 'Collection') return;
+        yield* extract(this.specification.value);
+        const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<T> {
+            if (!items) return;
+            for (const item of items) {
+                if (item.kind === 'Collection') {
+                    yield* extract(item.value);
+                    if (item.value.items) {
+                        yield* traverse(item.value.items);
+                    }
+                }
+            }
+        };
+        if (this.specification.value.items) {
+            yield* traverse(this.specification.value.items);
+        }
+    }
+
+    /**
      * Retrieves the type of the manifest specification.
      *
      * @returns {string} The type of the manifest specification.
@@ -697,23 +722,9 @@ export class Maniiifest {
      * @yields {U.Collection} The next collection item in the specification.
      */
     *iterateCollectionCollection(): IterableIterator<U.Collection> {
-        if (this.specification.kind === 'Collection') {
-            yield F.writeCollectionT(this.specification.value);
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Collection> {
-                if (!items) return; // Handle case where items might not exist
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        yield F.writeCollectionT(item.value);
-                        if (item.value.items) { // Check if items exist before recursion
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) { // Check if items exist before starting traversal
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        yield* this.traverseCollections(function* (col) {
+            yield F.writeCollectionT(col);
+        });
     }
 
     /**
@@ -749,23 +760,9 @@ export class Maniiifest {
      * @yields {U.Label} The next label item in the collection.
      */
     *iterateCollectionLabel(): IterableIterator<U.Label> {
-        if (this.specification.kind === 'Collection') {
-            yield F.writeLabelT(this.specification.value.label) as unknown as U.Label;
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Label> {
-                if (!items) return; // Handle case where items might not exist
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        yield F.writeLabelT(item.value.label) as unknown as U.Label;
-                        if (item.value.items) { // Check if items exist before recursion
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) { // Check if items exist before starting traversal
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        yield* this.traverseCollections(function* (col) {
+            yield F.writeLabelT(col.label) as unknown as U.Label;
+        });
     }
 
     /**
@@ -776,27 +773,11 @@ export class Maniiifest {
      * @yields {U.Thumbnail} The next thumbnail item in the collection.
      */
     *iterateCollectionThumbnail(): IterableIterator<U.Thumbnail> {
-        if (this.specification.kind === 'Collection') {
-            for (const thumbnail of this.specification.value.thumbnail ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const thumbnail of col.thumbnail ?? []) {
                 yield F.writeThumbnailT(thumbnail);
             }
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Thumbnail> {
-                if (!items) return; // Handle case where items might not exist
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        for (const thumbnail of item.value.thumbnail ?? []) {
-                            yield F.writeThumbnailT(thumbnail);
-                        }
-                        if (item.value.items) { // Check if items exist before recursion
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) { // Check if items exist before starting traversal
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     /**
@@ -807,27 +788,11 @@ export class Maniiifest {
      * @yields {U.Metadata} The next metadata item in the collection.
      */
     *iterateCollectionMetadata(): IterableIterator<U.Metadata> {
-        if (this.specification.kind === 'Collection') {
-            for (const metadata of this.specification.value.metadata ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const metadata of col.metadata ?? []) {
                 yield F.writeMetadataT(metadata);
             }
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Metadata> {
-                if (!items) return; // Handle case where items might not exist
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        for (const metadata of item.value.metadata ?? []) {
-                            yield F.writeMetadataT(metadata);
-                        }
-                        if (item.value.items) { // Check if items exist before recursion
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) { // Check if items exist before starting traversal
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     /**
@@ -838,32 +803,11 @@ export class Maniiifest {
      * @yields {U.Provider} The next provider item in the collection.
      */
     *iterateCollectionProvider(): IterableIterator<U.Provider> {
-        if (this.specification.kind === 'Collection') {
-            // Yield providers from the top-level collection
-            for (const provider of this.specification.value.provider ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const provider of col.provider ?? []) {
                 yield F.writeProviderT(provider);
             }
-            // Define a recursive generator function to traverse nested collections
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Provider> {
-                if (!items) return; // Handle case where items might not exist
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        // Yield providers from nested collections
-                        for (const provider of item.value.provider ?? []) {
-                            yield F.writeProviderT(provider);
-                        }
-                        // Recursively traverse nested collections
-                        if (item.value.items) {
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            // Start traversal if there are nested items
-            if (this.specification.value.items) {
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     /**
@@ -874,32 +818,11 @@ export class Maniiifest {
      * @yields {U.Homepage} The next homepage item in the collection.
      */
     *iterateCollectionHomepage(): IterableIterator<U.Homepage> {
-        if (this.specification.kind === 'Collection') {
-            // Yield homepages from the top-level collection
-            for (const homepage of this.specification.value.homepage ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const homepage of col.homepage ?? []) {
                 yield F.writeHomepageT(homepage);
             }
-            // Define a recursive generator function to traverse nested collections
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Homepage> {
-                if (!items) return; // Handle case where items might not exist
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        // Yield homepages from nested collections
-                        for (const homepage of item.value.homepage ?? []) {
-                            yield F.writeHomepageT(homepage);
-                        }
-                        // Recursively traverse nested collections
-                        if (item.value.items) {
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            // Start traversal if there are nested items
-            if (this.specification.value.items) {
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     /**
@@ -910,24 +833,10 @@ export class Maniiifest {
      * @yields {U.ServiceItem} The next service item in the collection.
      */
     *iterateCollectionService(): IterableIterator<U.ServiceItem> {
-        if (this.specification.kind === 'Collection') {
-            yield* this.yieldServiceItems(this.specification.value.service);
-            const self = this;
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.ServiceItem> {
-                if (!items) return;
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        yield* self.yieldServiceItems(item.value.service);
-                        if (item.value.items) {
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) {
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        const self = this;
+        yield* this.traverseCollections(function* (col) {
+            yield* self.yieldServiceItems(col.service);
+        });
     }
 
 
@@ -1663,27 +1572,11 @@ export class Maniiifest {
      * @yields {U.Rendering} The next rendering element in the collection.
      */
     *iterateCollectionRendering(): IterableIterator<U.Rendering> {
-        if (this.specification.kind === 'Collection') {
-            for (const rendering of this.specification.value.rendering ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const rendering of col.rendering ?? []) {
                 yield F.writeRenderingT(rendering);
             }
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Rendering> {
-                if (!items) return;
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        for (const rendering of item.value.rendering ?? []) {
-                            yield F.writeRenderingT(rendering);
-                        }
-                        if (item.value.items) {
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) {
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     /**
@@ -1692,27 +1585,11 @@ export class Maniiifest {
      * @yields {U.SeeAlso} The next seeAlso element in the collection.
      */
     *iterateCollectionSeeAlso(): IterableIterator<U.SeeAlso> {
-        if (this.specification.kind === 'Collection') {
-            for (const seeAlso of this.specification.value.seeAlso ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const seeAlso of col.seeAlso ?? []) {
                 yield F.writeSeeAlsoT(seeAlso);
             }
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.SeeAlso> {
-                if (!items) return;
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        for (const seeAlso of item.value.seeAlso ?? []) {
-                            yield F.writeSeeAlsoT(seeAlso);
-                        }
-                        if (item.value.items) {
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) {
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     /**
@@ -1721,27 +1598,11 @@ export class Maniiifest {
      * @yields {U.Behavior} The next behavior element in the collection.
      */
     *iterateCollectionBehavior(): IterableIterator<U.Behavior> {
-        if (this.specification.kind === 'Collection') {
-            for (const behavior of this.specification.value.behavior ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const behavior of col.behavior ?? []) {
                 yield F.writeBehaviorT(behavior);
             }
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.Behavior> {
-                if (!items) return;
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        for (const behavior of item.value.behavior ?? []) {
-                            yield F.writeBehaviorT(behavior);
-                        }
-                        if (item.value.items) {
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) {
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     /**
@@ -1750,27 +1611,11 @@ export class Maniiifest {
      * @yields {U.PartOf} The next partOf element in the collection.
      */
     *iterateCollectionPartOf(): IterableIterator<U.PartOf> {
-        if (this.specification.kind === 'Collection') {
-            for (const partOf of this.specification.value.partOf ?? []) {
+        yield* this.traverseCollections(function* (col) {
+            for (const partOf of col.partOf ?? []) {
                 yield F.writePartOfT(partOf) as unknown as U.PartOf;
             }
-            const traverse = function* (items?: Array<{ kind: string; value: any }>): IterableIterator<U.PartOf> {
-                if (!items) return;
-                for (const item of items) {
-                    if (item.kind === 'Collection') {
-                        for (const partOf of item.value.partOf ?? []) {
-                            yield F.writePartOfT(partOf) as unknown as U.PartOf;
-                        }
-                        if (item.value.items) {
-                            yield* traverse(item.value.items);
-                        }
-                    }
-                }
-            };
-            if (this.specification.value.items) {
-                yield* traverse(this.specification.value.items);
-            }
-        }
+        });
     }
 
     // ──────────────────────────────────────────
