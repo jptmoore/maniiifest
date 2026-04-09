@@ -7,62 +7,62 @@ import type * as U from "./iiif-types";
  * Create via `Maniiifest.parseAnnotationPage(data)` or `new ManiiifestAnnotationPage(data)`.
  */
 export class ManiiifestAnnotationPage {
-    private spec: F.AnnotationPageT;
+    private specification: F.AnnotationPageT;
 
     constructor(data: any) {
         try {
-            this.spec = F.readAnnotationPageT(data);
+            this.specification = F.readAnnotationPageT(data);
         } catch (error) {
             throw new Error(`Failed to parse IIIF data as AnnotationPage: ${error instanceof Error ? error.message : String(error)}`);
         }
     }
 
     getAnnotationPage(): U.AnnotationPage {
-        return F.writeAnnotationPageT(this.spec);
+        return F.writeAnnotationPageT(this.specification);
     }
 
     getAnnotationPageId(): U.Id | null {
-        return this.spec.id !== undefined ? F.writeIdT(this.spec.id) : null;
+        return this.specification.id !== undefined ? F.writeIdT(this.specification.id) : null;
     }
 
     getAnnotationPageType(): U.Type {
-        return F.writeTypeT(this.spec.type);
+        return F.writeTypeT(this.specification.type);
     }
 
     getAnnotationPageContext(): U.Context | null {
-        return this.spec.context !== undefined
-            ? F.writeContextT(this.spec.context) as unknown as U.Context
+        return this.specification.context !== undefined
+            ? F.writeContextT(this.specification.context) as unknown as U.Context
             : null;
     }
 
     getAnnotationPagePartOf(): U.PartOf | null {
-        return this.spec.partOf !== undefined
-            ? F.writePartOfT(this.spec.partOf) as unknown as U.PartOf
+        return this.specification.partOf !== undefined
+            ? F.writePartOfT(this.specification.partOf) as unknown as U.PartOf
             : null;
     }
 
     getAnnotationPageLabel(): U.Label | null {
-        return this.spec.label !== undefined
-            ? F.writeLabelT(this.spec.label) as unknown as U.Label
+        return this.specification.label !== undefined
+            ? F.writeLabelT(this.specification.label) as unknown as U.Label
             : null;
     }
 
     getAnnotationPageNext(): U.Next | null {
-        return this.spec.next !== undefined ? F.writeNextT(this.spec.next) : null;
+        return this.specification.next !== undefined ? F.writeNextT(this.specification.next) : null;
     }
 
     getAnnotationPageStartIndex(): U.StartIndex | null {
-        return this.spec.startIndex !== undefined ? F.writeStartIndexT(this.spec.startIndex) : null;
+        return this.specification.startIndex !== undefined ? F.writeStartIndexT(this.specification.startIndex) : null;
     }
 
     *iterateAnnotationPageAnnotation(): IterableIterator<U.Annotation> {
-        for (const annotation of this.spec.items ?? []) {
+        for (const annotation of this.specification.items ?? []) {
             yield F.writeAnnotationT(annotation);
         }
     }
 
     *iterateAnnotationPageAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
-        for (const annotation of this.spec.items ?? []) {
+        for (const annotation of this.specification.items ?? []) {
             if (annotation.body?.kind === 'Array') {
                 for (const body of annotation.body.value) {
                     if (body.kind === 'TextualBody') {
@@ -78,7 +78,7 @@ export class ManiiifestAnnotationPage {
     }
 
     *iterateAnnotationPageAnnotationPartOf(): IterableIterator<U.AnnotationTargetCanvasRef> {
-        for (const annotation of this.spec.items ?? []) {
+        for (const annotation of this.specification.items ?? []) {
             if (annotation.target?.kind === 'Array') {
                 for (const target of annotation.target.value) {
                     if (target.kind === 'CanvasRef') {

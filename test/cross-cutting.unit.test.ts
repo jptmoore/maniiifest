@@ -72,6 +72,18 @@ describe('Constructor error handling', () => {
     expect(() => Maniiifest.parseAnnotationCollection(null)).toThrow(/Failed to parse IIIF data as AnnotationCollection/);
   });
 
+  it('wraps parse errors for direct ManiiifestAnnotation constructor', () => {
+    expect(() => new ManiiifestAnnotation(null)).toThrow(/Failed to parse IIIF data as Annotation/);
+  });
+
+  it('wraps parse errors for direct ManiiifestAnnotationPage constructor', () => {
+    expect(() => new ManiiifestAnnotationPage(null)).toThrow(/Failed to parse IIIF data as AnnotationPage/);
+  });
+
+  it('wraps parse errors for direct ManiiifestAnnotationCollection constructor', () => {
+    expect(() => new ManiiifestAnnotationCollection(null)).toThrow(/Failed to parse IIIF data as AnnotationCollection/);
+  });
+
   it('wraps errors when data is a non-object primitive', () => {
     expect(() => new Maniiifest(42)).toThrow(/Failed to parse IIIF data/);
   });

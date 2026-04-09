@@ -45,12 +45,12 @@ import { Maniiifest, ManiiifestAnnotation, ManiiifestAnnotationPage, ManiiifestA
 // Via static factory methods
 const annotation = Maniiifest.parseAnnotation(data);
 const page = Maniiifest.parseAnnotationPage(data);
-const collection = Maniiifest.parseAnnotationCollection(data);
+const annoCollection = Maniiifest.parseAnnotationCollection(data);
 
 // Or via direct constructors
-const annotation = new ManiiifestAnnotation(data);
-const page = new ManiiifestAnnotationPage(data);
-const collection = new ManiiifestAnnotationCollection(data);
+const annotation2 = new ManiiifestAnnotation(data);
+const page2 = new ManiiifestAnnotationPage(data);
+const annoCollection2 = new ManiiifestAnnotationCollection(data);
 ```
 
 ## Getters and iterators
