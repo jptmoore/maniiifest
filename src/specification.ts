@@ -309,6 +309,7 @@ export type AnnotationT = {
   motivation?: MotivationT;
   created?: CreatedT;
   creator?: CreatorT;
+  generator?: GeneratorT;
   modified?: ModifiedT;
   body?: BodyT;
   target?: TargetT;
@@ -325,6 +326,36 @@ export type CreatorItemT =
 export type CreatorItemRef = string
 
 export type CreatorItemObject = {
+  id?: IdT;
+  type?: TypeT;
+  name?: NameT;
+  nickname?: NicknameT;
+  email?: EmailStringsT;
+  email_sha1?: EmailSha1StringsT;
+  homepage?: HomepageStringsT;
+}
+
+export type GeneratorT =
+| { kind: 'Value'; value: GeneratorItemT }
+| { kind: 'Array'; value: GeneratorItemT[] }
+
+export type GeneratorItemT =
+| { kind: 'Ref'; value: GeneratorItemRef }
+| { kind: 'Object'; value: GeneratorItemObject }
+
+export type GeneratorItemRef = string
+
+export type GeneratorItemObject = {
+  id?: IdT;
+  type?: TypeT;
+  name?: NameT;
+  nickname?: NicknameT;
+  email?: EmailStringsT;
+  email_sha1?: EmailSha1StringsT;
+  homepage?: HomepageStringsT;
+}
+
+export type AgentT = {
   id?: IdT;
   type?: TypeT;
   name?: NameT;
@@ -406,6 +437,7 @@ export type AnnotationBodyTextualBody = {
   format?: FormatT;
   value?: ValueT;
   creator?: CreatorT;
+  generator?: GeneratorT;
 }
 
 export type AnnotationBodyFeature = {
@@ -1545,6 +1577,7 @@ export function writeAnnotationT(x: AnnotationT, context: any = x): any {
     'motivation': _atd_write_optional_field(writeMotivationT, x.motivation, x),
     'created': _atd_write_optional_field(writeCreatedT, x.created, x),
     'creator': _atd_write_optional_field(writeCreatorT, x.creator, x),
+    'generator': _atd_write_optional_field(writeGeneratorT, x.generator, x),
     'modified': _atd_write_optional_field(writeModifiedT, x.modified, x),
     'body': _atd_write_optional_field(writeBodyT, x.body, x),
     'target': _atd_write_optional_field(writeTargetT, x.target, x),
@@ -1562,6 +1595,7 @@ export function readAnnotationT(x: any, context: any = x): AnnotationT {
     motivation: _atd_read_optional_field(readMotivationT, x['motivation'], x),
     created: _atd_read_optional_field(readCreatedT, x['created'], x),
     creator: _atd_read_optional_field(readCreatorT, x['creator'], x),
+    generator: _atd_read_optional_field(readGeneratorT, x['generator'], x),
     modified: _atd_read_optional_field(readModifiedT, x['modified'], x),
     body: _atd_read_optional_field(readBodyT, x['body'], x),
     target: _atd_read_optional_field(readTargetT, x['target'], x),
@@ -1633,6 +1667,106 @@ export function writeCreatorItemObject(x: CreatorItemObject, context: any = x): 
 }
 
 export function readCreatorItemObject(x: any, context: any = x): CreatorItemObject {
+  return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    name: _atd_read_optional_field(readNameT, x['name'], x),
+    nickname: _atd_read_optional_field(readNicknameT, x['nickname'], x),
+    email: _atd_read_optional_field(readEmailStringsT, x['email'], x),
+    email_sha1: _atd_read_optional_field(readEmailSha1StringsT, x['email_sha1'], x),
+    homepage: _atd_read_optional_field(readHomepageStringsT, x['homepage'], x),
+  };
+}
+
+export function _writeGeneratorT(x: GeneratorT, context: any = x): any {
+  switch (x.kind) {
+    case 'Value':
+      return ['Value', writeGeneratorItemT(x.value, x)]
+    case 'Array':
+      return ['Array', _atd_write_array(writeGeneratorItemT)(x.value, x)]
+  }
+}
+
+export function _readGeneratorT(x: any, context: any = x): GeneratorT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'Value':
+      return { kind: 'Value', value: readGeneratorItemT(x[1], x) }
+    case 'Array':
+      return { kind: 'Array', value: _atd_read_array(readGeneratorItemT)(x[1], x) }
+    default:
+      _atd_bad_json('GeneratorT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function _writeGeneratorItemT(x: GeneratorItemT, context: any = x): any {
+  switch (x.kind) {
+    case 'Ref':
+      return ['Ref', writeGeneratorItemRef(x.value, x)]
+    case 'Object':
+      return ['Object', writeGeneratorItemObject(x.value, x)]
+  }
+}
+
+export function _readGeneratorItemT(x: any, context: any = x): GeneratorItemT {
+  _atd_check_json_tuple(2, x, context)
+  switch (x[0]) {
+    case 'Ref':
+      return { kind: 'Ref', value: readGeneratorItemRef(x[1], x) }
+    case 'Object':
+      return { kind: 'Object', value: readGeneratorItemObject(x[1], x) }
+    default:
+      _atd_bad_json('GeneratorItemT', x, context)
+      throw new Error('impossible')
+  }
+}
+
+export function writeGeneratorItemRef(x: GeneratorItemRef, context: any = x): any {
+  return _atd_write_string(x, context);
+}
+
+export function readGeneratorItemRef(x: any, context: any = x): GeneratorItemRef {
+  return _atd_read_string(x, context);
+}
+
+export function writeGeneratorItemObject(x: GeneratorItemObject, context: any = x): any {
+  return {
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'name': _atd_write_optional_field(writeNameT, x.name, x),
+    'nickname': _atd_write_optional_field(writeNicknameT, x.nickname, x),
+    'email': _atd_write_optional_field(writeEmailStringsT, x.email, x),
+    'email_sha1': _atd_write_optional_field(writeEmailSha1StringsT, x.email_sha1, x),
+    'homepage': _atd_write_optional_field(writeHomepageStringsT, x.homepage, x),
+  };
+}
+
+export function readGeneratorItemObject(x: any, context: any = x): GeneratorItemObject {
+  return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    name: _atd_read_optional_field(readNameT, x['name'], x),
+    nickname: _atd_read_optional_field(readNicknameT, x['nickname'], x),
+    email: _atd_read_optional_field(readEmailStringsT, x['email'], x),
+    email_sha1: _atd_read_optional_field(readEmailSha1StringsT, x['email_sha1'], x),
+    homepage: _atd_read_optional_field(readHomepageStringsT, x['homepage'], x),
+  };
+}
+
+export function writeAgentT(x: AgentT, context: any = x): any {
+  return {
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'name': _atd_write_optional_field(writeNameT, x.name, x),
+    'nickname': _atd_write_optional_field(writeNicknameT, x.nickname, x),
+    'email': _atd_write_optional_field(writeEmailStringsT, x.email, x),
+    'email_sha1': _atd_write_optional_field(writeEmailSha1StringsT, x.email_sha1, x),
+    'homepage': _atd_write_optional_field(writeHomepageStringsT, x.homepage, x),
+  };
+}
+
+export function readAgentT(x: any, context: any = x): AgentT {
   return {
     id: _atd_read_optional_field(readIdT, x['id'], x),
     type: _atd_read_optional_field(readTypeT, x['type'], x),
@@ -1875,6 +2009,7 @@ export function writeAnnotationBodyTextualBody(x: AnnotationBodyTextualBody, con
     'format': _atd_write_optional_field(writeFormatT, x.format, x),
     'value': _atd_write_optional_field(writeValueT, x.value, x),
     'creator': _atd_write_optional_field(writeCreatorT, x.creator, x),
+    'generator': _atd_write_optional_field(writeGeneratorT, x.generator, x),
   };
 }
 
@@ -1885,6 +2020,7 @@ export function readAnnotationBodyTextualBody(x: any, context: any = x): Annotat
     format: _atd_read_optional_field(readFormatT, x['format'], x),
     value: _atd_read_optional_field(readValueT, x['value'], x),
     creator: _atd_read_optional_field(readCreatorT, x['creator'], x),
+    generator: _atd_read_optional_field(readGeneratorT, x['generator'], x),
   };
 }
 
@@ -3508,6 +3644,8 @@ import {
     normalize_email_sha1_strings, restore_email_sha1_strings,
     normalize_email_strings, restore_email_strings,
     normalize_first, restore_first,
+    normalize_generator, restore_generator,
+    normalize_generator_item, restore_generator_item,
     normalize_geometry, restore_geometry,
     normalize_homepage_strings, restore_homepage_strings,
     normalize_label, restore_label,
@@ -3602,6 +3740,22 @@ export function writeFirstT(x: any, context: any = x): FirstT {
 
 export function readFirstT(x: any, context: any = x): FirstT {
     return normalize_first(x, context, _readFirstT);
+}
+
+export function writeGeneratorT(x: any, context: any = x): GeneratorT {
+    return restore_generator(x, context, _writeGeneratorT);
+}
+
+export function readGeneratorT(x: any, context: any = x): GeneratorT {
+    return normalize_generator(x, context, _readGeneratorT);
+}
+
+export function writeGeneratorItemT(x: any, context: any = x): GeneratorItemT {
+    return restore_generator_item(x, context, _writeGeneratorItemT);
+}
+
+export function readGeneratorItemT(x: any, context: any = x): GeneratorItemT {
+    return normalize_generator_item(x, context, _readGeneratorItemT);
 }
 
 export function writeGeometryT(x: any, context: any = x): GeometryT {

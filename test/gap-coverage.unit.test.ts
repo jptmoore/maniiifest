@@ -570,6 +570,92 @@ describe('Annotation provenance getters', () => {
     expect(m.getAnnotationCreator()).toBeNull();
   });
 
+  it('getAnnotationGenerator returns the generator object', () => {
+    const withGen = {
+      ...annotation,
+      generator: {
+        id: "http://example.org/software/1",
+        type: "Software",
+        name: "Example Annotation Tool",
+        homepage: "http://example.org/software/1/homepage"
+      }
+    };
+    const m = Maniiifest.parseAnnotation(withGen);
+    const generator = m.getAnnotationGenerator();
+    expect(generator).toBeDefined();
+    expect((generator as any).id).toBe("http://example.org/software/1");
+    expect((generator as any).type).toBe("Software");
+    expect((generator as any).name).toBe("Example Annotation Tool");
+  });
+
+  it('getAnnotationGenerator returns string when generator is a ref', () => {
+    const withRef = { ...annotation, generator: "http://example.org/software/1" };
+    const m = Maniiifest.parseAnnotation(withRef);
+    expect(m.getAnnotationGenerator()).toBe("http://example.org/software/1");
+  });
+
+  it('getAnnotationGenerator returns array when generator is a list', () => {
+    const withArr = {
+      ...annotation,
+      generator: [
+        "http://example.org/software/1",
+        { id: "http://example.org/software/2", type: "Software", name: "Tool 2" }
+      ]
+    };
+    const m = Maniiifest.parseAnnotation(withArr);
+    const generator = m.getAnnotationGenerator();
+    expect(Array.isArray(generator)).toBe(true);
+    expect((generator as any[]).length).toBe(2);
+    expect((generator as any[])[0]).toBe("http://example.org/software/1");
+    expect(((generator as any[])[1] as any).name).toBe("Tool 2");
+  });
+
+  it('getAnnotationGenerator returns null when absent', () => {
+    const m = Maniiifest.parseAnnotation(annotation);
+    expect(m.getAnnotationGenerator()).toBeNull();
+  });
+
+  it('getAnnotationGenerator round-trips all Agent properties', () => {
+    const fullAgent = {
+      id: "http://example.org/agent/1",
+      type: "Software",
+      name: "Full Agent",
+      nickname: "fa",
+      email: "mailto:agent@example.org",
+      email_sha1: "58bad08927902ff9307b621c54716dcc5083e339",
+      homepage: "http://example.org/agent/1/home"
+    };
+    const withFull = { ...annotation, generator: fullAgent };
+    const m = Maniiifest.parseAnnotation(withFull);
+    const generator = m.getAnnotationGenerator();
+    expect(generator).toEqual(fullAgent);
+  });
+
+  it('getAnnotation preserves generator in round-trip', () => {
+    const withGen = {
+      ...annotation,
+      generator: { id: "http://example.org/sw/1", type: "Software", name: "X" }
+    };
+    const m = Maniiifest.parseAnnotation(withGen);
+    const out = m.getAnnotation();
+    expect((out as any).generator).toEqual(withGen.generator);
+  });
+
+  it('TextualBody preserves generator field', () => {
+    const withTbGen = {
+      ...annotation,
+      body: {
+        type: "TextualBody",
+        value: "A comment",
+        format: "text/plain",
+        generator: { id: "http://example.org/sw/1", type: "Software", name: "Tool" }
+      }
+    };
+    const m = Maniiifest.parseAnnotation(withTbGen);
+    const body = m.getAnnotationBody();
+    expect((body as any).generator).toEqual(withTbGen.body.generator);
+  });
+
   it('getAnnotationCreated returns the created date', () => {
     const m = Maniiifest.parseAnnotation(annotation);
     expect(m.getAnnotationCreated()).toBe("2024-01-04T17:24:11Z");

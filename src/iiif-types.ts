@@ -284,6 +284,7 @@ export interface Annotation {
   motivation?: Motivation;
   created?: Created;
   creator?: Creator;
+  generator?: Generator;
   modified?: Modified;
   body?: Body;
   target?: Target;
@@ -294,6 +295,30 @@ export type Creator = CreatorItem | CreatorItem[];
 export type CreatorItem = string | CreatorItemObject;
 
 export interface CreatorItemObject {
+  id?: Id;
+  type?: Type;
+  name?: Name;
+  nickname?: Nickname;
+  email?: EmailStrings;
+  email_sha1?: EmailSha1Strings;
+  homepage?: HomepageStrings;
+}
+
+export type Generator = GeneratorItem | GeneratorItem[];
+
+export type GeneratorItem = string | GeneratorItemObject;
+
+export interface GeneratorItemObject {
+  id?: Id;
+  type?: Type;
+  name?: Name;
+  nickname?: Nickname;
+  email?: EmailStrings;
+  email_sha1?: EmailSha1Strings;
+  homepage?: HomepageStrings;
+}
+
+export interface Agent {
   id?: Id;
   type?: Type;
   name?: Name;
@@ -356,6 +381,7 @@ export interface AnnotationBodyTextualBody {
   format?: Format;
   value?: Value;
   creator?: Creator;
+  generator?: Generator;
 }
 
 export interface AnnotationBodyFeature {
