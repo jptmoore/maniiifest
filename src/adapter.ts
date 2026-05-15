@@ -416,6 +416,40 @@ export function normalize_creator_item<T, R>(x: T, context: any = x, fn: (input:
     }
 }
 
+export function restore_generator<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_generator<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (Array.isArray(x)) {
+        return fn(['Array', x], context);
+    } else {
+        return fn(['Value', x], context);
+    }
+}
+
+export function restore_generator_item<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
+    const resultList = fn(x, context);
+    if (resultList.length < 2) {
+        throw new Error(`${JSON.stringify(x)}: Result array must contain at least two items.`);
+    }
+    return resultList[1];
+}
+
+export function normalize_generator_item<T, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
+    if (typeof (x) === 'string') {
+        return fn(['Ref', x], context);
+    } else if (typeof (x) === 'object') {
+        return fn(['Object', x], context);
+    } else {
+        throw new Error(`${JSON.stringify(x)}: Input type did not match expected types.`);
+    }
+}
+
 export function restore_email_strings<T, R>(x: T, context: any = x, fn: (input: T, context: any) => R[]): R {
     const resultList = fn(x, context);
     if (resultList.length < 2) {

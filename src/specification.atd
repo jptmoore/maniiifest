@@ -225,6 +225,7 @@ type annotation_t = {
   ?motivation : motivation_t option;
   ?created : created_t option;
   ?creator : creator_t option;
+  ?generator : generator_t option;
   ?modified : modified_t option;
   ?body : body_t option;
   ?target : target_t option;
@@ -243,6 +244,29 @@ type creator_item_t = [
 type creator_item_ref = string
 
 type creator_item_object = {
+  inherit agent_t;
+}
+
+type generator_t = [
+  | Value of generator_item_t
+  | Array of generator_item_t list
+]
+
+type generator_item_t = [
+  | Ref of generator_item_ref
+  | Object of generator_item_object
+]
+
+type generator_item_ref = string
+
+type generator_item_object = {
+  inherit agent_t;
+}
+
+(* W3C Web Annotation Data Model Agent.
+   Used by both creator and generator. The `type` should be one of
+   "Person", "Organization", or "Software". *)
+type agent_t = {
   ?id : id_t option;
   ?_type <json name="type"> : type_t option;
   ?name : name_t option;
@@ -301,6 +325,7 @@ type annotation_body_textual_body = {
   ?format : format_t option;
   ?value : value_t option;
   ?creator : creator_t option;
+  ?generator : generator_t option;
 }
 
 type annotation_body_feature = {

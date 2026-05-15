@@ -59,6 +59,12 @@ export class ManiiifestAnnotation {
             : null;
     }
 
+    getAnnotationGenerator(): U.Generator | null {
+        return this.specification.generator !== undefined
+            ? F.writeGeneratorT(this.specification.generator) as unknown as U.Generator
+            : null;
+    }
+
     getAnnotationCreated(): U.Created | null {
         return this.specification.created !== undefined ? F.writeCreatedT(this.specification.created) : null;
     }
