@@ -615,6 +615,7 @@ export interface Range {
   annotations?: AnnotationPage[];
   thumbnail?: Thumbnail[];
   navPlace?: NavPlace;
+  behavior?: Behavior[];
   items: RangeItems[];
 }
 

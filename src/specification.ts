@@ -728,6 +728,7 @@ export type RangeT = {
   annotations?: AnnotationPageT[];
   thumbnail?: ThumbnailT[];
   navPlace?: NavPlaceT;
+  behavior?: BehaviorT[];
   items: RangeItemsT[];
 }
 
@@ -2947,6 +2948,7 @@ export function writeRangeT(x: RangeT, context: any = x): any {
     'annotations': _atd_write_optional_field(_atd_write_array(writeAnnotationPageT), x.annotations, x),
     'thumbnail': _atd_write_optional_field(_atd_write_array(writeThumbnailT), x.thumbnail, x),
     'navPlace': _atd_write_optional_field(writeNavPlaceT, x.navPlace, x),
+    'behavior': _atd_write_optional_field(_atd_write_array(writeBehaviorT), x.behavior, x),
     'items': _atd_write_required_field('RangeT', 'items', _atd_write_array(writeRangeItemsT), x.items, x),
   };
 }
@@ -2964,6 +2966,7 @@ export function readRangeT(x: any, context: any = x): RangeT {
     annotations: _atd_read_optional_field(_atd_read_array(readAnnotationPageT), x['annotations'], x),
     thumbnail: _atd_read_optional_field(_atd_read_array(readThumbnailT), x['thumbnail'], x),
     navPlace: _atd_read_optional_field(readNavPlaceT, x['navPlace'], x),
+    behavior: _atd_read_optional_field(_atd_read_array(readBehaviorT), x['behavior'], x),
     items: _atd_read_required_field('RangeT', 'items', _atd_read_array(readRangeItemsT), x['items'], x),
   };
 }
