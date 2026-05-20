@@ -607,6 +607,7 @@ type range_t = {
   ?annotations : annotation_page_t list option;
   ?thumbnail : thumbnail_t list option;
   ?navPlace : nav_place_t option;
+  ?behavior : behavior_t list option;
   items : range_items_t list;
 }
 
