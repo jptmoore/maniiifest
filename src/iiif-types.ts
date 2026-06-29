@@ -405,7 +405,21 @@ export interface AnnotationBodyChoice {
 
 export type Target = AnnotationTarget | AnnotationTarget[];
 
-export type AnnotationTarget = string | AnnotationTargetSelectorTarget | SpecificResource | AnnotationTargetCanvasRef;
+export type AnnotationTarget = string | AnnotationTargetSelectorTarget | SpecificResource | AnnotationTargetCanvasRef | AnnotationTargetFeature | AnnotationTargetFeatureCollection;
+
+export interface AnnotationTargetFeature {
+  id?: Id;
+  type?: Type;
+  properties?: Properties;
+  geometry?: Geometry;
+}
+
+export interface AnnotationTargetFeatureCollection {
+  id?: Id;
+  type: Type;
+  features?: Feature[];
+  transformation?: Transformation;
+}
 
 export interface AnnotationTargetSelectorTarget {
   source: Id;

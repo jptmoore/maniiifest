@@ -351,9 +351,19 @@ type annotation_target_t = [
   | SelectorTarget of annotation_target_selector_target
   | SpecificResource of annotation_target_specific_resource
   | CanvasRef of annotation_target_canvas_ref
+  | Feature of annotation_target_feature
+  | FeatureCollection of annotation_target_feature_collection
 ]  
 
 type annotation_target_string = string
+
+type annotation_target_feature = {
+  inherit feature_t;
+}
+
+type annotation_target_feature_collection = {
+  inherit feature_collection_t;
+}
 
 type annotation_target_selector_target = {
   source : id_t;
