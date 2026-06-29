@@ -142,6 +142,10 @@ export function restore_annotation_target<T, R>(x: T, context: any = x, fn: (inp
 export function normalize_annotation_target<T extends { type: string }, R>(x: T, context: any = x, fn: (input: [string, T], context: any) => R): R {
     if (typeof (x) === 'string') {
         return fn(['String', x], context);
+    } else if (typeof x === 'object' && x.type === 'Feature') {
+        return fn(['Feature', x], context);
+    } else if (typeof x === 'object' && x.type === 'FeatureCollection') {
+        return fn(['FeatureCollection', x], context);
     } else if (('source' in x) && ('scope' in x)) {
         return fn(['SelectorTarget', x], context);
     } else if (('source' in x)) {

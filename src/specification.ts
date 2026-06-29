@@ -468,8 +468,24 @@ export type AnnotationTargetT =
 | { kind: 'SelectorTarget'; value: AnnotationTargetSelectorTarget }
 | { kind: 'SpecificResource'; value: AnnotationTargetSpecificResource }
 | { kind: 'CanvasRef'; value: AnnotationTargetCanvasRef }
+| { kind: 'Feature'; value: AnnotationTargetFeature }
+| { kind: 'FeatureCollection'; value: AnnotationTargetFeatureCollection }
 
 export type AnnotationTargetString = string
+
+export type AnnotationTargetFeature = {
+  id?: IdT;
+  type?: TypeT;
+  properties?: PropertiesT;
+  geometry?: GeometryT;
+}
+
+export type AnnotationTargetFeatureCollection = {
+  id?: IdT;
+  type: TypeT;
+  features?: FeatureT[];
+  transformation?: TransformationT;
+}
 
 export type AnnotationTargetSelectorTarget = {
   source: IdT;
@@ -2107,6 +2123,10 @@ export function _writeAnnotationTargetT(x: AnnotationTargetT, context: any = x):
       return ['SpecificResource', writeAnnotationTargetSpecificResource(x.value, x)]
     case 'CanvasRef':
       return ['CanvasRef', writeAnnotationTargetCanvasRef(x.value, x)]
+    case 'Feature':
+      return ['Feature', writeAnnotationTargetFeature(x.value, x)]
+    case 'FeatureCollection':
+      return ['FeatureCollection', writeAnnotationTargetFeatureCollection(x.value, x)]
   }
 }
 
@@ -2121,6 +2141,10 @@ export function _readAnnotationTargetT(x: any, context: any = x): AnnotationTarg
       return { kind: 'SpecificResource', value: readAnnotationTargetSpecificResource(x[1], x) }
     case 'CanvasRef':
       return { kind: 'CanvasRef', value: readAnnotationTargetCanvasRef(x[1], x) }
+    case 'Feature':
+      return { kind: 'Feature', value: readAnnotationTargetFeature(x[1], x) }
+    case 'FeatureCollection':
+      return { kind: 'FeatureCollection', value: readAnnotationTargetFeatureCollection(x[1], x) }
     default:
       _atd_bad_json('AnnotationTargetT', x, context)
       throw new Error('impossible')
@@ -2133,6 +2157,42 @@ export function writeAnnotationTargetString(x: AnnotationTargetString, context: 
 
 export function readAnnotationTargetString(x: any, context: any = x): AnnotationTargetString {
   return _atd_read_string(x, context);
+}
+
+export function writeAnnotationTargetFeature(x: AnnotationTargetFeature, context: any = x): any {
+  return {
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'type': _atd_write_optional_field(writeTypeT, x.type, x),
+    'properties': _atd_write_optional_field(writePropertiesT, x.properties, x),
+    'geometry': _atd_write_optional_field(writeGeometryT, x.geometry, x),
+  };
+}
+
+export function readAnnotationTargetFeature(x: any, context: any = x): AnnotationTargetFeature {
+  return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
+    type: _atd_read_optional_field(readTypeT, x['type'], x),
+    properties: _atd_read_optional_field(readPropertiesT, x['properties'], x),
+    geometry: _atd_read_optional_field(readGeometryT, x['geometry'], x),
+  };
+}
+
+export function writeAnnotationTargetFeatureCollection(x: AnnotationTargetFeatureCollection, context: any = x): any {
+  return {
+    'id': _atd_write_optional_field(writeIdT, x.id, x),
+    'type': _atd_write_required_field('AnnotationTargetFeatureCollection', 'type', writeTypeT, x.type, x),
+    'features': _atd_write_optional_field(_atd_write_array(writeFeatureT), x.features, x),
+    'transformation': _atd_write_optional_field(writeTransformationT, x.transformation, x),
+  };
+}
+
+export function readAnnotationTargetFeatureCollection(x: any, context: any = x): AnnotationTargetFeatureCollection {
+  return {
+    id: _atd_read_optional_field(readIdT, x['id'], x),
+    type: _atd_read_required_field('AnnotationTargetFeatureCollection', 'type', readTypeT, x['type'], x),
+    features: _atd_read_optional_field(_atd_read_array(readFeatureT), x['features'], x),
+    transformation: _atd_read_optional_field(readTransformationT, x['transformation'], x),
+  };
 }
 
 export function writeAnnotationTargetSelectorTarget(x: AnnotationTargetSelectorTarget, context: any = x): any {

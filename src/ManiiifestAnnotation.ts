@@ -80,6 +80,22 @@ export class ManiiifestAnnotation {
         return null;
     }
 
+    /** @returns {U.AnnotationTargetFeature | null} The GeoJSON Feature target, if present. */
+    getAnnotationTargetFeature(): U.AnnotationTargetFeature | null {
+        if (this.specification.target?.kind === 'Value' && this.specification.target.value.kind === 'Feature') {
+            return F.writeAnnotationTargetFeature(this.specification.target.value.value) as unknown as U.AnnotationTargetFeature;
+        }
+        return null;
+    }
+
+    /** @returns {U.AnnotationTargetFeatureCollection | null} The GeoJSON FeatureCollection target, if present. */
+    getAnnotationTargetFeatureCollection(): U.AnnotationTargetFeatureCollection | null {
+        if (this.specification.target?.kind === 'Value' && this.specification.target.value.kind === 'FeatureCollection') {
+            return F.writeAnnotationTargetFeatureCollection(this.specification.target.value.value) as unknown as U.AnnotationTargetFeatureCollection;
+        }
+        return null;
+    }
+
     /** @yields {U.AnnotationBodyTextualBody} Each textual body from the annotation. */
     *iterateAnnotationTextualBody(): IterableIterator<U.AnnotationBodyTextualBody> {
         if (this.specification.body?.kind === 'Array') {
@@ -138,6 +154,40 @@ export class ManiiifestAnnotation {
                     for (const coordinates of feature.geometry.value.coordinates ?? []) {
                         yield F.writePointCoordinatesT(coordinates);
                     }
+                }
+            }
+        }
+    }
+
+    /** @yields {U.Feature} Each GeoJSON feature from a Feature or FeatureCollection target. */
+    *iterateAnnotationTargetFeature(): IterableIterator<U.Feature> {
+        if (this.specification.target?.kind === 'Value') {
+            const target = this.specification.target.value;
+            if (target.kind === 'Feature') {
+                yield F.writeFeatureT(target.value);
+            } else if (target.kind === 'FeatureCollection') {
+                for (const feature of target.value.features ?? []) {
+                    yield F.writeFeatureT(feature);
+                }
+            }
+        }
+    }
+
+    /** @yields {U.PointCoordinates} Each point coordinate pair from target geometry. */
+    *iterateAnnotationTargetGeometryPointCoordinates(): IterableIterator<U.PointCoordinates> {
+        if (this.specification.target?.kind !== 'Value') {
+            return;
+        }
+        const target = this.specification.target.value;
+        const features = target.kind === 'Feature'
+            ? [target.value]
+            : target.kind === 'FeatureCollection'
+                ? target.value.features ?? []
+                : [];
+        for (const feature of features) {
+            if (feature.geometry?.kind === 'Point') {
+                for (const coordinates of feature.geometry.value.coordinates ?? []) {
+                    yield F.writePointCoordinatesT(coordinates);
                 }
             }
         }
