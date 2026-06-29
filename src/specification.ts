@@ -199,16 +199,7 @@ export type FeatureCollectionT = {
   transformation?: TransformationT;
 }
 
-export type TransformationT = {
-  type?: TypeT;
-  options?: OptionsT;
-}
-
-export type OptionsT = {
-  order?: OrderT;
-}
-
-export type OrderT = number /*int*/
+export type TransformationT = Json
 
 export type FeatureT = {
   id?: IdT;
@@ -217,9 +208,9 @@ export type FeatureT = {
   geometry?: GeometryT;
 }
 
-export type PropertiesT = {
-  label?: LabelT;
-}
+export type PropertiesT = Json
+
+export type Json = any
 
 export type GeometriesT =
 | { kind: 'Point'; value: GeometryPoint }
@@ -1262,37 +1253,11 @@ export function readFeatureCollectionT(x: any, context: any = x): FeatureCollect
 }
 
 export function writeTransformationT(x: TransformationT, context: any = x): any {
-  return {
-    'type': _atd_write_optional_field(writeTypeT, x.type, x),
-    'options': _atd_write_optional_field(writeOptionsT, x.options, x),
-  };
+  return writeJson(x, context);
 }
 
 export function readTransformationT(x: any, context: any = x): TransformationT {
-  return {
-    type: _atd_read_optional_field(readTypeT, x['type'], x),
-    options: _atd_read_optional_field(readOptionsT, x['options'], x),
-  };
-}
-
-export function writeOptionsT(x: OptionsT, context: any = x): any {
-  return {
-    'order': _atd_write_optional_field(writeOrderT, x.order, x),
-  };
-}
-
-export function readOptionsT(x: any, context: any = x): OptionsT {
-  return {
-    order: _atd_read_optional_field(readOrderT, x['order'], x),
-  };
-}
-
-export function writeOrderT(x: OrderT, context: any = x): any {
-  return _atd_write_int(x, context);
-}
-
-export function readOrderT(x: any, context: any = x): OrderT {
-  return _atd_read_int(x, context);
+  return readJson(x, context);
 }
 
 export function writeFeatureT(x: FeatureT, context: any = x): any {
@@ -1314,15 +1279,19 @@ export function readFeatureT(x: any, context: any = x): FeatureT {
 }
 
 export function writePropertiesT(x: PropertiesT, context: any = x): any {
-  return {
-    'label': _atd_write_optional_field(writeLabelT, x.label, x),
-  };
+  return writeJson(x, context);
 }
 
 export function readPropertiesT(x: any, context: any = x): PropertiesT {
-  return {
-    label: _atd_read_optional_field(readLabelT, x['label'], x),
-  };
+  return readJson(x, context);
+}
+
+export function writeJson(x: Json, context: any = x): any {
+  return ((x: any, context): any => x)(x, context);
+}
+
+export function readJson(x: any, context: any = x): Json {
+  return ((x: any, context): any => x)(x, context);
 }
 
 export function writeGeometriesT(x: GeometriesT, context: any = x): any {

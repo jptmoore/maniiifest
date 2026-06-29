@@ -117,16 +117,10 @@ type feature_collection_t = {
   ?transformation : transformation_t option;
 }
 
-type transformation_t = {
-  ?_type <json name="type"> : type_t option;
-  ?options : options_t option;
-}
-
-type options_t = {
-  ?order : order_t option;
-}
-
-type order_t = int
+(* GeoJSON FeatureCollection-level transformation object (e.g. IIIF
+   Georeference Extension). Free-form so all members (type, order, …)
+   are preserved on round-trip rather than dropped. *)
+type transformation_t = json
 
 type feature_t = {
   ?id : id_t option;
@@ -135,9 +129,14 @@ type feature_t = {
   ?geometry : geometry_t option;
 }
 
-type properties_t = {
-  ?label : label_t option;
-}
+(* GeoJSON Feature properties is an arbitrary JSON object (or null) per the
+   GeoJSON spec. Modelled as free-form json so arbitrary keys (e.g. the
+   IIIF Georeference Extension's resourceCoords) pass through unchanged
+   instead of being dropped. *)
+type properties_t = json
+
+(* Free-form, pass-through JSON value: read/write are the identity. *)
+type json = abstract
 
 type geometries_t = [
   | Point of geometry_point

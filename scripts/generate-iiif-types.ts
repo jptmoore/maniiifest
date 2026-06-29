@@ -234,6 +234,10 @@ const PRIM_MAP: Record<string, string> = {
 // key = ATD name, value = TS expression to emit
 const OVERRIDE_MAP: Record<string, string> = {
   lng_string_t: 'Record<string, string[]>',
+  // Free-form GeoJSON pass-through values (see specification.atd `json`).
+  json: 'any',
+  properties_t: 'Record<string, any>',
+  transformation_t: 'Record<string, any>',
 };
 
 /**
