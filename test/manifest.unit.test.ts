@@ -691,4 +691,65 @@ describe('Manifest navPlace features', () => {
   });
 });
 
+describe('GeoJSON Feature properties preservation (IIIF Georeference Extension)', () => {
+
+  const georefManifest = {
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    id: "https://example.org/m.json",
+    type: "Manifest",
+    label: { en: ["x"] },
+    items: [{
+      id: "https://example.org/canvas/1",
+      type: "Canvas",
+      width: 4032,
+      height: 3024,
+      items: [],
+      annotations: [{
+        id: "https://example.org/p",
+        type: "AnnotationPage",
+        items: [{
+          id: "https://example.org/a",
+          type: "Annotation",
+          motivation: "georeferencing",
+          target: { type: "SpecificResource", source: "https://example.org/image" },
+          body: {
+            type: "FeatureCollection",
+            transformation: { type: "polynomial", order: 1 },
+            features: [
+              {
+                type: "Feature",
+                properties: { resourceCoords: [0, 0], label: { en: ["GCP 1"] }, custom: "keep me" },
+                geometry: { type: "Point", coordinates: [0, 3.024] }
+              }
+            ]
+          }
+        }]
+      }]
+    }]
+  };
+
+  it('preserves arbitrary GeoJSON Feature properties (incl. resourceCoords) when iterating', () => {
+    const m = new Maniiifest(georefManifest);
+    const canvases = Array.from(m.iterateManifestCanvas()) as any[];
+    const body = canvases[0].annotations[0].items[0].body;
+    expect(body.features[0].properties).toEqual({
+      resourceCoords: [0, 0],
+      label: { en: ["GCP 1"] },
+      custom: "keep me"
+    });
+  });
+
+  it('preserves the FeatureCollection transformation with all members (incl. order)', () => {
+    const m = new Maniiifest(georefManifest);
+    const canvases = Array.from(m.iterateManifestCanvas()) as any[];
+    const body = canvases[0].annotations[0].items[0].body;
+    expect(body.transformation).toEqual({ type: "polynomial", order: 1 });
+  });
+
+  it('round-trips arbitrary GeoJSON properties unchanged (read -> write)', () => {
+    const m = new Maniiifest(georefManifest);
+    expect(m.getManifest()).toEqual(georefManifest);
+  });
+});
+
 

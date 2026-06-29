@@ -184,30 +184,21 @@ export interface FeatureCollection {
   id?: Id;
   type: Type;
   features?: Feature[];
-  transformation?: Transformation;
+  transformation?: Record<string, any>;
 }
 
-export interface Transformation {
-  type?: Type;
-  options?: Options;
-}
-
-export interface Options {
-  order?: Order;
-}
-
-export type Order = number;
+export type Transformation = Record<string, any>;
 
 export interface Feature {
   id?: Id;
   type?: Type;
-  properties?: Properties;
+  properties?: Record<string, any>;
   geometry?: Geometry;
 }
 
-export interface Properties {
-  label?: Label;
-}
+export type Properties = Record<string, any>;
+
+export type Json = any;
 
 export type Geometries = GeometryPoint | GeometryMultiPoint | GeometryLineString | GeometryMultiLineString | GeometryPolygon | GeometryMultiPolygon;
 
@@ -387,7 +378,7 @@ export interface AnnotationBodyTextualBody {
 export interface AnnotationBodyFeature {
   id?: Id;
   type?: Type;
-  properties?: Properties;
+  properties?: Record<string, any>;
   geometry?: Geometry;
 }
 
@@ -395,7 +386,7 @@ export interface AnnotationBodyFeatureCollection {
   id?: Id;
   type: Type;
   features?: Feature[];
-  transformation?: Transformation;
+  transformation?: Record<string, any>;
 }
 
 export interface AnnotationBodyChoice {
@@ -410,7 +401,7 @@ export type AnnotationTarget = string | AnnotationTargetSelectorTarget | Specifi
 export interface AnnotationTargetFeature {
   id?: Id;
   type?: Type;
-  properties?: Properties;
+  properties?: Record<string, any>;
   geometry?: Geometry;
 }
 
@@ -418,7 +409,7 @@ export interface AnnotationTargetFeatureCollection {
   id?: Id;
   type: Type;
   features?: Feature[];
-  transformation?: Transformation;
+  transformation?: Record<string, any>;
 }
 
 export interface AnnotationTargetSelectorTarget {
